@@ -56,22 +56,15 @@ namespace FurnitureShop.Api
                 new CoreModule(dbConnStr),
                 new AuthModule(hostEnv, config),
 
-                new OpenTelemetryModule(),
                 new CQRSModule()
                     .WithCustomPipelines<CoreContext>(
                         AllHandlers,
-                        c => c.Trace().Secure().Validate().StoreAndPublishEvents(),
-                        q => q.Trace().Secure().Cache()),
+                        c => c.Secure().Validate().StoreAndPublishEvents(),
+                        q => q.Secure()),
                 new FluentValidationModule(AllHandlers),
-                new InMemoryCacheModule(),
                 new MassTransitRelayModule(AllHandlers, Domain, MassTransitConfiguration.ConfigureBus(config, hostEnv)),
                 new LocalizationModule(LocalizationConfiguration.For<Strings.Strings>()),
             };
-
-            if (!hostEnv.IsDevelopment())
-            {
-                modules.Add(new IdentityServerKeyVaultModule());
-            }
 
             return modules.ToArray();
         }
@@ -94,9 +87,7 @@ namespace FurnitureShop.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", VersionHandler.HandleAsync);
                 endpoints.MapHealthChecks("/live/health");
-                endpoints.MapGet("/live/ready", ReadinessProbe.HandleAsync);
             });
         }
     }

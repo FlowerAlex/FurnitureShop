@@ -45,47 +45,9 @@ namespace FurnitureShop.Api
                 options.KnownProxies.Clear();
             });
 
-            var zipkin = Config.Telemetry.ZipkinEndpoint(config);
-            var otlp = Config.Telemetry.OtlpEndpoint(config);
-
-            if (!string.IsNullOrWhiteSpace(zipkin) || !string.IsNullOrWhiteSpace(otlp))
-            {
-                services.AddOpenTelemetryTracing(builder =>
-                {
-                    builder
-                        .AddAspNetCoreInstrumentation(opts => opts.Filter = ctx =>
-                        {
-                            return !ctx.Request.Path.StartsWithSegments("/live");
-                        })
-                        .AddHttpClientInstrumentation()
-                        .AddSqlClientInstrumentation(opts => opts.SetDbStatementForText = true)
-                        .AddMassTransitInstrumentation()
-                        .AddLeanCodeTelemetry()
-                        .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                            .AddService("FurnitureShop.Api"));
-
-                    if (!string.IsNullOrWhiteSpace(otlp))
-                    {
-                        builder.AddOtlpExporter(cfg => cfg.Endpoint = new(otlp));
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(zipkin))
-                    {
-                        builder.AddZipkinExporter(cfg => cfg.Endpoint = new(zipkin));
-                    }
-                });
-            }
-
             services.AddAzureClients(cfg =>
             {
                 cfg.AddBlobServiceClient(Config.BlobStorage.ConnectionString(config));
-
-                if (!hostEnv.IsDevelopment())
-                {
-                    cfg.AddKeyClient(new(Config.KeyVault.VaultUrl(config)));
-                    cfg.AddIdentityServerTokenSigningKey(new(Config.KeyVault.KeyId(config)));
-                    cfg.UseCredential(DefaultLeanCodeCredential.Create(config));
-                }
             });
         }
 
