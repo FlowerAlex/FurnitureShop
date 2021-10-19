@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Core/FurnitureShop.Core.Services/FurnitureShop.Core.Services.csproj" />
+  </ItemGroup>
+</Project>

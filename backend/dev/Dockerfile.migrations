@@ -1,0 +1,13 @@
+FROM leancode.azurecr.io/dotnet:rootless-6.0
+
+ARG APP_VERSION
+
+ENV ENVTYPE=Docker
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV APP_VERSION=${APP_VERSION}
+
+WORKDIR /app
+COPY Docker.Directory.Build.props Directory.Build.props
+
+WORKDIR /app/code/src/Apps/FurnitureShop.Migrations
+ENTRYPOINT /app/code/dev/tools/migrate.sh

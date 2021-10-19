@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Api",
+      "type": "coreclr",
+      "request": "attach",
+      "processName": "FurnitureShop.Api",
+      "sourceFileMap": {
+        "/app/code": "${workspaceRoot}"
+      },
+      "pipeTransport": {
+        "pipeCwd": "${workspaceFolder}",
+        "pipeProgram": "docker",
+        "quoteArgs": false,
+        "pipeArgs": ["exec -i furnitureshop_api_1"],
+        "debuggerPath": "/vsdbg/vsdbg"
+      }
+    },
+    {
+      "name": "Attach to Integration tests",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "sourceFileMap": {
+        "/app/code": "${workspaceFolder}"
+      },
+      "requireExactSource": false,
+      "pipeTransport": {
+        "pipeCwd": "${workspaceFolder}",
+        "pipeProgram": "docker",
+        "quoteArgs": false,
+        "pipeArgs": [
+          "exec -i furnitureshop_integration_tests_1"
+        ],
+        "debuggerPath": "/vsdbg/vsdbg"
+      }
+    }
+  ]
+}

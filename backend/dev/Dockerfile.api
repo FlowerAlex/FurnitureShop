@@ -1,0 +1,18 @@
+FROM leancode.azurecr.io/dotnet:rootless-6.0
+
+ARG APP_VERSION
+
+ENV ASPNETCORE_URLS=http://*:8080
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV APP_VERSION=${APP_VERSION}
+ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+EXPOSE 8080
+
+WORKDIR /app
+COPY Docker.Directory.Build.props Directory.Build.props
+
+WORKDIR /app/code/src/Apps/FurnitureShop.Api
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT source /app/code/dev/config/config.sh && \
+    dotnet restore && \
+    dotnet watch run --no-restore
