@@ -23,7 +23,6 @@ services:
       - proxy
       - logs
       - storage
-      - zipkin
 
   tests:
     build:
@@ -35,19 +34,6 @@ services:
       - ../:/app/code
       - ~/.nuget:/home/dotnet/.nuget
 
-  integration_tests:
-    build:
-      context: ..
-      dockerfile: dev/Dockerfile.integration_tests
-      args:
-        - APP_VERSION=0.0.1-dev
-    environment:
-      - WAIT_FOR_DEBUGGER=${WAIT_FOR_DEBUGGER:-}
-    volumes:
-      - ../:/app/code
-      - ~/.nuget:/home/dotnet/.nuget
-    depends_on:
-      - db
   #### One-shot apps
 
   migrations:
@@ -79,6 +65,9 @@ services:
   #### Infrastructure
   proxy:
     image: leancode.azurecr.io/traefik-proxy
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy-self-signed
     ports:
       - "80:80"
       - "443:443"
@@ -135,21 +124,7 @@ services:
           - seq
           - seq.local.lncd.pl
 
-  zipkin:
-    image: openzipkin/zipkin
-    ports:
-      - 9411:9411
-    labels:
-      - "traefik.http.routers.zipkin.rule=Host(`zipkin.local.lncd.pl`)"
-      - "traefik.http.routers.zipkin.tls=true"
-      - "traefik.http.services.zipkin.loadbalancer.server.port=9411"
-    networks:
-      default:
-        aliases:
-          - zipkin
-          - zipkin.local.lncd.pl
 volumes:
   database:
   storage:
   seq:
-  zipkin:
