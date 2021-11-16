@@ -4,7 +4,7 @@ namespace FurnitureShop.Api.Helpers
 {
     public static class VersionHelper
     {
-        public static readonly string Version;
+        public static readonly string Version; //n
 
         static VersionHelper()
         {

@@ -45,11 +45,6 @@ namespace FurnitureShop.Api
             public static string ConnectionString(IConfiguration cfg) => cfg.GetString("SqlServer:ConnectionString");
         }
 
-        public static class MassTransit
-        {
-            public static string AzureServiceBusConnectionstring(IConfiguration cfg) => cfg.GetString("MassTransit:AzureServiceBusConnectionstring");
-        }
-
         public static class Services
         {
             public static string[] AllowedOrigins(IConfiguration cfg) =>
@@ -75,12 +70,6 @@ namespace FurnitureShop.Api
             public static bool EnableDetailedInternalLogs(IConfiguration cfg) => cfg.GetBool("Logging:EnableDetailedInternalLogs");
             public static LogEventLevel MinimumLevel(IConfiguration cfg) =>
                 cfg.GetValue("Logging:MinimumLevel", LogEventLevel.Verbose);
-        }
-
-        public static class Telemetry
-        {
-            public static string? ZipkinEndpoint(IConfiguration cfg) => cfg.GetString("Telemetry:ZipkinEndpoint");
-            public static string? OtlpEndpoint(IConfiguration cfg) => cfg.GetString("Telemetry:OtlpEndpoint");
         }
 
         private static string GetString(this IConfiguration configuration, string key)
@@ -109,10 +98,10 @@ namespace FurnitureShop.Api
             builder.RegisterInstance(config).AsSelf().SingleInstance();
         }
 
-        public static void RegisterMappedConfiguration(
+        public static void RegisterMappedConfiguration( 
             ContainerBuilder builder,
             IConfiguration config,
-            IWebHostEnvironment hostEnv)
+            IWebHostEnvironment hostEnv) // tutaj rejstrujemy klasy z konfiguracjami poszczególnych usług
         {
         }
     }

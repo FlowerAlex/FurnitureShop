@@ -23,7 +23,7 @@ namespace FurnitureShop.Api
             }
             else
             {
-                var connString = Config.MassTransit.AzureServiceBusConnectionstring(configuration);
+                var connString = Config.MassTransit.AzureServiceBusConnectionstring(configuration); // na rabbita
                 return cfg => ServiceBus(cfg, connString);
             }
         }
@@ -40,7 +40,7 @@ namespace FurnitureShop.Api
         {
             busCfg.AddServiceBusMessageScheduler();
 
-            busCfg.UsingAzureServiceBus((ctx, cfg) =>
+            busCfg.UsingAzureServiceBus((ctx, cfg) => // na rabbita
             {
                 cfg.Host(asbConnString, host =>
                 {
