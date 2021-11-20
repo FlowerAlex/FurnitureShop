@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using FluentValidation;
+using FurnitureShop.Core.Contracts.Example;
 using LeanCode.CQRS.Execution;
 using LeanCode.CQRS.Validation.Fluent;
-using FurnitureShop.Core.Contracts.Example;
 
 namespace FurnitureShop.Core.Services.CQRS.Example
 {

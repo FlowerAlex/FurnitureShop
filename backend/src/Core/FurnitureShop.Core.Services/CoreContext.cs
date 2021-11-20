@@ -1,9 +1,9 @@
 using System;
 using System.Security.Claims;
 using System.Threading;
+using FurnitureShop.Core.Contracts;
 using LeanCode.CQRS.Security;
 using LeanCode.Pipelines;
-using FurnitureShop.Core.Contracts;
 using Microsoft.AspNetCore.Http;
 
 namespace FurnitureShop.Core.Services

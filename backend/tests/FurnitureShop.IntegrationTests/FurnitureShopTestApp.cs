@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using FurnitureShop.Api;
+using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Services.DataAccess;
+using FurnitureShop.Core.Services.DataAccess.Entities;
+using FurnitureShop.IntegrationTests.Overrides;
 using IdentityModel.Client;
 using LeanCode.Components;
 using LeanCode.Components.Startup;
 using LeanCode.CQRS.RemoteHttp.Client;
 using LeanCode.IntegrationTestHelpers;
-using FurnitureShop.Core.Contracts;
-using FurnitureShop.Core.Services.DataAccess;
-using FurnitureShop.Core.Services.DataAccess.Entities;
-using FurnitureShop.IntegrationTests.Overrides;
-using FurnitureShop.Api;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -132,7 +132,7 @@ namespace FurnitureShop.IntegrationTests
             Command = CreateCommandsExecutor();
         }
 
-        public override async Task DisposeAsync()
+        public override async ValueTask DisposeAsync()
         {
             Command = default!;
             Query = default!;
@@ -153,7 +153,7 @@ namespace FurnitureShop.IntegrationTests
             Command = CreateCommandsExecutor();
         }
 
-        public override async Task DisposeAsync()
+        public override async ValueTask DisposeAsync()
         {
             Command = default!;
             Query = default!;

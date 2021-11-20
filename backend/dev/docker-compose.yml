@@ -64,7 +64,6 @@ services:
 
   #### Infrastructure
   proxy:
-    image: leancode.azurecr.io/traefik-proxy
     build:
       context: .
       dockerfile: Dockerfile.proxy-self-signed

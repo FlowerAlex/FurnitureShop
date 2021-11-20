@@ -1,8 +1,8 @@
+using System;
+using FurnitureShop.Core.Services.DataAccess.Serialization;
 using GreenPipes;
-using LeanCode.DomainModels.EF;
 using LeanCode.DomainModels.MassTransitRelay;
 using LeanCode.DomainModels.MassTransitRelay.Middleware;
-using FurnitureShop.Core.Services.DataAccess.Serialization;
 using MassTransit;
 using MassTransit.AutofacIntegration;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +23,7 @@ namespace FurnitureShop.Api
             }
             else
             {
-                var connString = Config.MassTransit.AzureServiceBusConnectionstring(configuration); // na rabbita
+                var connString = Config.ConnectionString.AzureServiceBusConnectionstring(configuration);
                 return cfg => ServiceBus(cfg, connString);
             }
         }
@@ -40,7 +40,7 @@ namespace FurnitureShop.Api
         {
             busCfg.AddServiceBusMessageScheduler();
 
-            busCfg.UsingAzureServiceBus((ctx, cfg) => // na rabbita
+            busCfg.UsingAzureServiceBus((ctx, cfg) =>
             {
                 cfg.Host(asbConnString, host =>
                 {

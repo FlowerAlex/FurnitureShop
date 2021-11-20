@@ -1,5 +1,8 @@
 using System.Collections.Generic;
-using LeanCode.Cache.AspNet;
+using FurnitureShop.Api.Auth;
+using FurnitureShop.Core.Contracts.Example;
+using FurnitureShop.Core.Domain.Example.Events;
+using FurnitureShop.Core.Services;
 using LeanCode.Components;
 using LeanCode.Components.Startup;
 using LeanCode.CQRS.Cache;
@@ -10,20 +13,12 @@ using LeanCode.CQRS.Validation;
 using LeanCode.CQRS.Validation.Fluent;
 using LeanCode.DomainModels.MassTransitRelay;
 using LeanCode.DomainModels.MassTransitRelay.Middleware;
-using LeanCode.IdentityServer.KeyVault;
 using LeanCode.Localization;
 using LeanCode.OpenTelemetry;
 using LeanCode.ViewRenderer.Razor;
-using FurnitureShop.Core.Contracts.Example;
-using FurnitureShop.Core.Domain.Example.Events;
-using FurnitureShop.Core.Services;
-using FurnitureShop.Api.Auth;
-using FurnitureShop.Api.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace FurnitureShop.Api
 {

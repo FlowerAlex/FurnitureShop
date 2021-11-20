@@ -7,12 +7,18 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  cqrs: ^6.1.0
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
+  json_annotation: ^4.1.0
+  login_client: ^2.0.3
+  login_client_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  contracts_generator: ^0.2.3
 flutter:
   uses-material-design: true

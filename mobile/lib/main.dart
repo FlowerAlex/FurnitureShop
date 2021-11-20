@@ -1,4 +1,8 @@
+import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/contracts.dart';
+import 'package:login_client/login_client.dart';
+import 'package:login_client_flutter/login_client_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,6 +13,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginClient = LoginClient(
+      oAuthSettings: OAuthSettings(
+        authorizationUri: Uri.parse('https://api.mindy.test.lncd.pl')
+            .resolve('/auth/connect/token'),
+        clientId: 'client_app',
+        scopes: [
+          'offline_access',
+          'internal_api',
+        ],
+      ),
+      credentialsStorage: const FlutterSecureCredentialsStorage(),
+    );
+    final cqrs = CQRS(
+      loginClient,
+      Uri.parse('https://api.mindy.test.lncd.pl').resolve('/api/'),
+    );
+
+    cqrs.run(ExampleCommand(arg: 'arg'));
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

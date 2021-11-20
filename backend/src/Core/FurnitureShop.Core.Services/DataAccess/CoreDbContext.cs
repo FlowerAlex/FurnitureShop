@@ -1,10 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LeanCode.DomainModels.DataAccess;
+using FurnitureShop.Core.Services.DataAccess.Entities;
 using LeanCode.DomainModels.MassTransitRelay.Inbox;
 using LeanCode.DomainModels.MassTransitRelay.Outbox;
-using FurnitureShop.Core.Services.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

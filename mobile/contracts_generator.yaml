@@ -1,0 +1,15 @@
+# Possible input methods, specify exactly one (required)
+input:
+  # Array of paths pointing to .csproj contracts project files
+  project:
+    - ../backend/src/Core/FurnitureShop.Core.Contracts/FurnitureShop.Core.Contracts.csproj
+# Name of the output dart file
+name: contracts
+# Regex to filter-in namespaced statements
+include: FurnitureShop\.Core\.Contracts\.(Example)
+# Output directory
+output: lib/data
+# Directives (`export`, `import`, `part` etc.) to be added to the generated contracts file
+directives: ""
+# Code to be added to the generated contracts file after all directives
+extra: ""
