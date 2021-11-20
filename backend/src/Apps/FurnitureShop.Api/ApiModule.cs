@@ -1,10 +1,9 @@
 using System;
 using Autofac;
+using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.AzureIdentity;
 using LeanCode.Components;
-using LeanCode.IdentityServer.KeyVault;
 using LeanCode.OpenTelemetry;
-using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;

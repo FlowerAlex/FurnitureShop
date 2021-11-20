@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using Autofac;
+using FurnitureShop.Core.Services.DataAccess.Entities;
 using IdentityServer4.Services;
 using LeanCode.Components;
-using FurnitureShop.Core.Services.DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

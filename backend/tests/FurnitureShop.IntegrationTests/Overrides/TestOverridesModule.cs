@@ -1,7 +1,7 @@
 using Autofac;
+using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.Components;
 using LeanCode.IntegrationTestHelpers;
-using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -16,12 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WebApplicationFactoryContentRootAttribute
-      Include="FurnitureShop.IntegrationTests"
-      AssemblyName="FurnitureShop.IntegrationTests"
-      ContentRootPath="$(MSBuildProjectDirectory)"
-      ContentRootTest="FurnitureShop.IntegrationTests.csproj"
-      Priority="-1" />
+    <WebApplicationFactoryContentRootAttribute Include="FurnitureShop.IntegrationTests" AssemblyName="FurnitureShop.IntegrationTests" ContentRootPath="$(MSBuildProjectDirectory)" ContentRootTest="FurnitureShop.IntegrationTests.csproj" Priority="-1" />
   </ItemGroup>
 
 </Project>

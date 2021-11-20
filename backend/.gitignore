@@ -248,3 +248,6 @@ infrastructure/**/*.tfstate*
 
 !dev/**/.env
 !release/
+
+**/proxy
+**/.DS_Store

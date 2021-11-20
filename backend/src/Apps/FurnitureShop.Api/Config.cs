@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using LeanCode;
-using LeanCode.IdentityServer.KeyVault;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog.Events;
@@ -24,15 +23,9 @@ namespace FurnitureShop.Api
                 $"https://{component}.{PublicDomain(cfg)}";
         }
 
-        public static class KeyVault
+        public static class ConnectionString
         {
-            private const string KeyAddress = "keys/token-signing";
-
-            public static string VaultUrl(IConfiguration cfg) =>
-                cfg.GetString("KeyVault:VaultUrl") ?? string.Empty;
-
-            public static string KeyId(IConfiguration cfg) =>
-                UrlHelper.Concat(VaultUrl(cfg), KeyAddress);
+            public static string AzureServiceBusConnectionstring(IConfiguration cfg) => cfg.GetConnectionString("ServiceBus"); // TODO ustawić AzureServiceBus
         }
 
         public static class SqlServer
@@ -98,7 +91,7 @@ namespace FurnitureShop.Api
             builder.RegisterInstance(config).AsSelf().SingleInstance();
         }
 
-        public static void RegisterMappedConfiguration( 
+        public static void RegisterMappedConfiguration(
             ContainerBuilder builder,
             IConfiguration config,
             IWebHostEnvironment hostEnv) // tutaj rejstrujemy klasy z konfiguracjami poszczególnych usług

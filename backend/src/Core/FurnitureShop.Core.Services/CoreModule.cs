@@ -1,8 +1,8 @@
 using Autofac;
-using LeanCode.Components;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.DataAccess.Entities;
 using FurnitureShop.Core.Services.Services;
+using LeanCode.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

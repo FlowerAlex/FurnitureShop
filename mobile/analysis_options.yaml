@@ -1,0 +1,18 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - lib/data/contracts.dart
+    - "**.g.dart"
+    - "**/*.freezed.dart"
+    - "**.mocks.dart"
+  strong-mode:
+    implicit-dynamic: false
+
+linter:
+  rules:
+    sort_constructors_first: true
+    prefer_single_quotes: true
+    unnecessary_lambdas: true
+    use_build_context_synchronously: false
+    avoid_classes_with_only_static_members: false

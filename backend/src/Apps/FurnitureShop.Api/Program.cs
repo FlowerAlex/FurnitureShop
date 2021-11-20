@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using LeanCode.Components;
 using LeanCode.Components.Startup;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +17,6 @@ namespace FurnitureShop.Api
         {
             return LeanProgram
                 .BuildMinimalHost<Startup>()
-                .AddAppConfigurationFromAzureKeyVaultOnNonDevelopmentEnvironment()
                 .ConfigureDefaultLogging("FurnitureShop", TypesCatalog.Of<Startup>());
         }
     }

@@ -1,44 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <AssemblyName>FurnitureShop.Api</AssemblyName>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="Templates/**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Remove="Templates/**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="../../Core/FurnitureShop.Core.Services/FurnitureShop.Core.Services.csproj" />
-
-    <PackageReference Include="Azure.Storage.Blobs" />
-
-    <PackageReference Include="IdentityServer4" />
-    <PackageReference Include="IdentityServer4.AspNetIdentity" />
-    <PackageReference Include="IdentityServer4.EntityFramework" />
-
-    <PackageReference Include="LeanCode.ClientCredentialsHandler" />
-    <PackageReference Include="LeanCode.Components.Startup" />
-    <PackageReference Include="LeanCode.CQRS.Default" />
-    <PackageReference Include="LeanCode.CQRS.RemoteHttp.Server" />
-    <PackageReference Include="LeanCode.CQRS.Validation.Fluent" />
-    <PackageReference Include="LeanCode.DomainModels.MassTransitRelay" />
-    <PackageReference Include="LeanCode.Logging" />
-    <PackageReference Include="LeanCode.Localization" />
-    <PackageReference Include="LeanCode.UrlHelper" />
-    <PackageReference Include="LeanCode.ViewRenderer.Razor" />
-
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" />
-
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-
-  </ItemGroup>
-
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<AssemblyName>FurnitureShop.Api</AssemblyName>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="Templates/**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Content Remove="Templates/**"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="../../Core/FurnitureShop.Core.Services/FurnitureShop.Core.Services.csproj"/>
+		<PackageReference Include="Azure.Storage.Blobs"/>
+		<PackageReference Include="IdentityServer4"/>
+		<PackageReference Include="IdentityServer4.AspNetIdentity"/>
+		<PackageReference Include="IdentityServer4.EntityFramework"/>
+		<PackageReference Include="LeanCode.ClientCredentialsHandler"/>
+		<PackageReference Include="LeanCode.Components.Startup"/>
+		<PackageReference Include="LeanCode.CQRS.Default"/>
+		<PackageReference Include="LeanCode.CQRS.RemoteHttp.Server"/>
+		<PackageReference Include="LeanCode.CQRS.Validation.Fluent"/>
+		<PackageReference Include="LeanCode.DomainModels.MassTransitRelay"/>
+		<PackageReference Include="LeanCode.Logging"/>
+		<PackageReference Include="LeanCode.Localization"/>
+		<PackageReference Include="LeanCode.UrlHelper"/>
+		<PackageReference Include="LeanCode.ViewRenderer.Razor"/>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"/>
+		<PackageReference Include="Microsoft.Extensions.Hosting"/>
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt"/>
+		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.1.1"/>
+	</ItemGroup>
 </Project>
