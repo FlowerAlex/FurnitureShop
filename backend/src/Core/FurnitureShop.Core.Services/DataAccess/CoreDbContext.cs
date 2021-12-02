@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess.Entities;
 using LeanCode.DomainModels.MassTransitRelay.Inbox;
 using LeanCode.DomainModels.MassTransitRelay.Outbox;
@@ -18,6 +19,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbContext Self => this;
         public DbSet<ConsumedMessage> ConsumedMessages => Set<ConsumedMessage>();
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
+
+        public DbSet<Category> Categories => Set<Category>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
