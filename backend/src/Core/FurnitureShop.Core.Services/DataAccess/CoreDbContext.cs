@@ -19,8 +19,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbContext Self => this;
         public DbSet<ConsumedMessage> ConsumedMessages => Set<ConsumedMessage>();
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
-
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Product> Products => Set<Product>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -35,6 +35,10 @@ namespace FurnitureShop.Core.Services.DataAccess
             RaisedEvent.Configure(builder);
 
             ConfigureAuth(builder);
+
+            builder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany();
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);
