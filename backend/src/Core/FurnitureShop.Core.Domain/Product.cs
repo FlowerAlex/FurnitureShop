@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FurnitureShop.Core.Domain
 {
@@ -10,6 +11,7 @@ namespace FurnitureShop.Core.Domain
             this.Description = description;
             this.ModelUrl = modelUrl;
             this.Category = category;
+            this.Orders = new List<Order>();
         }
 
         public Product(string name, string description, string modelUrl)
@@ -17,6 +19,7 @@ namespace FurnitureShop.Core.Domain
             this.Name = name;
             this.Description = description;
             this.ModelUrl = modelUrl;
+            this.Orders = new List<Order>();
         }
 
         public Guid Id { get; set; }
@@ -24,5 +27,6 @@ namespace FurnitureShop.Core.Domain
         public string Description { get; set; }
         public string ModelUrl { get; set; }
         public Category? Category { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
