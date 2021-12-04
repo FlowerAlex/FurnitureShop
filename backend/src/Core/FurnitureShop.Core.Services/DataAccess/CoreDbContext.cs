@@ -44,6 +44,36 @@ namespace FurnitureShop.Core.Services.DataAccess
             builder.Entity<Order>()
                 .HasMany(o => o.Products)
                 .WithMany(p => p.Orders);
+
+            builder.Entity<Address>()
+                .HasOne<Order>()
+                .WithOne()
+                .HasForeignKey<Order>(o => o.DeliveryAddressId);
+
+            builder.Entity<Order>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(o => o.UserId);
+
+            builder.Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews);
+
+            builder.Entity<Review>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(r => r.UserId);
+
+            builder.Entity<Complaint>()
+                .HasOne<Order>(c => c.Order)
+                .WithOne()
+                .HasForeignKey<Order>(o => o.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Complaint>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(c => c.UserId);
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);
