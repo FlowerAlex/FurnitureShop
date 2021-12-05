@@ -10,6 +10,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/back-arrow.png
+  AssetGenImage get backArrow =>
+      const AssetGenImage('assets/icons/back-arrow.png');
+
   /// File path: assets/icons/eye.png
   AssetGenImage get eye => const AssetGenImage('assets/icons/eye.png');
 }

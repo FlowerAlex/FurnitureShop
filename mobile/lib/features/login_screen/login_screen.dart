@@ -4,6 +4,7 @@ import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
 import 'package:furniture_shop/features/common/widgets/asset_button.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
+import 'package:furniture_shop/features/sign_up_screen.dart/sign_up_screen.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
@@ -34,12 +35,12 @@ class LoginScreen extends HookWidget {
                     const SizedBox(height: 36),
                     AppTextField(
                       controller: loginTextEditingController,
-                      label: 'login',
+                      label: 'Email',
                     ),
                     const SizedBox(height: 20),
                     AppTextField(
                       controller: passwordTextEditingController,
-                      label: 'password',
+                      label: 'Password',
                       obscureText: obscureText.value,
                       suffixIcon: AssetButton(
                         splashRadius: 8,
@@ -79,7 +80,7 @@ class LoginScreen extends HookWidget {
               ),
               const SizedBox(height: 20),
               AppTextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(SignUpPage()),
                 child: Text(
                   'Sign up',
                   style: AppTextStyles.reg12.copyWith(
