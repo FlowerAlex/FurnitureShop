@@ -23,5 +23,14 @@ namespace FurnitureShop.Core.Domain
         public ICollection<Product> Products { get; set; }
         public Guid? ComplaintId { get; set; }
         public Guid DeliveryAddressId { get; set; }
+        public OrderState State { get; set; }
+    }
+
+    public enum OrderState
+    {
+        Pending,
+        Cancelled,
+        InProgress,
+        Finished,
     }
 }

@@ -25,5 +25,6 @@ namespace FurnitureShop.Core.Domain
         public string Text { get; set; }
         public string? Response { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool Resolved { get; set; }
     }
 }
