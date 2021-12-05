@@ -4,14 +4,16 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FurnitureShop.Migrations.CoreDbMigrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211202150953_AddedCategory")]
+    partial class AddedCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,37 +21,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "6.0.0-preview.7.21378.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Address", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Address");
-                });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.Category", b =>
                 {
@@ -64,126 +35,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Complaint", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Resolved")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Response")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Complaint");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ComplaintId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DeliveryAddressId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComplaintId")
-                        .IsUnique()
-                        .HasFilter("[ComplaintId] IS NOT NULL");
-
-                    b.HasIndex("DeliveryAddressId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModelUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Review", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Services.DataAccess.Entities.AuthRole", b =>
@@ -434,74 +285,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.ToTable("AspNetUserTokens", "auth");
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.Property<Guid>("OrdersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("OrdersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderProduct");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Complaint", b =>
-                {
-                    b.HasOne("FurnitureShop.Core.Services.DataAccess.Entities.AuthUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Order", b =>
-                {
-                    b.HasOne("FurnitureShop.Core.Domain.Complaint", null)
-                        .WithOne("Order")
-                        .HasForeignKey("FurnitureShop.Core.Domain.Order", "ComplaintId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("FurnitureShop.Core.Domain.Address", null)
-                        .WithOne()
-                        .HasForeignKey("FurnitureShop.Core.Domain.Order", "DeliveryAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FurnitureShop.Core.Services.DataAccess.Entities.AuthUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Product", b =>
-                {
-                    b.HasOne("FurnitureShop.Core.Domain.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Review", b =>
-                {
-                    b.HasOne("FurnitureShop.Core.Domain.Product", "Product")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("FurnitureShop.Core.Services.DataAccess.Entities.AuthUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("LeanCode.DomainModels.MassTransitRelay.Outbox.RaisedEvent", b =>
                 {
                     b.OwnsOne("LeanCode.DomainModels.MassTransitRelay.Outbox.RaisedEventMetadata", "Metadata", b1 =>
@@ -576,31 +359,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.HasOne("FurnitureShop.Core.Domain.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FurnitureShop.Core.Domain.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Complaint", b =>
-                {
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("FurnitureShop.Core.Domain.Product", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Services.DataAccess.Entities.AuthUser", b =>

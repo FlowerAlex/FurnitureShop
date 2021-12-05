@@ -4,14 +4,16 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FurnitureShop.Migrations.CoreDbMigrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211204195251_Final")]
+    partial class Final
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +77,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Resolved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Response")
                         .HasColumnType("nvarchar(max)");
 
@@ -106,9 +105,6 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
 
                     b.Property<Guid>("DeliveryAddressId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

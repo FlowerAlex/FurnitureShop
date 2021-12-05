@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess.Entities;
 using LeanCode.DomainModels.MassTransitRelay.Inbox;
 using LeanCode.DomainModels.MassTransitRelay.Outbox;
@@ -18,6 +19,9 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbContext Self => this;
         public DbSet<ConsumedMessage> ConsumedMessages => Set<ConsumedMessage>();
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<Order> Orders => Set<Order>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -32,6 +36,44 @@ namespace FurnitureShop.Core.Services.DataAccess
             RaisedEvent.Configure(builder);
 
             ConfigureAuth(builder);
+
+            builder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany();
+
+            builder.Entity<Order>()
+                .HasMany(o => o.Products)
+                .WithMany(p => p.Orders);
+
+            builder.Entity<Address>()
+                .HasOne<Order>()
+                .WithOne()
+                .HasForeignKey<Order>(o => o.DeliveryAddressId);
+
+            builder.Entity<Order>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(o => o.UserId);
+
+            builder.Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews);
+
+            builder.Entity<Review>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(r => r.UserId);
+
+            builder.Entity<Complaint>()
+                .HasOne<Order>(c => c.Order)
+                .WithOne()
+                .HasForeignKey<Order>(o => o.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Complaint>()
+                .HasOne<AuthUser>()
+                .WithMany()
+                .HasForeignKey(c => c.UserId);
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);
