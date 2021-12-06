@@ -5,6 +5,7 @@ namespace FurnitureShop.Core.Contracts
         public static class Roles
         {
             public const string User = "user";
+            public const string Admin = "admin";
         }
 
         public static class KnownClaims
