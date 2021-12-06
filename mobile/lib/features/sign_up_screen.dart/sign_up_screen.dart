@@ -24,9 +24,9 @@ class SignUpScreen extends HookWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(left: 20, top: 20),
-              child: Container(
+              child: SizedBox(
                 width: 40,
                 height: 40,
                 child: AppBackButton(),
