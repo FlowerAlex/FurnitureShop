@@ -18,7 +18,7 @@ class AppBackButton extends StatelessWidget {
             BoxShadow(
               color: AppColors.grey0.withAlpha(122),
               blurRadius: 1,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             )
           ]),
       child: InkWell(
@@ -27,7 +27,8 @@ class AppBackButton extends StatelessWidget {
         child: Center(
           child: AssetIcon(
             asset: Assets.icons.backArrow,
-            color: AppColors.primaryText,
+            color: AppColors.labelText,
+            size: 16,
           ),
         ),
       ),

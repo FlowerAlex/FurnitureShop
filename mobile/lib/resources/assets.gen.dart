@@ -14,8 +14,23 @@ class $AssetsIconsGen {
   AssetGenImage get backArrow =>
       const AssetGenImage('assets/icons/back-arrow.png');
 
+  /// File path: assets/icons/backet.png
+  AssetGenImage get backet => const AssetGenImage('assets/icons/backet.png');
+
   /// File path: assets/icons/eye.png
   AssetGenImage get eye => const AssetGenImage('assets/icons/eye.png');
+
+  /// File path: assets/icons/heart.png
+  AssetGenImage get heart => const AssetGenImage('assets/icons/heart.png');
+
+  /// File path: assets/icons/loupe.png
+  AssetGenImage get loupe => const AssetGenImage('assets/icons/loupe.png');
+
+  /// File path: assets/icons/squares.png
+  AssetGenImage get squares => const AssetGenImage('assets/icons/squares.png');
+
+  /// File path: assets/icons/user.png
+  AssetGenImage get user => const AssetGenImage('assets/icons/user.png');
 }
 
 class Assets {

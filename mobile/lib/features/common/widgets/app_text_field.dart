@@ -6,17 +6,21 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     Key? key,
     this.controller,
+    this.prefix,
     this.suffixIcon,
     this.hintText,
     this.label,
+    this.backgroundColor,
     this.obscureText = false,
   }) : super(key: key);
 
   final TextEditingController? controller;
+  final Widget? prefix;
   final Widget? suffixIcon;
   final String? hintText;
   final String? label;
   final bool obscureText;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +35,27 @@ class AppTextField extends StatelessWidget {
               style: AppTextStyles.reg12.copyWith(color: AppColors.primaryText),
             ),
           ),
-        SizedBox(
+        Container(
           height: 40,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: TextField(
             controller: controller,
             cursorColor: AppColors.primaryText,
             obscureText: obscureText,
-            style: AppTextStyles.reg14,
+            style: AppTextStyles.reg14.copyWith(color: AppColors.primaryText),
+            textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: prefix,
+              ),
               contentPadding: EdgeInsets.zero,
               hintText: hintText,
+              hintStyle:
+                  AppTextStyles.reg14.copyWith(color: AppColors.primaryText),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(100),
                 borderSide: const BorderSide(
@@ -53,9 +68,12 @@ class AppTextField extends StatelessWidget {
                   color: AppColors.black,
                 ),
               ),
-              prefix: const SizedBox(
-                width: 10,
-              ),
+              prefixIconConstraints: const BoxConstraints(),
+              prefix: prefix != null
+                  ? null
+                  : const SizedBox(
+                      width: 10,
+                    ),
               suffixIcon: suffixIcon,
               focusColor: AppColors.grey1,
             ),
