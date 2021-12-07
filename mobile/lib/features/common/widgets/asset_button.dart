@@ -6,12 +6,12 @@ class AssetButton extends StatelessWidget {
     Key? key,
     required this.icon,
     this.onPressed,
-    this.splashRadius,
+    this.splashRadius = 16,
   }) : super(key: key);
 
   final AssetIcon icon;
   final VoidCallback? onPressed;
-  final double? splashRadius;
+  final double splashRadius;
 
   @override
   Widget build(BuildContext context) {

@@ -51,7 +51,6 @@ class SignUpScreen extends HookWidget {
                     label: 'Password',
                     obscureText: obscureText.value,
                     suffixIcon: AssetButton(
-                      splashRadius: 8,
                       icon: AssetIcon(
                         asset: Assets.icons.eye,
                         color: AppColors.grey5,
@@ -65,7 +64,6 @@ class SignUpScreen extends HookWidget {
                     label: 'Repeat password',
                     obscureText: obscureText.value,
                     suffixIcon: AssetButton(
-                      splashRadius: 8,
                       icon: AssetIcon(
                         asset: Assets.icons.eye,
                         color: AppColors.grey5,

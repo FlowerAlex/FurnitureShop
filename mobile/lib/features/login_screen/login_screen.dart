@@ -45,7 +45,6 @@ class LoginScreen extends HookWidget {
                       label: 'Password',
                       obscureText: obscureText.value,
                       suffixIcon: AssetButton(
-                        splashRadius: 8,
                         icon: AssetIcon(
                           asset: Assets.icons.eye,
                           color: AppColors.grey5,

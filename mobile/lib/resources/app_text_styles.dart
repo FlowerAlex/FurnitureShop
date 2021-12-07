@@ -37,4 +37,16 @@ class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+  static const reg18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  );
+  static const med18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
+  static const bold18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
 }

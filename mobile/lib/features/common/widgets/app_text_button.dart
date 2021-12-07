@@ -21,7 +21,7 @@ class AppTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(AppColors.grey0),
+          overlayColor: MaterialStateProperty.all(AppColors.grey1),
           backgroundColor: MaterialStateProperty.all(background),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(

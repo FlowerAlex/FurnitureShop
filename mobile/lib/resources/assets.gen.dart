@@ -17,6 +17,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/backet.png
   AssetGenImage get backet => const AssetGenImage('assets/icons/backet.png');
 
+  /// File path: assets/icons/cross.png
+  AssetGenImage get cross => const AssetGenImage('assets/icons/cross.png');
+
+  /// File path: assets/icons/edit.png
+  AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
+
   /// File path: assets/icons/eye.png
   AssetGenImage get eye => const AssetGenImage('assets/icons/eye.png');
 
