@@ -20,7 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
 
         public async Task<List<CategoryDTO>> ExecuteAsync(CoreContext context, GetAllCategories query)
         {
-            return await dbContext.Categories.Select(c => new CategoryDTO{Id = c.Id, Name = c.Name}).ToListAsync();
+            return await dbContext.Categories.Select(c => new CategoryDTO { Id = c.Id, Name = c.Name }).ToListAsync();
         }
     }
 }

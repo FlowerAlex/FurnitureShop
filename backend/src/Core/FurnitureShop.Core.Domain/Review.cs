@@ -1,31 +1,32 @@
 using System;
-
+using System.Collections.Generic;
+using LeanCode.DomainModels.Model;
+using LeanCode.Time;
 namespace FurnitureShop.Core.Domain
 {
-    public class Review
+    public class Review : IAggregateRoot<Id<Review>>
     {
-        public Review(Product? product, Guid userId, string text, double rating)
-        {
-            this.Product = product;
-            this.UserId = userId;
-            this.Text = text;
-            this.Rating = rating;
-            this.CreatedDate = DateTime.Now;
-        }
-
-        public Review(Guid userId, string text, double rating)
-        {
-            this.UserId = userId;
-            this.Text = text;
-            this.Rating = rating;
-            this.CreatedDate = DateTime.Now;
-        }
-
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public Product? Product { get; set; }
+        public Id<Review> Id { get; set; }
+        public Id<User>? UserId { get; set; }
+        public Id<Product>? ProductId { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; }
         public DateTime CreatedDate { get; set; }
+        byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
+        DateTime IOptimisticConcurrency.DateModified { get; set; }
+        public Review(string text, double rating)
+        {
+            Id = Id<Review>.New();
+            Text = text;
+            Rating = rating;
+            CreatedDate = DateTime.Now;
+        }
+
+        public Review()
+        {
+            Id = Id<Review>.New();
+            Text = "";
+            CreatedDate = DateTime.Now;
+        }
     }
 }

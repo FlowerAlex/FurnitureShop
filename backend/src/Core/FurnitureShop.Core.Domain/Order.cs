@@ -1,30 +1,27 @@
 using System;
 using System.Collections.Generic;
+using LeanCode.DomainModels.Model;
+using LeanCode.Time;
 
 namespace FurnitureShop.Core.Domain
 {
-    public class Order
+    public class Order : IAggregateRoot<Id<Order>>
     {
-        public Order(ICollection<Product> products, Guid userId, Guid deliveryAddressId)
-        {
-            this.Products = products;
-            this.UserId = userId;
-            this.DeliveryAddressId = deliveryAddressId;
-        }
-
-        public Order(Guid userId)
-        {
-            this.Products = new List<Product>();
-            this.UserId = userId;
-        }
-
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public Id<Order> Id { get; set; }
+        public Id<User>? UserId { get; set; }
+        public Id<Complaint>? ComplaintId { get; set; }
+        public Id<Address>? AddressId { get; set; }
         public ICollection<Product> Products { get; set; }
-        public Guid? ComplaintId { get; set; }
-        public Guid DeliveryAddressId { get; set; }
         public OrderState State { get; set; }
         public decimal Price { get; set; }
+        byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
+        DateTime IOptimisticConcurrency.DateModified { get; set; }
+        public Order()
+        {
+            Id = Id<Order>.New();
+            State = OrderState.Pending;
+            Products = new List<Product>();
+        }
     }
 
     public enum OrderState

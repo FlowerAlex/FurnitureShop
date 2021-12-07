@@ -3,11 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess.Entities;
+using LeanCode.DomainModels.EF;
 using LeanCode.DomainModels.MassTransitRelay.Inbox;
 using LeanCode.DomainModels.MassTransitRelay.Outbox;
+using LeanCode.DomainModels.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FurnitureShop.Core.Services.DataAccess
 {
@@ -17,6 +20,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         IConsumedMessagesContext
     {
         public DbContext Self => this;
+        public DbSet<AuthUser> AuthUsers => base.Users;
+        public new DbSet<User> Users => Set<User>();
         public DbSet<ConsumedMessage> ConsumedMessages => Set<ConsumedMessage>();
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
         public DbSet<Category> Categories => Set<Category>();
@@ -37,43 +42,86 @@ namespace FurnitureShop.Core.Services.DataAccess
 
             ConfigureAuth(builder);
 
-            builder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany();
+            builder.Entity<User>(b =>
+            {
+                b.HasKey(u => u.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.HasMany(u => u.Orders)
+                    .WithOne()
+                    .HasPrincipalKey(u => u.Id)
+                    .HasForeignKey(o => o.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+                b.HasMany(u => u.Reviews)
+                    .WithOne()
+                    .HasPrincipalKey(u => u.Id)
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+                b.HasMany(u => u.Complaints)
+                    .WithOne()
+                    .HasPrincipalKey(u => u.Id)
+                    .HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+            });
 
-            builder.Entity<Order>()
-                .HasMany(o => o.Products)
-                .WithMany(p => p.Orders);
+            builder.Entity<Category>(b =>
+            {
+                b.HasKey(c => c.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.HasMany<Product>()
+                    .WithOne()
+                    .HasForeignKey(p => p.CategoryId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
 
-            builder.Entity<Address>()
-                .HasOne<Order>()
-                .WithOne()
-                .HasForeignKey<Order>(o => o.DeliveryAddressId);
+            builder.Entity<Product>(b =>
+            {
+                b.HasKey(p => p.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.Property(e => e.CategoryId).IsTypedId();
+                b.HasMany<Review>()
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Id)
+                    .HasForeignKey(r => r.ProductId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+            });
 
-            builder.Entity<Order>()
-                .HasOne<AuthUser>()
-                .WithMany()
-                .HasForeignKey(o => o.UserId);
+            builder.Entity<Order>(b =>
+           {
+               b.HasKey(o => o.Id);
+               b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+               b.Property(e => e.UserId).IsTypedId();
+               b.Property(e => e.AddressId).IsTypedId();
+               b.HasMany(o => o.Products)
+                   .WithMany(p => p.Orders);
+               b.HasOne<Complaint>()
+                   .WithOne()
+                   .HasForeignKey<Order>(o => o.ComplaintId)
+                   .OnDelete(DeleteBehavior.ClientCascade);
+               b.HasOne<Address>()
+                   .WithOne()
+                   .HasForeignKey<Order>(o => o.AddressId)
+                   .OnDelete(DeleteBehavior.ClientCascade);
+           });
 
-            builder.Entity<Review>()
-                .HasOne(r => r.Product)
-                .WithMany(p => p.Reviews);
-
-            builder.Entity<Review>()
-                .HasOne<AuthUser>()
-                .WithMany()
-                .HasForeignKey(r => r.UserId);
-
-            builder.Entity<Complaint>()
-                .HasOne<Order>(c => c.Order)
-                .WithOne()
-                .HasForeignKey<Order>(o => o.ComplaintId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Complaint>()
-                .HasOne<AuthUser>()
-                .WithMany()
-                .HasForeignKey(c => c.UserId);
+            builder.Entity<Address>(b =>
+             {
+                 b.HasKey(a => a.Id);
+                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+             });
+            builder.Entity<Review>(b =>
+            {
+                b.HasKey(r => r.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.Property(e => e.UserId).IsTypedId();
+                b.Property(e => e.ProductId).IsTypedId();
+            });
+            builder.Entity<Complaint>(b =>
+            {
+                b.HasKey(c => c.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.Property(e => e.UserId).IsTypedId();
+                b.Property(e => e.OrderId).IsTypedId();
+            });
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);
