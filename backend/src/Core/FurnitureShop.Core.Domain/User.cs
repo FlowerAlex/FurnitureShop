@@ -9,10 +9,10 @@ namespace FurnitureShop.Core.Domain
     {
         public Id<User> Id { get; private set; }
 
-        public string Firstname { get; private set; }
-        public string Surname { get; private set; }
-        public string Username { get; private set; }
-        public string EmailAddress { get; private set; }
+        public string Firstname { get; set; }
+        public string Surname { get; set; }
+        public string Username { get; set; }
+        public string EmailAddress { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Complaint> Complaints { get; set; }
