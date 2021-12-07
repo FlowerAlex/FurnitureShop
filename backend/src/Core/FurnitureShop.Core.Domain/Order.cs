@@ -24,6 +24,7 @@ namespace FurnitureShop.Core.Domain
         public Guid? ComplaintId { get; set; }
         public Guid DeliveryAddressId { get; set; }
         public OrderState State { get; set; }
+        public decimal Price { get; set; }
     }
 
     public enum OrderState

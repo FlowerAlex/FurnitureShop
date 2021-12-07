@@ -28,6 +28,7 @@ namespace FurnitureShop.Core.Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public string ModelUrl { get; set; }
+        public decimal Price { get; set; }
         public Category? Category { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Order> Orders { get; set; }
