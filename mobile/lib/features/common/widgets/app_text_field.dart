@@ -12,6 +12,7 @@ class AppTextField extends StatelessWidget {
     this.label,
     this.backgroundColor,
     this.obscureText = false,
+    this.readOnly = false,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -21,7 +22,7 @@ class AppTextField extends StatelessWidget {
   final String? label;
   final bool obscureText;
   final Color? backgroundColor;
-
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,6 +46,7 @@ class AppTextField extends StatelessWidget {
             controller: controller,
             cursorColor: AppColors.primaryText,
             obscureText: obscureText,
+            readOnly: readOnly,
             style: AppTextStyles.reg14.copyWith(color: AppColors.primaryText),
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
@@ -64,8 +66,14 @@ class AppTextField extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(100),
+                borderSide: BorderSide(
+                  color: readOnly ? AppColors.grey5 : AppColors.black,
+                ),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(100),
                 borderSide: const BorderSide(
-                  color: AppColors.black,
+                  color: AppColors.grey5,
                 ),
               ),
               prefixIconConstraints: const BoxConstraints(),
