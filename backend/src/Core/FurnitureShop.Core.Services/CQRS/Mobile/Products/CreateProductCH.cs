@@ -5,10 +5,10 @@ using FurnitureShop.Core.Services.DataAccess;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class GetProductQH : ICommandHandler<CreateProduct>
+    public class CreateProductQH : ICommandHandler<CreateProduct>
     {
         private readonly CoreDbContext dbContext;
-        public GetProductQH(CoreDbContext dbContext)
+        public CreateProductQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
