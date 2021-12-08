@@ -18,7 +18,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             var result = await dbContext.Products.AddAsync(
                 new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
                 {
-                    ModelUrl = command.NewProduct.ModelUrl
+                    ModelUrl = command.NewProduct.ModelUrl,
                 });
         }
     }
