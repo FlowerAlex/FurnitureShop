@@ -24,11 +24,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(p => p.Id == query.ProductId)
                 .Select(p => new ProductDTO
                 {
-                    Name = "exampleName",
-                    Description = "exampleDesc",
-                    Price = 12,
-                    ModelUrl = "someUrl",
-                    Id = Guid.Parse("190937ca-884e-42ec-ae96-48abc925c1d9"),
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ModelUrl = p.ModelUrl,
+                    Id = p.Id,
                 })
                 .FirstOrDefaultAsync();
         }

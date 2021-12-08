@@ -16,17 +16,11 @@ namespace FurnitureShop.Core.Domain
         public bool Resolved { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public Complaint(string text)
         {
             Id = Id<Complaint>.New();
             Text = text;
-            CreatedDate = DateTime.Now;
-        }
-
-        public Complaint()
-        {
-            Id = Id<Complaint>.New();
-            Text = "";
             CreatedDate = DateTime.Now;
         }
     }

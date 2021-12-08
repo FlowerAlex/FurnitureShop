@@ -35,17 +35,5 @@ namespace FurnitureShop.Core.Domain
             Reviews = new List<Review>();
             Complaints = new List<Complaint>();
         }
-
-        public User()
-        {
-            Id = Id<User>.New();
-            Firstname = "";
-            Surname = "";
-            Username = "";
-            EmailAddress = "";
-            Orders = new List<Order>();
-            Reviews = new List<Review>();
-            Complaints = new List<Complaint>();
-        }
     }
 }

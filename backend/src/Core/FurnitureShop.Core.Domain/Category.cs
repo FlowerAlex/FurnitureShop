@@ -11,15 +11,10 @@ namespace FurnitureShop.Core.Domain
         public string Name { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public Category(string name)
         {
             Name = name;
-            Id = Id<Category>.New();
-        }
-
-        public Category()
-        {
-            Name = "";
             Id = Id<Category>.New();
         }
     }

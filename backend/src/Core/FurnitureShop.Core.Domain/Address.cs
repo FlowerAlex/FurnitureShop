@@ -15,6 +15,7 @@ namespace FurnitureShop.Core.Domain
         public string Country { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public Address(string street, string city, string state, string postalCode, string country)
         {
             Street = street;
@@ -22,16 +23,6 @@ namespace FurnitureShop.Core.Domain
             City = city;
             PostalCode = postalCode;
             Country = country;
-            Id = Id<Address>.New();
-        }
-
-        public Address()
-        {
-            Street = "";
-            State = "";
-            City = "";
-            PostalCode = "";
-            Country = "";
             Id = Id<Address>.New();
         }
     }

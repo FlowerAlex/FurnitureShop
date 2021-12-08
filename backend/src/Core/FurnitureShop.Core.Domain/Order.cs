@@ -16,6 +16,7 @@ namespace FurnitureShop.Core.Domain
         public decimal Price { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public Order()
         {
             Id = Id<Order>.New();

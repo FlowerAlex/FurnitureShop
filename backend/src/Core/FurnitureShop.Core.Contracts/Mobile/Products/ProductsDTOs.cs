@@ -9,6 +9,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Name { get; set; }
-        public string ModelUrl { get; set; }
+        public string? ModelUrl { get; set; }
     }
 }

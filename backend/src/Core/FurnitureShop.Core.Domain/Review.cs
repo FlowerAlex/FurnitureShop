@@ -9,23 +9,16 @@ namespace FurnitureShop.Core.Domain
         public Id<Review> Id { get; set; }
         public Id<User>? UserId { get; set; }
         public Id<Product>? ProductId { get; set; }
-        public string Text { get; set; }
+        public string? Text { get; set; }
         public double Rating { get; set; }
         public DateTime CreatedDate { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
-        public Review(string text, double rating)
-        {
-            Id = Id<Review>.New();
-            Text = text;
-            Rating = rating;
-            CreatedDate = DateTime.Now;
-        }
 
-        public Review()
+        public Review(double rating)
         {
             Id = Id<Review>.New();
-            Text = "";
+            Rating = rating;
             CreatedDate = DateTime.Now;
         }
     }
