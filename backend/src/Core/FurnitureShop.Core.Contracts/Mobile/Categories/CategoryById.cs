@@ -7,6 +7,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Categories
     [AllowUnauthorized]
     public class CategoryById : IRemoteQuery<CategoryDTO>
     {
-        public Guid CategoryId { get; set; }
+        public Guid Id { get; set; }
     }
 }

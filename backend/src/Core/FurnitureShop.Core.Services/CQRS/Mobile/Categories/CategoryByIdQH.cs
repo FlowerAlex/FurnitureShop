@@ -21,9 +21,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
         public async Task<CategoryDTO?> ExecuteAsync(CoreContext context, CategoryById query)
         {
             return await dbContext.Categories
-                .Where(p => p.Id == query.CategoryId)
+                .Where(p => p.Id == query.Id)
                 .Select(p => new CategoryDTO
                 {
+                    Id = p.Id,
                     Name = p.Name,
                 })
                 .FirstOrDefaultAsync();
