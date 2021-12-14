@@ -13,6 +13,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public AddressDTO DeliveryAddress { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductInfoDTO> Products { get; set; }
     }
 }

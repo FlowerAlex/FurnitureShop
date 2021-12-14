@@ -6,9 +6,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
     // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     [AllowUnauthorized]
-    public class CreateProduct : IRemoteCommand
+    public class UpdateProduct : IRemoteCommand
     {
-        public ProductInfoDTO NewProduct { get; set; }
+        public ProductDTO UpdatedProduct { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

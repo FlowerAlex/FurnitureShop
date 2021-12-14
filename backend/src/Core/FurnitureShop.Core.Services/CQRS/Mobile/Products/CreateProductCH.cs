@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
+using LeanCode.DomainModels.Model;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
@@ -19,6 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
                 {
                     ModelUrl = command.NewProduct.ModelUrl,
+                    CategoryId = Id<Category>.From(command.NewProduct.CategoryId),
                 });
         }
     }
