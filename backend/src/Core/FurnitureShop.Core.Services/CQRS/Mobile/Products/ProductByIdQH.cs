@@ -24,13 +24,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(p => p.Id == query.ProductId)
                 .Select(p => new ProductDTO
                 {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        ModelUrl = p.ModelUrl,
-                    },
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ModelUrl = p.ModelUrl,
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

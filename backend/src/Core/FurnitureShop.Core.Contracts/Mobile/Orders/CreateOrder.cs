@@ -8,7 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     [AllowUnauthorized]
     public class CreateOrder : IRemoteCommand
     {
-        public OrderInfoDTO NewOrder { get; set; }
+        public NewOrderDTO NewOrder { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectAddress = 1;

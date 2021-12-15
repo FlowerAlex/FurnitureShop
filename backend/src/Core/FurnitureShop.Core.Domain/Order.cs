@@ -10,8 +10,8 @@ namespace FurnitureShop.Core.Domain
         public Id<Order> Id { get; set; }
         public Id<User>? UserId { get; set; }
         public Id<Complaint>? ComplaintId { get; set; }
-        public ICollection<Product> Products { get; set; }
-        public OrderState OrdrerState { get; set; }
+        public List<Order_Product> OrdersProducts { get; set; }
+        public OrderState OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
         public string Street { get; set; }
@@ -31,8 +31,8 @@ namespace FurnitureShop.Core.Domain
             PostalCode = postalCode;
             Country = country;
             Id = Id<Order>.New();
-            OrdrerState = OrderState.Pending;
-            Products = new List<Product>();
+            OrderState = OrderState.Pending;
+            OrdersProducts = new List<Order_Product>();
         }
     }
 

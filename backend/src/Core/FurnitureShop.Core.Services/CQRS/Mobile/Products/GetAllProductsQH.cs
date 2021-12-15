@@ -24,25 +24,19 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(p => p.CategoryId == query.CategoryId)
                 .Select(p => new ProductDTO
                 {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        ModelUrl = p.ModelUrl,
-                    },
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ModelUrl = p.ModelUrl,
                     Id = p.Id,
                 }).ToListAsync()
                 : await dbContext.Products
                 .Select(p => new ProductDTO
                 {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        ModelUrl = p.ModelUrl,
-                    },
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ModelUrl = p.ModelUrl,
                     Id = p.Id,
                 }).ToListAsync();
         }

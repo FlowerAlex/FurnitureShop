@@ -21,30 +21,16 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
         public async Task<OrderDTO?> ExecuteAsync(CoreContext context, OrderById query)
         {
-            return await dbContext.Orders.Include(o => o.Products)
+            return await dbContext.Orders.Include(o => o.OrdersProducts)
                 .Where(p => p.Id == query.OrderId)
                 .Select(p => new OrderDTO
                 {
                     Id = p.Id,
-                    OrderInfo = new OrderInfoDTO
-                    {
-                        Price = p.Price,
-                        UserId = p.UserId,
-                        // dopisac adres
-                        OrderedDate = p.OrderedDate,
-                        DeliveredDate = p.DeliveredDate,
-                        Products = p.Products.Select(p => new ProductDTO
-                        {
-                            Id = p.Id,
-                            ProductInfo = new ProductInfoDTO
-                            {
-                                Name = p.Name,
-                                Description = p.Description,
-                                Price = p.Price,
-                                ModelUrl = p.ModelUrl,
-                            },
-                        }).ToList(),
-                    },
+                    Price = p.Price,
+                    UserId = p.UserId,
+                    State = p.OrderState.ToString(),
+                    OrderedDate = p.OrderedDate,
+                    DeliveredDate = p.DeliveredDate,
                 })
                 .FirstOrDefaultAsync();
         }

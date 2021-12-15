@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Products
+namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
     // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     [AllowUnauthorized]
-    public class CreateProduct : IRemoteCommand
+    public class GetAllReviews : IQuery<List<ReviewDTO>>
     {
-        public NewProductDTO NewProduct { get; set; }
+        public Guid? ProductId { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

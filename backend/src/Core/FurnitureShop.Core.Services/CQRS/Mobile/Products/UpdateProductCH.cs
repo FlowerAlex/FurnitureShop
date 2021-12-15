@@ -26,7 +26,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 return;
             }
 
-            var updated = command.UpdatedProduct.ProductInfo;
+            var updated = command.UpdatedProduct;
             product.Name = updated.Name;
             product.Description = updated.Description;
             product.Price = updated.Price;
