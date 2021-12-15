@@ -10,7 +10,7 @@ namespace FurnitureShop.Core.Domain
         public Id<Order> Id { get; set; }
         public Id<User>? UserId { get; set; }
         public Id<Complaint>? ComplaintId { get; set; }
-        public List<Order_Product> OrdersProducts { get; set; }
+        public List<OrderProduct> OrdersProducts { get; set; }
         public OrderState OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
@@ -32,7 +32,7 @@ namespace FurnitureShop.Core.Domain
             Country = country;
             Id = Id<Order>.New();
             OrderState = OrderState.Pending;
-            OrdersProducts = new List<Order_Product>();
+            OrdersProducts = new List<OrderProduct>();
         }
     }
 

@@ -4,21 +4,8 @@ using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    public class NewOrderDTO
+    public class OrderInfoDTO
     {
-        public Guid? UserId { get; set; }
-        public decimal Price { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
-        public List<OrderProductDTO> OrderProducts { get; set; }
-    }
-
-    public class OrderDTO
-    {
-        public Guid Id { get; set; }
         public Guid? UserId { get; set; }
         public decimal Price { get; set; }
         public string Street { get; set; }
@@ -30,6 +17,13 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
         public List<OrderProductDTO> OrderProducts { get; set; }
+    }
+
+    public class OrderDTO
+    {
+        public Guid Id { get; set; }
+        public OrderInfoDTO OrderInfo { get; set; }
+
     }
     public class OrderProductDTO
     {

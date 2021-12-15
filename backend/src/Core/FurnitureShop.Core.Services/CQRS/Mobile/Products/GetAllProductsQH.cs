@@ -20,25 +20,37 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task<List<ProductDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
         {
-            return query.CategoryId.HasValue ? await dbContext.Products
-                .Where(p => p.CategoryId == query.CategoryId)
-                .Select(p => new ProductDTO
-                {
-                    Name = p.Name,
-                    Description = p.Description,
-                    Price = p.Price,
-                    ModelUrl = p.ModelUrl,
-                    Id = p.Id,
-                }).ToListAsync()
-                : await dbContext.Products
-                .Select(p => new ProductDTO
-                {
-                    Name = p.Name,
-                    Description = p.Description,
-                    Price = p.Price,
-                    ModelUrl = p.ModelUrl,
-                    Id = p.Id,
-                }).ToListAsync();
+            if (query.CategoryId.HasValue)
+            {
+                return await dbContext.Products
+                   .Where(p => p.CategoryId == query.CategoryId)
+                   .Select(p => new ProductDTO
+                   {
+                       ProductInfo = new ProductInfoDTO
+                       {
+                           Name = p.Name,
+                           Description = p.Description,
+                           Price = p.Price,
+                           ModelUrl = p.ModelUrl,
+                       },
+                       Id = p.Id,
+                   }).ToListAsync();
+            }
+            else
+            {
+                return await dbContext.Products
+                    .Select(p => new ProductDTO
+                    {
+                        ProductInfo = new ProductInfoDTO
+                        {
+                            Name = p.Name,
+                            Description = p.Description,
+                            Price = p.Price,
+                            ModelUrl = p.ModelUrl,
+                        },
+                        Id = p.Id,
+                    }).ToListAsync();
+            }
         }
     }
 }

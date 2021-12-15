@@ -14,7 +14,7 @@ namespace FurnitureShop.Core.Domain
         public string? ModelUrl { get; set; }
         public decimal Price { get; set; }
         public List<Review> Reviews { get; set; }
-        public List<Order_Product> OrdersProducts { get; set; }
+        public List<OrderProduct> OrdersProducts { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
@@ -24,7 +24,7 @@ namespace FurnitureShop.Core.Domain
             Name = name;
             Description = description;
             Price = price;
-            OrdersProducts = new List<Order_Product>();
+            OrdersProducts = new List<OrderProduct>();
             Reviews = new List<Review>();
         }
     }

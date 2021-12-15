@@ -24,14 +24,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
         {
             var result = await dbContext.Orders.AddAsync(// mapper.Map<Order>(command.NewOrder));
-                new Order(command.NewOrder.Street, command.NewOrder.City, command.NewOrder.State,
-                    command.NewOrder.PostalCode, command.NewOrder.Country)
+                new Order(command.OrderInfoDTO.Street, command.OrderInfoDTO.City, command.OrderInfoDTO.State,
+                    command.OrderInfoDTO.PostalCode, command.OrderInfoDTO.Country)
                 {
-                    UserId = Id<User>.From(command.NewOrder.UserId),
-                    Price = command.NewOrder.Price,
+                    UserId = Id<User>.From(command.OrderInfoDTO.UserId),
+                    Price = command.OrderInfoDTO.Price,
                     OrderedDate = DateTime.Now,
                     OrderState = OrderState.Pending,
-                    OrdersProducts = command.NewOrder.OrderProducts.Select(op => new Order_Product
+                    OrdersProducts = command.OrderInfoDTO.OrderProducts.Select(op => new OrderProduct
                     {
                         ProductId = Id<Product>.From(op.ProductId),
                         Amount = op.Amount,

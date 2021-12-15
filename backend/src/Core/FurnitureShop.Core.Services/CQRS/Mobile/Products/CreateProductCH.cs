@@ -17,10 +17,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
             var result = await dbContext.Products.AddAsync(
-                new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
+                new Product(command.OrderInfoDTO.Name, command.OrderInfoDTO.Description, command.OrderInfoDTO.Price)
                 {
-                    ModelUrl = command.NewProduct.ModelUrl,
-                    CategoryId = Id<Category>.From(command.NewProduct.CategoryId),
+                    ModelUrl = command.OrderInfoDTO.ModelUrl,
+                    CategoryId = Id<Category>.From(command.OrderInfoDTO.CategoryId),
                 });
         }
     }

@@ -20,13 +20,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task ExecuteAsync(CoreContext context, UpdateProduct command)
         {
-            var product = await dbContext.Products.Where(c => c.Id == command.UpdatedProduct.Id).FirstOrDefaultAsync();
+            var product = await dbContext.Products.Where(c => c.Id == command.Id).FirstOrDefaultAsync();
             if (product == null)
             {
                 return;
             }
 
-            var updated = command.UpdatedProduct;
+            var updated = command.ProductInfoDTO;
             product.Name = updated.Name;
             product.Description = updated.Description;
             product.Price = updated.Price;

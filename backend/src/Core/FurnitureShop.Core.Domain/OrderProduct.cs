@@ -5,10 +5,10 @@ using LeanCode.Time;
 
 namespace FurnitureShop.Core.Domain
 {
-    public class Order_Product : IAggregateRoot<Id<Order_Product>>
+    public class OrderProduct : IAggregateRoot<Id<OrderProduct>>
     {
         
-        public Id<Order_Product> Id { get; set; }
+        public Id<OrderProduct> Id { get; set; }
         public Id<Order>? OrderId { get; set; }
         public Id<Product>? ProductId { get; set; }
         public int Amount { get; set; }

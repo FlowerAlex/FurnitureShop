@@ -84,7 +84,7 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .HasForeignKey(r => r.ProductId)
                     .OnDelete(DeleteBehavior.ClientCascade);
             });
-            builder.Entity<Order_Product>( o =>
+            builder.Entity<OrderProduct>( o =>
             {
                 o.HasKey(o => o.Id);
                 o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
