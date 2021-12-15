@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class AppTextFormField extends HookWidget {
+  const AppTextFormField({
     Key? key,
     this.controller,
     this.prefix,
@@ -16,6 +17,7 @@ class AppTextField extends StatelessWidget {
     this.readOnly = false,
     this.autofillHints,
     this.keyboardType,
+    this.validator,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -29,27 +31,33 @@ class AppTextField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final bool autocorrect;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    final errorText = useState('');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null)
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 4),
-            child: Text(
-              label!,
-              style: AppTextStyles.reg12.copyWith(color: AppColors.primaryText),
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    label!,
+                    style: AppTextStyles.reg12
+                        .copyWith(color: AppColors.primaryText),
+                  ),
+                ),
+              ],
             ),
           ),
-        Container(
+        SizedBox(
           height: 40,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             cursorColor: AppColors.primaryText,
             obscureText: obscureText,
@@ -59,12 +67,17 @@ class AppTextField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.center,
             autofillHints: autofillHints,
             keyboardType: keyboardType,
+            validator: (value) {
+              final validatorText = (validator?.call(value));
+              errorText.value = validatorText ?? '';
+              return (validatorText != null ? '' : null);
+            },
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: prefix,
               ),
-              contentPadding: EdgeInsets.zero,
+              contentPadding: const EdgeInsets.only(left: 16),
               hintText: hintText,
               hintStyle:
                   AppTextStyles.reg14.copyWith(color: AppColors.primaryText),
@@ -86,6 +99,21 @@ class AppTextField extends StatelessWidget {
                   color: AppColors.grey5,
                 ),
               ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(100),
+                borderSide: const BorderSide(
+                  color: AppColors.errorRed,
+                ),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(100),
+                borderSide: const BorderSide(
+                  color: AppColors.errorRed,
+                ),
+              ),
+              errorStyle: const TextStyle(
+                height: 0,
+              ),
               prefixIconConstraints: const BoxConstraints(),
               prefix: prefix != null
                   ? null
@@ -97,6 +125,21 @@ class AppTextField extends StatelessWidget {
             ),
           ),
         ),
+        if (errorText.value != '')
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 8),
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    errorText.value,
+                    style:
+                        AppTextStyles.reg12.copyWith(color: AppColors.errorRed),
+                  ),
+                ),
+              ],
+            ),
+          )
       ],
     );
   }

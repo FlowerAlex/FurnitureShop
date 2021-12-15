@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
+import 'package:furniture_shop/features/login_screen/login_screen.dart';
 import 'package:furniture_shop/features/main_screen/main_screen.dart';
-import 'package:furniture_shop/features/unauthorized_screen/unauthorized_screen.dart';
 import 'package:provider/provider.dart';
 
 class AuthRouter extends HookWidget {
@@ -22,7 +22,7 @@ class AuthRouter extends HookWidget {
           if (authCubitState is AuthLoggedInState)
             MainPage()
           else
-            const UnauthorizedPage()
+            const LoginPage()
         ],
         onPopPage: (route, dynamic result) => route.didPop(result),
       ),
