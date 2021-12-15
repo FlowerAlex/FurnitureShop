@@ -28,6 +28,8 @@ namespace FurnitureShop.Core.Services
                 .AddEntityFrameworkStores<CoreDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAutoMapper(ThisAssembly);
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'*+-/=?^_`{|}~.""(),:;<>@[\] ";

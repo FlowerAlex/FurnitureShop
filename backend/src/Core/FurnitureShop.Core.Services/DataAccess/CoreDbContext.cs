@@ -90,24 +90,13 @@ namespace FurnitureShop.Core.Services.DataAccess
                b.HasKey(o => o.Id);
                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                b.Property(e => e.UserId).IsTypedId();
-               b.Property(e => e.AddressId).IsTypedId();
                b.HasMany(o => o.Products)
                    .WithMany(p => p.Orders);
                b.HasOne<Complaint>()
                    .WithOne()
                    .HasForeignKey<Order>(o => o.ComplaintId)
                    .OnDelete(DeleteBehavior.ClientCascade);
-               b.HasOne<Address>()
-                   .WithOne()
-                   .HasForeignKey<Order>(o => o.AddressId)
-                   .OnDelete(DeleteBehavior.ClientCascade);
            });
-
-            builder.Entity<Address>(b =>
-             {
-                 b.HasKey(a => a.Id);
-                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
-             });
             builder.Entity<Review>(b =>
             {
                 b.HasKey(r => r.Id);
