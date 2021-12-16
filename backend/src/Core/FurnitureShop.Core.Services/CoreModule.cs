@@ -1,3 +1,4 @@
+using System.Reflection;
 using Autofac;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.DataAccess.Entities;
@@ -27,6 +28,8 @@ namespace FurnitureShop.Core.Services
             services.AddIdentity<AuthUser, AuthRole>()
                 .AddEntityFrameworkStores<CoreDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.Configure<IdentityOptions>(options =>
             {

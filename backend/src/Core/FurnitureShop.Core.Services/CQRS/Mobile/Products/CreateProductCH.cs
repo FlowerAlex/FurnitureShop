@@ -2,13 +2,14 @@ using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
+using LeanCode.DomainModels.Model;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class CreateProductQH : ICommandHandler<CreateProduct>
+    public class CreateProductCH : ICommandHandler<CreateProduct>
     {
         private readonly CoreDbContext dbContext;
-        public CreateProductQH(CoreDbContext dbContext)
+        public CreateProductCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -16,10 +17,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
             var result = await dbContext.Products.AddAsync(
-                new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
+                new Product(command.OrderInfoDTO.Name, command.OrderInfoDTO.Description, command.OrderInfoDTO.Price)
                 {
-                    ModelUrl = command.NewProduct.ModelUrl,
+                    ModelUrl = command.OrderInfoDTO.ModelUrl,
+                    CategoryId = Id<Category>.From(command.OrderInfoDTO.CategoryId),
                 });
+            await dbContext.SaveChangesAsync();
         }
     }
 }

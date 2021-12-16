@@ -21,13 +21,16 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         public async Task<ProductDTO?> ExecuteAsync(CoreContext context, ProductById query)
         {
             return await dbContext.Products
-                .Where(p => p.Id == query.ProductId)
+                .Where(p => p.Id == query.Id)
                 .Select(p => new ProductDTO
                 {
-                    Name = p.Name,
-                    Description = p.Description,
-                    Price = p.Price,
-                    ModelUrl = p.ModelUrl,
+                    ProductInfo = new ProductInfoDTO
+                    {
+                        Name = p.Name,
+                        Description = p.Description,
+                        Price = p.Price,
+                        ModelUrl = p.ModelUrl,
+                    },
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

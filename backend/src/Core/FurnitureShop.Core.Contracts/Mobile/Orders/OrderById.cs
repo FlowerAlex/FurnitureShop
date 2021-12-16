@@ -7,6 +7,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     [AllowUnauthorized]
     public class OrderById : IRemoteQuery<OrderDTO>
     {
-        public Guid OrderId { get; set; }
+        public Guid Id { get; set; }
     }
 }

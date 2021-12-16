@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Example;
+using FurnitureShop.Core.Contracts.Mobile.Categories;
 using Xunit;
 
 namespace FurnitureShop.IntegrationTests.Example
@@ -9,11 +9,10 @@ namespace FurnitureShop.IntegrationTests.Example
         [Fact]
         public async Task Example_test()
         {
-            var result = await App.Command.RunAsync(new ExampleCommand
+            var result = await App.Command.RunAsync(new CreateCategory
             {
-                Arg = "foo",
+                CategoryName = "Sypialnia",
             });
-
             Assert.True(result.WasSuccessful);
         }
     }

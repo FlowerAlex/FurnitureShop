@@ -26,6 +26,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Complaint> Complaints => Set<Complaint>();
         public DbSet<Order> Orders => Set<Order>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
@@ -50,7 +52,7 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .WithOne()
                     .HasPrincipalKey(u => u.Id)
                     .HasForeignKey(o => o.UserId)
-                    .OnDelete(DeleteBehavior.ClientCascade);
+                    .OnDelete(DeleteBehavior.SetNull);
                 b.HasMany(u => u.Reviews)
                     .WithOne()
                     .HasPrincipalKey(u => u.Id)
@@ -84,30 +86,29 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .HasForeignKey(r => r.ProductId)
                     .OnDelete(DeleteBehavior.ClientCascade);
             });
-
+            builder.Entity<OrderProduct>( o =>
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+                o.Property(o => o.OrderId).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
+                o.HasOne<Order>()
+                    .WithMany(ord => ord.OrdersProducts)
+                    .HasForeignKey(o => o.OrderId);
+                o.HasOne<Product>()
+                    .WithMany(p => p.OrdersProducts)
+                    .HasForeignKey(o => o.ProductId);
+            });
             builder.Entity<Order>(b =>
            {
                b.HasKey(o => o.Id);
                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                b.Property(e => e.UserId).IsTypedId();
-               b.Property(e => e.AddressId).IsTypedId();
-               b.HasMany(o => o.Products)
-                   .WithMany(p => p.Orders);
                b.HasOne<Complaint>()
                    .WithOne()
                    .HasForeignKey<Order>(o => o.ComplaintId)
                    .OnDelete(DeleteBehavior.ClientCascade);
-               b.HasOne<Address>()
-                   .WithOne()
-                   .HasForeignKey<Order>(o => o.AddressId)
-                   .OnDelete(DeleteBehavior.ClientCascade);
            });
-
-            builder.Entity<Address>(b =>
-             {
-                 b.HasKey(a => a.Id);
-                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
-             });
             builder.Entity<Review>(b =>
             {
                 b.HasKey(r => r.Id);
