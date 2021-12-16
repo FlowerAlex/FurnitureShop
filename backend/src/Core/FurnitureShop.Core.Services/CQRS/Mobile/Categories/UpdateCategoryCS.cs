@@ -27,6 +27,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
 
             category.Name = command.NewName;
             dbContext.Categories.Update(category);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             }
 
             dbContext.Products.Remove(product);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

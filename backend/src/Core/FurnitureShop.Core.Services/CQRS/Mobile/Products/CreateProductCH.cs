@@ -6,10 +6,10 @@ using LeanCode.DomainModels.Model;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class CreateProductQH : ICommandHandler<CreateProduct>
+    public class CreateProductCH : ICommandHandler<CreateProduct>
     {
         private readonly CoreDbContext dbContext;
-        public CreateProductQH(CoreDbContext dbContext)
+        public CreateProductCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -22,6 +22,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                     ModelUrl = command.OrderInfoDTO.ModelUrl,
                     CategoryId = Id<Category>.From(command.OrderInfoDTO.CategoryId),
                 });
+            await dbContext.SaveChangesAsync();
         }
     }
 }

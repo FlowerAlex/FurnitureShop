@@ -26,6 +26,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<RaisedEvent> RaisedEvents => Set<RaisedEvent>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Complaint> Complaints => Set<Complaint>();
         public DbSet<Order> Orders => Set<Order>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)

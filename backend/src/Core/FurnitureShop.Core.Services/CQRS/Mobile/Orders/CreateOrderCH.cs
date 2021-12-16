@@ -37,6 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                         Amount = op.Amount,
                     }).ToList()
                 });
+            await dbContext.SaveChangesAsync();
         }
     }
 }

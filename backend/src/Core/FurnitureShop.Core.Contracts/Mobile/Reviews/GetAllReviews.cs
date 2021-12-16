@@ -7,9 +7,10 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
     // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     [AllowUnauthorized]
-    public class GetAllReviews : IQuery<List<ReviewDTO>>
+    public class GetAllReviews : IRemoteQuery<List<ReviewDTO>> // TODO paginated query
     {
         public Guid? ProductId { get; set; }
+        public Guid? UserId { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

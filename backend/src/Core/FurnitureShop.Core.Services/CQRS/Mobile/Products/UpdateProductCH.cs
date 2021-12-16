@@ -33,6 +33,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             product.CategoryId = Id<Category>.From(updated.CategoryId);
 
             dbContext.Products.Update(product);
+            await dbContext.SaveChangesAsync();
         }
     }
 }
