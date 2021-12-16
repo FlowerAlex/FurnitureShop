@@ -35,8 +35,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     void _onSignUpPressed() {
       if (_formKey.currentState?.validate() ?? false) {
         context.read<SignUpScreenCubit>().registerUser(
-              _loginTextEditingController.value.text,
-              _passwordTextEditingController.value.text,
+              _loginTextEditingController.text,
+              _passwordTextEditingController.text,
             );
       }
     }
@@ -53,6 +53,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return null;
         }
       };
+    }
+
+    bool hasError(SignUpScreenState state) {
+      return state.invalidCredentials ||
+          state.networkError ||
+          state.unknownError;
+    }
+
+    String getTextForSignUpError(SignUpScreenState state) {
+      if (state.invalidCredentials) {
+        return 'Invalid credentials';
+      }
+      if (state.networkError) {
+        return 'Network error';
+      }
+      if (state.unknownError) {
+        return 'Unknown error';
+      }
+      return '';
     }
 
     return Scaffold(
@@ -166,6 +185,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ),
                                   ),
+                                  if (hasError(state))
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 12),
+                                      child: Align(
+                                        child: Text(
+                                          getTextForSignUpError(state),
+                                          style: AppTextStyles.reg12.copyWith(
+                                            color: AppColors.errorRed,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

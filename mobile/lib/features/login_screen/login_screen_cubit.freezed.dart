@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'sign_up_screen_cubit.dart';
+part of 'login_screen_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,15 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SignUpScreenStateTearOff {
-  const _$SignUpScreenStateTearOff();
+class _$LogInScreenStateTearOff {
+  const _$LogInScreenStateTearOff();
 
-  SignUpScreenReadyState ready(
+  LogInScreenReadyState ready(
       {bool loading = false,
       bool invalidCredentials = false,
       bool networkError = false,
       bool unknownError = false}) {
-    return SignUpScreenReadyState(
+    return LogInScreenReadyState(
       loading: loading,
       invalidCredentials: invalidCredentials,
       networkError: networkError,
@@ -32,10 +32,10 @@ class _$SignUpScreenStateTearOff {
 }
 
 /// @nodoc
-const $SignUpScreenState = _$SignUpScreenStateTearOff();
+const $LogInScreenState = _$LogInScreenStateTearOff();
 
 /// @nodoc
-mixin _$SignUpScreenState {
+mixin _$LogInScreenState {
   bool get loading => throw _privateConstructorUsedError;
   bool get invalidCredentials => throw _privateConstructorUsedError;
   bool get networkError => throw _privateConstructorUsedError;
@@ -65,31 +65,31 @@ mixin _$SignUpScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(SignUpScreenReadyState value) ready,
+    required TResult Function(LogInScreenReadyState value) ready,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SignUpScreenReadyState value)? ready,
+    TResult Function(LogInScreenReadyState value)? ready,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(SignUpScreenReadyState value)? ready,
+    TResult Function(LogInScreenReadyState value)? ready,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SignUpScreenStateCopyWith<SignUpScreenState> get copyWith =>
+  $LogInScreenStateCopyWith<LogInScreenState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SignUpScreenStateCopyWith<$Res> {
-  factory $SignUpScreenStateCopyWith(
-          SignUpScreenState value, $Res Function(SignUpScreenState) then) =
-      _$SignUpScreenStateCopyWithImpl<$Res>;
+abstract class $LogInScreenStateCopyWith<$Res> {
+  factory $LogInScreenStateCopyWith(
+          LogInScreenState value, $Res Function(LogInScreenState) then) =
+      _$LogInScreenStateCopyWithImpl<$Res>;
   $Res call(
       {bool loading,
       bool invalidCredentials,
@@ -98,13 +98,13 @@ abstract class $SignUpScreenStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SignUpScreenStateCopyWithImpl<$Res>
-    implements $SignUpScreenStateCopyWith<$Res> {
-  _$SignUpScreenStateCopyWithImpl(this._value, this._then);
+class _$LogInScreenStateCopyWithImpl<$Res>
+    implements $LogInScreenStateCopyWith<$Res> {
+  _$LogInScreenStateCopyWithImpl(this._value, this._then);
 
-  final SignUpScreenState _value;
+  final LogInScreenState _value;
   // ignore: unused_field
-  final $Res Function(SignUpScreenState) _then;
+  final $Res Function(LogInScreenState) _then;
 
   @override
   $Res call({
@@ -135,11 +135,11 @@ class _$SignUpScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $SignUpScreenReadyStateCopyWith<$Res>
-    implements $SignUpScreenStateCopyWith<$Res> {
-  factory $SignUpScreenReadyStateCopyWith(SignUpScreenReadyState value,
-          $Res Function(SignUpScreenReadyState) then) =
-      _$SignUpScreenReadyStateCopyWithImpl<$Res>;
+abstract class $LogInScreenReadyStateCopyWith<$Res>
+    implements $LogInScreenStateCopyWith<$Res> {
+  factory $LogInScreenReadyStateCopyWith(LogInScreenReadyState value,
+          $Res Function(LogInScreenReadyState) then) =
+      _$LogInScreenReadyStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool loading,
@@ -149,15 +149,15 @@ abstract class $SignUpScreenReadyStateCopyWith<$Res>
 }
 
 /// @nodoc
-class _$SignUpScreenReadyStateCopyWithImpl<$Res>
-    extends _$SignUpScreenStateCopyWithImpl<$Res>
-    implements $SignUpScreenReadyStateCopyWith<$Res> {
-  _$SignUpScreenReadyStateCopyWithImpl(SignUpScreenReadyState _value,
-      $Res Function(SignUpScreenReadyState) _then)
-      : super(_value, (v) => _then(v as SignUpScreenReadyState));
+class _$LogInScreenReadyStateCopyWithImpl<$Res>
+    extends _$LogInScreenStateCopyWithImpl<$Res>
+    implements $LogInScreenReadyStateCopyWith<$Res> {
+  _$LogInScreenReadyStateCopyWithImpl(
+      LogInScreenReadyState _value, $Res Function(LogInScreenReadyState) _then)
+      : super(_value, (v) => _then(v as LogInScreenReadyState));
 
   @override
-  SignUpScreenReadyState get _value => super._value as SignUpScreenReadyState;
+  LogInScreenReadyState get _value => super._value as LogInScreenReadyState;
 
   @override
   $Res call({
@@ -166,7 +166,7 @@ class _$SignUpScreenReadyStateCopyWithImpl<$Res>
     Object? networkError = freezed,
     Object? unknownError = freezed,
   }) {
-    return _then(SignUpScreenReadyState(
+    return _then(LogInScreenReadyState(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class _$SignUpScreenReadyStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignUpScreenReadyState implements SignUpScreenReadyState {
-  const _$SignUpScreenReadyState(
+class _$LogInScreenReadyState implements LogInScreenReadyState {
+  const _$LogInScreenReadyState(
       {this.loading = false,
       this.invalidCredentials = false,
       this.networkError = false,
@@ -211,14 +211,14 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
 
   @override
   String toString() {
-    return 'SignUpScreenState.ready(loading: $loading, invalidCredentials: $invalidCredentials, networkError: $networkError, unknownError: $unknownError)';
+    return 'LogInScreenState.ready(loading: $loading, invalidCredentials: $invalidCredentials, networkError: $networkError, unknownError: $unknownError)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SignUpScreenReadyState &&
+            other is LogInScreenReadyState &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.invalidCredentials, invalidCredentials) ||
                 other.invalidCredentials == invalidCredentials) &&
@@ -234,8 +234,8 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
 
   @JsonKey(ignore: true)
   @override
-  $SignUpScreenReadyStateCopyWith<SignUpScreenReadyState> get copyWith =>
-      _$SignUpScreenReadyStateCopyWithImpl<SignUpScreenReadyState>(
+  $LogInScreenReadyStateCopyWith<LogInScreenReadyState> get copyWith =>
+      _$LogInScreenReadyStateCopyWithImpl<LogInScreenReadyState>(
           this, _$identity);
 
   @override
@@ -275,7 +275,7 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(SignUpScreenReadyState value) ready,
+    required TResult Function(LogInScreenReadyState value) ready,
   }) {
     return ready(this);
   }
@@ -283,7 +283,7 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(SignUpScreenReadyState value)? ready,
+    TResult Function(LogInScreenReadyState value)? ready,
   }) {
     return ready?.call(this);
   }
@@ -291,7 +291,7 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(SignUpScreenReadyState value)? ready,
+    TResult Function(LogInScreenReadyState value)? ready,
     required TResult orElse(),
   }) {
     if (ready != null) {
@@ -301,12 +301,12 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
   }
 }
 
-abstract class SignUpScreenReadyState implements SignUpScreenState {
-  const factory SignUpScreenReadyState(
+abstract class LogInScreenReadyState implements LogInScreenState {
+  const factory LogInScreenReadyState(
       {bool loading,
       bool invalidCredentials,
       bool networkError,
-      bool unknownError}) = _$SignUpScreenReadyState;
+      bool unknownError}) = _$LogInScreenReadyState;
 
   @override
   bool get loading;
@@ -318,6 +318,6 @@ abstract class SignUpScreenReadyState implements SignUpScreenState {
   bool get unknownError;
   @override
   @JsonKey(ignore: true)
-  $SignUpScreenReadyStateCopyWith<SignUpScreenReadyState> get copyWith =>
+  $LogInScreenReadyStateCopyWith<LogInScreenReadyState> get copyWith =>
       throw _privateConstructorUsedError;
 }
