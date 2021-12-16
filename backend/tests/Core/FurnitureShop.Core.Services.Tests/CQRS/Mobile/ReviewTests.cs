@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly Review TestReview = new Review(4.5)
         {
             Text = "good test product",
-            CreatedDate = DateTime.Parse("21/01/21"),
+            CreatedDate = DateTime.Parse("09-09-2020"),
             UserId = Id<User>.From(Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19")),
         };
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100);
@@ -69,6 +69,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(TestReview.Text, Review.ReviewInfo.Text);
             Assert.Equal(TestReview.Rating, Review.ReviewInfo.Rating);
             Assert.Equal(TestReview.ProductId, Review.ReviewInfo.ProductId  );
+            Assert.Equal(TestReview.CreatedDate, Review.ReviewInfo.CreatedDate  );
             Assert.Equal(TestReview.Id, Review.Id);
         }
         [Fact]

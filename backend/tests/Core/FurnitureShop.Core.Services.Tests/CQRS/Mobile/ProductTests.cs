@@ -21,6 +21,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             ModelUrl = "https://some.url.com",
         };
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
+        
+        private string NewProductName = "new Product";
+        private string NewProdctDescription = "new desc";
+        private string NewProductModelUrl = "new model url";
+        private decimal NewProductPrice = 111;
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
@@ -69,10 +74,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void CreateProductTest()
         {
-            string NewProductName = "new Product";
-            string NewProdctDescription = "new desc";
-            string NewProductModelUrl = "new model url";
-            decimal NewProductPrice = 111;
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateProductCH(dbContext);
@@ -111,10 +112,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void UpdateProductTest()
         {
-            string NewProductName = "new Product";
-            string NewProdctDescription = "new desc";
-            string NewProductModelUrl = "new model url";
-            decimal NewProductPrice = 111;
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateProductCH(dbContext);
