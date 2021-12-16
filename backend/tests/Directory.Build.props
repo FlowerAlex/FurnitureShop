@@ -9,7 +9,7 @@
     <DebugType>portable</DebugType>
 
     <LangVersion>latest</LangVersion>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <ImplicitUsings>enabled</ImplicitUsings>
 
     <IncludeSymbols>false</IncludeSymbols>

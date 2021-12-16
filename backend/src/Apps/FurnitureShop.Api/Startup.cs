@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FurnitureShop.Api.Auth;
-using FurnitureShop.Core.Contracts.Example;
+using FurnitureShop.Core.Contracts.Mobile.Categories;
 using FurnitureShop.Core.Domain.Example.Events;
 using FurnitureShop.Core.Services;
 using LeanCode.Components;
@@ -27,7 +27,7 @@ namespace FurnitureShop.Api
         private static readonly RazorViewRendererOptions ViewOptions = new("Templates");
 
         private static readonly TypesCatalog AllHandlers = new(typeof(CoreContext));
-        private static readonly TypesCatalog Api = new(typeof(ExampleCommand));
+        private static readonly TypesCatalog Api = new(typeof(CreateCategory));
         private static readonly TypesCatalog Domain = new(typeof(ExampleEvent));
 
         private readonly IWebHostEnvironment hostEnv;

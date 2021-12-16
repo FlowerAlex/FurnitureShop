@@ -26,7 +26,7 @@ namespace FurnitureShop.Core.Services
             return new CoreContext(httpContext.User, httpContext.RequestAborted);
         }
 
-        private static CoreContext ForTests(Guid userId, string role)
+        public static CoreContext ForTests(Guid userId, string role)
         {
             var claims = new[]
             {
