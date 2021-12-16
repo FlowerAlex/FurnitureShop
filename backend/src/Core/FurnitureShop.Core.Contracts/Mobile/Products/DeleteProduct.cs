@@ -8,6 +8,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     [AllowUnauthorized]
     public class DeleteProduct : IRemoteCommand
     {
-        public Guid ProductId { get; set; }
+        public Guid Id { get; set; }
     }
 }

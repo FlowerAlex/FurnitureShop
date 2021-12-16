@@ -30,6 +30,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             product.Name = updated.Name;
             product.Description = updated.Description;
             product.Price = updated.Price;
+            product.ModelUrl = command.ProductInfoDTO.ModelUrl;
             product.CategoryId = Id<Category>.From(updated.CategoryId);
 
             dbContext.Products.Update(product);
