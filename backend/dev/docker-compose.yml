@@ -34,7 +34,21 @@ services:
       - ../:/app/code
       - ~/.nuget:/home/dotnet/.nuget
 
-  #### One-shot apps
+  integration_tests:
+      build:
+        context: ..
+        dockerfile: dev/Dockerfile.integration_tests
+        args:
+          - APP_VERSION=0.0.1-dev
+      environment:
+        - WAIT_FOR_DEBUGGER=${WAIT_FOR_DEBUGGER:-}
+        - TESTS_FQN=${TESTS_FQN:-}
+      volumes:
+        - ../:/app/code
+      depends_on:
+        - db
+        - storage
+        - proxy
 
   migrations:
     build:
