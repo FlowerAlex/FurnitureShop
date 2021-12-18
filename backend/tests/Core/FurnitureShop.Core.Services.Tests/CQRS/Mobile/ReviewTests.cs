@@ -91,10 +91,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Where(c => c.Text == NewReviewText).FirstOrDefault();
             Assert.NotNull(Review);
-            Assert.Equal(NewReviewText, Review.Text);
             Assert.Equal(NewReviewRating, Review.Rating);
+            Assert.Equal(NewReviewText, Review.Text);
             Assert.Equal(NewReviewProductId,Review.ProductId.Value);
-            Assert.Equal(TestReview.Id, Review.Id);
         }
         [Fact]
         public void DeleteReviewTest()
@@ -118,7 +117,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 ReviewInfoDTO = new ReviewInfoDTO
                 {
                     Text = NewReviewText,
-                    ProductId = NewReviewProductId,
                     UserId = TestUserId,
                     Rating = NewReviewRating,
                 },Id = TestReview.Id};
@@ -128,7 +126,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(Review);
             Assert.Equal(NewReviewText, Review.Text);
             Assert.Equal(NewReviewRating, Review.Rating);
-            Assert.Equal(NewReviewProductId,Review.ProductId.Value);
             Assert.Equal(TestReview.Id, Review.Id);
         }
     }

@@ -30,6 +30,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                         Rating = p.Rating,
                         UserId = p.UserId,
                         ProductId = p.ProductId,
+                        CreatedDate = p.CreatedDate,
                     },
                     Id = p.Id,
                 })
