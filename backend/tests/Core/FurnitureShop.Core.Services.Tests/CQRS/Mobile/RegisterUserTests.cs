@@ -28,7 +28,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile.Users
         }
 
         [Fact]
-        public void ImplementMe()
+        public void RegisterUserTest()
         {
             using var dbContext = new CoreDbContext(ContextOptions);
             //var handler = new RegisterUserCH(new Microsoft.AspNetCore.Identity.UserManager<DataAccess.Entities.AuthUser>(),dbContext);
