@@ -17,10 +17,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
         public async Task ExecuteAsync(CoreContext context, CreateComplaint command)
         {
             var result = await dbContext.Complaints.AddAsync(
-                new Complaint(command.ComplaintInfoDTO.Text)
+                new Complaint(command.ComplaintInfo.Text)
                 {
-                    OrderId = Id<Order>.From(command.ComplaintInfoDTO.OrderId),
-                    UserId = Id<User>.From(command.ComplaintInfoDTO.UserId),
+                    OrderId = Id<Order>.From(command.ComplaintInfo.OrderId),
+                    UserId = Id<User>.From(command.ComplaintInfo.UserId),
                     Resolved = false,
                 });
             await dbContext.SaveChangesAsync();

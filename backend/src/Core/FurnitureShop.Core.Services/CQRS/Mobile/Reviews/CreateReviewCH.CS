@@ -17,11 +17,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         public async Task ExecuteAsync(CoreContext context, CreateReview command)
         {
             var result = await dbContext.Reviews.AddAsync(
-                new Review(command.ReviewDTO.Rating)
+                new Review(command.ReviewInfo.Rating)
                 {
-                    Text = command.ReviewDTO.Text,
-                    UserId = Id<User>.From(command.ReviewDTO.UserId),
-                    ProductId = Id<Product>.From(command.ReviewDTO.ProductId)
+                    Text = command.ReviewInfo.Text,
+                    UserId = Id<User>.From(command.ReviewInfo.UserId),
+                    ProductId = Id<Product>.From(command.ReviewInfo.ProductId)
                 });
             await dbContext.SaveChangesAsync();
         }

@@ -79,7 +79,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateReviewCH(dbContext);
             var command = new CreateReview {
-                ReviewDTO = new ReviewInfoDTO
+                ReviewInfo = new ReviewInfoDTO
                 {
                     Text = NewReviewText,
                     ProductId = NewReviewProductId,
@@ -114,7 +114,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateReviewCH(dbContext);
             var command = new UpdateReview{
-                ReviewInfoDTO = new ReviewInfoDTO
+                ReviewInfo = new ReviewInfoDTO
                 {
                     Text = NewReviewText,
                     UserId = TestUserId,

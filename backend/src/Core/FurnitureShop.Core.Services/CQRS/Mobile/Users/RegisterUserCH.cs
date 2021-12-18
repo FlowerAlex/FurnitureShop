@@ -29,10 +29,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             var random = new Random();
 
             var user = new User(
-                command.UserInfoDTO.Firstname,
-                command.UserInfoDTO.Surname,
-                command.UserInfoDTO.Username,
-                command.UserInfoDTO.EmailAddress);
+                command.UserInfo.Firstname,
+                command.UserInfo.Surname,
+                command.UserInfo.Username,
+                command.UserInfo.EmailAddress);
 
             var authUser = new AuthUser
             {

@@ -86,7 +86,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateComplaintCH(dbContext);
             var command = new CreateComplaint
             {
-                ComplaintInfoDTO = new ComplaintInfoDTO
+                ComplaintInfo = new ComplaintInfoDTO
                 {
                     Text = NewComplaintText,
                     Resolved = NewComplaintResolved,
@@ -123,7 +123,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new UpdateComplaint
             {
                 Id = TestComplaint.Id,
-                ComplaintInfoDTO = new ComplaintInfoDTO
+                ComplaintInfo = new ComplaintInfoDTO
                 {
                     Text = NewComplaintText,
                     Response = NewComplaintResponse,

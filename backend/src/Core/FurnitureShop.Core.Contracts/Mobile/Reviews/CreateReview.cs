@@ -8,7 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     [AllowUnauthorized]
     public class CreateReview : IRemoteCommand
     {
-        public ReviewInfoDTO ReviewDTO { get; set; }
+        public ReviewInfoDTO ReviewInfo { get; set; }
         public static class ErrorCodes
         {
             

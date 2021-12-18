@@ -9,7 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     public class UpdateReview : IRemoteCommand
     {
         public Guid Id { get; set; }
-        public ReviewInfoDTO ReviewInfoDTO { get; set; }
+        public ReviewInfoDTO ReviewInfo { get; set; }
         public static class ErrorCodes
         {
         }
