@@ -19,10 +19,7 @@ class AuthRouter extends HookWidget {
       child: Navigator(
         key: _navigatorKey,
         pages: <Page<void>>[
-          if (authCubitState is AuthLoggedInState)
-            MainPage()
-          else
-            const LoginPage()
+          if (authCubitState is AuthLoggedInState) MainPage() else LoginPage()
         ],
         onPopPage: (route, dynamic result) => route.didPop(result),
       ),

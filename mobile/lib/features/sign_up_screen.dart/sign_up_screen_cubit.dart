@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,65 +15,53 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
     required AuthCubit authCubit,
   })  : _cqrs = cqrs,
         _authCubit = authCubit,
-        super(const SignUpScreenInitialState());
+        super(const SignUpScreenReadyState());
 
   final CQRS _cqrs;
   final AuthCubit _authCubit;
-
-  void setEmail(String email) {
-    emit(state.copyWith(email: email));
-  }
-
-  void setPassword(String password) {
-    emit(state.copyWith(password: password));
-  }
 
   Future<void> registerUser(
     String email,
     String password,
   ) async {
-    final res = await _cqrs.run(
-      RegisterUser(
-        userInfo: UserDTO(
-          emailAddress: email,
-          firstname: '',
-          surname: '',
-          username: email,
-        ),
-        password: password,
-      ),
-    );
-    if (res.success) {
-      await _authCubit.logIn(ResourceOwnerPasswordStrategy(email, password));
-      emit(
-        SignUpScreenSuccessState(
-          email: email,
+    emit(const SignUpScreenReadyState(loading: true));
+    try {
+      final res = await _cqrs.run(
+        RegisterUser(
+          userInfo: UserDTO(
+            emailAddress: email,
+            firstname: '',
+            surname: '',
+            username: email,
+          ),
           password: password,
         ),
       );
-    } else {
-      emit(
-        SignUpScreenErrorState(
-          email: email,
-          password: password,
-        ),
-      );
+      if (res.success) {
+        await _authCubit.logIn(ResourceOwnerPasswordStrategy(email, password));
+        emit(
+          const SignUpScreenReadyState(),
+        );
+      } else {
+        emit(const SignUpScreenReadyState(
+            unknownError: true)); // check different errorCodes
+      }
+    } on AuthorizationException {
+      emit(const SignUpScreenReadyState(invalidCredentials: true));
+    } on SocketException {
+      emit(const SignUpScreenReadyState(networkError: true));
+    } catch (e) {
+      emit(const SignUpScreenReadyState(unknownError: true));
     }
   }
 }
 
 @freezed
 class SignUpScreenState with _$SignUpScreenState {
-  const factory SignUpScreenState.initial({
-    @Default('') String email,
-    @Default('') String password,
-  }) = SignUpScreenInitialState;
-  const factory SignUpScreenState.success({
-    required String email,
-    required String password,
-  }) = SignUpScreenSuccessState;
-  const factory SignUpScreenState.error({
-    required String email,
-    required String password,
-  }) = SignUpScreenErrorState;
+  const factory SignUpScreenState.ready({
+    @Default(false) bool loading,
+    @Default(false) bool invalidCredentials,
+    @Default(false) bool networkError,
+    @Default(false) bool unknownError,
+  }) = SignUpScreenReadyState;
 }
