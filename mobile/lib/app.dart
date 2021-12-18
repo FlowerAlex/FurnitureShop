@@ -15,3 +15,17 @@ class App extends StatelessWidget {
     );
   }
 }
+
+class GlobalProvider extends StatelessWidget {
+  const GlobalProvider({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}
