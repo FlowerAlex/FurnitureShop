@@ -25,7 +25,11 @@ namespace FurnitureShop.IntegrationTests
     public class FurnitureShopTestApp : LeanCodeTestFactory<Startup>
     {
         protected override ConfigurationOverrides Configuration { get; }
-            = new ConfigurationOverrides(LogEventLevel.Debug, true);
+            = new ConfigurationOverrides(LogEventLevel.Debug, true,
+                connectionStringBase: "ConnectionStrings__DatabaseBase",
+                connectionStringKey: "SqlServer:ConnectionString");
+
+
 
         static FurnitureShopTestApp()
         {
