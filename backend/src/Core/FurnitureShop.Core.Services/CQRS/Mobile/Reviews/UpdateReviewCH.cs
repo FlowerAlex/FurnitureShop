@@ -25,8 +25,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
             {
                 return;
             }
-            toUpdate.Rating = command.ReviewInfoDTO.Rating;
-            toUpdate.Text = command.ReviewInfoDTO.Text;
+            toUpdate.Rating = command.ReviewInfo.Rating;
+            toUpdate.Text = command.ReviewInfo.Text;
             dbContext.Reviews.Update(toUpdate);
             await dbContext.SaveChangesAsync();
         }

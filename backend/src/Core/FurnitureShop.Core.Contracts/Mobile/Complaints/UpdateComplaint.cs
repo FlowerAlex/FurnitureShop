@@ -9,7 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
     public class UpdateComplaint : IRemoteCommand
     {
         public Guid Id { get; set; }
-        public ComplaintInfoDTO ComplaintInfoDTO { get; set; }
+        public ComplaintInfoDTO ComplaintInfo { get; set; }
         public static class ErrorCodes
         {
 

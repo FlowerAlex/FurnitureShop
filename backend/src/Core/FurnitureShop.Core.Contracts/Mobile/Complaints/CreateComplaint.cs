@@ -8,7 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
     [AllowUnauthorized]
     public class CreateComplaint : IRemoteCommand
     {
-        public ComplaintInfoDTO ComplaintInfoDTO { get; set; }
+        public ComplaintInfoDTO ComplaintInfo { get; set; }
         public static class ErrorCodes
         {
 

@@ -4,7 +4,7 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
+namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile.Users
 {
     public class RegisterUserCHTests : IDisposable
     {
@@ -28,7 +28,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         }
 
         [Fact]
-        public void ImplementMe()
+        public void RegisterUserTest()
         {
             using var dbContext = new CoreDbContext(ContextOptions);
             //var handler = new RegisterUserCH(new Microsoft.AspNetCore.Identity.UserManager<DataAccess.Entities.AuthUser>(),dbContext);

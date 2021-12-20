@@ -47,7 +47,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CategoryByIdQH(dbContext);
             var command = new CategoryById { Id = TestCategory.Id };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var category = result.Result;
             Assert.NotNull(category);
@@ -62,7 +64,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateCategoryCH(dbContext);
             var command = new CreateCategory { CategoryName = NewCategoryName };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var category = dbContext.Categories.Where(c => c.Name == NewCategoryName).FirstOrDefault();
             Assert.NotNull(category);
@@ -75,7 +79,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteCategoryCH(dbContext);
             var command = new DeleteCategory{Id = TestCategory.Id};
+            
             var result = handler.ExecuteAsync(coreContext,command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var category = dbContext.Categories.Find(TestCategory.Id);
             Assert.Null(category);
@@ -88,7 +94,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateCategoryCH(dbContext);
             var command = new UpdateCategory{NewName = NewNameForCategory,Id = TestCategory.Id};
+            
             var result = handler.ExecuteAsync(coreContext,command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var category = dbContext.Categories.Where(c => c.Id == TestCategory.Id).FirstOrDefault();
             Assert.NotNull(category);

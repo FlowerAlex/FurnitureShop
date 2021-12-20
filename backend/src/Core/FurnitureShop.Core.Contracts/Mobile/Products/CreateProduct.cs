@@ -4,11 +4,11 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
+    //[AllowUnauthorized]
     public class CreateProduct : IRemoteCommand
     {
-        public ProductInfoDTO OrderInfoDTO { get; set; }
+        public ProductInfoDTO ProductInfo { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

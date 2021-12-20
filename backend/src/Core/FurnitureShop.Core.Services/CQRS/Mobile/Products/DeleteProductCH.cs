@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task ExecuteAsync(CoreContext context, DeleteProduct command)
         {
-            var product = await dbContext.Products.Where(c => c.Id == command.ProductId).FirstOrDefaultAsync();
+            var product = await dbContext.Products.Where(c => c.Id == command.Id).FirstOrDefaultAsync();
             if (product == null)
             {
                 return;
