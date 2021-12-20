@@ -62,7 +62,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new ReviewByIdQH(dbContext);
             var command = new ReviewById { Id = TestReview.Id };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Review = result.Result;
             Assert.NotNull(Review);
@@ -87,7 +89,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Rating = NewReviewRating,
                 }
             };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Where(c => c.Text == NewReviewText).FirstOrDefault();
             Assert.NotNull(Review);
@@ -102,7 +106,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteReviewCH(dbContext);
             var command = new DeleteReview{Id = TestReview.Id};
+            
             var result = handler.ExecuteAsync(coreContext,command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Find(TestReview.Id);
             Assert.Null(Review);
@@ -120,7 +126,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     UserId = TestUserId,
                     Rating = NewReviewRating,
                 },Id = TestReview.Id};
+            
             var result = handler.ExecuteAsync(coreContext,command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Where(c => c.Id == TestReview.Id).FirstOrDefault();
             Assert.NotNull(Review);

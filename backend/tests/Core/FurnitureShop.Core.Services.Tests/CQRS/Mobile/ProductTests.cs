@@ -87,7 +87,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Price = NewProductPrice,
                 }
             };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Where(c => c.Name == NewProductName).FirstOrDefault();
             Assert.NotNull(Product);
@@ -104,7 +106,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteProductCH(dbContext);
             var command = new DeleteProduct { Id = TestProduct.Id };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Find(TestProduct.Id);
             Assert.Null(Product);
@@ -126,7 +130,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Price = NewProductPrice,
                 }
             };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Where(c => c.Name == NewProductName).FirstOrDefault();
             Assert.NotNull(Product);

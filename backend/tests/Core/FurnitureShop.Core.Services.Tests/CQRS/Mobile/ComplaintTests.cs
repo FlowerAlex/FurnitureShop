@@ -67,7 +67,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new ComplaintByIdQH(dbContext);
             var command = new ComplaintById { Id = TestComplaint.Id };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = result.Result;
             Assert.NotNull(Complaint);
@@ -94,7 +96,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     OrderId = TestOrder.Id
                 }
             };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Where(c => c.Text == NewComplaintText).FirstOrDefault();
             Assert.NotNull(Complaint);
@@ -109,7 +113,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteComplaintCH(dbContext);
             var command = new DeleteComplaint { Id = TestComplaint.Id };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Find(TestComplaint.Id);
             Assert.Null(Complaint);
@@ -132,7 +138,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     OrderId = TestOrder.Id
                 }
             };
+            
             var result = handler.ExecuteAsync(coreContext, command);
+            
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Where(c => c.Text == NewComplaintText).FirstOrDefault();
             Assert.NotNull(Complaint);
