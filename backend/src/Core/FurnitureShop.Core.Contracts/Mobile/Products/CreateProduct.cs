@@ -4,8 +4,8 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    //[AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
+    //[AllowUnauthorized]
     public class CreateProduct : IRemoteCommand
     {
         public ProductInfoDTO ProductInfo { get; set; }

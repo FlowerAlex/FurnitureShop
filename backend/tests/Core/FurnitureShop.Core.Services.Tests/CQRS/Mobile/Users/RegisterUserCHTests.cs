@@ -4,7 +4,7 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile.Users
+namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 {
     public class RegisterUserCHTests : IDisposable
     {

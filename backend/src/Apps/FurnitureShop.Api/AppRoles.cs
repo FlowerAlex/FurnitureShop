@@ -10,6 +10,7 @@ namespace FurnitureShop.Api
         public IEnumerable<Role> Roles { get; } = new[]
         {
             new Role(R.User, R.User),
+             new Role(R.Admin, R.Admin),
         };
     }
 }
