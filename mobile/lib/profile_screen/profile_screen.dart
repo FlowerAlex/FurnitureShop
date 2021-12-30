@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/common/widgets/app_bar.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
@@ -9,6 +10,7 @@ import 'package:furniture_shop/profile_screen/update_profile_dialog.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends HookWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -83,7 +85,9 @@ class ProfileScreen extends HookWidget {
       );
     }
 
-    void _logOut() {}
+    void _logOut() {
+      context.read<AuthCubit>().logOut();
+    }
 
     return Scaffold(
       body: SafeArea(
