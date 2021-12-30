@@ -35,12 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
               _loginTextEditingController.text,
               _passwordTextEditingController.text,
             );
-        Navigator.of(context).push(
-          // for remove
-          MaterialPageRoute<void>(
-            builder: (context) => MainScreen(),
-          ),
-        );
       }
     }
 

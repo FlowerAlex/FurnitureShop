@@ -19,7 +19,6 @@ Future<void> mainCommon(AppConfig config) async {
       authorizationUri: config.apiUri.resolve('/auth/connect/token'),
       clientId: 'client_app',
       scopes: [
-        'offline_access',
         'internal_api',
       ],
     ),

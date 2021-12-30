@@ -3,7 +3,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Categories
 {
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class CreateCategory : IRemoteCommand
     {
         public string CategoryName { get; set; }
