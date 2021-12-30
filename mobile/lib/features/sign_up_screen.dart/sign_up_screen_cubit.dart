@@ -28,7 +28,7 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
     try {
       final res = await _cqrs.run(
         RegisterUser(
-          userInfo: UserDTO(
+          userInfo: UserInfoDTO(
             emailAddress: email,
             firstname: '',
             surname: '',
