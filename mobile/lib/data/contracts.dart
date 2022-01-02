@@ -32,6 +32,77 @@ class Time with EquatableMixin {
   String toJson() => '$hour:$minute:$second';
 }
 
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class Auth with EquatableMixin {
+  Auth();
+
+  factory Auth.fromJson(Map<String, dynamic> json) => _$AuthFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$AuthToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class Clients with EquatableMixin {
+  Clients();
+
+  factory Clients.fromJson(Map<String, dynamic> json) =>
+      _$ClientsFromJson(json);
+
+  static const String adminApp = 'admin_app';
+
+  static const String clientApp = 'client_app';
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$ClientsToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class KnownClaims with EquatableMixin {
+  KnownClaims();
+
+  factory KnownClaims.fromJson(Map<String, dynamic> json) =>
+      _$KnownClaimsFromJson(json);
+
+  static const String userId = 'sub';
+
+  static const String role = 'role';
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$KnownClaimsToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class Roles with EquatableMixin {
+  Roles();
+
+  factory Roles.fromJson(Map<String, dynamic> json) => _$RolesFromJson(json);
+
+  static const String user = 'user';
+
+  static const String admin = 'admin';
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$RolesToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class Scopes with EquatableMixin {
+  Scopes();
+
+  factory Scopes.fromJson(Map<String, dynamic> json) => _$ScopesFromJson(json);
+
+  static const String internalApi = 'internal_api';
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$ScopesToJson(this);
+}
+
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class CategoryById with EquatableMixin implements IRemoteQuery<CategoryDTO> {
@@ -236,7 +307,7 @@ class ComplaintInfoDTO with EquatableMixin {
   Map<String, dynamic> toJson() => _$ComplaintInfoDTOToJson(this);
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class CreateComplaint with EquatableMixin implements IRemoteCommand {
   CreateComplaint({
@@ -277,6 +348,33 @@ class DeleteComplaint with EquatableMixin implements IRemoteCommand {
 }
 
 class DeleteComplaintErrorCodes {}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class GetAllComplaints
+    with EquatableMixin
+    implements PaginatedQuery<ComplaintDTO> {
+  GetAllComplaints({
+    required this.pageNumber,
+    required this.pageSize,
+  });
+
+  factory GetAllComplaints.fromJson(Map<String, dynamic> json) =>
+      _$GetAllComplaintsFromJson(json);
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  get props => [pageNumber, pageSize];
+
+  Map<String, dynamic> toJson() => _$GetAllComplaintsToJson(this);
+  PaginatedResult<ComplaintDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$ComplaintDTOFromJson(e as Map<String, dynamic>));
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Complaints.GetAllComplaints';
+}
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -448,15 +546,15 @@ class OrderProductDTO with EquatableMixin {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class CreateProduct with EquatableMixin implements IRemoteCommand {
   CreateProduct({
-    required this.productInfo,
+    required this.productDetails,
   });
 
   factory CreateProduct.fromJson(Map<String, dynamic> json) =>
       _$CreateProductFromJson(json);
 
-  final ProductInfoDTO productInfo;
+  final ProductDetailsDTO productDetails;
 
-  get props => [productInfo];
+  get props => [productDetails];
 
   Map<String, dynamic> toJson() => _$CreateProductToJson(this);
   String getFullName() =>
@@ -492,34 +590,51 @@ class DeleteProduct with EquatableMixin implements IRemoteCommand {
 
 class DeleteProductErrorCodes {}
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class GetAllProducts
     with EquatableMixin
-    implements IRemoteQuery<List<ProductDTO>> {
+    implements SortablePaginatedQuery<ProductDTO, ProductsSortFieldDTO?> {
   GetAllProducts({
+    required this.pageNumber,
+    required this.pageSize,
+    this.filterBy,
+    this.sortBy,
+    required this.sortByDescending,
     this.categoryId,
   });
 
   factory GetAllProducts.fromJson(Map<String, dynamic> json) =>
       _$GetAllProductsFromJson(json);
 
+  final int pageNumber;
+
+  final int pageSize;
+
+  final String? filterBy;
+
+  final ProductsSortFieldDTO? sortBy;
+
+  final bool sortByDescending;
+
   final String? categoryId;
 
-  get props => [categoryId];
+  get props =>
+      [pageNumber, pageSize, filterBy, sortBy, sortByDescending, categoryId];
 
   Map<String, dynamic> toJson() => _$GetAllProductsToJson(this);
-  List<ProductDTO> resultFactory(dynamic decodedJson) =>
-      (decodedJson as Iterable<dynamic>)
-          .map((dynamic e) => _$ProductDTOFromJson(e as Map<String, dynamic>))
-          .toList();
+  PaginatedResult<ProductDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$ProductDTOFromJson(e as Map<String, dynamic>));
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Products.GetAllProducts';
 }
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductById with EquatableMixin implements IRemoteQuery<ProductDTO> {
+class ProductById
+    with EquatableMixin
+    implements IRemoteQuery<ProductWithDetailsDTO> {
   ProductById({
     required this.id,
   });
@@ -532,10 +647,32 @@ class ProductById with EquatableMixin implements IRemoteQuery<ProductDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$ProductByIdToJson(this);
-  ProductDTO resultFactory(dynamic decodedJson) =>
-      _$ProductDTOFromJson(decodedJson as Map<String, dynamic>);
+  ProductWithDetailsDTO resultFactory(dynamic decodedJson) =>
+      _$ProductWithDetailsDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Products.ProductById';
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ProductDetailsDTO with EquatableMixin {
+  ProductDetailsDTO({
+    required this.description,
+    this.modelUrl,
+    required this.productInfo,
+  });
+
+  factory ProductDetailsDTO.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailsDTOFromJson(json);
+
+  final String description;
+
+  final String? modelUrl;
+
+  final ProductInfoDTO productInfo;
+
+  get props => [description, modelUrl, productInfo];
+
+  Map<String, dynamic> toJson() => _$ProductDetailsDTOToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -560,29 +697,55 @@ class ProductDTO with EquatableMixin {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ProductInfoDTO with EquatableMixin {
   ProductInfoDTO({
-    required this.description,
-    required this.price,
     required this.name,
-    this.modelUrl,
+    required this.price,
+    this.averageRating,
+    this.previewPhotoURL,
     this.categoryId,
   });
 
   factory ProductInfoDTO.fromJson(Map<String, dynamic> json) =>
       _$ProductInfoDTOFromJson(json);
 
-  final String description;
+  final String name;
 
   final double price;
 
-  final String name;
+  final double? averageRating;
 
-  final String? modelUrl;
+  final String? previewPhotoURL;
 
   final String? categoryId;
 
-  get props => [description, price, name, modelUrl, categoryId];
+  get props => [name, price, averageRating, previewPhotoURL, categoryId];
 
   Map<String, dynamic> toJson() => _$ProductInfoDTOToJson(this);
+}
+
+enum ProductsSortFieldDTO {
+  @JsonValue(0)
+  name,
+  @JsonValue(1)
+  rating
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ProductWithDetailsDTO with EquatableMixin {
+  ProductWithDetailsDTO({
+    required this.id,
+    required this.productDetails,
+  });
+
+  factory ProductWithDetailsDTO.fromJson(Map<String, dynamic> json) =>
+      _$ProductWithDetailsDTOFromJson(json);
+
+  final String id;
+
+  final ProductDetailsDTO productDetails;
+
+  get props => [id, productDetails];
+
+  Map<String, dynamic> toJson() => _$ProductWithDetailsDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
@@ -590,7 +753,7 @@ class ProductInfoDTO with EquatableMixin {
 class UpdateProduct with EquatableMixin implements IRemoteCommand {
   UpdateProduct({
     required this.id,
-    required this.productInfo,
+    required this.productDetails,
   });
 
   factory UpdateProduct.fromJson(Map<String, dynamic> json) =>
@@ -598,9 +761,9 @@ class UpdateProduct with EquatableMixin implements IRemoteCommand {
 
   final String id;
 
-  final ProductInfoDTO productInfo;
+  final ProductDetailsDTO productDetails;
 
-  get props => [id, productInfo];
+  get props => [id, productDetails];
 
   Map<String, dynamic> toJson() => _$UpdateProductToJson(this);
   String getFullName() =>
@@ -657,30 +820,30 @@ class DeleteReview with EquatableMixin implements IRemoteCommand {
 
 class DeleteReviewErrorCodes {}
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class GetAllReviews
-    with EquatableMixin
-    implements IRemoteQuery<List<ReviewDTO>> {
+class GetAllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
   GetAllReviews({
-    this.productId,
-    this.userId,
+    required this.pageNumber,
+    required this.pageSize,
+    required this.productId,
   });
 
   factory GetAllReviews.fromJson(Map<String, dynamic> json) =>
       _$GetAllReviewsFromJson(json);
 
-  final String? productId;
+  final int pageNumber;
 
-  final String? userId;
+  final int pageSize;
 
-  get props => [productId, userId];
+  final String productId;
+
+  get props => [pageNumber, pageSize, productId];
 
   Map<String, dynamic> toJson() => _$GetAllReviewsToJson(this);
-  List<ReviewDTO> resultFactory(dynamic decodedJson) =>
-      (decodedJson as Iterable<dynamic>)
-          .map((dynamic e) => _$ReviewDTOFromJson(e as Map<String, dynamic>))
-          .toList();
+  PaginatedResult<ReviewDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$ReviewDTOFromJson(e as Map<String, dynamic>));
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Reviews.GetAllReviews';
 }
@@ -830,11 +993,7 @@ class UpdateProfile with EquatableMixin implements IRemoteCommand {
       'FurnitureShop.Core.Contracts.Mobile.Users.UpdateProfile';
 }
 
-class UpdateProfileErrorCodes {
-  static const userDTOIsNull = 1;
-
-  static const passwordTooWeak = 2;
-}
+class UpdateProfileErrorCodes {}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -875,4 +1034,65 @@ class UserInfoDTO with EquatableMixin {
   get props => [firstname, surname, username, emailAddress];
 
   Map<String, dynamic> toJson() => _$UserInfoDTOToJson(this);
+}
+
+abstract class PaginatedQuery<TResult>
+    with EquatableMixin
+    implements IRemoteQuery<PaginatedResult<TResult>> {
+  PaginatedQuery({
+    required this.pageNumber,
+    required this.pageSize,
+  });
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  get props => [pageNumber, pageSize];
+}
+
+@JsonSerializable(
+    fieldRename: FieldRename.pascal, genericArgumentFactories: true)
+class PaginatedResult<TResult> with EquatableMixin {
+  PaginatedResult({
+    required this.items,
+    required this.totalCount,
+  });
+
+  factory PaginatedResult.fromJson(Map<String, dynamic> json,
+          TResult Function(Object?) fromJsonTResult) =>
+      _$PaginatedResultFromJson(json, fromJsonTResult);
+
+  final List<TResult> items;
+
+  final int totalCount;
+
+  get props => [items, totalCount];
+
+  Map<String, dynamic> toJson(Object? Function(TResult) toJsonTResult) =>
+      _$PaginatedResultToJson(this, toJsonTResult);
+}
+
+abstract class SortablePaginatedQuery<TResult, TBy>
+    with EquatableMixin
+    implements PaginatedQuery<TResult> {
+  SortablePaginatedQuery({
+    required this.pageNumber,
+    required this.pageSize,
+    this.filterBy,
+    required this.sortBy,
+    required this.sortByDescending,
+  });
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  final String? filterBy;
+
+  final TBy sortBy;
+
+  final bool sortByDescending;
+
+  get props => [pageNumber, pageSize, filterBy, sortBy, sortByDescending];
 }

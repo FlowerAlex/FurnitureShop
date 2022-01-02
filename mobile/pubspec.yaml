@@ -8,14 +8,17 @@ environment:
 
 dependencies:
   bloc_test: ^9.0.1
+  cached_network_image: ^3.2.0
   cqrs: ^6.1.0
   equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
   flutter_hooks: ^0.18.1
+  flutter_rating_bar: ^4.0.0
   freezed: ^0.15.1+1
   freezed_annotation: ^0.15.0
+  infinite_scroll_pagination: ^3.1.0
   json_annotation: ^4.1.0
   keyboard_dismisser: ^2.0.0
   logging: ^1.0.2
