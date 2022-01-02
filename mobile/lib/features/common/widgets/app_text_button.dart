@@ -8,12 +8,15 @@ class AppTextButton extends StatelessWidget {
     required this.child,
     this.withBorderSide = false,
     this.background = AppColors.grey0,
+    this.initialValue,
   }) : super(key: key);
 
   final Widget child;
   final Color background;
   final VoidCallback onPressed;
   final bool withBorderSide;
+  final String? initialValue;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
