@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
+import 'package:furniture_shop/features/common/widgets/circle_button.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
@@ -22,16 +22,9 @@ Future<T?> showUpdateProfileDialog<T>({
             children: [
               Align(
                 alignment: Alignment.centerRight,
-                child: Material(
-                  shape: const CircleBorder(),
-                  child: InkResponse(
-                    radius: 16,
-                    onTap: Navigator.of(context).pop,
-                    child: AssetIcon(
-                      asset: Assets.icons.cross,
-                      size: 32,
-                    ),
-                  ),
+                child: CircleButton(
+                  onPressed: Navigator.of(context).pop,
+                  asset: Assets.icons.cross,
                 ),
               ),
               Text(

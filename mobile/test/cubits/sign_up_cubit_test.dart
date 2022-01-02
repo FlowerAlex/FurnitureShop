@@ -24,7 +24,7 @@ void main() {
       setUpAll(() {
         registerFallbackValue(
           RegisterUser(
-            userInfo: UserDTO(
+            userInfo: UserInfoDTO(
               emailAddress: '',
               firstname: '',
               surname: '',

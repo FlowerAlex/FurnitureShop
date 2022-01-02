@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
+import 'package:furniture_shop/features/products_screen/filter_dialog.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
@@ -17,8 +18,13 @@ class CustomAppBar extends StatelessWidget {
   final String title;
   final bool withFilter;
   final TextEditingController? textEditingController;
+
   @override
   Widget build(BuildContext context) {
+    void _filterButtonPressed() {
+      showFilterDialog<void>(context);
+    }
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
@@ -50,18 +56,20 @@ class CustomAppBar extends StatelessWidget {
                       backgroundColor: AppColors.white,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  AppTextButton(
-                    onPressed: () {},
-                    background: AppColors.white,
-                    withBorderSide: true,
-                    child: Text(
-                      'Filter',
-                      style: AppTextStyles.reg12.copyWith(
-                        color: AppColors.primaryText,
+                  if (withFilter) ...[
+                    const SizedBox(width: 12),
+                    AppTextButton(
+                      onPressed: _filterButtonPressed,
+                      background: AppColors.white,
+                      withBorderSide: true,
+                      child: Text(
+                        'Filter',
+                        style: AppTextStyles.reg12.copyWith(
+                          color: AppColors.primaryText,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ),
