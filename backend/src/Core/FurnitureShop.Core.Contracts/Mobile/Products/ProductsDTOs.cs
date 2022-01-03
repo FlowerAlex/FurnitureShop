@@ -18,7 +18,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public Guid? CategoryId { get; set; }
     }
 
-    public class ProductDetailsDTO
+    public class ProductWithDetailsDTO
     {
         public Guid Id { get; set; }
         public ProductDetailsDTO ProductDetails { get; set; }

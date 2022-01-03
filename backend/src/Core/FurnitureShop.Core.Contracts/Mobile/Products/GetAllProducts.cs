@@ -7,7 +7,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
     // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     [AllowUnauthorized]
-    public class GetAllProducts : IRemoteQuery<List<ProductDetailsDTO>>
+    public class GetAllProducts : IRemoteQuery<List<ProductWithDetailsDTO>>
     {
         public Guid? CategoryId { get; set; }
     }

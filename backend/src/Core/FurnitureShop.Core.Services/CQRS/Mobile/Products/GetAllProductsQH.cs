@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class GetAllProductsQH : IQueryHandler<GetAllProducts, List<ProductDetailsDTO>>
+    public class GetAllProductsQH : IQueryHandler<GetAllProducts, List<ProductWithDetailsDTO>>
     {
         private readonly CoreDbContext dbContext;
 
@@ -18,13 +18,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<List<ProductDetailsDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
+        public async Task<List<ProductWithDetailsDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
         {
             if (query.CategoryId.HasValue)
             {
                 return await dbContext.Products
                    .Where(p => p.CategoryId == query.CategoryId)
-                   .Select(p => new ProductDetailsDTO
+                   .Select(p => new ProductWithDetailsDTO
                    {
                        ProductDetails = new ProductDetailsDTO
                        {
@@ -39,7 +39,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             else
             {
                 return await dbContext.Products
-                    .Select(p => new ProductDetailsDTO
+                    .Select(p => new ProductWithDetailsDTO
                     {
                         ProductDetails = new ProductDetailsDTO
                         {
