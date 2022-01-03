@@ -11,6 +11,7 @@ Future<T?> showUpdateProfileDialog<T>({
 }) =>
     showDialog<T>(
       context: context,
+      useRootNavigator: true,
       builder: (context) => Dialog(
         backgroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

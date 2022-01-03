@@ -2,6 +2,7 @@ using System.Reflection;
 using Autofac;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.DataAccess.Entities;
+using FurnitureShop.Core.Services.DataAccess.Repositories;
 using FurnitureShop.Core.Services.Services;
 using LeanCode.Components;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +53,10 @@ namespace FurnitureShop.Core.Services
             builder.RegisterAssemblyTypes(self)
                 .InNamespaceOf<IdentityUserManager>()
                 .AsSelf()
+                .AsImplementedInterfaces();
+            
+            builder.RegisterAssemblyTypes(self)
+                .InNamespaceOf<UsersRepository>()
                 .AsImplementedInterfaces();
         }
     }

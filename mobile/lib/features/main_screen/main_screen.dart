@@ -8,6 +8,7 @@ import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:furniture_shop/profile_screen/profile_screen.dart';
+import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends HookWidget {
@@ -52,6 +53,9 @@ class MainScreen extends HookWidget {
     switch (state) {
       case Screen.products:
         context.read<ProductsScreenCubit>().fetch();
+        break;
+      case Screen.profile:
+        context.read<ProfileScreenCubit>().fetch();
         break;
       default:
         break;

@@ -805,6 +805,53 @@ class RegisterUserErrorCodes {
   static const passwordTooWeak = 2;
 }
 
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UpdateProfile with EquatableMixin implements IRemoteCommand {
+  UpdateProfile({
+    this.firstname,
+    this.surname,
+    this.username,
+  });
+
+  factory UpdateProfile.fromJson(Map<String, dynamic> json) =>
+      _$UpdateProfileFromJson(json);
+
+  final String? firstname;
+
+  final String? surname;
+
+  final String? username;
+
+  get props => [firstname, surname, username];
+
+  Map<String, dynamic> toJson() => _$UpdateProfileToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Users.UpdateProfile';
+}
+
+class UpdateProfileErrorCodes {
+  static const userDTOIsNull = 1;
+
+  static const passwordTooWeak = 2;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UserInfo with EquatableMixin implements IRemoteQuery<UserInfoDTO> {
+  UserInfo();
+
+  factory UserInfo.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$UserInfoToJson(this);
+  UserInfoDTO resultFactory(dynamic decodedJson) =>
+      _$UserInfoDTOFromJson(decodedJson as Map<String, dynamic>);
+  String getFullName() => 'FurnitureShop.Core.Contracts.Mobile.Users.UserInfo';
+}
+
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UserInfoDTO with EquatableMixin {
   UserInfoDTO({

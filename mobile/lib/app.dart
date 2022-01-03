@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_router.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
 import 'package:furniture_shop/resources/app_theme.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
@@ -37,6 +38,9 @@ class GlobalProvider extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => ProductsScreenCubit(cqrs: context.read<CQRS>()),
+        ),
+        BlocProvider(
+          create: (context) => ProfileScreenCubit(cqrs: context.read<CQRS>()),
         ),
       ],
       child: child,

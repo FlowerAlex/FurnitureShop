@@ -35,5 +35,21 @@ namespace FurnitureShop.Core.Domain
             Reviews = new List<Review>();
             Complaints = new List<Complaint>();
         }
+
+        public void updateUser(string? firstname, string? surname, string? username)
+        {
+            if (firstname != null)
+            {
+                this.Firstname = firstname;
+            }
+            if (surname != null)
+            {
+                this.Surname = surname;
+            }
+            if (username != null)
+            {
+                this.Username = username;
+            }
+        }
     }
 }

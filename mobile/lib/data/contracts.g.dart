@@ -389,6 +389,24 @@ Map<String, dynamic> _$RegisterUserToJson(RegisterUser instance) =>
       'Password': instance.password,
     };
 
+UpdateProfile _$UpdateProfileFromJson(Map<String, dynamic> json) =>
+    UpdateProfile(
+      firstname: json['Firstname'] as String?,
+      surname: json['Surname'] as String?,
+      username: json['Username'] as String?,
+    );
+
+Map<String, dynamic> _$UpdateProfileToJson(UpdateProfile instance) =>
+    <String, dynamic>{
+      'Firstname': instance.firstname,
+      'Surname': instance.surname,
+      'Username': instance.username,
+    };
+
+UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo();
+
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{};
+
 UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
       firstname: json['Firstname'] as String,
       surname: json['Surname'] as String,
