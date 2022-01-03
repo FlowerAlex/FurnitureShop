@@ -64,11 +64,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
             Assert.NotNull(Product);
-            Assert.Equal(TestProduct.Name, Product.ProductInfo.Name);
-            Assert.Equal(TestProduct.Description, Product.ProductInfo.Description);
-            Assert.Equal(TestProduct.ModelUrl, Product.ProductInfo.ModelUrl);
-            Assert.Equal(TestProduct.Price, Product.ProductInfo.Price);
-            Assert.Equal(TestProduct.CategoryId, Product.ProductInfo.CategoryId);
+            Assert.Equal(TestProduct.Name, Product.ProductDetails.Name);
+            Assert.Equal(TestProduct.Description, Product.ProductDetails.Description);
+            Assert.Equal(TestProduct.ModelUrl, Product.ProductDetails.ModelUrl);
+            Assert.Equal(TestProduct.Price, Product.ProductDetails.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
         }
         [Fact]
@@ -79,7 +79,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                ProductInfo = new ProductInfoDTO
+                ProductDetails = new ProductDetailsDTO
                 {
                     Name = NewProductName,
                     Description = NewProdctDescription,
@@ -122,7 +122,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new UpdateProduct
             {
                 Id = TestProduct.Id,
-                ProductInfo = new ProductInfoDTO
+                ProductDetais = new ProductDetailsDTO
                 {
                     Name = NewProductName,
                     Description = NewProdctDescription,

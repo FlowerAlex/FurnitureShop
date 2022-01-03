@@ -8,7 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     //[AllowUnauthorized]
     public class CreateProduct : IRemoteCommand
     {
-        public ProductInfoDTO ProductInfo { get; set; }
+        public ProductDetailsDTO ProductDetails { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;
