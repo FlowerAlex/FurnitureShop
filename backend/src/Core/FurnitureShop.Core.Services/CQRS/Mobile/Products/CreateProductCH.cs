@@ -22,7 +22,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                     ModelUrl = command.ProductDetails.ModelUrl,
                     CategoryId = Id<Category>.From(command.ProductDetails.ProductInfo.CategoryId),
                     PreviewPhotoUrl = command.ProductDetails.ProductInfo.PreviewPhotoURL,
-                    AvergeRating = 0,
                 });
             await dbContext.SaveChangesAsync();
         }

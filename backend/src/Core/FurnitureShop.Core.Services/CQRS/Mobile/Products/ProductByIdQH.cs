@@ -21,7 +21,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         public async Task<ProductWithDetailsDTO?> ExecuteAsync(CoreContext context, ProductById query)
         {
             return await dbContext.Products
-                .Where(p => p.Id == query.Id)
+                .Where(p => p.Id == query.Id).Include(p => p.Reviews)
                 .Select(p => new ProductWithDetailsDTO
                 {
                     ProductDetails = new ProductDetailsDTO
@@ -32,6 +32,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                             Price = p.Price,
                             CategoryId = p.CategoryId,
                             PreviewPhotoURL = p.PreviewPhotoUrl,
+                            AvergeRating = p.Reviews.Average(r => r.Rating),
                         },
                         Description = p.Description,
                         ModelUrl = p.ModelUrl,

@@ -26,11 +26,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 return;
             }
 
-            var updated = command.ProductDetais;
+            var updated = command.ProductDetails;
             product.Name = updated.ProductInfo.Name;
             product.Description = updated.Description;
             product.Price = updated.ProductInfo.Price;
-            product.ModelUrl = command.ProductDetais.ModelUrl;
+            product.ModelUrl = command.ProductDetails.ModelUrl;
             product.CategoryId = Id<Category>.From(updated.ProductInfo.CategoryId);
             product.PreviewPhotoUrl = updated.ProductInfo.PreviewPhotoURL;
 

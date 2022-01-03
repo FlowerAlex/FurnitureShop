@@ -21,7 +21,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             ModelUrl = "https://some.url.com",
         };
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
-        
+
         private string NewProductName = "new Product";
         private string NewProdctDescription = "new desc";
         private string NewProductModelUrl = "new model url";
@@ -64,11 +64,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
             Assert.NotNull(Product);
-            Assert.Equal(TestProduct.Name, Product.ProductDetails.Name);
+            Assert.Equal(TestProduct.Name, Product.ProductDetails.ProductInfo.Name);
             Assert.Equal(TestProduct.Description, Product.ProductDetails.Description);
             Assert.Equal(TestProduct.ModelUrl, Product.ProductDetails.ModelUrl);
-            Assert.Equal(TestProduct.Price, Product.ProductDetails.Price);
-            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.CategoryId);
+            Assert.Equal(TestProduct.Price, Product.ProductDetails.ProductInfo.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.ProductInfo.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
         }
         [Fact]
@@ -81,15 +81,18 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             {
                 ProductDetails = new ProductDetailsDTO
                 {
-                    Name = NewProductName,
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
-                    Price = NewProductPrice,
+                    ProductInfo = new ProductInfoDTO
+                    {
+                        Name = NewProductName,
+                        Price = NewProductPrice,
+                    }
                 }
             };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Where(c => c.Name == NewProductName).FirstOrDefault();
             Assert.NotNull(Product);
@@ -106,9 +109,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteProductCH(dbContext);
             var command = new DeleteProduct { Id = TestProduct.Id };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Find(TestProduct.Id);
             Assert.Null(Product);
@@ -122,17 +125,20 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new UpdateProduct
             {
                 Id = TestProduct.Id,
-                ProductDetais = new ProductDetailsDTO
+                ProductDetails = new ProductDetailsDTO
                 {
-                    Name = NewProductName,
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
-                    Price = NewProductPrice,
+                    ProductInfo = new ProductInfoDTO
+                    {
+                        Name = NewProductName,
+                        Price = NewProductPrice,
+                    }
                 }
             };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Product = dbContext.Products.Where(c => c.Name == NewProductName).FirstOrDefault();
             Assert.NotNull(Product);

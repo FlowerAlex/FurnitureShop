@@ -9,7 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     public class UpdateProduct : IRemoteCommand
     {
         public Guid Id { get;set;}
-        public ProductDetailsDTO ProductDetais { get; set; }
+        public ProductDetailsDTO ProductDetails { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;
