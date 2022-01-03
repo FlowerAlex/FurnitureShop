@@ -5,10 +5,15 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     [AllowUnauthorized]
-    public class GetAllProducts : IRemoteQuery<List<ProductDTO>>
+    public class GetAllProducts : SortablePaginatedQuery<ProductDTO,ProductsSortFieldDTO>
     {
-        public Guid? CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
+    }
+    public enum ProductsSortFieldDTO
+    {
+        Name = 0,
+        Rating = 1,       
     }
 }
