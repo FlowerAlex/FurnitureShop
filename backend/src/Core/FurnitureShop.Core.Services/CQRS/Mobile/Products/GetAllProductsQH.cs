@@ -64,7 +64,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             }
         }
     }
-    internal static class CollectionsListQHExtensions
+    internal static class ProductQHExtensions
     {
         public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, GetAllProducts query)
         {
