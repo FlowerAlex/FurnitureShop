@@ -1,14 +1,37 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
+using LeanCode.CQRS.Validation.Fluent;
 using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
+    public class UpdateProductCV : ContextualValidator<UpdateProduct>
+    {
+        public UpdateProductCV()
+        {
+            RuleFor(p => p.ProductDetails.ProductInfo.Name)
+                .NotEmpty()
+                    .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
+                    .WithMessage("Product name should not be empty");
+            RuleFor(p => p.ProductDetails.ProductInfo.Price)
+                .NotEmpty()
+                    .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
+                    .WithMessage("Price should not be empty")
+                .GreaterThan(0)
+                    .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
+                    .WithMessage("Price should be a positive number");
+            RuleFor(p => p.ProductDetails.Description)
+                .NotEmpty()
+                    .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
+                    .WithMessage("Product description should not be empty");  
+        }
+    }
     public class UpdateProductCH : ICommandHandler<UpdateProduct>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateProductCH>();
