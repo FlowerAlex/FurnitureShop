@@ -9,7 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     [AllowUnauthorized]
     public class GetAllProducts : SortablePaginatedQuery<ProductDTO,ProductsSortFieldDTO>
     {
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
     }
     public enum ProductsSortFieldDTO
     {

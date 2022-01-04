@@ -21,7 +21,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
         {
-            return await dbContext.Products
+            if (query.CategoryId.HasValue)
+            {
+                return await dbContext.Products
                 .FilterBy(query)
                 .Where(p => p.CategoryId == query.CategoryId)
                 .Select(p => new ProductDTO
@@ -39,6 +41,27 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 )
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
+            }
+            else
+            {
+                return await dbContext.Products
+                .FilterBy(query)
+                .Select(p => new ProductDTO
+                {
+                    ProductInfo = new ProductInfoDTO
+                    {
+                        Name = p.Name,
+                        Price = p.Price,
+                        PreviewPhotoURL = p.ModelUrl,
+                        AvergeRating = p.Reviews.Average(r => r.Rating),
+                        CategoryId = p.CategoryId,
+                    },
+                    Id = p.Id,
+                }
+                )
+                .SortBy(query)
+                .ToPaginatedResultAsync(query);
+            }
         }
     }
     internal static class CollectionsListQHExtensions
