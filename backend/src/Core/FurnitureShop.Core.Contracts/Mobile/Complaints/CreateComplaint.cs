@@ -4,8 +4,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Complaints
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class CreateComplaint : IRemoteCommand
     {
         public ComplaintInfoDTO ComplaintInfo { get; set; }
