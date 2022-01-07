@@ -32,7 +32,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                             Price = p.Price,
                             CategoryId = p.CategoryId,
                             PreviewPhotoURL = p.PreviewPhotoUrl,
-                            AvergeRating = p.Reviews.Average(r => r.Rating),
+                            AverageRating = p.Reviews.Average(r => r.Rating),
                         },
                         Description = p.Description,
                         ModelUrl = p.ModelUrl,
