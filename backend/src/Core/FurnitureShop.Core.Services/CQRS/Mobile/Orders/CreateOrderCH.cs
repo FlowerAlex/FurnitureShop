@@ -35,7 +35,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     {
                         ProductId = Id<Product>.From(op.ProductId),
                         Amount = op.Amount,
-                    }).ToList()
+                    }).ToList(),
                 });
             await dbContext.SaveChangesAsync();
         }

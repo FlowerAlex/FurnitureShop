@@ -27,6 +27,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             return count != 0;
         }
     }
+
     public class UserInfoQH : IQueryHandler<UserInfo, UserInfoDTO>
     {
         private readonly CoreDbContext dbContext;

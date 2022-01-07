@@ -29,8 +29,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             user.updateUser(
                 command.Firstname,
                 command.Surname,
-                command.Username
-            );
+                command.Username);
             if (command.Username != null)
             {
                 authUser.UserName = command.Username;

@@ -14,7 +14,6 @@ namespace FurnitureShop.Core.Services.Services.MappingProfiles
         {
             CreateMap<Order, OrderDTO>()
                 .ForMember(dto => dto.Id, o => o.MapFrom(dto => Id<Order>.From(dto.Id)));
-
         }
     }
 }
