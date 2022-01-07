@@ -19,14 +19,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                     .WithMessage("Product name should not be empty");
             RuleFor(p => p.ProductDetails.ProductInfo.Price)
                 .NotEmpty()
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectName)
+                    .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should not be empty")
                 .GreaterThan(0)
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectName)
+                    .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should be a positive number");
             RuleFor(p => p.ProductDetails.Description)
                 .NotEmpty()
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectName)
+                    .WithCode(CreateProduct.ErrorCodes.IncorrectDescription)
                     .WithMessage("Product description should not be empty");  
         }
     }
