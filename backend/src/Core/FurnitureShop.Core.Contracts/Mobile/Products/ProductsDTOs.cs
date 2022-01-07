@@ -13,7 +13,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public double AvergeRating { get; set; }
+        public double? AvergeRating { get; set; }
         public string? PreviewPhotoURL { get;set; }
         public Guid? CategoryId { get; set; }
     }
