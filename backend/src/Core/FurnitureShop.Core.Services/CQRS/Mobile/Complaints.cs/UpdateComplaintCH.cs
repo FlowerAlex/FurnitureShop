@@ -25,6 +25,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
             {
                 return;
             }
+
             toUpdate.Resolved = command.ComplaintInfo.Resolved;
             toUpdate.Response = command.ComplaintInfo.Response;
             toUpdate.Text = command.ComplaintInfo.Text;

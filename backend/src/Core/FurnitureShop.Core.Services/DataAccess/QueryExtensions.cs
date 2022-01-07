@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using FurnitureShop.Core.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.DataAccess
 {
