@@ -21,10 +21,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         public async Task ExecuteAsync(CoreContext context, DeleteReview command)
         {
             var toDelete = await dbContext.Reviews.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
-            if(toDelete == null) 
+            if (toDelete == null)
             {
                 return;
             }
+
             dbContext.Reviews.Remove(toDelete);
             await dbContext.SaveChangesAsync();
         }

@@ -36,7 +36,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         },
                         Description = p.Description,
                         ModelUrl = p.ModelUrl,
-
                     },
                     Id = p.Id,
                 })

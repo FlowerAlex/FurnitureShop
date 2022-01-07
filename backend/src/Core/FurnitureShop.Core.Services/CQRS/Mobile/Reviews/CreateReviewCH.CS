@@ -21,7 +21,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                 {
                     Text = command.ReviewInfo.Text,
                     UserId = Id<User>.From(command.ReviewInfo.UserId),
-                    ProductId = Id<Product>.From(command.ReviewInfo.ProductId)
+                    ProductId = Id<Product>.From(command.ReviewInfo.ProductId),
                 });
             await dbContext.SaveChangesAsync();
         }

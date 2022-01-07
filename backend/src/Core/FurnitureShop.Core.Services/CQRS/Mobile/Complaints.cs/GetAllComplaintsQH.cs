@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 
@@ -32,9 +32,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
                     Resolved = p.Resolved,
                 },
                 Id = p.Id,
-            }
-            )
-            .ToPaginatedResultAsync(query);      
+            })
+            .ToPaginatedResultAsync(query);
         }
     }
 }

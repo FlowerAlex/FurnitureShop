@@ -20,11 +20,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 
         public async Task ExecuteAsync(CoreContext context, UpdateComplaint command)
         {
-            var toUpdate =  await dbContext.Complaints.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
-            if (toUpdate == null) 
+            var toUpdate = await dbContext.Complaints.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
+            if (toUpdate == null)
             {
                 return;
             }
+
             toUpdate.Resolved = command.ComplaintInfo.Resolved;
             toUpdate.Response = command.ComplaintInfo.Response;
             toUpdate.Text = command.ComplaintInfo.Text;

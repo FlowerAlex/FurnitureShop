@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         CategoryId = p.CategoryId,
                     },
                     Id = p.Id,
-                }
-                )
+                })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
             }
@@ -57,13 +56,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         CategoryId = p.CategoryId,
                     },
                     Id = p.Id,
-                }
-                )
+                })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
             }
         }
     }
+
     internal static class ProductQHExtensions
     {
         public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, GetAllProducts query)
@@ -77,6 +76,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, GetAllProducts query)
         {
+            if (!query.SortBy.HasValue)
+            {
+                return queryable;
+            }
+
             return query.SortBy switch
             {
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.ProductInfo.AverageRating, query.SortByDescending),

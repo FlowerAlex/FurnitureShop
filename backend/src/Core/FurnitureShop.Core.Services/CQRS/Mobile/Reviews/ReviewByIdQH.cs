@@ -26,7 +26,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                 {
                     ReviewInfo = new ReviewInfoDTO
                     {
-                        Text = p.Text == null ?"":p.Text,
+                        Text = p.Text == null ? "" : p.Text,
                         Rating = p.Rating,
                         UserId = p.UserId,
                         ProductId = p.ProductId,
