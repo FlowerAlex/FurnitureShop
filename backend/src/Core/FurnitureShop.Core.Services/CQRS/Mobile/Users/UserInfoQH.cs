@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
 {
-    public class UserInfoCV : ContextualValidator<UserInfo> {
+    public class UserInfoCV : ContextualValidator<UserInfo>
+    {
         public UserInfoCV()
         {
             RuleForAsync(userInfo => userInfo, DoesUserExistAsync)
@@ -21,7 +22,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
         {
             var uid = ctx.AppContext<CoreContext>().UserId;
             var dbContext = ctx.GetService<CoreDbContext>();
-            var count =  await dbContext.Users
+            var count = await dbContext.Users
                 .Where(u => u.Id == uid).CountAsync();
             return count != 0;
         }
@@ -35,13 +36,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             this.dbContext = dbContext;
         }
 
-        public async Task<UserInfoDTO> ExecuteAsync(CoreContext context, UserInfo query){    
-            return  await dbContext.Users.Where(user => user.Id == context.UserId).Select(user => new UserInfoDTO{
+        public async Task<UserInfoDTO> ExecuteAsync(CoreContext context, UserInfo query)
+        {
+            return await dbContext.Users.Where(user => user.Id == context.UserId).Select(user => new UserInfoDTO
+            {
                 Firstname = user.Firstname,
                 Surname = user.Surname,
                 EmailAddress = user.EmailAddress,
                 Username = user.Username,
-            }).FirstAsync();      
+            }).FirstAsync();
         }
     }
 }

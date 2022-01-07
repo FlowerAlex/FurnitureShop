@@ -29,9 +29,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             RuleFor(p => p.ProductDetails.Description)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectDescription)
-                    .WithMessage("Product description should not be empty");  
+                    .WithMessage("Product description should not be empty");
         }
     }
+    
     public class UpdateProductCH : ICommandHandler<UpdateProduct>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateProductCH>();

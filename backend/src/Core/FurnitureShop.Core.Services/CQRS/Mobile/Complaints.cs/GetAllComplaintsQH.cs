@@ -32,9 +32,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
                     Resolved = p.Resolved,
                 },
                 Id = p.Id,
-            }
-            )
-            .ToPaginatedResultAsync(query);      
+            })
+            .ToPaginatedResultAsync(query);
         }
     }
 }

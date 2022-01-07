@@ -86,19 +86,19 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .HasForeignKey(r => r.ProductId)
                     .OnDelete(DeleteBehavior.ClientCascade);
             });
-            builder.Entity<OrderProduct>( o =>
-            {
-                o.HasKey(o => o.Id);
-                o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
-                o.Property(o => o.OrderId).IsTypedId();
-                o.Property(o => o.ProductId).IsTypedId();
-                o.HasOne<Order>()
-                    .WithMany(ord => ord.OrdersProducts)
-                    .HasForeignKey(o => o.OrderId);
-                o.HasOne<Product>()
-                    .WithMany(p => p.OrdersProducts)
-                    .HasForeignKey(o => o.ProductId);
-            });
+            builder.Entity<OrderProduct>(o =>
+           {
+               o.HasKey(o => o.Id);
+               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+               o.Property(o => o.OrderId).IsTypedId();
+               o.Property(o => o.ProductId).IsTypedId();
+               o.HasOne<Order>()
+                   .WithMany(ord => ord.OrdersProducts)
+                   .HasForeignKey(o => o.OrderId);
+               o.HasOne<Product>()
+                   .WithMany(p => p.OrdersProducts)
+                   .HasForeignKey(o => o.ProductId);
+           });
             builder.Entity<Order>(b =>
            {
                b.HasKey(o => o.Id);

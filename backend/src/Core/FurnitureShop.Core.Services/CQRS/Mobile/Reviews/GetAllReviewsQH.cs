@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 
@@ -27,14 +27,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                 {
                     UserId = p.UserId,
                     ProductId = p.ProductId,
-                    Text = string.IsNullOrWhiteSpace(p.Text) ?  string.Empty : p.Text ,
+                    Text = string.IsNullOrWhiteSpace(p.Text) ? string.Empty : p.Text,
                     Rating = p.Rating,
                     CreatedDate = p.CreatedDate,
                 },
                 Id = p.Id,
-            }
-            )
-            .ToPaginatedResultAsync(query);      
+            })
+            .ToPaginatedResultAsync(query);
         }
     }
 }

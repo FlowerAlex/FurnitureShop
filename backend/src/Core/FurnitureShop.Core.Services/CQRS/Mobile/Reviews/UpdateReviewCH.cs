@@ -20,8 +20,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
 
         public async Task ExecuteAsync(CoreContext context, UpdateReview command)
         {
-            var toUpdate =  await dbContext.Reviews.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
-            if (toUpdate == null) 
+            var toUpdate = await dbContext.Reviews.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
+            if (toUpdate == null)
             {
                 return;
             }

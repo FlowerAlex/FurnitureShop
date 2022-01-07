@@ -54,7 +54,7 @@ namespace FurnitureShop.Core.Services
                 .InNamespaceOf<IdentityUserManager>()
                 .AsSelf()
                 .AsImplementedInterfaces();
-            
+
             builder.RegisterAssemblyTypes(self)
                 .InNamespaceOf<UsersRepository>()
                 .AsImplementedInterfaces();
