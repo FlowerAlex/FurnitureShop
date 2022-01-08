@@ -35,7 +35,6 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           sortBy: ProductsSortFieldDTO.name,
         ),
       );
-
       emit(
         ProductsScreenReadyState(
           categories: categories,
@@ -70,14 +69,14 @@ class ProductsScreenState with _$ProductsScreenState {
   factory ProductsScreenState.initial({
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(<ProductDTO>[]) List<ProductDTO> products,
-    @Default(1) int currentPage,
+    @Default(0) int currentPage,
     @Default(0) int totalCount,
     required CategoryDTO activeCategory,
   }) = ProductsScreenInitialState;
   const factory ProductsScreenState.loading({
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(<ProductDTO>[]) List<ProductDTO> products,
-    @Default(1) int currentPage,
+    @Default(0) int currentPage,
     @Default(0) int totalCount,
     required CategoryDTO activeCategory,
   }) = ProductsScreenLoadingState;

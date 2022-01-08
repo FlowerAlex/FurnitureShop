@@ -20,7 +20,7 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenInitialState initial(
       {List<CategoryDTO> categories = const <CategoryDTO>[],
       List<ProductDTO> products = const <ProductDTO>[],
-      int currentPage = 1,
+      int currentPage = 0,
       int totalCount = 0,
       required CategoryDTO activeCategory}) {
     return ProductsScreenInitialState(
@@ -35,7 +35,7 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenLoadingState loading(
       {List<CategoryDTO> categories = const <CategoryDTO>[],
       List<ProductDTO> products = const <ProductDTO>[],
-      int currentPage = 1,
+      int currentPage = 0,
       int totalCount = 0,
       required CategoryDTO activeCategory}) {
     return ProductsScreenLoadingState(
@@ -306,7 +306,7 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
   _$ProductsScreenInitialState(
       {this.categories = const <CategoryDTO>[],
       this.products = const <ProductDTO>[],
-      this.currentPage = 1,
+      this.currentPage = 0,
       this.totalCount = 0,
       required this.activeCategory});
 
@@ -316,7 +316,7 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
   @JsonKey(defaultValue: const <ProductDTO>[])
   @override
   final List<ProductDTO> products;
-  @JsonKey(defaultValue: 1)
+  @JsonKey(defaultValue: 0)
   @override
   final int currentPage;
   @JsonKey(defaultValue: 0)
@@ -570,7 +570,7 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
   const _$ProductsScreenLoadingState(
       {this.categories = const <CategoryDTO>[],
       this.products = const <ProductDTO>[],
-      this.currentPage = 1,
+      this.currentPage = 0,
       this.totalCount = 0,
       required this.activeCategory});
 
@@ -580,7 +580,7 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
   @JsonKey(defaultValue: const <ProductDTO>[])
   @override
   final List<ProductDTO> products;
-  @JsonKey(defaultValue: 1)
+  @JsonKey(defaultValue: 0)
   @override
   final int currentPage;
   @JsonKey(defaultValue: 0)

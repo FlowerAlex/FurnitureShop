@@ -52,7 +52,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
       );
 
       if (res.success) {
-        _fetch();
+        await _fetch();
       }
     } catch (e) {
       emit(const ProfileScreenErrorState());

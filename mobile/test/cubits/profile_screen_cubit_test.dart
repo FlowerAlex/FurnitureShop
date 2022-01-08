@@ -121,27 +121,27 @@ void main() {
         ],
       );
 
-      // blocTest<ProfileScreenCubit, ProfileScreenState>(
-      //   'run updateProfile successfully twise',
-      //   build: () {
-      //     when(() => cqrs.get<UserInfoDTO>(any(that: isA<UserInfo>())))
-      //         .thenAnswer((_) async => userInfoTest);
-      //     when(() => cqrs.run(any<IRemoteCommand>(that: isA<UpdateProfile>())))
-      //         .thenAnswer((_) async => const CommandResult([]));
+      blocTest<ProfileScreenCubit, ProfileScreenState>(
+        'run updateProfile successfully twise',
+        build: () {
+          when(() => cqrs.get<UserInfoDTO>(any(that: isA<UserInfo>())))
+              .thenAnswer((_) async => userInfoTest);
+          when(() => cqrs.run(any<IRemoteCommand>(that: isA<UpdateProfile>())))
+              .thenAnswer((_) async => const CommandResult([]));
 
-      //     return buildCubit();
-      //   },
-      //   act: (cubit) async {
-      //     await cubit.updateProfile();
-      //     await cubit.updateProfile();
-      //   },
-      //   expect: () => [
-      //     const ProfileScreenLoadingState(),
-      //     ProfileScreenSuccessState(userInfo: userInfoTest),
-      //     ProfileScreenLoadingState(userInfo: userInfoTest),
-      //     ProfileScreenSuccessState(userInfo: userInfoTest),
-      //   ],
-      // );
+          return buildCubit();
+        },
+        act: (cubit) async {
+          await cubit.updateProfile();
+          await cubit.updateProfile();
+        },
+        expect: () => [
+          const ProfileScreenLoadingState(userInfo: null),
+          ProfileScreenSuccessState(userInfo: userInfoTest),
+          ProfileScreenLoadingState(userInfo: userInfoTest),
+          ProfileScreenSuccessState(userInfo: userInfoTest),
+        ],
+      );
     },
   );
 }
