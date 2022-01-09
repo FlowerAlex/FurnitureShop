@@ -83,8 +83,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
             return query.SortBy switch
             {
+                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.ProductInfo.Name, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.ProductInfo.AverageRating, query.SortByDescending),
-                _ => queryable.OrderBy(s => s.ProductInfo.Name, query.SortByDescending),
+                _ => queryable
             };
         }
     }

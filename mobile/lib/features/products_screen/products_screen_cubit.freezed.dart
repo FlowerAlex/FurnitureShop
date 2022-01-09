@@ -20,10 +20,14 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenInitialState initial(
       {List<CategoryDTO> categories = const <CategoryDTO>[],
       List<ProductDTO> products = const <ProductDTO>[],
+      int currentPage = 0,
+      int totalCount = 0,
       required CategoryDTO activeCategory}) {
     return ProductsScreenInitialState(
       categories: categories,
       products: products,
+      currentPage: currentPage,
+      totalCount: totalCount,
       activeCategory: activeCategory,
     );
   }
@@ -31,10 +35,14 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenLoadingState loading(
       {List<CategoryDTO> categories = const <CategoryDTO>[],
       List<ProductDTO> products = const <ProductDTO>[],
+      int currentPage = 0,
+      int totalCount = 0,
       required CategoryDTO activeCategory}) {
     return ProductsScreenLoadingState(
       categories: categories,
       products: products,
+      currentPage: currentPage,
+      totalCount: totalCount,
       activeCategory: activeCategory,
     );
   }
@@ -42,10 +50,14 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenReadyState ready(
       {required List<CategoryDTO> categories,
       required List<ProductDTO> products,
+      required int currentPage,
+      required int totalCount,
       required CategoryDTO activeCategory}) {
     return ProductsScreenReadyState(
       categories: categories,
       products: products,
+      currentPage: currentPage,
+      totalCount: totalCount,
       activeCategory: activeCategory,
     );
   }
@@ -53,10 +65,14 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenErrorState error(
       {required List<CategoryDTO> categories,
       required List<ProductDTO> products,
+      required int currentPage,
+      required int totalCount,
       required CategoryDTO activeCategory}) {
     return ProductsScreenErrorState(
       categories: categories,
       products: products,
+      currentPage: currentPage,
+      totalCount: totalCount,
       activeCategory: activeCategory,
     );
   }
@@ -69,53 +85,71 @@ const $ProductsScreenState = _$ProductsScreenStateTearOff();
 mixin _$ProductsScreenState {
   List<CategoryDTO> get categories => throw _privateConstructorUsedError;
   List<ProductDTO> get products => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  int get totalCount => throw _privateConstructorUsedError;
   CategoryDTO get activeCategory => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         initial,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         loading,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         ready,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
     required TResult orElse(),
   }) =>
@@ -159,6 +193,8 @@ abstract class $ProductsScreenStateCopyWith<$Res> {
   $Res call(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       CategoryDTO activeCategory});
 }
 
@@ -175,6 +211,8 @@ class _$ProductsScreenStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? products = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
     Object? activeCategory = freezed,
   }) {
     return _then(_value.copyWith(
@@ -186,6 +224,14 @@ class _$ProductsScreenStateCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -204,6 +250,8 @@ abstract class $ProductsScreenInitialStateCopyWith<$Res>
   $Res call(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       CategoryDTO activeCategory});
 }
 
@@ -223,6 +271,8 @@ class _$ProductsScreenInitialStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? products = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
     Object? activeCategory = freezed,
   }) {
     return _then(ProductsScreenInitialState(
@@ -234,6 +284,14 @@ class _$ProductsScreenInitialStateCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -248,6 +306,8 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
   _$ProductsScreenInitialState(
       {this.categories = const <CategoryDTO>[],
       this.products = const <ProductDTO>[],
+      this.currentPage = 0,
+      this.totalCount = 0,
       required this.activeCategory});
 
   @JsonKey(defaultValue: const <CategoryDTO>[])
@@ -256,12 +316,18 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
   @JsonKey(defaultValue: const <ProductDTO>[])
   @override
   final List<ProductDTO> products;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int currentPage;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int totalCount;
   @override
   final CategoryDTO activeCategory;
 
   @override
   String toString() {
-    return 'ProductsScreenState.initial(categories: $categories, products: $products, activeCategory: $activeCategory)';
+    return 'ProductsScreenState.initial(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory)';
   }
 
   @override
@@ -272,6 +338,10 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             (identical(other.activeCategory, activeCategory) ||
                 other.activeCategory == activeCategory));
   }
@@ -281,6 +351,8 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
+      currentPage,
+      totalCount,
       activeCategory);
 
   @JsonKey(ignore: true)
@@ -293,60 +365,79 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         initial,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         loading,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         ready,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         error,
   }) {
-    return initial(categories, products, activeCategory);
+    return initial(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
   }) {
-    return initial?.call(categories, products, activeCategory);
+    return initial?.call(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(categories, products, activeCategory);
+      return initial(
+          categories, products, currentPage, totalCount, activeCategory);
     }
     return orElse();
   }
@@ -393,12 +484,18 @@ abstract class ProductsScreenInitialState implements ProductsScreenState {
   factory ProductsScreenInitialState(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       required CategoryDTO activeCategory}) = _$ProductsScreenInitialState;
 
   @override
   List<CategoryDTO> get categories;
   @override
   List<ProductDTO> get products;
+  @override
+  int get currentPage;
+  @override
+  int get totalCount;
   @override
   CategoryDTO get activeCategory;
   @override
@@ -417,6 +514,8 @@ abstract class $ProductsScreenLoadingStateCopyWith<$Res>
   $Res call(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       CategoryDTO activeCategory});
 }
 
@@ -436,6 +535,8 @@ class _$ProductsScreenLoadingStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? products = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
     Object? activeCategory = freezed,
   }) {
     return _then(ProductsScreenLoadingState(
@@ -447,6 +548,14 @@ class _$ProductsScreenLoadingStateCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -461,6 +570,8 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
   const _$ProductsScreenLoadingState(
       {this.categories = const <CategoryDTO>[],
       this.products = const <ProductDTO>[],
+      this.currentPage = 0,
+      this.totalCount = 0,
       required this.activeCategory});
 
   @JsonKey(defaultValue: const <CategoryDTO>[])
@@ -469,12 +580,18 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
   @JsonKey(defaultValue: const <ProductDTO>[])
   @override
   final List<ProductDTO> products;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int currentPage;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int totalCount;
   @override
   final CategoryDTO activeCategory;
 
   @override
   String toString() {
-    return 'ProductsScreenState.loading(categories: $categories, products: $products, activeCategory: $activeCategory)';
+    return 'ProductsScreenState.loading(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory)';
   }
 
   @override
@@ -485,6 +602,10 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             (identical(other.activeCategory, activeCategory) ||
                 other.activeCategory == activeCategory));
   }
@@ -494,6 +615,8 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
+      currentPage,
+      totalCount,
       activeCategory);
 
   @JsonKey(ignore: true)
@@ -506,60 +629,79 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         initial,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         loading,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         ready,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         error,
   }) {
-    return loading(categories, products, activeCategory);
+    return loading(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
   }) {
-    return loading?.call(categories, products, activeCategory);
+    return loading?.call(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(categories, products, activeCategory);
+      return loading(
+          categories, products, currentPage, totalCount, activeCategory);
     }
     return orElse();
   }
@@ -606,12 +748,18 @@ abstract class ProductsScreenLoadingState implements ProductsScreenState {
   const factory ProductsScreenLoadingState(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       required CategoryDTO activeCategory}) = _$ProductsScreenLoadingState;
 
   @override
   List<CategoryDTO> get categories;
   @override
   List<ProductDTO> get products;
+  @override
+  int get currentPage;
+  @override
+  int get totalCount;
   @override
   CategoryDTO get activeCategory;
   @override
@@ -630,6 +778,8 @@ abstract class $ProductsScreenReadyStateCopyWith<$Res>
   $Res call(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       CategoryDTO activeCategory});
 }
 
@@ -649,6 +799,8 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? products = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
     Object? activeCategory = freezed,
   }) {
     return _then(ProductsScreenReadyState(
@@ -660,6 +812,14 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -674,6 +834,8 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   const _$ProductsScreenReadyState(
       {required this.categories,
       required this.products,
+      required this.currentPage,
+      required this.totalCount,
       required this.activeCategory});
 
   @override
@@ -681,11 +843,15 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   @override
   final List<ProductDTO> products;
   @override
+  final int currentPage;
+  @override
+  final int totalCount;
+  @override
   final CategoryDTO activeCategory;
 
   @override
   String toString() {
-    return 'ProductsScreenState.ready(categories: $categories, products: $products, activeCategory: $activeCategory)';
+    return 'ProductsScreenState.ready(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory)';
   }
 
   @override
@@ -696,6 +862,10 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             (identical(other.activeCategory, activeCategory) ||
                 other.activeCategory == activeCategory));
   }
@@ -705,6 +875,8 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
+      currentPage,
+      totalCount,
       activeCategory);
 
   @JsonKey(ignore: true)
@@ -716,60 +888,78 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         initial,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         loading,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         ready,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         error,
   }) {
-    return ready(categories, products, activeCategory);
+    return ready(categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
   }) {
-    return ready?.call(categories, products, activeCategory);
+    return ready?.call(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(categories, products, activeCategory);
+      return ready(
+          categories, products, currentPage, totalCount, activeCategory);
     }
     return orElse();
   }
@@ -816,12 +1006,18 @@ abstract class ProductsScreenReadyState implements ProductsScreenState {
   const factory ProductsScreenReadyState(
       {required List<CategoryDTO> categories,
       required List<ProductDTO> products,
+      required int currentPage,
+      required int totalCount,
       required CategoryDTO activeCategory}) = _$ProductsScreenReadyState;
 
   @override
   List<CategoryDTO> get categories;
   @override
   List<ProductDTO> get products;
+  @override
+  int get currentPage;
+  @override
+  int get totalCount;
   @override
   CategoryDTO get activeCategory;
   @override
@@ -840,6 +1036,8 @@ abstract class $ProductsScreenErrorStateCopyWith<$Res>
   $Res call(
       {List<CategoryDTO> categories,
       List<ProductDTO> products,
+      int currentPage,
+      int totalCount,
       CategoryDTO activeCategory});
 }
 
@@ -859,6 +1057,8 @@ class _$ProductsScreenErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? products = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
     Object? activeCategory = freezed,
   }) {
     return _then(ProductsScreenErrorState(
@@ -870,6 +1070,14 @@ class _$ProductsScreenErrorStateCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductDTO>,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -884,6 +1092,8 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   const _$ProductsScreenErrorState(
       {required this.categories,
       required this.products,
+      required this.currentPage,
+      required this.totalCount,
       required this.activeCategory});
 
   @override
@@ -891,11 +1101,15 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   @override
   final List<ProductDTO> products;
   @override
+  final int currentPage;
+  @override
+  final int totalCount;
+  @override
   final CategoryDTO activeCategory;
 
   @override
   String toString() {
-    return 'ProductsScreenState.error(categories: $categories, products: $products, activeCategory: $activeCategory)';
+    return 'ProductsScreenState.error(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory)';
   }
 
   @override
@@ -906,6 +1120,10 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             (identical(other.activeCategory, activeCategory) ||
                 other.activeCategory == activeCategory));
   }
@@ -915,6 +1133,8 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
+      currentPage,
+      totalCount,
       activeCategory);
 
   @JsonKey(ignore: true)
@@ -926,60 +1146,78 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         initial,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         loading,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         ready,
-    required TResult Function(List<CategoryDTO> categories,
-            List<ProductDTO> products, CategoryDTO activeCategory)
+    required TResult Function(
+            List<CategoryDTO> categories,
+            List<ProductDTO> products,
+            int currentPage,
+            int totalCount,
+            CategoryDTO activeCategory)
         error,
   }) {
-    return error(categories, products, activeCategory);
+    return error(categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
   }) {
-    return error?.call(categories, products, activeCategory);
+    return error?.call(
+        categories, products, currentPage, totalCount, activeCategory);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         initial,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         loading,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         ready,
     TResult Function(List<CategoryDTO> categories, List<ProductDTO> products,
-            CategoryDTO activeCategory)?
+            int currentPage, int totalCount, CategoryDTO activeCategory)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(categories, products, activeCategory);
+      return error(
+          categories, products, currentPage, totalCount, activeCategory);
     }
     return orElse();
   }
@@ -1026,12 +1264,18 @@ abstract class ProductsScreenErrorState implements ProductsScreenState {
   const factory ProductsScreenErrorState(
       {required List<CategoryDTO> categories,
       required List<ProductDTO> products,
+      required int currentPage,
+      required int totalCount,
       required CategoryDTO activeCategory}) = _$ProductsScreenErrorState;
 
   @override
   List<CategoryDTO> get categories;
   @override
   List<ProductDTO> get products;
+  @override
+  int get currentPage;
+  @override
+  int get totalCount;
   @override
   CategoryDTO get activeCategory;
   @override

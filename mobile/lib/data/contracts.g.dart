@@ -6,6 +6,27 @@ part of 'contracts.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Auth _$AuthFromJson(Map<String, dynamic> json) => Auth();
+
+Map<String, dynamic> _$AuthToJson(Auth instance) => <String, dynamic>{};
+
+Clients _$ClientsFromJson(Map<String, dynamic> json) => Clients();
+
+Map<String, dynamic> _$ClientsToJson(Clients instance) => <String, dynamic>{};
+
+KnownClaims _$KnownClaimsFromJson(Map<String, dynamic> json) => KnownClaims();
+
+Map<String, dynamic> _$KnownClaimsToJson(KnownClaims instance) =>
+    <String, dynamic>{};
+
+Roles _$RolesFromJson(Map<String, dynamic> json) => Roles();
+
+Map<String, dynamic> _$RolesToJson(Roles instance) => <String, dynamic>{};
+
+Scopes _$ScopesFromJson(Map<String, dynamic> json) => Scopes();
+
+Map<String, dynamic> _$ScopesToJson(Scopes instance) => <String, dynamic>{};
+
 CategoryById _$CategoryByIdFromJson(Map<String, dynamic> json) => CategoryById(
       id: json['Id'] as String,
     );
@@ -127,6 +148,18 @@ Map<String, dynamic> _$DeleteComplaintToJson(DeleteComplaint instance) =>
       'Id': instance.id,
     };
 
+GetAllComplaints _$GetAllComplaintsFromJson(Map<String, dynamic> json) =>
+    GetAllComplaints(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+    );
+
+Map<String, dynamic> _$GetAllComplaintsToJson(GetAllComplaints instance) =>
+    <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+    };
+
 UpdateComplaint _$UpdateComplaintFromJson(Map<String, dynamic> json) =>
     UpdateComplaint(
       id: json['Id'] as String,
@@ -216,13 +249,13 @@ Map<String, dynamic> _$OrderProductDTOToJson(OrderProductDTO instance) =>
 
 CreateProduct _$CreateProductFromJson(Map<String, dynamic> json) =>
     CreateProduct(
-      productInfo:
-          ProductInfoDTO.fromJson(json['ProductInfo'] as Map<String, dynamic>),
+      productDetails: ProductDetailsDTO.fromJson(
+          json['ProductDetails'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CreateProductToJson(CreateProduct instance) =>
     <String, dynamic>{
-      'ProductInfo': instance.productInfo,
+      'ProductDetails': instance.productDetails,
     };
 
 DeleteProduct _$DeleteProductFromJson(Map<String, dynamic> json) =>
@@ -237,13 +270,66 @@ Map<String, dynamic> _$DeleteProductToJson(DeleteProduct instance) =>
 
 GetAllProducts _$GetAllProductsFromJson(Map<String, dynamic> json) =>
     GetAllProducts(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+      filterBy: json['FilterBy'] as String?,
+      sortBy:
+          _$enumDecodeNullable(_$ProductsSortFieldDTOEnumMap, json['SortBy']),
+      sortByDescending: json['SortByDescending'] as bool,
       categoryId: json['CategoryId'] as String?,
     );
 
 Map<String, dynamic> _$GetAllProductsToJson(GetAllProducts instance) =>
     <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+      'FilterBy': instance.filterBy,
+      'SortBy': _$ProductsSortFieldDTOEnumMap[instance.sortBy],
+      'SortByDescending': instance.sortByDescending,
       'CategoryId': instance.categoryId,
     };
+
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
+  }
+
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$ProductsSortFieldDTOEnumMap = {
+  ProductsSortFieldDTO.name: 0,
+  ProductsSortFieldDTO.rating: 1,
+};
 
 ProductById _$ProductByIdFromJson(Map<String, dynamic> json) => ProductById(
       id: json['Id'] as String,
@@ -252,6 +338,21 @@ ProductById _$ProductByIdFromJson(Map<String, dynamic> json) => ProductById(
 Map<String, dynamic> _$ProductByIdToJson(ProductById instance) =>
     <String, dynamic>{
       'Id': instance.id,
+    };
+
+ProductDetailsDTO _$ProductDetailsDTOFromJson(Map<String, dynamic> json) =>
+    ProductDetailsDTO(
+      description: json['Description'] as String,
+      modelUrl: json['ModelUrl'] as String?,
+      productInfo:
+          ProductInfoDTO.fromJson(json['ProductInfo'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ProductDetailsDTOToJson(ProductDetailsDTO instance) =>
+    <String, dynamic>{
+      'Description': instance.description,
+      'ModelUrl': instance.modelUrl,
+      'ProductInfo': instance.productInfo,
     };
 
 ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) => ProductDTO(
@@ -268,33 +369,48 @@ Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
 
 ProductInfoDTO _$ProductInfoDTOFromJson(Map<String, dynamic> json) =>
     ProductInfoDTO(
-      description: json['Description'] as String,
-      price: (json['Price'] as num).toDouble(),
       name: json['Name'] as String,
-      modelUrl: json['ModelUrl'] as String?,
+      price: (json['Price'] as num).toDouble(),
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
+      previewPhotoURL: json['PreviewPhotoURL'] as String?,
       categoryId: json['CategoryId'] as String?,
     );
 
 Map<String, dynamic> _$ProductInfoDTOToJson(ProductInfoDTO instance) =>
     <String, dynamic>{
-      'Description': instance.description,
-      'Price': instance.price,
       'Name': instance.name,
-      'ModelUrl': instance.modelUrl,
+      'Price': instance.price,
+      'AverageRating': instance.averageRating,
+      'PreviewPhotoURL': instance.previewPhotoURL,
       'CategoryId': instance.categoryId,
+    };
+
+ProductWithDetailsDTO _$ProductWithDetailsDTOFromJson(
+        Map<String, dynamic> json) =>
+    ProductWithDetailsDTO(
+      id: json['Id'] as String,
+      productDetails: ProductDetailsDTO.fromJson(
+          json['ProductDetails'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ProductWithDetailsDTOToJson(
+        ProductWithDetailsDTO instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'ProductDetails': instance.productDetails,
     };
 
 UpdateProduct _$UpdateProductFromJson(Map<String, dynamic> json) =>
     UpdateProduct(
       id: json['Id'] as String,
-      productInfo:
-          ProductInfoDTO.fromJson(json['ProductInfo'] as Map<String, dynamic>),
+      productDetails: ProductDetailsDTO.fromJson(
+          json['ProductDetails'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UpdateProductToJson(UpdateProduct instance) =>
     <String, dynamic>{
       'Id': instance.id,
-      'ProductInfo': instance.productInfo,
+      'ProductDetails': instance.productDetails,
     };
 
 CreateReview _$CreateReviewFromJson(Map<String, dynamic> json) => CreateReview(
@@ -318,14 +434,16 @@ Map<String, dynamic> _$DeleteReviewToJson(DeleteReview instance) =>
 
 GetAllReviews _$GetAllReviewsFromJson(Map<String, dynamic> json) =>
     GetAllReviews(
-      productId: json['ProductId'] as String?,
-      userId: json['UserId'] as String?,
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+      productId: json['ProductId'] as String,
     );
 
 Map<String, dynamic> _$GetAllReviewsToJson(GetAllReviews instance) =>
     <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
       'ProductId': instance.productId,
-      'UserId': instance.userId,
     };
 
 ReviewById _$ReviewByIdFromJson(Map<String, dynamic> json) => ReviewById(
@@ -420,4 +538,22 @@ Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
       'Surname': instance.surname,
       'Username': instance.username,
       'EmailAddress': instance.emailAddress,
+    };
+
+PaginatedResult<TResult> _$PaginatedResultFromJson<TResult>(
+  Map<String, dynamic> json,
+  TResult Function(Object? json) fromJsonTResult,
+) =>
+    PaginatedResult<TResult>(
+      items: (json['Items'] as List<dynamic>).map(fromJsonTResult).toList(),
+      totalCount: json['TotalCount'] as int,
+    );
+
+Map<String, dynamic> _$PaginatedResultToJson<TResult>(
+  PaginatedResult<TResult> instance,
+  Object? Function(TResult value) toJsonTResult,
+) =>
+    <String, dynamic>{
+      'Items': instance.items.map(toJsonTResult).toList(),
+      'TotalCount': instance.totalCount,
     };
