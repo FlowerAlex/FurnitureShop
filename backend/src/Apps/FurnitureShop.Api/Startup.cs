@@ -19,6 +19,7 @@ using LeanCode.ViewRenderer.Razor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Swashbuckle.AspNetCore;
 
 namespace FurnitureShop.Api
 {
@@ -63,7 +64,6 @@ namespace FurnitureShop.Api
 
             return modules.ToArray();
         }
-
         protected override void ConfigureApp(IApplicationBuilder app)
         {
             app
@@ -72,7 +72,7 @@ namespace FurnitureShop.Api
                 .UseCors(ApiModule.ApiCorsPolicy);
 
             app.Map("/auth", auth => auth.UseIdentityServer());
-
+            
             app.Map("/api", api =>
                     api
                         .UseAuthentication()
@@ -84,6 +84,9 @@ namespace FurnitureShop.Api
             {
                 endpoints.MapHealthChecks("/live/health");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
     }
 }
