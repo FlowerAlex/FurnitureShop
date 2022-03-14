@@ -35,29 +35,25 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
     {
         private readonly CoreDbContext dbContext;
 
-        private readonly IRepository<User> users;
-
-        public GetShoppingCartQH(CoreDbContext dbContext, IRepository<User> users)
+        public GetShoppingCartQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.users = users;
         }
 
         public async Task<ShoppingCartDTO?> ExecuteAsync(CoreContext context, GetShoppingCart query)
         {
-            var user = await users.FindAndEnsureExistsAsync(context.UserId);
             return await dbContext.ShoppingCarts.Include(p => p.ShoppingCartProducts)
-                .Where(p => p.UserId == user.Id)
+                .Where(p => p.Id == query.ShoppingCartId)
                 .Select(p => new ShoppingCartDTO
                 {
                     ShoppingCartInfo = new ShoppingCartInfoDTO
                     {
                         Price = 0, //todo douczyc sie linqa
-                        ShoppingCartProducts = p.ShoppingCartProducts.Select( sp => new ShoppingCartProductDTO
+                        ShoppingCartProducts = p.ShoppingCartProducts.Select(sp => new ShoppingCartProductDTO
                         {
                             ProductId = sp.ProductId,
                             Amount = sp.Amount,
-                        }) 
+                        })
                     },
                     Id = p.Id,
                 })
