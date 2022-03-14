@@ -8,13 +8,13 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
     {
         public Guid? UserId { get; set; }
         public decimal Price { get; set; }
-        public List<ShoppingCartProductDTO> ShoppingCartProducts { get; set; }
+        public IEnumerable<ShoppingCartProductDTO> ShoppingCartProducts { get; set; }
     }
 
     public class ShoppingCartDTO
     {
         public Guid Id { get; set; }
-        public ShoppingCartDTO OrderInfo { get; set; }
+        public ShoppingCartInfoDTO ShoppingCartInfo { get; set; }
 
     }
     public class ShoppingCartProductDTO
