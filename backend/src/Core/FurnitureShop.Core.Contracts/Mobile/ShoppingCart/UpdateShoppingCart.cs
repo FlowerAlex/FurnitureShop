@@ -12,7 +12,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
         public static class ErrorCodes
         {
             public const int ShoppingCartNotFound = 1;
-            public const int NoProducts = 2;
         }
     }
 }
