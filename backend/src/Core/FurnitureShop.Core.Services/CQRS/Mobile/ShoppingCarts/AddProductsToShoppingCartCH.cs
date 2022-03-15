@@ -30,7 +30,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 Amount = cmd.Amount,
                 ProductId = Id<Product>.From(cmd.ProductId),
             };  
-            shc.ShoppingCartProducts.Add(shp);//do rozkminy co jesli jest nullem ogolnie mechanizm tworzenia koszyka
+            shc.ShoppingCartProducts.Add(shp);
             dbContext.ShoppingCarts.Update(shc);
             await dbContext.SaveChangesAsync();
         }
