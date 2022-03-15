@@ -14,6 +14,7 @@ namespace FurnitureShop.Core.Domain
 
         public ShoppingCart()
         {
+            Id = Id<ShoppingCart>.New();
             ShoppingCartProducts = new List<ShoppingCartProduct>();
         }
     }

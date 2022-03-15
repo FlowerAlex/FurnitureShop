@@ -15,5 +15,9 @@ namespace FurnitureShop.Core.Domain
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
+        public ShoppingCartProduct()
+        {          
+            Id = Id<ShoppingCartProduct>.New();
+        }
     }
 }
