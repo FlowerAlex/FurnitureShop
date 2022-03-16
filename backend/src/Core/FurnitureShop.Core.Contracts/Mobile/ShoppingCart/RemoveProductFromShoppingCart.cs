@@ -1,6 +1,6 @@
 using System;
-using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
+using LeanCode.CQRS;
 
 namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
 {

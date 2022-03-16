@@ -21,15 +21,21 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         {
             this.dbContext = dbContext;
         }
+
         public async Task ExecuteAsync(CoreContext context, AddProductsToShoppingCart cmd)
         {
             var shc = await dbContext.ShoppingCarts.Include(sp => sp.ShoppingCartProducts)
                 .Where(sp => sp.Id == cmd.ShoppingCartId).FirstOrDefaultAsync();
-            var shp = new ShoppingCartProduct 
+            var shp = new ShoppingCartProduct
             {
                 Amount = cmd.Amount,
                 ProductId = Id<Product>.From(cmd.ProductId),
-            };  
+            };
+            if (shc == null)
+            {
+                return;
+            }
+
             shc.ShoppingCartProducts.Add(shp);
             dbContext.ShoppingCarts.Update(shc);
             await dbContext.SaveChangesAsync();
