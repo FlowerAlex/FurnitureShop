@@ -31,6 +31,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
             return count != 0;
         }
     }
+    
     public class GetShoppingCartQH : IQueryHandler<GetShoppingCart, ShoppingCartDTO?>
     {
         private readonly CoreDbContext dbContext;
@@ -48,12 +49,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 {
                     ShoppingCartInfo = new ShoppingCartInfoDTO
                     {
-                        Price = 0, //todo douczyc sie linqa
+                        Price = 0, // todo douczyc sie linqa
                         ShoppingCartProducts = p.ShoppingCartProducts.Select(sp => new ShoppingCartProductDTO
                         {
                             ProductId = sp.ProductId,
                             Amount = sp.Amount,
-                        })
+                        }),
+                        UserId = p.UserId,
                     },
                     Id = p.Id,
                 })
