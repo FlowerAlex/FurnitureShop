@@ -22,6 +22,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             ModelUrl = "https://some.url.com",
         };
+        private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 200);
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
         private readonly ShoppingCart TestShoppingCart = new ShoppingCart();
         private readonly ShoppingCartProduct TestShoppingCartProduct = new ShoppingCartProduct();
@@ -83,6 +84,47 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             //Assert.Equal(TestProduct.Price *TestProductAmount,ShoppingCart.ShoppingCartInfo.Price);
             Assert.Equal(TestShoppingCartProduct.ProductId,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().ProductId);
             Assert.Equal(TestProductAmount,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().Amount);
+        }
+        [Fact]
+        public void AddProductToShoppingCartTest()
+        {
+            int productAmount = 4;
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new AddProductsToShoppingCartCH(dbContext);
+            var command = new AddProductsToShoppingCart
+            {
+                ProductId = TestProduct2.Id,
+                ShoppingCartId = TestShoppingCart.Id,
+                Amount = productAmount,
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            var Shpc = dbContext.ShoppingCarts.Where(p => p.Id == TestShoppingCart.Id).First();
+            Assert.Equal(2,Shpc.ShoppingCartProducts.Count);
+            var addedProduct = Shpc.ShoppingCartProducts.Where(p => p.ProductId == TestProduct2.Id).First();
+            Assert.Equal(TestProduct2.Id,addedProduct.ProductId);
+            Assert.Equal(productAmount,addedProduct.Amount);
+            Assert.Equal(Shpc.Id,addedProduct.ShoppingCartId);
+        }
+        [Fact]
+        public void RemoveProductFromShoppintCartTest()
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new RemoveProductFromShoppingCartCH(dbContext);
+            var command = new RemoveProductFromShoppingCart
+            {
+                ProductId = TestProduct.Id,
+                ShoppingCartId = TestShoppingCart.Id,
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+
+            Assert.True(result.IsCompletedSuccessfully);
+            var ShoppingCartProduct = dbContext.ShoppingCartProducts.Find(TestShoppingCartProduct.Id);
+            Assert.Null(ShoppingCartProduct);
         }
     }
 }

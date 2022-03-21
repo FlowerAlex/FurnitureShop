@@ -35,7 +35,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.Categories.Add(TestCategory);
             context.SaveChanges();
 
-            TestProduct.CategoryId = context.Categories.Where(c => c.Name == TestCategory.Name).FirstOrDefault().Id;
+            TestProduct.CategoryId = TestCategory.Id;
             context.Products.Add(TestProduct);
             context.SaveChanges();
         }
@@ -61,7 +61,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new ProductByIdQH(dbContext);
             var command = new ProductById { Id = TestProduct.Id };
             var result = handler.ExecuteAsync(coreContext, command);
-            //Assert.True(result.IsCompletedSuccessfully);
+            Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
             Assert.NotNull(Product);
             Assert.Equal(TestProduct.Name, Product.ProductDetails.Name);
