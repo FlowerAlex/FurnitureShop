@@ -31,7 +31,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
             return count != 0;
         }
     }
-    
+
     public class GetShoppingCartQH : IQueryHandler<GetShoppingCart, ShoppingCartDTO?>
     {
         private readonly CoreDbContext dbContext;
@@ -43,23 +43,42 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 
         public async Task<ShoppingCartDTO?> ExecuteAsync(CoreContext context, GetShoppingCart query)
         {
-            return await dbContext.ShoppingCarts.Include(p => p.ShoppingCartProducts)
+            var ret =  await dbContext.ShoppingCarts.Include(p => p.ShoppingCartProducts)
                 .Where(p => p.Id == query.ShoppingCartId)
                 .Select(p => new ShoppingCartDTO
                 {
                     ShoppingCartInfo = new ShoppingCartInfoDTO
                     {
-                        Price = 0, // todo douczyc sie linqa
-                        ShoppingCartProducts = p.ShoppingCartProducts.Select(sp => new ShoppingCartProductDTO
-                        {
-                            ProductId = sp.ProductId,
-                            Amount = sp.Amount,
-                        }),
+                        ShoppingCartProducts = dbContext.Products
+                        .Join(
+                            dbContext.ShoppingCartProducts,
+                            prod => prod.Id,
+                            shp => shp.ProductId,
+                            (prod, shp) => new ShoppingCartProductDTO
+                            {
+                                Amount = shp.Amount,
+                                ShoppingCartId = shp.ShoppingCartId.Value,
+                                Product = new Contracts.Mobile.Products.ProductDTO
+                                {
+                                    Id = prod.Id,
+                                    ProductInfo = new Contracts.Mobile.Products.ProductInfoDTO
+                                    {
+                                        Name = prod.Name,
+                                        Price = prod.Price,
+                                        PreviewPhotoURL = prod.PreviewPhotoUrl,
+                                        CategoryId = prod.CategoryId,
+                                    }
+                                }
+                            }
+                        ).Where(shp => shp.ShoppingCartId == query.ShoppingCartId),
                         UserId = p.UserId,
                     },
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();
+                if (ret == null) return null;
+                ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price);
+                return ret;
         }
     }
 }
