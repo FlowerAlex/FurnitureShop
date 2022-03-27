@@ -43,7 +43,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 
         public async Task<ShoppingCartDTO?> ExecuteAsync(CoreContext context, GetShoppingCart query)
         {
-            var ret =  await dbContext.ShoppingCarts.Include(p => p.ShoppingCartProducts)
+            var ret =  await dbContext.ShoppingCarts
                 .Where(p => p.Id == query.ShoppingCartId)
                 .Select(p => new ShoppingCartDTO
                 {
@@ -70,14 +70,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                     }
                                 }
                             }
-                        ).Where(shp => shp.ShoppingCartId == query.ShoppingCartId),
+                        ).Where(shp => shp.ShoppingCartId == query.ShoppingCartId).ToList(),
                         UserId = p.UserId,
                     },
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();
-                if (ret == null) return null;
-                ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price);
+                if (ret == null) {return null;}
+                ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
                 return ret;
         }
     }
