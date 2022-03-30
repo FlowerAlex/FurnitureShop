@@ -10,19 +10,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 {
-    public class OrderByIdQH : IQueryHandler<OrderById, OrderDTO?>
+    public class GetAllOrdersQH : IQueryHandler<GetAllOrders, List<OrderDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public OrderByIdQH(CoreDbContext dbContext)
+        public GetAllOrdersQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<OrderDTO?> ExecuteAsync(CoreContext context, OrderById query)
+        public async Task<List<OrderDTO>> ExecuteAsync(CoreContext context, GetAllOrders query)
         {
             return await dbContext.Orders.Include(o => o.OrdersProducts)
-                .Where(p => p.Id == query.Id)
+                .Where(p => query.OrderState == null ? true : p.OrderState == Enum.Parse<OrderState>(query.OrderState))
                 .Select(p => new OrderDTO
                 {
                     Id = p.Id,
@@ -62,7 +62,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                         ).Where(ord => ord.OrderId == p.Id).ToList(),
                     },
                 })
-                .FirstOrDefaultAsync();
+                .ToListAsync();
         }
     }
 }

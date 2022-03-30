@@ -33,7 +33,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     OrderState = OrderState.Pending,
                     OrdersProducts = command.OrderInfo.OrderProducts.Select(op => new OrderProduct
                     {
-                        ProductId = Id<Product>.From(op.ProductId),
+                        ProductId = Id<Product>.From(op.Product.Id),
                         Amount = op.Amount,
                     }).ToList(),
                 });
