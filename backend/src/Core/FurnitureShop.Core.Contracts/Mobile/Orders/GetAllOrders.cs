@@ -13,5 +13,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         {
             public const int IncorrectStatus = 1;
         }
+        public enum OrdersSortFieldDTO
+        {
+            Date = 0,     
+        }
     }
 }

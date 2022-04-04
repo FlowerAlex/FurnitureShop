@@ -50,7 +50,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             TestShoppingCart.ShoppingCartProducts = new List<ShoppingCartProduct> { TestShoppingCartProduct };
             TestShoppingCart.UserId = Id<User>.From(TestUserId);
 
-            context.ShoppingCartProducts.Add(TestShoppingCartProduct);
+            context.ShoppingCartProduct.Add(TestShoppingCartProduct);
             context.ShoppingCarts.Add(TestShoppingCart);
             context.SaveChanges();
         }
@@ -123,7 +123,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
-            var ShoppingCartProduct = dbContext.ShoppingCartProducts.Find(TestShoppingCartProduct.Id);
+            var ShoppingCartProduct = dbContext.ShoppingCartProduct.Find(TestShoppingCartProduct.Id);
             Assert.Null(ShoppingCartProduct);
         }
     }

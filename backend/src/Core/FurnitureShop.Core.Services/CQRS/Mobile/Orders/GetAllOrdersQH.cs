@@ -40,7 +40,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                         DeliveredDate = p.DeliveredDate,
                         OrderProducts  = dbContext.Products
                         .Join(
-                            dbContext.OrderProducts,
+                            dbContext.OrderProduct,
                             prod => prod.Id,
                             ord => ord.ProductId,
                             (prod, ord) => new OrderProductDTO
