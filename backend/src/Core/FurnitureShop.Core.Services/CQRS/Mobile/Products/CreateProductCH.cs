@@ -13,11 +13,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
     {
         public CreateProductCV()
         {
-            RuleFor(p => p.ProductDetails.ProductInfo.Name)
+            RuleFor(p => p.ProductDetails.Name)
                 .NotEmpty()
                     .WithCode(CreateProduct.ErrorCodes.IncorrectName)
                     .WithMessage("Product name should not be empty");
-            RuleFor(p => p.ProductDetails.ProductInfo.Price)
+            RuleFor(p => p.ProductDetails.Price)
                 .NotEmpty()
                     .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should not be empty")
@@ -42,11 +42,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
             var result = await dbContext.Products.AddAsync(
-                new Product(command.ProductDetails.ProductInfo.Name, command.ProductDetails.Description, command.ProductDetails.ProductInfo.Price)
+                new Product(command.ProductDetails.Name, command.ProductDetails.Description, command.ProductDetails.Price)
                 {
                     ModelUrl = command.ProductDetails.ModelUrl,
-                    CategoryId = Id<Category>.From(command.ProductDetails.ProductInfo.CategoryId),
-                    PreviewPhotoUrl = command.ProductDetails.ProductInfo.PreviewPhotoURL,
+                    CategoryId = Id<Category>.From(command.ProductDetails.CategoryId),
+                    PreviewPhotoUrl = command.ProductDetails.PreviewPhotoURL,
                 });
             await dbContext.SaveChangesAsync();
         }

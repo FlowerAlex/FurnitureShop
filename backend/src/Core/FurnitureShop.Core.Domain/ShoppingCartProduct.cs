@@ -5,17 +5,19 @@ using LeanCode.Time;
 
 namespace FurnitureShop.Core.Domain
 {
-    public class OrderProduct : IAggregateRoot<Id<OrderProduct>>
+    public class ShoppingCartProduct : IAggregateRoot<Id<ShoppingCartProduct>>
     {
-        public Id<OrderProduct> Id { get; set; }
-        public Id<Order>? OrderId { get; set; }
+        
+        public Id<ShoppingCartProduct> Id { get; set; }
+        public Id<ShoppingCart>? ShoppingCartId { get; set; }
         public Id<Product>? ProductId { get; set; }
         public int Amount { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
-        public OrderProduct()
-        {
-            Id = Id<OrderProduct>.New();
+
+        public ShoppingCartProduct()
+        {          
+            Id = Id<ShoppingCartProduct>.New();
         }
     }
 }

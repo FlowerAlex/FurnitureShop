@@ -35,7 +35,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.Categories.Add(TestCategory);
             context.SaveChanges();
 
-            TestProduct.CategoryId = context.Categories.Where(c => c.Name == TestCategory.Name).FirstOrDefault().Id;
+            TestProduct.CategoryId = TestCategory.Id;
             context.Products.Add(TestProduct);
             context.SaveChanges();
         }
@@ -64,11 +64,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
             Assert.NotNull(Product);
-            Assert.Equal(TestProduct.Name, Product.ProductDetails.ProductInfo.Name);
+            Assert.Equal(TestProduct.Name, Product.ProductDetails.Name);
             Assert.Equal(TestProduct.Description, Product.ProductDetails.Description);
             Assert.Equal(TestProduct.ModelUrl, Product.ProductDetails.ModelUrl);
-            Assert.Equal(TestProduct.Price, Product.ProductDetails.ProductInfo.Price);
-            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.ProductInfo.CategoryId);
+            Assert.Equal(TestProduct.Price, Product.ProductDetails.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
         }
         [Fact]
@@ -83,11 +83,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 {
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = NewProductName,
-                        Price = NewProductPrice,
-                    }
+                    Name = NewProductName,
+                    Price = NewProductPrice,
                 }
             };
 
@@ -129,11 +126,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 {
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = NewProductName,
-                        Price = NewProductPrice,
-                    }
+                    Name = NewProductName,
+                    Price = NewProductPrice,
                 }
             };
 

@@ -29,6 +29,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Complaint> Complaints => Set<Complaint>();
         public DbSet<Order> Orders => Set<Order>();
+        public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
+        public DbSet<ShoppingCartProduct> ShoppingCartProducts => Set<ShoppingCartProduct>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -123,6 +125,29 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.UserId).IsTypedId();
                 b.Property(e => e.OrderId).IsTypedId();
             });
+            builder.Entity<ShoppingCart>(b =>
+            {
+                b.HasKey(s => s.Id);
+                b.Property(s => s.Id).ValueGeneratedNever().IsTypedId();
+                b.Property(e => e.UserId).IsTypedId();
+                b.HasOne<User>()
+                    .WithOne()
+                    .HasForeignKey<ShoppingCart>(s => s.UserId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+            builder.Entity<ShoppingCartProduct>(o =>
+           {
+               o.HasKey(o => o.Id);
+               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+               o.Property(o => o.ShoppingCartId).IsTypedId();
+               o.Property(o => o.ProductId).IsTypedId();
+               o.HasOne<ShoppingCart>()
+                   .WithMany(ord => ord.ShoppingCartProducts)
+                   .HasForeignKey(o => o.ShoppingCartId);
+               o.HasOne<Product>()
+                   .WithMany(p => p.ShoppingCartProducts)
+                   .HasForeignKey(o => o.ProductId);
+           });
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);

@@ -61,6 +61,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
                 logger.Error("Cannot create Identity user, error: {@Errors}", result.Errors);
                 throw new InvalidOperationException("Cannot create Identity user.");
             }
+            
+            await dbContext.SaveChangesAsync();
+            dbContext.ShoppingCarts.Add(new Domain.ShoppingCart
+            {
+                UserId = user.Id,
+            });
         }
     }
 }

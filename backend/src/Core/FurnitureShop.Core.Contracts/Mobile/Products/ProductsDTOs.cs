@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    public class ProductDetailsDTO
+    public class ProductDetailsDTO : ProductInfoDTO
     {
         public string Description { get; set; }
         public string? ModelUrl { get; set; }
-        public ProductInfoDTO ProductInfo { get; set; }
     }
     public class ProductInfoDTO
     {
@@ -18,7 +17,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public Guid? CategoryId { get; set; }
     }
 
-    public class ProductWithDetailsDTO
+    public class ProductWithDetailsDTO 
     {
         public Guid Id { get; set; }
         public ProductDetailsDTO ProductDetails { get; set; }

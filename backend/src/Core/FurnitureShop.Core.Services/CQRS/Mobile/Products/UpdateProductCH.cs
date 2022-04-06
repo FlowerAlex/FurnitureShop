@@ -15,11 +15,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
     {
         public UpdateProductCV()
         {
-            RuleFor(p => p.ProductDetails.ProductInfo.Name)
+            RuleFor(p => p.ProductDetails.Name)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
                     .WithMessage("Product name should not be empty");
-            RuleFor(p => p.ProductDetails.ProductInfo.Price)
+            RuleFor(p => p.ProductDetails.Price)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should not be empty")
@@ -51,12 +51,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             }
 
             var updated = command.ProductDetails;
-            product.Name = updated.ProductInfo.Name;
+            product.Name = updated.Name;
             product.Description = updated.Description;
-            product.Price = updated.ProductInfo.Price;
+            product.Price = updated.Price;
             product.ModelUrl = command.ProductDetails.ModelUrl;
-            product.CategoryId = Id<Category>.From(updated.ProductInfo.CategoryId);
-            product.PreviewPhotoUrl = updated.ProductInfo.PreviewPhotoURL;
+            product.CategoryId = Id<Category>.From(updated.CategoryId);
+            product.PreviewPhotoUrl = updated.PreviewPhotoURL;
 
             dbContext.Products.Update(product);
             await dbContext.SaveChangesAsync();

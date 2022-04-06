@@ -26,14 +26,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 {
                     ProductDetails = new ProductDetailsDTO
                     {
-                        ProductInfo = new ProductInfoDTO
-                        {
-                            Name = p.Name,
-                            Price = p.Price,
-                            CategoryId = p.CategoryId,
-                            PreviewPhotoURL = p.PreviewPhotoUrl,
-                            AverageRating = p.Reviews.Average(r => r.Rating),
-                        },
+                        Name = p.Name,
+                        Price = p.Price,
+                        CategoryId = p.CategoryId,
+                        PreviewPhotoURL = p.PreviewPhotoUrl,
+                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         Description = p.Description,
                         ModelUrl = p.ModelUrl,
                     },
