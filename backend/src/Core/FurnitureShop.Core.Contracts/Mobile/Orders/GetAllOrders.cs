@@ -6,16 +6,26 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class GetAllOrders : IRemoteQuery<List<OrderDTO>>
+    public class GetAllOrders : SortablePaginatedQuery<OrderDTO,OrdersSortFieldDTO?,OrdersFilterFieldDTO>
     {
-        public string? OrderState { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectStatus = 1;
-        }
-        public enum OrdersSortFieldDTO
-        {
-            Date = 0,     
-        }
+        }       
+    }
+    public enum OrdersSortFieldDTO
+    {
+        OrderedDate = 0,  
+        DeliveredDate = 1,   
+    }
+    public enum OrdersFilterFieldDTO
+    {
+        OrderState = 0,
+        Country = 1, 
+        State = 2,
+        City = 3, 
+        Street = 4, 
+        PostalCode = 5, 
+        UserId = 6,       
     }
 }
