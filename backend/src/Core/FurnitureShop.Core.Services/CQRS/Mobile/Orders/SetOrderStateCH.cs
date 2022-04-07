@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Domain;
@@ -16,12 +17,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
         public async Task ExecuteAsync(CoreContext context, SetOrderState command)
         {
-            var order = await dbContext.Orders.FindAsync(command.Id);
+            var order = dbContext.Orders.Where( o => o.Id == command.Id).FirstOrDefault();
             if (order == null)
             {
                 return;
             }
-            order.OrderState = Enum.Parse<OrderState>(command.OrderState);
+            order.OrderState = Enum.Parse<OrderState>(command.OrderState,ignoreCase:true);
             await dbContext.SaveChangesAsync();
         }
     }

@@ -11,7 +11,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public string OrderState { get; set; }
         public static class ErrorCodes
         {
-            public const int IncorrectStatus = 1;
+            public const int IncorrectState = 1;
         }
     }
 }
