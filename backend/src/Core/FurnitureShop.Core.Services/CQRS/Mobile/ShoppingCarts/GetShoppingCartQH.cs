@@ -51,7 +51,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                     {
                         ShoppingCartProducts = dbContext.Products
                         .Join(
+
                             dbContext.ShoppingCartProduct,
+
                             prod => prod.Id,
                             shp => shp.ProductId,
                             (prod, shp) => new ShoppingCartProductDTO

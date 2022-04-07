@@ -51,6 +51,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             TestShoppingCart.UserId = Id<User>.From(TestUserId);
 
             context.ShoppingCartProduct.Add(TestShoppingCartProduct);
+
             context.ShoppingCarts.Add(TestShoppingCart);
             context.SaveChanges();
         }
@@ -123,7 +124,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
+
             var ShoppingCartProduct = dbContext.ShoppingCartProduct.Find(TestShoppingCartProduct.Id);
+
             Assert.Null(ShoppingCartProduct);
         }
     }
