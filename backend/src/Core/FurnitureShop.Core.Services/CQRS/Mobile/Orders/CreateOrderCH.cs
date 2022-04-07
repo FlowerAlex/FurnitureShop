@@ -14,11 +14,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     public class CreateOrderQH : ICommandHandler<CreateOrder>
     {
         private readonly CoreDbContext dbContext;
-        private IMapper mapper;
-        public CreateOrderQH(CoreDbContext dbContext, IMapper mapper)
+        public CreateOrderQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.mapper = mapper;
         }
 
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
@@ -27,7 +25,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 new Order(command.OrderInfo.Street, command.OrderInfo.City, command.OrderInfo.State,
                     command.OrderInfo.PostalCode, command.OrderInfo.Country)
                 {
-                    UserId = Id<User>.From(command.OrderInfo.UserId),
+                    UserId = Id<User>.From(context.UserId),
                     Price = command.OrderInfo.Price,
                     OrderedDate = DateTime.Now,
                     OrderState = OrderState.Pending,
