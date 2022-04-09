@@ -30,7 +30,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<Complaint> Complaints => Set<Complaint>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
-        public DbSet<ShoppingCartProduct> ShoppingCartProducts => Set<ShoppingCartProduct>();
+        public DbSet<ShoppingCartProduct> ShoppingCartProduct => Set<ShoppingCartProduct>();
+        public DbSet<OrderProduct> OrderProduct => Set<OrderProduct>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)

@@ -38,6 +38,28 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                         OrderState = p.OrderState.ToString(),
                         OrderedDate = p.OrderedDate,
                         DeliveredDate = p.DeliveredDate,
+                        OrderProducts  = dbContext.Products
+                        .Join(
+                            dbContext.OrderProduct,
+                            prod => prod.Id,
+                            ord => ord.ProductId,
+                            (prod, ord) => new OrderProductDTO
+                            {
+                                Amount = ord.Amount,
+                                OrderId = ord.OrderId.Value,
+                                Product = new Contracts.Mobile.Products.ProductDTO
+                                {
+                                    Id = prod.Id,
+                                    ProductInfo = new Contracts.Mobile.Products.ProductInfoDTO
+                                    {
+                                        Name = prod.Name,
+                                        Price = prod.Price,
+                                        PreviewPhotoURL = prod.PreviewPhotoUrl,
+                                        CategoryId = prod.CategoryId,
+                                    }
+                                }
+                            }
+                        ).Where(ord => ord.OrderId == p.Id).ToList(),
                     },
                 })
                 .FirstOrDefaultAsync();

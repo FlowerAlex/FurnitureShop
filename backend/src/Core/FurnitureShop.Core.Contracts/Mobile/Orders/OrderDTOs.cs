@@ -23,11 +23,11 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     {
         public Guid Id { get; set; }
         public OrderInfoDTO OrderInfo { get; set; }
-
     }
     public class OrderProductDTO
     {
-        public Guid? ProductId { get; set; }
+        public Guid OrderId { get; set; }
+        public ProductDTO Product { get; set; }
         public int Amount { get; set; }
     }
 }

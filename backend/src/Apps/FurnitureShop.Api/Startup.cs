@@ -19,7 +19,6 @@ using LeanCode.ViewRenderer.Razor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Swashbuckle.AspNetCore;
 
 namespace FurnitureShop.Api
 {
@@ -84,9 +83,6 @@ namespace FurnitureShop.Api
             {
                 endpoints.MapHealthChecks("/live/health");
             });
-
-            app.UseSwagger();
-            app.UseSwaggerUI();
         }
     }
 }
