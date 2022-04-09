@@ -20,7 +20,7 @@ namespace FurnitureShop.Core.Domain
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
-        public Product(string name, string description, decimal price)
+        public Product(string name, string description, double price)
         {
             Id = Id<Product>.New();
             Name = name;
