@@ -13,14 +13,14 @@ namespace FurnitureShop.Core.Domain
         public string Description { get; set; }
         public string? ModelUrl { get; set; }
         public string? PreviewPhotoUrl { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public List<Review> Reviews { get; set; }
         public List<OrderProduct> OrdersProducts { get; set; }
         public List<ShoppingCartProduct> ShoppingCartProducts { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
-        public Product(string name, string description, decimal price)
+        public Product(string name, string description, double price)
         {
             Id = Id<Product>.New();
             Name = name;
