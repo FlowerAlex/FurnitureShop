@@ -310,16 +310,16 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
       this.totalCount = 0,
       required this.activeCategory});
 
-  @JsonKey(defaultValue: const <CategoryDTO>[])
+  @JsonKey()
   @override
   final List<CategoryDTO> categories;
-  @JsonKey(defaultValue: const <ProductDTO>[])
+  @JsonKey()
   @override
   final List<ProductDTO> products;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int currentPage;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int totalCount;
   @override
@@ -338,12 +338,12 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            (identical(other.activeCategory, activeCategory) ||
-                other.activeCategory == activeCategory));
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other.totalCount, totalCount) &&
+            const DeepCollectionEquality()
+                .equals(other.activeCategory, activeCategory));
   }
 
   @override
@@ -351,9 +351,9 @@ class _$ProductsScreenInitialState implements ProductsScreenInitialState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
-      currentPage,
-      totalCount,
-      activeCategory);
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(totalCount),
+      const DeepCollectionEquality().hash(activeCategory));
 
   @JsonKey(ignore: true)
   @override
@@ -574,16 +574,16 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
       this.totalCount = 0,
       required this.activeCategory});
 
-  @JsonKey(defaultValue: const <CategoryDTO>[])
+  @JsonKey()
   @override
   final List<CategoryDTO> categories;
-  @JsonKey(defaultValue: const <ProductDTO>[])
+  @JsonKey()
   @override
   final List<ProductDTO> products;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int currentPage;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int totalCount;
   @override
@@ -602,12 +602,12 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            (identical(other.activeCategory, activeCategory) ||
-                other.activeCategory == activeCategory));
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other.totalCount, totalCount) &&
+            const DeepCollectionEquality()
+                .equals(other.activeCategory, activeCategory));
   }
 
   @override
@@ -615,9 +615,9 @@ class _$ProductsScreenLoadingState implements ProductsScreenLoadingState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
-      currentPage,
-      totalCount,
-      activeCategory);
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(totalCount),
+      const DeepCollectionEquality().hash(activeCategory));
 
   @JsonKey(ignore: true)
   @override
@@ -862,12 +862,12 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            (identical(other.activeCategory, activeCategory) ||
-                other.activeCategory == activeCategory));
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other.totalCount, totalCount) &&
+            const DeepCollectionEquality()
+                .equals(other.activeCategory, activeCategory));
   }
 
   @override
@@ -875,9 +875,9 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
-      currentPage,
-      totalCount,
-      activeCategory);
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(totalCount),
+      const DeepCollectionEquality().hash(activeCategory));
 
   @JsonKey(ignore: true)
   @override
@@ -1120,12 +1120,12 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.products, products) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            (identical(other.activeCategory, activeCategory) ||
-                other.activeCategory == activeCategory));
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other.totalCount, totalCount) &&
+            const DeepCollectionEquality()
+                .equals(other.activeCategory, activeCategory));
   }
 
   @override
@@ -1133,9 +1133,9 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
       runtimeType,
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(products),
-      currentPage,
-      totalCount,
-      activeCategory);
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(totalCount),
+      const DeepCollectionEquality().hash(activeCategory));
 
   @JsonKey(ignore: true)
   @override

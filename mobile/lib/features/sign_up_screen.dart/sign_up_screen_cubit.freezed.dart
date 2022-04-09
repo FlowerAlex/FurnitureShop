@@ -196,16 +196,16 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
       this.networkError = false,
       this.unknownError = false});
 
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   @override
   final bool loading;
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   @override
   final bool invalidCredentials;
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   @override
   final bool networkError;
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   @override
   final bool unknownError;
 
@@ -219,18 +219,22 @@ class _$SignUpScreenReadyState implements SignUpScreenReadyState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is SignUpScreenReadyState &&
-            (identical(other.loading, loading) || other.loading == loading) &&
-            (identical(other.invalidCredentials, invalidCredentials) ||
-                other.invalidCredentials == invalidCredentials) &&
-            (identical(other.networkError, networkError) ||
-                other.networkError == networkError) &&
-            (identical(other.unknownError, unknownError) ||
-                other.unknownError == unknownError));
+            const DeepCollectionEquality().equals(other.loading, loading) &&
+            const DeepCollectionEquality()
+                .equals(other.invalidCredentials, invalidCredentials) &&
+            const DeepCollectionEquality()
+                .equals(other.networkError, networkError) &&
+            const DeepCollectionEquality()
+                .equals(other.unknownError, unknownError));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, loading, invalidCredentials, networkError, unknownError);
+      runtimeType,
+      const DeepCollectionEquality().hash(loading),
+      const DeepCollectionEquality().hash(invalidCredentials),
+      const DeepCollectionEquality().hash(networkError),
+      const DeepCollectionEquality().hash(unknownError));
 
   @JsonKey(ignore: true)
   @override

@@ -35,6 +35,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           sortBy: ProductsSortFieldDTO.name,
         ),
       );
+
       emit(
         ProductsScreenReadyState(
           categories: categories,

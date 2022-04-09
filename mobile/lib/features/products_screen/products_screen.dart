@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/use_paging_controller.dart';
 import 'package:furniture_shop/features/common/widgets/app_bar.dart';
 import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:furniture_shop/data/contracts.dart';
 
 class ProductsScreen extends HookWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -45,7 +45,15 @@ class ProductsScreen extends HookWidget {
                   builderDelegate: PagedChildBuilderDelegate<ProductDTO>(
                     itemBuilder: (context, item, index) {
                       return ProductTile(
-                          product: state.products.elementAt(index));
+                        productName:
+                            state.products.elementAt(index).productInfo.name,
+                        productPrice: state.products
+                                .elementAt(index)
+                                .productInfo
+                                .price
+                                .toString() +
+                            '\$',
+                      );
                     },
                   ),
                 ),
@@ -76,7 +84,15 @@ class ProductsScreen extends HookWidget {
                   builderDelegate: PagedChildBuilderDelegate<ProductDTO>(
                     itemBuilder: (context, item, index) {
                       return ProductTile(
-                          product: state.products.elementAt(index));
+                        productName:
+                            state.products.elementAt(index).productInfo.name,
+                        productPrice: state.products
+                                .elementAt(index)
+                                .productInfo
+                                .price
+                                .toString() +
+                            '\$',
+                      );
                     },
                   ),
                 ),

@@ -183,6 +183,42 @@ Map<String, dynamic> _$CreateOrderToJson(CreateOrder instance) =>
       'OrderInfo': instance.orderInfo,
     };
 
+GetAllOrders _$GetAllOrdersFromJson(Map<String, dynamic> json) => GetAllOrders(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+      filterBy: (json['FilterBy'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(
+            $enumDecode(_$OrdersFilterFieldDTOEnumMap, k), e as String),
+      ),
+      sortBy: $enumDecodeNullable(_$OrdersSortFieldDTOEnumMap, json['SortBy']),
+      sortByDescending: json['SortByDescending'] as bool,
+    );
+
+Map<String, dynamic> _$GetAllOrdersToJson(GetAllOrders instance) =>
+    <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+      'FilterBy': instance.filterBy
+          .map((k, e) => MapEntry(_$OrdersFilterFieldDTOEnumMap[k], e)),
+      'SortBy': _$OrdersSortFieldDTOEnumMap[instance.sortBy],
+      'SortByDescending': instance.sortByDescending,
+    };
+
+const _$OrdersFilterFieldDTOEnumMap = {
+  OrdersFilterFieldDTO.orderState: 0,
+  OrdersFilterFieldDTO.country: 1,
+  OrdersFilterFieldDTO.state: 2,
+  OrdersFilterFieldDTO.city: 3,
+  OrdersFilterFieldDTO.street: 4,
+  OrdersFilterFieldDTO.postalCode: 5,
+  OrdersFilterFieldDTO.userId: 6,
+};
+
+const _$OrdersSortFieldDTOEnumMap = {
+  OrdersSortFieldDTO.orderedDate: 0,
+  OrdersSortFieldDTO.deliveredDate: 1,
+};
+
 OrderById _$OrderByIdFromJson(Map<String, dynamic> json) => OrderById(
       id: json['Id'] as String,
     );
@@ -237,14 +273,28 @@ Map<String, dynamic> _$OrderInfoDTOToJson(OrderInfoDTO instance) =>
 
 OrderProductDTO _$OrderProductDTOFromJson(Map<String, dynamic> json) =>
     OrderProductDTO(
-      productId: json['ProductId'] as String?,
+      orderId: json['OrderId'] as String,
+      product: ProductDTO.fromJson(json['Product'] as Map<String, dynamic>),
       amount: json['Amount'] as int,
     );
 
 Map<String, dynamic> _$OrderProductDTOToJson(OrderProductDTO instance) =>
     <String, dynamic>{
-      'ProductId': instance.productId,
+      'OrderId': instance.orderId,
+      'Product': instance.product,
       'Amount': instance.amount,
+    };
+
+SetOrderState _$SetOrderStateFromJson(Map<String, dynamic> json) =>
+    SetOrderState(
+      id: json['Id'] as String,
+      orderState: json['OrderState'] as String,
+    );
+
+Map<String, dynamic> _$SetOrderStateToJson(SetOrderState instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'OrderState': instance.orderState,
     };
 
 CreateProduct _$CreateProductFromJson(Map<String, dynamic> json) =>
@@ -274,7 +324,7 @@ GetAllProducts _$GetAllProductsFromJson(Map<String, dynamic> json) =>
       pageSize: json['PageSize'] as int,
       filterBy: json['FilterBy'] as String?,
       sortBy:
-          _$enumDecodeNullable(_$ProductsSortFieldDTOEnumMap, json['SortBy']),
+          $enumDecodeNullable(_$ProductsSortFieldDTOEnumMap, json['SortBy']),
       sortByDescending: json['SortByDescending'] as bool,
       categoryId: json['CategoryId'] as String?,
     );
@@ -288,43 +338,6 @@ Map<String, dynamic> _$GetAllProductsToJson(GetAllProducts instance) =>
       'SortByDescending': instance.sortByDescending,
       'CategoryId': instance.categoryId,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
-}
 
 const _$ProductsSortFieldDTOEnumMap = {
   ProductsSortFieldDTO.name: 0,
@@ -342,17 +355,24 @@ Map<String, dynamic> _$ProductByIdToJson(ProductById instance) =>
 
 ProductDetailsDTO _$ProductDetailsDTOFromJson(Map<String, dynamic> json) =>
     ProductDetailsDTO(
+      name: json['Name'] as String,
+      price: (json['Price'] as num).toDouble(),
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
+      previewPhotoURL: json['PreviewPhotoURL'] as String?,
+      categoryId: json['CategoryId'] as String?,
       description: json['Description'] as String,
       modelUrl: json['ModelUrl'] as String?,
-      productInfo:
-          ProductInfoDTO.fromJson(json['ProductInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ProductDetailsDTOToJson(ProductDetailsDTO instance) =>
     <String, dynamic>{
+      'Name': instance.name,
+      'Price': instance.price,
+      'AverageRating': instance.averageRating,
+      'PreviewPhotoURL': instance.previewPhotoURL,
+      'CategoryId': instance.categoryId,
       'Description': instance.description,
       'ModelUrl': instance.modelUrl,
-      'ProductInfo': instance.productInfo,
     };
 
 ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) => ProductDTO(
@@ -494,6 +514,93 @@ Map<String, dynamic> _$UpdateReviewToJson(UpdateReview instance) =>
     <String, dynamic>{
       'Id': instance.id,
       'ReviewInfo': instance.reviewInfo,
+    };
+
+AddProductsToShoppingCart _$AddProductsToShoppingCartFromJson(
+        Map<String, dynamic> json) =>
+    AddProductsToShoppingCart(
+      productId: json['ProductId'] as String,
+      amount: json['Amount'] as int,
+      shoppingCartId: json['ShoppingCartId'] as String,
+    );
+
+Map<String, dynamic> _$AddProductsToShoppingCartToJson(
+        AddProductsToShoppingCart instance) =>
+    <String, dynamic>{
+      'ProductId': instance.productId,
+      'Amount': instance.amount,
+      'ShoppingCartId': instance.shoppingCartId,
+    };
+
+GetShoppingCart _$GetShoppingCartFromJson(Map<String, dynamic> json) =>
+    GetShoppingCart(
+      shoppingCartId: json['ShoppingCartId'] as String,
+    );
+
+Map<String, dynamic> _$GetShoppingCartToJson(GetShoppingCart instance) =>
+    <String, dynamic>{
+      'ShoppingCartId': instance.shoppingCartId,
+    };
+
+RemoveProductFromShoppingCart _$RemoveProductFromShoppingCartFromJson(
+        Map<String, dynamic> json) =>
+    RemoveProductFromShoppingCart(
+      shoppingCartId: json['ShoppingCartId'] as String,
+      productId: json['ProductId'] as String,
+    );
+
+Map<String, dynamic> _$RemoveProductFromShoppingCartToJson(
+        RemoveProductFromShoppingCart instance) =>
+    <String, dynamic>{
+      'ShoppingCartId': instance.shoppingCartId,
+      'ProductId': instance.productId,
+    };
+
+ShoppingCartDTO _$ShoppingCartDTOFromJson(Map<String, dynamic> json) =>
+    ShoppingCartDTO(
+      id: json['Id'] as String,
+      shoppingCartInfo: ShoppingCartInfoDTO.fromJson(
+          json['ShoppingCartInfo'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ShoppingCartDTOToJson(ShoppingCartDTO instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'ShoppingCartInfo': instance.shoppingCartInfo,
+    };
+
+ShoppingCartInfoDTO _$ShoppingCartInfoDTOFromJson(Map<String, dynamic> json) =>
+    ShoppingCartInfoDTO(
+      userId: json['UserId'] as String?,
+      price: (json['Price'] as num).toDouble(),
+      shoppingCartProducts: (json['ShoppingCartProducts'] as List<dynamic>)
+          .map(
+              (e) => ShoppingCartProductDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ShoppingCartInfoDTOToJson(
+        ShoppingCartInfoDTO instance) =>
+    <String, dynamic>{
+      'UserId': instance.userId,
+      'Price': instance.price,
+      'ShoppingCartProducts': instance.shoppingCartProducts,
+    };
+
+ShoppingCartProductDTO _$ShoppingCartProductDTOFromJson(
+        Map<String, dynamic> json) =>
+    ShoppingCartProductDTO(
+      amount: json['Amount'] as int,
+      product: ProductDTO.fromJson(json['Product'] as Map<String, dynamic>),
+      shoppingCartId: json['ShoppingCartId'] as String,
+    );
+
+Map<String, dynamic> _$ShoppingCartProductDTOToJson(
+        ShoppingCartProductDTO instance) =>
+    <String, dynamic>{
+      'Amount': instance.amount,
+      'Product': instance.product,
+      'ShoppingCartId': instance.shoppingCartId,
     };
 
 RegisterUser _$RegisterUserFromJson(Map<String, dynamic> json) => RegisterUser(
