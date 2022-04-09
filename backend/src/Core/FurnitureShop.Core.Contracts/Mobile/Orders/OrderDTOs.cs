@@ -7,7 +7,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     public class OrderInfoDTO
     {
         public Guid? UserId { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

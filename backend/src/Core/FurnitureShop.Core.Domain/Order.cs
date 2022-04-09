@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Domain
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 

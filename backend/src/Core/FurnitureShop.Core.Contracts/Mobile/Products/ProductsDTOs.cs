@@ -11,7 +11,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     public class ProductInfoDTO
     {
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public double? AverageRating { get; set; }
         public string? PreviewPhotoURL { get;set; }
         public Guid? CategoryId { get; set; }
