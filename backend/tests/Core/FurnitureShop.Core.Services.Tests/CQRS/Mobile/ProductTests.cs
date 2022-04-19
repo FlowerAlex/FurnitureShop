@@ -25,7 +25,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private string NewProductName = "new Product";
         private string NewProdctDescription = "new desc";
         private string NewProductModelUrl = "new model url";
-        private decimal NewProductPrice = 111;
+        private double NewProductPrice = 111;
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
