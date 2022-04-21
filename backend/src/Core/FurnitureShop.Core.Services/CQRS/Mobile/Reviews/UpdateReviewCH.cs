@@ -2,13 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
 {
+    public class UpdateReviewCV : ContextualValidator<UpdateReview>
+    {
+        public UpdateReviewCV()
+        {
+            RuleFor(p => p.ReviewInfo.Text)
+                .NotEmpty()
+                    .WithCode(UpdateReview.ErrorCodes.EmptyReviewText)
+                    .WithMessage("Review text should not be empty");
+            RuleFor(p => p.ReviewInfo.Rating)
+                .InclusiveBetween(0.0,5.0)
+                    .WithCode(UpdateReview.ErrorCodes.IncorrectRating)
+                    .WithMessage("Incorrect rating");
+        }
+    }
     public class UpdateReviewCH : ICommandHandler<UpdateReview>
     {
         private readonly CoreDbContext dbContext;

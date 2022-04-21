@@ -12,26 +12,6 @@ using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 {
-    public class GetShoppingCartCV : ContextualValidator<GetShoppingCart>
-    {
-        public GetShoppingCartCV()
-        {
-            RuleForAsync(p => p, DoesUserExistAsync)
-                .Equal(false)
-                    .WithMessage("User not found.")
-                    .WithCode(GetShoppingCart.ErrorCodes.UserNotFound);
-        }
-
-        private static async Task<bool> DoesUserExistAsync(IValidationContext ctx, GetShoppingCart cmd)
-        {
-            var uid = ctx.AppContext<CoreContext>().UserId;
-            var dbContext = ctx.GetService<CoreDbContext>();
-            var count = await dbContext.Users
-                .Where(u => u.Id == uid).CountAsync();
-            return count != 0;
-        }
-    }
-
     public class GetShoppingCartQH : IQueryHandler<GetShoppingCart, ShoppingCartDTO?>
     {
         private readonly CoreDbContext dbContext;

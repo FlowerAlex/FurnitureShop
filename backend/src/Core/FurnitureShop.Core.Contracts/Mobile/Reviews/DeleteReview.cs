@@ -4,8 +4,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     public class DeleteReview : IRemoteCommand
     {
         public Guid Id { get; set; }

@@ -9,9 +9,5 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
     {
         public Guid ShoppingCartId { get; set; }
         public Guid ProductId { get; set; }
-        public static class ErrorCodes
-        {
-            public const int ShoppingCartNotFound = 1;
-        }
     }
 }
