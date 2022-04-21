@@ -1,10 +1,22 @@
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Categories;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
 {
+    public class CreateCategoryCV : ContextualValidator<CreateCategory>
+    {
+        public CreateCategoryCV()
+        {
+            RuleFor(p => p.CategoryName)
+                .NotEmpty()
+                    .WithCode(CreateCategory.ErrorCodes.IncorrectName)
+                    .WithMessage("Category name should not be empty");
+        }
+    }
     public class CreateCategoryCH : ICommandHandler<CreateCategory>
     {
         private readonly CoreDbContext dbContext;
