@@ -73,8 +73,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new GetShoppingCartQH(dbContext);
-            var command = new GetShoppingCart{ShoppingCartId = TestShoppingCart.Id};
+            var handler = new ShoppingCartByUserIdQH(dbContext);
+            var command = new ShoppingCartByUserId();
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var ShoppingCart = result.Result;
