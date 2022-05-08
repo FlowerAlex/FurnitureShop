@@ -5,7 +5,7 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
-    public class ShoppingCartByUserId : IRemoteQuery<ShoppingCartDTO>
+    public class ShoppingCart : IRemoteQuery<ShoppingCartDTO>
     {
         public static class ErrorCodes
         {
