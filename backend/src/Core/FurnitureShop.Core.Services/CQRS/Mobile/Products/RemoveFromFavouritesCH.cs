@@ -20,7 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task ExecuteAsync(CoreContext context, RemoveFromFavourites command)
         {
-            var toDelete = dbContext.Favourites.Where(f => f.UserId == context.UserId && f.ProductId == command.Id).FirstOrDefault();
+            var toDelete = dbContext.Favourites.Where(f => f.UserId == context.UserId && f.ProductId == command.ProductId).FirstOrDefault();
             if (toDelete == null)
             {
                 return;

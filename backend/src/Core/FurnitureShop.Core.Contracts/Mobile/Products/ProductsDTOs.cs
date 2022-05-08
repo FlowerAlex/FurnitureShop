@@ -15,6 +15,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public double? AverageRating { get; set; }
         public string? PreviewPhotoURL { get; set; }
         public bool IsInFavourites { get; set; }
+        public bool IsInShoppingCart {get;set;}
         public Guid? CategoryId { get; set; }
     }
 

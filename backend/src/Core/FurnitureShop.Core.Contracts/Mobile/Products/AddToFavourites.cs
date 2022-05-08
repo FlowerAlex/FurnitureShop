@@ -7,6 +7,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class AddToFavourites : IRemoteCommand
     {
-        public Guid Id { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

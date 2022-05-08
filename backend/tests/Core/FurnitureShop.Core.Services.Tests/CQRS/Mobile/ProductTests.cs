@@ -159,7 +159,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new AddToFavouritesCH(dbContext);
             var command = new AddToFavourites
             {
-                Id = TestProduct.Id,
+                ProductId = TestProduct.Id,
             };
 
             var result = handler.ExecuteAsync(coreContext, command);
@@ -175,7 +175,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new RemoveFromFavouritesCH(dbContext);
             var command = new RemoveFromFavourites
             {
-                Id = TestProduct2.Id,
+                ProductId = TestProduct2.Id,
             };
 
             var result = handler.ExecuteAsync(coreContext, command);
