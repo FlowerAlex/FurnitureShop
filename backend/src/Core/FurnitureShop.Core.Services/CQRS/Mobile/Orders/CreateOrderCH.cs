@@ -22,23 +22,23 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     .WithMessage("No products to order");
             RuleFor(p => p.OrderInfo.Street)
                 .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectStreet)
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Street should not be empty");
             RuleFor(p => p.OrderInfo.City)
                 .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectCity)
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("City should not be empty");
             RuleFor(p => p.OrderInfo.State)
                 .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectState)
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("State should not be empty");
             RuleFor(p => p.OrderInfo.Country)
                 .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectCountry)
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Country should not be empty");
             RuleFor(p => p.OrderInfo.PostalCode)
                 .Matches("[0-9]{2}-[0-9]{3}")
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectPostalCode)
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Postal code is in incorrect format");
         }
     }
