@@ -35,7 +35,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         PreviewPhotoURL = p.ModelUrl,
                         AverageRating = p.Reviews.Average(r => r.Rating),
                         CategoryId = p.CategoryId,
-                        IsInFavourites = dbContext.Favourites
+                        InFavourites = dbContext.Favourites
                             .Where(f => f.UserId == context.UserId && f.ProductId == p.Id).Any(),
                     },
                     Id = p.Id,
@@ -56,7 +56,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         PreviewPhotoURL = p.ModelUrl,
                         AverageRating = p.Reviews.Average(r => r.Rating),
                         CategoryId = p.CategoryId,
-                        IsInFavourites = dbContext.Favourites
+                        InFavourites = dbContext.Favourites
                             .Where(f => f.UserId == context.UserId && f.ProductId == p.Id).Any(),
                     },
                     Id = p.Id,
