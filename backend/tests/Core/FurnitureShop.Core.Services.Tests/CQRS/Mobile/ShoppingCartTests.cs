@@ -24,7 +24,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         };
         private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 200);
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
-        private readonly ShoppingCart TestShoppingCart = new ShoppingCart();
+        private readonly Domain.ShoppingCart TestShoppingCart = new Domain.ShoppingCart();
         private readonly ShoppingCartProduct TestShoppingCartProduct = new ShoppingCartProduct();
         private readonly int TestProductAmount = 3;
         private string NewProductName = "new Product";
@@ -73,15 +73,15 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new GetShoppingCartQH(dbContext);
-            var command = new GetShoppingCart{ShoppingCartId = TestShoppingCart.Id};
+            var handler = new ShoppingCartQH(dbContext);
+            var command = new Contracts.Mobile.ShoppingCart.ShoppingCart();
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var ShoppingCart = result.Result;
             Assert.NotNull(ShoppingCart);
-            Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.Count());
-            Assert.Equal(TestShoppingCart.Id,ShoppingCart.Id);
-            Assert.Equal(TestShoppingCart.UserId,ShoppingCart.ShoppingCartInfo.UserId);
+            Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.Count());
+            Assert.Equal(TestShoppingCart.Id, ShoppingCart.Id);
+            Assert.Equal(TestShoppingCart.UserId, ShoppingCart.ShoppingCartInfo.UserId);
             Assert.Equal(TestProduct.Price *TestProductAmount,ShoppingCart.ShoppingCartInfo.Price);
             Assert.Equal(TestShoppingCartProduct.ProductId.Value,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().Product.Id);
             Assert.Equal(TestProductAmount,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().Amount);
