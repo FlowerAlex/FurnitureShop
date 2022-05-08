@@ -52,14 +52,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                         ShoppingCartProducts = dbContext.Products
                         .Join(
 
-                            dbContext.ShoppingCartProduct,
+                            dbContext.ShoppingCartProduct.Where(s => s.ShoppingCartId == p.Id),
 
                             prod => prod.Id,
                             shp => shp.ProductId,
                             (prod, shp) => new ShoppingCartProductDTO
                             {
                                 Amount = shp.Amount,
-                                ShoppingCartId = shp.ShoppingCartId.Value,
                                 Product = new Contracts.Mobile.Products.ProductDTO
                                 {
                                     Id = prod.Id,
@@ -72,7 +71,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                     }
                                 }
                             }
-                        ).Where(shp => shp.ShoppingCartId == p.Id).ToList(),
+                        ).ToList(),
                         UserId = p.UserId,
                     },
                     Id = p.Id,
