@@ -15,6 +15,8 @@ class ShoppingCartScreen extends HookWidget {
   Widget build(BuildContext context) {
     final searchTextEditingController = useTextEditingController();
 
+    final state = context.watch<ShoppingCartScreenCubit>().state;
+
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -23,6 +25,10 @@ class ShoppingCartScreen extends HookWidget {
             title: 'Shopping cart',
             textEditingController: searchTextEditingController,
             withFilter: true,
+            categories: state is ShoppingCartReadyState ? state.categories : [],
+            activeCategoryId: state is ShoppingCartReadyState
+                ? state.activeCategory.id
+                : null,
           ),
           Expanded(
             child:
@@ -32,34 +38,7 @@ class ShoppingCartScreen extends HookWidget {
                   loading: (_) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  ready: (state) => PagedListView<int, ShoppingCartProductDTO>(
-                    padding: const EdgeInsets.only(bottom: 60),
-                    pagingController:
-                        usePagingController<int, ShoppingCartProductDTO>(
-                      firstPageKey: 0,
-                      hasMore: state.totalCount > state.currentPage * pageSize,
-                      items: state
-                          .shoppingCart.shoppingCartInfo.shoppingCartProducts,
-                      fetchPage: (int page) => context
-                          .read<ShoppingCartScreenCubit>()
-                          .fetch(page: page),
-                      getNextPageKey: (_) => state.currentPage + 1,
-                    ),
-                    builderDelegate:
-                        PagedChildBuilderDelegate<ShoppingCartProductDTO>(
-                      itemBuilder: (context, item, index) {
-                        final product = state
-                            .shoppingCart.shoppingCartInfo.shoppingCartProducts
-                            .elementAt(index)
-                            .product;
-                        return ProductTile(
-                          productName: product.productInfo.name,
-                          productPrice:
-                              product.productInfo.price.toString() + '\$',
-                        );
-                      },
-                    ),
-                  ),
+                  ready: (state) => _ShoppingCartReadyBody(state: state),
                   error: (state) => Center(
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,6 +50,48 @@ class ShoppingCartScreen extends HookWidget {
           ),
         ],
       )),
+    );
+  }
+}
+
+class _ShoppingCartReadyBody extends HookWidget {
+  const _ShoppingCartReadyBody({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final ShoppingCartReadyState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ShoppingCartScreenCubit>();
+
+    final paginatingController =
+        usePagingController<int, ShoppingCartProductDTO>(
+      firstPageKey: 0,
+      hasMore: state.totalCount > state.currentPage * pageSize,
+      items: state.shoppingCart.shoppingCartInfo.shoppingCartProducts,
+      fetchPage: (int page) => cubit.fetch(page: page),
+      getNextPageKey: (_) => state.currentPage + 1,
+    );
+
+    return PagedListView<int, ShoppingCartProductDTO>(
+      padding: const EdgeInsets.only(bottom: 60),
+      pagingController: paginatingController,
+      builderDelegate: PagedChildBuilderDelegate<ShoppingCartProductDTO>(
+        itemBuilder: (context, item, index) {
+          final product = state
+              .shoppingCart.shoppingCartInfo.shoppingCartProducts
+              .elementAt(index)
+              .product;
+          return ProductTile(
+            productName: product.productInfo.name,
+            productPrice: product.productInfo.price.toString() + '\$',
+            productShoppingCartClicked: () =>
+                cubit.removeProductFromShoppingCart(item.product.id),
+          );
+        },
+      ),
     );
   }
 }

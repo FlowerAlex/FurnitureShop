@@ -1024,7 +1024,6 @@ class AddProductsToShoppingCart with EquatableMixin implements Command {
   AddProductsToShoppingCart({
     required this.productId,
     required this.amount,
-    required this.shoppingCartId,
   });
 
   factory AddProductsToShoppingCart.fromJson(Map<String, dynamic> json) =>
@@ -1034,9 +1033,7 @@ class AddProductsToShoppingCart with EquatableMixin implements Command {
 
   final int amount;
 
-  final String shoppingCartId;
-
-  get props => [productId, amount, shoppingCartId];
+  get props => [productId, amount];
 
   Map<String, dynamic> toJson() => _$AddProductsToShoppingCartToJson(this);
   String getFullName() =>
@@ -1053,41 +1050,17 @@ class AddProductsToShoppingCartErrorCodes {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class GetShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
-  GetShoppingCart({
-    required this.shoppingCartId,
-  });
-
-  factory GetShoppingCart.fromJson(Map<String, dynamic> json) =>
-      _$GetShoppingCartFromJson(json);
-
-  final String shoppingCartId;
-
-  get props => [shoppingCartId];
-
-  Map<String, dynamic> toJson() => _$GetShoppingCartToJson(this);
-  ShoppingCartDTO resultFactory(dynamic decodedJson) =>
-      _$ShoppingCartDTOFromJson(decodedJson as Map<String, dynamic>);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.GetShoppingCart';
-}
-
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
-@JsonSerializable(fieldRename: FieldRename.pascal)
 class RemoveProductFromShoppingCart with EquatableMixin implements Command {
   RemoveProductFromShoppingCart({
-    required this.shoppingCartId,
     required this.productId,
   });
 
   factory RemoveProductFromShoppingCart.fromJson(Map<String, dynamic> json) =>
       _$RemoveProductFromShoppingCartFromJson(json);
 
-  final String shoppingCartId;
-
   final String productId;
 
-  get props => [shoppingCartId, productId];
+  get props => [productId];
 
   Map<String, dynamic> toJson() => _$RemoveProductFromShoppingCartToJson(this);
   String getFullName() =>
@@ -1096,6 +1069,23 @@ class RemoveProductFromShoppingCart with EquatableMixin implements Command {
 
 class RemoveProductFromShoppingCartErrorCodes {
   static const shoppingCartNotFound = 1;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
+  ShoppingCart();
+
+  factory ShoppingCart.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$ShoppingCartToJson(this);
+  ShoppingCartDTO resultFactory(dynamic decodedJson) =>
+      _$ShoppingCartDTOFromJson(decodedJson as Map<String, dynamic>);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ShoppingCart';
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)

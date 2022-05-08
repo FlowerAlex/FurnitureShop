@@ -20,13 +20,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
   Future<void> fetch({int page = 0}) async {
     try {
       final categories = await _cqrs.get(GetAllCategories());
-      final result = await _cqrs.get(
-        GetShoppingCart(
-          // pageNumber: page,
-          // pageSize: pageSize,
-          shoppingCartId: '',
-        ),
-      ); // TODO: update this when contracts will be updated
+      final result = await _cqrs.get(ShoppingCart());
 
       emit(
         ShoppingCartReadyState(
@@ -47,6 +41,15 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
     }
 
     emit(state.copyWith(activeCategory: activeCategory));
+  }
+
+  Future<void> removeProductFromShoppingCart(String productId) async {
+    try {
+      await _cqrs.run(RemoveProductFromShoppingCart(productId: productId));
+      await fetch();
+    } catch (e, _) {
+      emit(ShoppingCartErrorState(error: e.toString()));
+    }
   }
 }
 

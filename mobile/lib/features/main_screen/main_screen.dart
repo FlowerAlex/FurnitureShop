@@ -33,17 +33,12 @@ class MainScreen extends HookWidget {
       child: BlocConsumer<MainScreenCubit, Screen>(
         listener: _mainScreenCubitListener,
         builder: (context, state) {
-          return Stack(
-            children: [
-              IndexedStack(
-                index: state.index,
-                children: screens,
-              ),
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: BottomBar(),
-              ),
-            ],
+          return Scaffold(
+            body: IndexedStack(
+              index: state.index,
+              children: screens,
+            ),
+            bottomNavigationBar: const BottomBar(),
           );
         },
       ),

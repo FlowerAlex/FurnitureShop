@@ -9,10 +9,15 @@ class ProductTile extends StatelessWidget {
     Key? key,
     required this.productName,
     required this.productPrice,
+    this.productLikeClicked,
+    this.productShoppingCartClicked,
   }) : super(key: key);
 
   final String productName;
   final String productPrice;
+
+  final VoidCallback? productLikeClicked;
+  final VoidCallback? productShoppingCartClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +63,18 @@ class ProductTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            InkWell(
-                              onTap: () {}, // TODO
-                              child: Assets.icons.heart.image(),
-                            ),
-                            const SizedBox(width: 12),
-                            InkWell(
-                              onTap: () {}, // TODO
-                              child: Assets.icons.addToCart.image(),
-                            ),
+                            if (productLikeClicked != null)
+                              InkWell(
+                                onTap: productLikeClicked,
+                                child: Assets.icons.heart.image(),
+                              ),
+                            if (productShoppingCartClicked != null) ...[
+                              const SizedBox(width: 12),
+                              InkWell(
+                                onTap: productShoppingCartClicked,
+                                child: Assets.icons.addToCart.image(),
+                              ),
+                            ],
                           ],
                         ),
                         Text(

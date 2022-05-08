@@ -13,18 +13,30 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   ProductsScreenCubit({
     required CQRS cqrs,
   })  : _cqrs = cqrs,
-        super(ProductsScreenInitialState(activeCategory: allCategories));
+        super(const ProductsScreenReadyState());
 
   final CQRS _cqrs;
 
   Future<void> fetch({int page = 0}) async {
-    emit(ProductsScreenLoadingState(
-      categories: state.categories,
-      products: state.products,
-      currentPage: state.currentPage,
-      totalCount: state.totalCount,
-      activeCategory: state.activeCategory,
-    ));
+    final state = this.state;
+
+    if (state is! ProductsScreenReadyState) {
+      emit(const ProductsScreenReadyState(isLoading: true));
+    } else {
+      emit(ProductsScreenReadyState(
+        isLoading: true,
+        categories: state.categories,
+        products: state.products,
+        currentPage: state.currentPage,
+        totalCount: state.totalCount,
+        activeCategory: state.activeCategory,
+      ));
+    }
+
+    if (state is! ProductsScreenReadyState) {
+      return;
+    }
+
     try {
       final categories = await _cqrs.get(GetAllCategories());
       final products = await _cqrs.get(
@@ -47,52 +59,63 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           activeCategory: allCategories,
         ),
       );
-    } catch (e) {
+    } catch (e, _) {
       emit(
         ProductsScreenErrorState(
-          categories: state.categories,
-          currentPage: state.currentPage,
-          totalCount: state.totalCount,
-          products: state.products,
-          activeCategory: state.activeCategory,
+          errorMessage: e.toString(),
         ),
       );
     }
   }
 
-  Future<void> changeActiveCategory(CategoryDTO activeCategory) async {
+  void changeActiveCategory(CategoryDTO activeCategory) {
+    final state = this.state;
+
+    if (state is! ProductsScreenReadyState) {
+      return;
+    }
+
     emit(state.copyWith(activeCategory: activeCategory));
+  }
+
+  Future<void> likeProduct(String productId) async {
+    try {
+      // _cqrs.run();
+    } catch (e, _) {
+      emit(ProductsScreenErrorState(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> addProductToShoppingCart(String productId) async {
+    final state = this.state;
+
+    if (state is! ProductsScreenReadyState) {
+      return;
+    }
+    try {
+      await _cqrs.run(AddProductsToShoppingCart(
+        productId: productId,
+        amount: 1,
+      ));
+
+      // await fetch(page: state.currentPage); uncomment when ProductDTO will have fields isFavorite and isInShoppingCart
+    } catch (e, _) {
+      emit(ProductsScreenErrorState(errorMessage: e.toString()));
+    }
   }
 }
 
 @freezed
 class ProductsScreenState with _$ProductsScreenState {
-  factory ProductsScreenState.initial({
-    @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
-    @Default(<ProductDTO>[]) List<ProductDTO> products,
-    @Default(0) int currentPage,
-    @Default(0) int totalCount,
-    required CategoryDTO activeCategory,
-  }) = ProductsScreenInitialState;
-  const factory ProductsScreenState.loading({
-    @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
-    @Default(<ProductDTO>[]) List<ProductDTO> products,
-    @Default(0) int currentPage,
-    @Default(0) int totalCount,
-    required CategoryDTO activeCategory,
-  }) = ProductsScreenLoadingState;
   const factory ProductsScreenState.ready({
-    required List<CategoryDTO> categories,
-    required List<ProductDTO> products,
-    required int currentPage,
-    required int totalCount,
-    required CategoryDTO activeCategory,
+    @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
+    @Default(<ProductDTO>[]) List<ProductDTO> products,
+    @Default(0) int currentPage,
+    @Default(0) int totalCount,
+    CategoryDTO? activeCategory,
+    @Default(false) bool isLoading,
   }) = ProductsScreenReadyState;
   const factory ProductsScreenState.error({
-    required List<CategoryDTO> categories,
-    required List<ProductDTO> products,
-    required int currentPage,
-    required int totalCount,
-    required CategoryDTO activeCategory,
+    required String errorMessage,
   }) = ProductsScreenErrorState;
 }

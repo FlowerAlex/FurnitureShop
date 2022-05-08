@@ -521,7 +521,6 @@ AddProductsToShoppingCart _$AddProductsToShoppingCartFromJson(
     AddProductsToShoppingCart(
       productId: json['ProductId'] as String,
       amount: json['Amount'] as int,
-      shoppingCartId: json['ShoppingCartId'] as String,
     );
 
 Map<String, dynamic> _$AddProductsToShoppingCartToJson(
@@ -529,32 +528,25 @@ Map<String, dynamic> _$AddProductsToShoppingCartToJson(
     <String, dynamic>{
       'ProductId': instance.productId,
       'Amount': instance.amount,
-      'ShoppingCartId': instance.shoppingCartId,
-    };
-
-GetShoppingCart _$GetShoppingCartFromJson(Map<String, dynamic> json) =>
-    GetShoppingCart(
-      shoppingCartId: json['ShoppingCartId'] as String,
-    );
-
-Map<String, dynamic> _$GetShoppingCartToJson(GetShoppingCart instance) =>
-    <String, dynamic>{
-      'ShoppingCartId': instance.shoppingCartId,
     };
 
 RemoveProductFromShoppingCart _$RemoveProductFromShoppingCartFromJson(
         Map<String, dynamic> json) =>
     RemoveProductFromShoppingCart(
-      shoppingCartId: json['ShoppingCartId'] as String,
       productId: json['ProductId'] as String,
     );
 
 Map<String, dynamic> _$RemoveProductFromShoppingCartToJson(
         RemoveProductFromShoppingCart instance) =>
     <String, dynamic>{
-      'ShoppingCartId': instance.shoppingCartId,
       'ProductId': instance.productId,
     };
+
+ShoppingCart _$ShoppingCartFromJson(Map<String, dynamic> json) =>
+    ShoppingCart();
+
+Map<String, dynamic> _$ShoppingCartToJson(ShoppingCart instance) =>
+    <String, dynamic>{};
 
 ShoppingCartDTO _$ShoppingCartDTOFromJson(Map<String, dynamic> json) =>
     ShoppingCartDTO(

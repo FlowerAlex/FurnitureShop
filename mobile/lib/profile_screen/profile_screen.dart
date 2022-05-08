@@ -152,7 +152,9 @@ class ProfileScreen extends HookWidget {
               return SafeArea(
                 child: Column(
                   children: [
-                    const CustomAppBar(title: 'Profile'),
+                    const CustomAppBar(
+                      title: 'Profile',
+                    ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(56, 24, 60, 0),
