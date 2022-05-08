@@ -4,14 +4,9 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Categories
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class DeleteCategory : IRemoteCommand
     {
         public Guid Id { get; set; }
-        public static class ErrorCodes
-        {
-            public const int EmptyArgs = 1;
-        }
     }
 }

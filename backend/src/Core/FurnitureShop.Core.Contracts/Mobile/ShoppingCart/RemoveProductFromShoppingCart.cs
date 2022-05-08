@@ -8,9 +8,5 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
     public class RemoveProductFromShoppingCart : IRemoteCommand
     {
         public Guid ProductId { get; set; }
-        public static class ErrorCodes
-        {
-            public const int ShoppingCartNotFound = 1;
-        }
     }
 }
