@@ -37,9 +37,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Country should not be empty");
             RuleFor(p => p.OrderInfo.PostalCode)
-                .Matches("[0-9]{2}-[0-9]{3}")
+                .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("Postal code is in incorrect format");
+                    .WithMessage("Postal should not be empty");
         }
     }
     public class CreateOrderQH : ICommandHandler<CreateOrder>
