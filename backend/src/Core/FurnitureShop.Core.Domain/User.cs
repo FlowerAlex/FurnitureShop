@@ -16,7 +16,7 @@ namespace FurnitureShop.Core.Domain
         public ICollection<Order> Orders { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Complaint> Complaints { get; set; }
-
+        public ICollection<UserProduct> Favourites { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
@@ -34,6 +34,7 @@ namespace FurnitureShop.Core.Domain
             Orders = new List<Order>();
             Reviews = new List<Review>();
             Complaints = new List<Complaint>();
+            Favourites = new List<UserProduct>();
         }
 
         public void updateUser(string? firstname, string? surname, string? username)
