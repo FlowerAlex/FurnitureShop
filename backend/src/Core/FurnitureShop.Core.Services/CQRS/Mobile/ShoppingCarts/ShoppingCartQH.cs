@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
             RuleForAsync(p => p, DoesUserExistAsync)
                 .Equal(false)
                     .WithMessage("User not found.")
-                    .WithCode(ShoppingCart.ErrorCodes.UserNotFound);
+                    .WithCode(FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ShoppingCart.ErrorCodes.UserNotFound);
         }
 
         private static async Task<bool> DoesUserExistAsync(IValidationContext ctx, Contracts.Mobile.ShoppingCart.ShoppingCart cmd)
