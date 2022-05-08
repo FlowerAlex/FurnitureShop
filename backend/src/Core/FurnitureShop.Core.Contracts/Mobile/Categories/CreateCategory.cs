@@ -9,7 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Categories
         public string CategoryName { get; set; }
         public static class ErrorCodes
         {
-            public const int EmptyArgs = 1;
+            public const int IncorrectName = 1;
         }
     }
 }

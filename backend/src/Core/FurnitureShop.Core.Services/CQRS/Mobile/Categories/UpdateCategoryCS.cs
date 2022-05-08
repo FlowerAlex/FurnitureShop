@@ -1,13 +1,25 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Categories;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
 {
+    public class UpdateCategoryCV : ContextualValidator<UpdateCategory>
+    {
+        public UpdateCategoryCV()
+        {
+            RuleFor(p => p.NewName)
+                .NotEmpty()
+                    .WithCode(UpdateCategory.ErrorCodes.IncorrectName)
+                    .WithMessage("Category name should not be empty");
+        }
+    }
     public class UpdateCategoryCH : ICommandHandler<UpdateCategory>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateCategoryCH>();

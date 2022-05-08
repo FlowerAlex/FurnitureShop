@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using FluentValidation;
-using FluentValidation.Validators;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;

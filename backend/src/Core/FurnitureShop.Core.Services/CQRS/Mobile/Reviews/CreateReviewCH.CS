@@ -1,11 +1,27 @@
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
 {
+    public class CreateReviewCV : ContextualValidator<CreateReview>
+    {
+        public CreateReviewCV()
+        {
+            RuleFor(p => p.ReviewInfo.Text)
+                .NotEmpty()
+                    .WithCode(CreateReview.ErrorCodes.EmptyReviewText)
+                    .WithMessage("Review text should not be empty");
+            RuleFor(p => p.ReviewInfo.Rating)
+                .InclusiveBetween(0.0,5.0)
+                    .WithCode(CreateReview.ErrorCodes.IncorrectRating)
+                    .WithMessage("Incorrect rating");
+        }
+    }
     public class CreateReviewCH : ICommandHandler<CreateReview>
     {
         private readonly CoreDbContext dbContext;

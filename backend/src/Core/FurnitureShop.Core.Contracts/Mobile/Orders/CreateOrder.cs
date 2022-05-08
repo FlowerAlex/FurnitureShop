@@ -10,8 +10,8 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public OrderInfoDTO OrderInfo { get; set; }
         public static class ErrorCodes
         {
-            public const int IncorrectAddress = 1;
-            public const int NoProducts = 2;
+            public const int NoProducts = 1;
+            public const int IncorrectAddress = 2;
         }
     }
 }

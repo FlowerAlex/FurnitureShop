@@ -4,8 +4,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    // [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class UpdateProduct : IRemoteCommand
     {
         public Guid Id { get;set;}
