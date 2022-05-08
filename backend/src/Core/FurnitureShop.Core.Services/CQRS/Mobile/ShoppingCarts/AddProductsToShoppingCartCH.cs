@@ -25,7 +25,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         public async Task ExecuteAsync(CoreContext context, AddProductsToShoppingCart cmd)
         {
             var shc = await dbContext.ShoppingCarts.Include(sp => sp.ShoppingCartProducts)
-                .Where(sp => sp.Id == cmd.ShoppingCartId).FirstOrDefaultAsync();
+                .Where(sp => sp.UserId == context.UserId).FirstOrDefaultAsync();
             var shp = new ShoppingCartProduct
             {
                 Amount = cmd.Amount,
