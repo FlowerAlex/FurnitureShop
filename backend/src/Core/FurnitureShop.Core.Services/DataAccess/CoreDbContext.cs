@@ -32,6 +32,7 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
         public DbSet<ShoppingCartProduct> ShoppingCartProduct => Set<ShoppingCartProduct>();
         public DbSet<OrderProduct> OrderProduct => Set<OrderProduct>();
+        public DbSet<UserProduct> Favourites => Set<UserProduct>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -147,6 +148,19 @@ namespace FurnitureShop.Core.Services.DataAccess
                    .HasForeignKey(o => o.ShoppingCartId);
                o.HasOne<Product>()
                    .WithMany(p => p.ShoppingCartProducts)
+                   .HasForeignKey(o => o.ProductId);
+           });
+           builder.Entity<UserProduct>(o =>
+           {
+               o.HasKey(o => o.Id);
+               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+               o.Property(o => o.UserId).IsTypedId();
+               o.Property(o => o.ProductId).IsTypedId();
+               o.HasOne<User>()
+                   .WithMany(u => u.Favourites)
+                   .HasForeignKey(o => o.UserId);
+               o.HasOne<Product>()
+                   .WithMany()
                    .HasForeignKey(o => o.ProductId);
            });
         }
