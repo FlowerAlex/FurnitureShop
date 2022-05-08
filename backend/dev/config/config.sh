@@ -9,7 +9,7 @@ export Logging__MinimumLevel=Verbose
 export Telemetry__ZipkinEndpoint='http://zipkin:9411/api/v2/spans'
 
 export SqlServer__ConnectionString='Server=db.local.lncd.pl,1433;Database=App;User Id=sa;Password=Passw12#'
-export BlobStorage__ConnectionString='DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://storage.local.lncd.pl:10000/devstoreaccount1;'
+export BlobStorage__ConnectionString='DefaultEndpointsProtocol=https;AccountName=furniturestoreblob1;AccountKey=7RElTWiIcqNeijKRBODpw6cBG9xxVOsWzriCs3bEXkLkGBt026Lvfcdi+Oec8Gg0Jn6eNDj4MEAVm365iIEb0g==;EndpointSuffix=core.windows.net'
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ -f "$DIR/secrets.sh" ]]; then
