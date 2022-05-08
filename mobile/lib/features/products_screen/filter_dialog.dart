@@ -1,55 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_show_dialog.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 
-Future<T?> showFilterDialog<T>(BuildContext context) => showAppDialog(
+Future<T?> showFilterDialog<T>(
+  BuildContext context, {
+  required String? activeCategoryId,
+  required List<CategoryDTO> categories,
+}) =>
+    showAppDialog(
       context: context,
       title: 'Filter details',
-      bottomWidgetBuilder: (context) =>
-          BlocBuilder<ProductsScreenCubit, ProductsScreenState>(
-        builder: (context, state) {
-          final categories = [allCategories, ...state.categories];
+      bottomWidgetBuilder: (context) {
+        final updatedCategories = [allCategories, ...categories];
 
-          return ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.5,
-            ),
-            child: SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Categories',
-                      style: AppTextStyles.med16,
-                    ),
-                    const SizedBox(height: 8),
-                    Column(
-                      children: [
-                        for (final category in categories) ...[
-                          FilterCategoryTile(
-                            active: state.activeCategory.id == category.id,
-                            categoryName: category.name,
-                            onPressed: () => context
-                                .read<ProductsScreenCubit>()
-                                .changeActiveCategory(category),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+          ),
+          child: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Text(
+                    'Categories',
+                    style: AppTextStyles.med16,
+                  ),
+                  const SizedBox(height: 8),
+                  Column(
+                    children: [
+                      for (final category in updatedCategories) ...[
+                        FilterCategoryTile(
+                          active: activeCategoryId == category.id,
+                          categoryName: category.name,
+                          onPressed: () => context
+                              .read<ProductsScreenCubit>()
+                              .changeActiveCategory(category),
+                        ),
+                        const SizedBox(height: 8),
                       ],
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
 
 class FilterCategoryTile extends StatelessWidget {

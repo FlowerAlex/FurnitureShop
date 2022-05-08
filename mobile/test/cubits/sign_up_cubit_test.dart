@@ -2,17 +2,12 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cqrs/contracts.dart';
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:furniture_shop/features/auth/auth_cubit.dart';
-import 'package:furniture_shop/features/sign_up_screen.dart/sign_up_screen_cubit.dart';
-import 'package:login_client/login_client.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/features/sign_up_screen.dart/sign_up_screen_cubit.dart';
+import 'package:mocktail/mocktail.dart';
 
-class MockCQRS extends Mock implements CQRS {}
-
-class MockAuthCubit extends Mock implements AuthCubit {}
+import '../register_fallback_values.dart';
 
 void main() {
   group(
@@ -21,21 +16,7 @@ void main() {
       late MockCQRS cqrs;
       late MockAuthCubit authCubit;
 
-      setUpAll(() {
-        registerFallbackValue(
-          RegisterUser(
-            userInfo: UserInfoDTO(
-              emailAddress: '',
-              firstname: '',
-              surname: '',
-              username: '',
-            ),
-            password: 'password',
-          ),
-        );
-
-        registerFallbackValue(const ResourceOwnerPasswordStrategy('', ''));
-      });
+      setUpAll(registerFallbackValues);
 
       setUp(() {
         cqrs = MockCQRS();

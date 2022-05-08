@@ -1,36 +1,7 @@
-import 'package:cqrs/contracts.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:equatable/equatable.dart';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+import 'package:leancode_contracts/leancode_contracts.dart';
 part 'contracts.g.dart';
-
-final _ = EquatableConfig.stringify = true;
-
-/// [TimeOfDay] but with seconds precision
-class Time with EquatableMixin {
-  const Time(this.hour, this.minute, this.second)
-      : assert(hour >= 0 && hour <= 23),
-        assert(minute >= 0 && minute <= 59),
-        assert(second >= 0 && second <= 59);
-
-  factory Time.fromJson(String json) {
-    final chunks = json.split(':');
-    return Time(
-      int.parse(chunks[0]),
-      int.parse(chunks[1]),
-      int.parse(chunks[2]),
-    );
-  }
-
-  final int hour;
-
-  final int minute;
-
-  final int second;
-
-  get props => [hour, minute, second];
-
-  String toJson() => '$hour:$minute:$second';
-}
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class Auth with EquatableMixin {
@@ -105,7 +76,7 @@ class Scopes with EquatableMixin {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CategoryById with EquatableMixin implements IRemoteQuery<CategoryDTO> {
+class CategoryById with EquatableMixin implements Query<CategoryDTO> {
   CategoryById({
     required this.id,
   });
@@ -145,7 +116,7 @@ class CategoryDTO with EquatableMixin {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateCategory with EquatableMixin implements IRemoteCommand {
+class CreateCategory with EquatableMixin implements Command {
   CreateCategory({
     required this.categoryName,
   });
@@ -168,7 +139,7 @@ class CreateCategoryErrorCodes {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class DeleteCategory with EquatableMixin implements IRemoteCommand {
+class DeleteCategory with EquatableMixin implements Command {
   DeleteCategory({
     required this.id,
   });
@@ -191,9 +162,7 @@ class DeleteCategoryErrorCodes {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class GetAllCategories
-    with EquatableMixin
-    implements IRemoteQuery<List<CategoryDTO>> {
+class GetAllCategories with EquatableMixin implements Query<List<CategoryDTO>> {
   GetAllCategories();
 
   factory GetAllCategories.fromJson(Map<String, dynamic> json) =>
@@ -212,7 +181,7 @@ class GetAllCategories
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateCategory with EquatableMixin implements IRemoteCommand {
+class UpdateCategory with EquatableMixin implements Command {
   UpdateCategory({
     required this.id,
     required this.newName,
@@ -238,7 +207,7 @@ class UpdateCategoryErrorCodes {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ComplaintById with EquatableMixin implements IRemoteQuery<ComplaintDTO> {
+class ComplaintById with EquatableMixin implements Query<ComplaintDTO> {
   ComplaintById({
     required this.id,
   });
@@ -309,7 +278,7 @@ class ComplaintInfoDTO with EquatableMixin {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateComplaint with EquatableMixin implements IRemoteCommand {
+class CreateComplaint with EquatableMixin implements Command {
   CreateComplaint({
     required this.complaintInfo,
   });
@@ -330,7 +299,7 @@ class CreateComplaintErrorCodes {}
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class DeleteComplaint with EquatableMixin implements IRemoteCommand {
+class DeleteComplaint with EquatableMixin implements Command {
   DeleteComplaint({
     required this.id,
   });
@@ -378,7 +347,7 @@ class GetAllComplaints
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateComplaint with EquatableMixin implements IRemoteCommand {
+class UpdateComplaint with EquatableMixin implements Command {
   UpdateComplaint({
     required this.id,
     required this.complaintInfo,
@@ -400,9 +369,9 @@ class UpdateComplaint with EquatableMixin implements IRemoteCommand {
 
 class UpdateComplaintErrorCodes {}
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateOrder with EquatableMixin implements IRemoteCommand {
+class CreateOrder with EquatableMixin implements Command {
   CreateOrder({
     required this.orderInfo,
   });
@@ -425,9 +394,48 @@ class CreateOrderErrorCodes {
   static const noProducts = 2;
 }
 
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class GetAllOrders
+    with
+        EquatableMixin
+    implements
+        SortableMulitiFilterPaginatedQuery<OrderDTO, OrdersSortFieldDTO?,
+            OrdersFilterFieldDTO> {
+  GetAllOrders({
+    required this.pageNumber,
+    required this.pageSize,
+    required this.filterBy,
+    this.sortBy,
+    required this.sortByDescending,
+  });
+
+  factory GetAllOrders.fromJson(Map<String, dynamic> json) =>
+      _$GetAllOrdersFromJson(json);
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  final Map<OrdersFilterFieldDTO, String> filterBy;
+
+  final OrdersSortFieldDTO? sortBy;
+
+  final bool sortByDescending;
+
+  get props => [pageNumber, pageSize, filterBy, sortBy, sortByDescending];
+
+  Map<String, dynamic> toJson() => _$GetAllOrdersToJson(this);
+  PaginatedResult<OrderDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$OrderDTOFromJson(e as Map<String, dynamic>));
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Orders.GetAllOrders';
+}
+
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class OrderById with EquatableMixin implements IRemoteQuery<OrderDTO> {
+class OrderById with EquatableMixin implements Query<OrderDTO> {
   OrderById({
     required this.id,
   });
@@ -526,25 +534,77 @@ class OrderInfoDTO with EquatableMixin {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class OrderProductDTO with EquatableMixin {
   OrderProductDTO({
-    this.productId,
+    required this.orderId,
+    required this.product,
     required this.amount,
   });
 
   factory OrderProductDTO.fromJson(Map<String, dynamic> json) =>
       _$OrderProductDTOFromJson(json);
 
-  final String? productId;
+  final String orderId;
+
+  final ProductDTO product;
 
   final int amount;
 
-  get props => [productId, amount];
+  get props => [orderId, product, amount];
 
   Map<String, dynamic> toJson() => _$OrderProductDTOToJson(this);
 }
 
+enum OrdersFilterFieldDTO {
+  @JsonValue(0)
+  orderState,
+  @JsonValue(1)
+  country,
+  @JsonValue(2)
+  state,
+  @JsonValue(3)
+  city,
+  @JsonValue(4)
+  street,
+  @JsonValue(5)
+  postalCode,
+  @JsonValue(6)
+  userId
+}
+enum OrdersSortFieldDTO {
+  @JsonValue(0)
+  orderedDate,
+  @JsonValue(1)
+  deliveredDate
+}
+
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateProduct with EquatableMixin implements IRemoteCommand {
+class SetOrderState with EquatableMixin implements Command {
+  SetOrderState({
+    required this.id,
+    required this.orderState,
+  });
+
+  factory SetOrderState.fromJson(Map<String, dynamic> json) =>
+      _$SetOrderStateFromJson(json);
+
+  final String id;
+
+  final String orderState;
+
+  get props => [id, orderState];
+
+  Map<String, dynamic> toJson() => _$SetOrderStateToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Orders.SetOrderState';
+}
+
+class SetOrderStateErrorCodes {
+  static const incorrectState = 1;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class CreateProduct with EquatableMixin implements Command {
   CreateProduct({
     required this.productDetails,
   });
@@ -571,7 +631,7 @@ class CreateProductErrorCodes {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class DeleteProduct with EquatableMixin implements IRemoteCommand {
+class DeleteProduct with EquatableMixin implements Command {
   DeleteProduct({
     required this.id,
   });
@@ -632,9 +692,7 @@ class GetAllProducts
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductById
-    with EquatableMixin
-    implements IRemoteQuery<ProductWithDetailsDTO> {
+class ProductById with EquatableMixin implements Query<ProductWithDetailsDTO> {
   ProductById({
     required this.id,
   });
@@ -654,23 +712,43 @@ class ProductById
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductDetailsDTO with EquatableMixin {
+class ProductDetailsDTO with EquatableMixin implements ProductInfoDTO {
   ProductDetailsDTO({
+    required this.name,
+    required this.price,
+    this.averageRating,
+    this.previewPhotoURL,
+    this.categoryId,
     required this.description,
     this.modelUrl,
-    required this.productInfo,
   });
 
   factory ProductDetailsDTO.fromJson(Map<String, dynamic> json) =>
       _$ProductDetailsDTOFromJson(json);
 
+  final String name;
+
+  final double price;
+
+  final double? averageRating;
+
+  final String? previewPhotoURL;
+
+  final String? categoryId;
+
   final String description;
 
   final String? modelUrl;
 
-  final ProductInfoDTO productInfo;
-
-  get props => [description, modelUrl, productInfo];
+  get props => [
+        name,
+        price,
+        averageRating,
+        previewPhotoURL,
+        categoryId,
+        description,
+        modelUrl
+      ];
 
   Map<String, dynamic> toJson() => _$ProductDetailsDTOToJson(this);
 }
@@ -750,7 +828,7 @@ class ProductWithDetailsDTO with EquatableMixin {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateProduct with EquatableMixin implements IRemoteCommand {
+class UpdateProduct with EquatableMixin implements Command {
   UpdateProduct({
     required this.id,
     required this.productDetails,
@@ -780,7 +858,7 @@ class UpdateProductErrorCodes {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateReview with EquatableMixin implements IRemoteCommand {
+class CreateReview with EquatableMixin implements Command {
   CreateReview({
     required this.reviewInfo,
   });
@@ -801,7 +879,7 @@ class CreateReviewErrorCodes {}
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class DeleteReview with EquatableMixin implements IRemoteCommand {
+class DeleteReview with EquatableMixin implements Command {
   DeleteReview({
     required this.id,
   });
@@ -850,7 +928,7 @@ class GetAllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ReviewById with EquatableMixin implements IRemoteQuery<ReviewDTO> {
+class ReviewById with EquatableMixin implements Query<ReviewDTO> {
   ReviewById({
     required this.id,
   });
@@ -918,7 +996,7 @@ class ReviewInfoDTO with EquatableMixin {
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateReview with EquatableMixin implements IRemoteCommand {
+class UpdateReview with EquatableMixin implements Command {
   UpdateReview({
     required this.id,
     required this.reviewInfo,
@@ -940,9 +1018,142 @@ class UpdateReview with EquatableMixin implements IRemoteCommand {
 
 class UpdateReviewErrorCodes {}
 
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class AddProductsToShoppingCart with EquatableMixin implements Command {
+  AddProductsToShoppingCart({
+    required this.productId,
+    required this.amount,
+  });
+
+  factory AddProductsToShoppingCart.fromJson(Map<String, dynamic> json) =>
+      _$AddProductsToShoppingCartFromJson(json);
+
+  final String productId;
+
+  final int amount;
+
+  get props => [productId, amount];
+
+  Map<String, dynamic> toJson() => _$AddProductsToShoppingCartToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.AddProductsToShoppingCart';
+}
+
+class AddProductsToShoppingCartErrorCodes {
+  static const incorrectAmount = 1;
+
+  static const productNotFound = 2;
+
+  static const shoppingCartNotFound = 3;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class RemoveProductFromShoppingCart with EquatableMixin implements Command {
+  RemoveProductFromShoppingCart({
+    required this.productId,
+  });
+
+  factory RemoveProductFromShoppingCart.fromJson(Map<String, dynamic> json) =>
+      _$RemoveProductFromShoppingCartFromJson(json);
+
+  final String productId;
+
+  get props => [productId];
+
+  Map<String, dynamic> toJson() => _$RemoveProductFromShoppingCartToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.RemoveProductFromShoppingCart';
+}
+
+class RemoveProductFromShoppingCartErrorCodes {
+  static const shoppingCartNotFound = 1;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
+  ShoppingCart();
+
+  factory ShoppingCart.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$ShoppingCartToJson(this);
+  ShoppingCartDTO resultFactory(dynamic decodedJson) =>
+      _$ShoppingCartDTOFromJson(decodedJson as Map<String, dynamic>);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ShoppingCart';
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ShoppingCartDTO with EquatableMixin {
+  ShoppingCartDTO({
+    required this.id,
+    required this.shoppingCartInfo,
+  });
+
+  factory ShoppingCartDTO.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartDTOFromJson(json);
+
+  final String id;
+
+  final ShoppingCartInfoDTO shoppingCartInfo;
+
+  get props => [id, shoppingCartInfo];
+
+  Map<String, dynamic> toJson() => _$ShoppingCartDTOToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ShoppingCartInfoDTO with EquatableMixin {
+  ShoppingCartInfoDTO({
+    this.userId,
+    required this.price,
+    required this.shoppingCartProducts,
+  });
+
+  factory ShoppingCartInfoDTO.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartInfoDTOFromJson(json);
+
+  final String? userId;
+
+  final double price;
+
+  final List<ShoppingCartProductDTO> shoppingCartProducts;
+
+  get props => [userId, price, shoppingCartProducts];
+
+  Map<String, dynamic> toJson() => _$ShoppingCartInfoDTOToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ShoppingCartProductDTO with EquatableMixin {
+  ShoppingCartProductDTO({
+    required this.amount,
+    required this.product,
+    required this.shoppingCartId,
+  });
+
+  factory ShoppingCartProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartProductDTOFromJson(json);
+
+  final int amount;
+
+  final ProductDTO product;
+
+  final String shoppingCartId;
+
+  get props => [amount, product, shoppingCartId];
+
+  Map<String, dynamic> toJson() => _$ShoppingCartProductDTOToJson(this);
+}
+
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class RegisterUser with EquatableMixin implements IRemoteCommand {
+class RegisterUser with EquatableMixin implements Command {
   RegisterUser({
     required this.userInfo,
     required this.password,
@@ -970,7 +1181,7 @@ class RegisterUserErrorCodes {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateProfile with EquatableMixin implements IRemoteCommand {
+class UpdateProfile with EquatableMixin implements Command {
   UpdateProfile({
     this.firstname,
     this.surname,
@@ -997,7 +1208,7 @@ class UpdateProfileErrorCodes {}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UserInfo with EquatableMixin implements IRemoteQuery<UserInfoDTO> {
+class UserInfo with EquatableMixin implements Query<UserInfoDTO> {
   UserInfo();
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
@@ -1038,7 +1249,7 @@ class UserInfoDTO with EquatableMixin {
 
 abstract class PaginatedQuery<TResult>
     with EquatableMixin
-    implements IRemoteQuery<PaginatedResult<TResult>> {
+    implements Query<PaginatedResult<TResult>> {
   PaginatedQuery({
     required this.pageNumber,
     required this.pageSize,
@@ -1068,9 +1279,30 @@ class PaginatedResult<TResult> with EquatableMixin {
   final int totalCount;
 
   get props => [items, totalCount];
+}
 
-  Map<String, dynamic> toJson(Object? Function(TResult) toJsonTResult) =>
-      _$PaginatedResultToJson(this, toJsonTResult);
+abstract class SortableMulitiFilterPaginatedQuery<TResult, TBy, TFBy>
+    with EquatableMixin
+    implements PaginatedQuery<TResult> {
+  SortableMulitiFilterPaginatedQuery({
+    required this.pageNumber,
+    required this.pageSize,
+    required this.filterBy,
+    required this.sortBy,
+    required this.sortByDescending,
+  });
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  final Map<TFBy, String> filterBy;
+
+  final TBy sortBy;
+
+  final bool sortByDescending;
+
+  get props => [pageNumber, pageSize, filterBy, sortBy, sortByDescending];
 }
 
 abstract class SortablePaginatedQuery<TResult, TBy>
