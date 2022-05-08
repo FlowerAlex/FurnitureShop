@@ -20,6 +20,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task ExecuteAsync(CoreContext context, AddToFavourites command)
         {
+            var isAlreadyFavourite = dbContext.Favourites.Where(f => f.UserId == context.UserId && f.ProductId == command.Id).Any();
+            if (isAlreadyFavourite)
+            {
+                return;
+            }
             dbContext.Favourites.Add(
                 new UserProduct()
                 {

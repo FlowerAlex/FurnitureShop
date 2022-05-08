@@ -8,6 +8,7 @@ using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.Products;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS;
+using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -19,6 +20,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
             ModelUrl = "https://some.url.com",
+        };
+        private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
+        {
+            ModelUrl = "https://some.url2.com",
         };
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
 
@@ -37,8 +42,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
             TestProduct.CategoryId = TestCategory.Id;
             context.Products.Add(TestProduct);
+            context.Products.Add(TestProduct2);
             context.SaveChanges();
-        }
+
+            context.Favourites.Add(new UserProduct(){UserId = Id<User>.From(TestUserId), ProductId = TestProduct2.Id});
+            context.SaveChanges();
+        } 
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -141,6 +150,38 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewProductModelUrl, Product.ModelUrl);
             Assert.Equal(NewProductPrice, Product.Price);
             Assert.Null(Product.CategoryId);
+        }
+        [Fact]
+        public void AddToFavouritesTest()
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new AddToFavouritesCH(dbContext);
+            var command = new AddToFavourites
+            {
+                Id = TestProduct.Id,
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            var favourite = dbContext.Favourites.Where(f => f.UserId == TestUserId && f.ProductId == TestProduct.Id).First();
+            Assert.Equal(TestProduct.Id,favourite.ProductId);
+        }
+        [Fact] 
+        public void RemoveFromFavouritesTest()
+        {     
+            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            using var dbContext = new CoreDbContext(ContextOptions);            
+            var handler = new RemoveFromFavouritesCH(dbContext);
+            var command = new RemoveFromFavourites
+            {
+                Id = TestProduct2.Id,
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            bool isFavourtie = dbContext.Favourites.Where(f => f.UserId == TestUserId && f.ProductId == TestProduct2.Id).Any();
+            Assert.False(isFavourtie);
         }
     }
 }
