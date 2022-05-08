@@ -12,17 +12,17 @@ using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 {
-    public class GetShoppingCartCV : ContextualValidator<GetShoppingCart>
+    public class ShoppingCartCV : ContextualValidator<Contracts.Mobile.ShoppingCart.ShoppingCart>
     {
-        public GetShoppingCartCV()
+        public ShoppingCartCV()
         {
             RuleForAsync(p => p, DoesUserExistAsync)
                 .Equal(false)
                     .WithMessage("User not found.")
-                    .WithCode(GetShoppingCart.ErrorCodes.UserNotFound);
+                    .WithCode(FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ShoppingCart.ErrorCodes.UserNotFound);
         }
 
-        private static async Task<bool> DoesUserExistAsync(IValidationContext ctx, GetShoppingCart cmd)
+        private static async Task<bool> DoesUserExistAsync(IValidationContext ctx, Contracts.Mobile.ShoppingCart.ShoppingCart cmd)
         {
             var uid = ctx.AppContext<CoreContext>().UserId;
             var dbContext = ctx.GetService<CoreDbContext>();
@@ -32,19 +32,19 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         }
     }
 
-    public class GetShoppingCartQH : IQueryHandler<GetShoppingCart, ShoppingCartDTO?>
+    public class ShoppingCartQH : IQueryHandler<Contracts.Mobile.ShoppingCart.ShoppingCart, ShoppingCartDTO?>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetShoppingCartQH(CoreDbContext dbContext)
+        public ShoppingCartQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<ShoppingCartDTO?> ExecuteAsync(CoreContext context, GetShoppingCart query)
+        public async Task<ShoppingCartDTO?> ExecuteAsync(CoreContext context, Contracts.Mobile.ShoppingCart.ShoppingCart query)
         {
-            var ret =  await dbContext.ShoppingCarts
-                .Where(p => p.Id == query.ShoppingCartId)
+            var ret = await dbContext.ShoppingCarts
+                .Where(p => p.UserId == context.UserId)
                 .Select(p => new ShoppingCartDTO
                 {
                     ShoppingCartInfo = new ShoppingCartInfoDTO
@@ -72,15 +72,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                     }
                                 }
                             }
-                        ).Where(shp => shp.ShoppingCartId == query.ShoppingCartId).ToList(),
+                        ).Where(shp => shp.ShoppingCartId == p.Id).ToList(),
                         UserId = p.UserId,
                     },
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();
-                if (ret == null) {return null;}
-                ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
-                return ret;
+            if (ret == null) { return null; }
+            ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
+            return ret;
         }
     }
 }
