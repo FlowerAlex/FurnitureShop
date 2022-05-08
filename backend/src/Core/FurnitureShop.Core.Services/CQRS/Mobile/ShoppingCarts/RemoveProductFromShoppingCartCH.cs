@@ -24,9 +24,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 
         public async Task ExecuteAsync(CoreContext context, RemoveProductFromShoppingCart cmd)
         {
-
+            var shoppingCart = await dbContext.ShoppingCarts.Where(s => s.UserId == context.UserId).FirstOrDefaultAsync();
+            if (shoppingCart == null)
+            {
+                return ;
+            }
             var shp = await dbContext.ShoppingCartProduct.Where(
-                s => s.ShoppingCartId == cmd.ShoppingCartId && s.ProductId == cmd.ProductId)
+                s => s.ShoppingCartId == shoppingCart.Id && s.ProductId == cmd.ProductId)
                 .FirstOrDefaultAsync();
             if (shp == null) { return; }
             dbContext.ShoppingCartProduct.Remove(shp);
