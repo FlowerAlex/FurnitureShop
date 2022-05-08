@@ -1,14 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cqrs/contracts.dart';
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:furniture_shop/data/contracts.dart';
 
+import '../register_fallback_values.dart';
 import '../test_data.dart';
-
-class MockCQRS extends Mock implements CQRS {}
 
 void main() {
   group(
@@ -16,10 +14,7 @@ void main() {
     () {
       late MockCQRS cqrs;
 
-      setUpAll(() {
-        registerFallbackValue(UserInfo());
-        registerFallbackValue(UpdateProfile());
-      });
+      setUpAll(registerFallbackValues);
 
       setUp(() {
         cqrs = MockCQRS();

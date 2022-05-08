@@ -1,15 +1,12 @@
 import 'dart:io';
+
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/login_screen/login_screen_cubit.dart';
 import 'package:login_client/login_client.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockCQRS extends Mock implements CQRS {}
-
-class MockAuthCubit extends Mock implements AuthCubit {}
+import '../register_fallback_values.dart';
 
 void main() {
   group(
@@ -17,9 +14,7 @@ void main() {
     () {
       late MockAuthCubit authCubit;
 
-      setUpAll(() {
-        registerFallbackValue(const ResourceOwnerPasswordStrategy('', ''));
-      });
+      setUpAll(registerFallbackValues);
 
       setUp(() {
         authCubit = MockAuthCubit();
