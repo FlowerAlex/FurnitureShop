@@ -21,6 +21,5 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
     {
         public int Amount { get; set; }
         public ProductDTO Product {get;set;}
-        public Guid ShoppingCartId { get; set; }
     }
 }

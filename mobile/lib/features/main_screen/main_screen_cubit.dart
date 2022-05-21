@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 enum Screen {
   products,
   favorites,
-  bucket,
+  shoppingCart,
   profile,
 }
 

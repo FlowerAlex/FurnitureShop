@@ -17,6 +17,8 @@ class FavoritesScreen extends HookWidget {
             title: 'Favorites',
             textEditingController: searchTextEditingController,
             withFilter: true,
+            categories: const [], // TODO
+            activeCategoryId: null, // TODO
           ),
         ],
       )),

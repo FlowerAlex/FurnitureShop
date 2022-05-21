@@ -274,6 +274,26 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("FurnitureShop.Core.Domain.UserProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favourites");
+                });
+
             modelBuilder.Entity("FurnitureShop.Core.Services.DataAccess.Entities.AuthRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -598,6 +618,17 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         .HasForeignKey("ShoppingCartId");
                 });
 
+            modelBuilder.Entity("FurnitureShop.Core.Domain.UserProduct", b =>
+                {
+                    b.HasOne("FurnitureShop.Core.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("FurnitureShop.Core.Domain.User", null)
+                        .WithMany("Favourites")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("LeanCode.DomainModels.MassTransitRelay.Outbox.RaisedEvent", b =>
                 {
                     b.OwnsOne("LeanCode.DomainModels.MassTransitRelay.Outbox.RaisedEventMetadata", "Metadata", b1 =>
@@ -696,6 +727,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
             modelBuilder.Entity("FurnitureShop.Core.Domain.User", b =>
                 {
                     b.Navigation("Complaints");
+
+                    b.Navigation("Favourites");
 
                     b.Navigation("Orders");
 

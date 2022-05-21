@@ -96,7 +96,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new AddProductsToShoppingCart
             {
                 ProductId = TestProduct2.Id,
-                ShoppingCartId = TestShoppingCart.Id,
                 Amount = productAmount,
             };
 
@@ -118,7 +117,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new RemoveProductFromShoppingCart
             {
                 ProductId = TestProduct.Id,
-                ShoppingCartId = TestShoppingCart.Id,
             };
 
             var result = handler.ExecuteAsync(coreContext, command);

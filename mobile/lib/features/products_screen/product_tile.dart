@@ -1,16 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
+import 'package:furniture_shop/resources/assets.gen.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({
     Key? key,
-    required this.product,
+    required this.productName,
+    required this.productPrice,
+    this.productLikeClicked,
+    this.productShoppingCartClicked,
   }) : super(key: key);
 
-  final ProductDTO product;
+  final String productName;
+  final String productPrice;
+
+  final VoidCallback? productLikeClicked;
+  final VoidCallback? productShoppingCartClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,6 @@ class ProductTile extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
                   width: 100,
@@ -44,18 +50,37 @@ class ProductTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.productInfo.name),
+                    Text(productName),
                     const AvaregeScore(rating: 3), // get from product
                   ],
                 ),
-                Flexible(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        product.productInfo.price.toString() + '\$',
-                      ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            if (productLikeClicked != null)
+                              InkWell(
+                                onTap: productLikeClicked,
+                                child: Assets.icons.heart.image(),
+                              ),
+                            if (productShoppingCartClicked != null) ...[
+                              const SizedBox(width: 12),
+                              InkWell(
+                                onTap: productShoppingCartClicked,
+                                child: Assets.icons.addToCart.image(),
+                              ),
+                            ],
+                          ],
+                        ),
+                        Text(
+                          productPrice,
+                        ),
+                      ],
                     ),
                   ),
                 ),

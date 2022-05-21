@@ -13,11 +13,12 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public string Name { get; set; }
         public double Price { get; set; }
         public double? AverageRating { get; set; }
-        public string? PreviewPhotoURL { get;set; }
+        public string? PreviewPhotoURL { get; set; }
+        public bool InFavourites { get; set; }
         public Guid? CategoryId { get; set; }
     }
 
-    public class ProductWithDetailsDTO 
+    public class ProductWithDetailsDTO
     {
         public Guid Id { get; set; }
         public ProductDetailsDTO ProductDetails { get; set; }

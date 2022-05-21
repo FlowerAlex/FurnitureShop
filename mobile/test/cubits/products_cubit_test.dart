@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:furniture_shop/data/contracts.dart';
 
 import '../test_data.dart';
 
@@ -35,8 +35,8 @@ void main() {
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'emit initial ProductsScreenState on the start',
         build: buildCubit,
-        verify: (cubit) => expect(cubit.state,
-            ProductsScreenInitialState(activeCategory: allCategories)),
+        verify: (cubit) => expect(
+            cubit.state, const ProductsScreenReadyState(activeCategory: null)),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
@@ -44,7 +44,7 @@ void main() {
         build: buildCubit,
         act: (cubit) => cubit.changeActiveCategory(category1Test),
         verify: (cubit) => expect(cubit.state,
-            ProductsScreenInitialState(activeCategory: category1Test)),
+            ProductsScreenReadyState(activeCategory: category1Test)),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
@@ -60,7 +60,7 @@ void main() {
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
-          ProductsScreenLoadingState(activeCategory: allCategories),
+          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
           ProductsScreenReadyState(
               products: [],
               activeCategory: allCategories,
@@ -74,22 +74,17 @@ void main() {
         'run fetch unsuccessfully',
         build: () {
           when(() => cqrs.get<List<CategoryDTO>>(
-              any(that: isA<GetAllCategories>()))).thenThrow(Exception());
+              any(that: isA<GetAllCategories>()))).thenThrow(Exception(''));
 
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-              any(that: isA<GetAllProducts>()))).thenThrow(Exception());
+              any(that: isA<GetAllProducts>()))).thenThrow(Exception(''));
 
           return buildCubit();
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
-          ProductsScreenLoadingState(activeCategory: allCategories),
-          ProductsScreenErrorState(
-              products: [],
-              activeCategory: allCategories,
-              totalCount: 0,
-              currentPage: 0,
-              categories: []),
+          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
+          const ProductsScreenErrorState(errorMessage: 'Exception: '),
         ],
       );
 
@@ -111,7 +106,7 @@ void main() {
           await cubit.fetch(page: 1);
         },
         expect: () => [
-          ProductsScreenLoadingState(activeCategory: allCategories),
+          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
           ProductsScreenReadyState(
             products: [productDTO1Test],
             activeCategory: allCategories,
@@ -119,7 +114,8 @@ void main() {
             currentPage: 0,
             categories: [],
           ),
-          ProductsScreenLoadingState(
+          ProductsScreenReadyState(
+            isLoading: true,
             activeCategory: allCategories,
             products: [
               productDTO1Test,

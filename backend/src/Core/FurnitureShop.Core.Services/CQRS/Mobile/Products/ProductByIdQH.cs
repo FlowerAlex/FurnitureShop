@@ -33,6 +33,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         Description = p.Description,
                         ModelUrl = p.ModelUrl,
+                        InFavourites = dbContext.Favourites
+                            .Where(f => f.UserId == context.UserId && f.ProductId == query.Id).Any(),
+                            
                     },
                     Id = p.Id,
                 })

@@ -1,12 +1,24 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 {
+    public class SetOrderStateCV : ContextualValidator<SetOrderState>
+    {
+        public SetOrderStateCV()
+        {
+            RuleFor(p => p.OrderState)
+                .NotEmpty()
+                    .WithCode(SetOrderState.ErrorCodes.IncorrectState)
+                    .WithMessage("OrderState should not be empty");
+        }
+    }
     public class SetOrderStateCH : ICommandHandler<SetOrderState>
     {
         private readonly CoreDbContext dbContext;

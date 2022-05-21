@@ -3,12 +3,16 @@
 ///  FlutterGen
 /// *****************************************************
 
-// ignore_for_file: directives_ordering
+// ignore_for_file: directives_ordering,unnecessary_import
 
 import 'package:flutter/widgets.dart';
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
+
+  /// File path: assets/icons/add-to-cart.png
+  AssetGenImage get addToCart =>
+      const AssetGenImage('assets/icons/add-to-cart.png');
 
   /// File path: assets/icons/back-arrow.png
   AssetGenImage get backArrow =>

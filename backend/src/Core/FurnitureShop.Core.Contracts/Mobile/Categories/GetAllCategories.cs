@@ -5,7 +5,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Categories
 {
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
     public class GetAllCategories : IRemoteQuery<List<CategoryDTO>>
     { }
 }

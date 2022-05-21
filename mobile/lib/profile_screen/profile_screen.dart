@@ -12,7 +12,6 @@ import 'package:furniture_shop/profile_screen/update_profile_dialog.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
-import 'package:provider/provider.dart';
 
 class ProfileScreen extends HookWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -153,7 +152,9 @@ class ProfileScreen extends HookWidget {
               return SafeArea(
                 child: Column(
                   children: [
-                    const CustomAppBar(title: 'Profile'),
+                    const CustomAppBar(
+                      title: 'Profile',
+                    ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(56, 24, 60, 0),

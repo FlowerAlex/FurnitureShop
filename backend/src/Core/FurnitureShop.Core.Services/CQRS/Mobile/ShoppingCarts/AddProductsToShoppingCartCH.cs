@@ -13,8 +13,19 @@ using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 {
+    public class AddProductsToShoppingCartCV : ContextualValidator<AddProductsToShoppingCart>
+    {
+        public AddProductsToShoppingCartCV()
+        {
+            RuleFor(p => p.Amount)
+                .NotEmpty()
+                    .WithCode(AddProductsToShoppingCart.ErrorCodes.IncorrectAmount)
+                    .WithMessage("Incorrect amount of products to add");
+        }
+    }
     public class AddProductsToShoppingCartCH : ICommandHandler<AddProductsToShoppingCart>
     {
+        
         private readonly CoreDbContext dbContext;
 
         public AddProductsToShoppingCartCH(CoreDbContext dbContext)
@@ -25,7 +36,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         public async Task ExecuteAsync(CoreContext context, AddProductsToShoppingCart cmd)
         {
             var shc = await dbContext.ShoppingCarts.Include(sp => sp.ShoppingCartProducts)
-                .Where(sp => sp.Id == cmd.ShoppingCartId).FirstOrDefaultAsync();
+                .Where(sp => sp.UserId == context.UserId).FirstOrDefaultAsync();
             var shp = new ShoppingCartProduct
             {
                 Amount = cmd.Amount,

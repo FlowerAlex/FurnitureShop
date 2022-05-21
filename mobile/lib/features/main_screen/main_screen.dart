@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:furniture_shop/features/backet_screen/backet_screen.dart';
 import 'package:furniture_shop/features/favorites_screen/favorites_screen.dart';
 import 'package:furniture_shop/features/main_screen/bottom_bar.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen.dart';
+import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen_cubit.dart';
 import 'package:furniture_shop/profile_screen/profile_screen.dart';
 import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends HookWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class MainScreen extends HookWidget {
   final screens = [
     const ProductsScreen(),
     const FavoritesScreen(),
-    const BacketScreen(),
+    const ShoppingCartScreen(),
     const ProfileScreen(),
   ];
 
@@ -25,6 +25,7 @@ class MainScreen extends HookWidget {
   Widget build(BuildContext context) {
     useEffect(() {
       fetchAll(context);
+      return null;
     });
 
     return BlocProvider(
@@ -32,17 +33,12 @@ class MainScreen extends HookWidget {
       child: BlocConsumer<MainScreenCubit, Screen>(
         listener: _mainScreenCubitListener,
         builder: (context, state) {
-          return Stack(
-            children: [
-              IndexedStack(
-                index: state.index,
-                children: screens,
-              ),
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: BottomBar(),
-              ),
-            ],
+          return Scaffold(
+            body: IndexedStack(
+              index: state.index,
+              children: screens,
+            ),
+            bottomNavigationBar: const BottomBar(),
           );
         },
       ),
@@ -57,6 +53,9 @@ class MainScreen extends HookWidget {
       case Screen.profile:
         context.read<ProfileScreenCubit>().fetch();
         break;
+      case Screen.shoppingCart:
+        context.read<ShoppingCartScreenCubit>().fetch();
+        break;
       default:
         break;
     }
@@ -65,6 +64,8 @@ class MainScreen extends HookWidget {
   Future<void> fetchAll(BuildContext context) async {
     await Future.wait([
       context.read<ProductsScreenCubit>().fetch(),
+      context.read<ProfileScreenCubit>().fetch(),
+      context.read<ShoppingCartScreenCubit>().fetch(),
     ]);
   }
 }

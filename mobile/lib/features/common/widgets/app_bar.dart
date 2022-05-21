@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
@@ -11,18 +12,29 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    this.activeCategoryId,
+    this.categories,
     this.withFilter = false,
     this.textEditingController,
-  }) : super(key: key);
+  })  : assert((categories != null && withFilter == true) ||
+            categories == null && withFilter == false),
+        super(key: key);
 
   final String title;
   final bool withFilter;
   final TextEditingController? textEditingController;
 
+  final String? activeCategoryId;
+  final List<CategoryDTO>? categories;
+
   @override
   Widget build(BuildContext context) {
     void _filterButtonPressed() {
-      showFilterDialog<void>(context);
+      showFilterDialog<void>(
+        context,
+        categories: categories!,
+        activeCategoryId: activeCategoryId,
+      );
     }
 
     return Container(

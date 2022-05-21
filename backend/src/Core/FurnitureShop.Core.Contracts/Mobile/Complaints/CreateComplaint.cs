@@ -10,7 +10,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
         public ComplaintInfoDTO ComplaintInfo { get; set; }
         public static class ErrorCodes
         {
-
+            public const int EmptyComplaintText = 1;
         }
     }
 }

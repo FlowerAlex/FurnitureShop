@@ -2,14 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.Services;
 using LeanCode.DomainModels.Model;
+using LeanCode.CQRS.Validation.Fluent;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 {
+    public class CreateOrderCV : ContextualValidator<CreateOrder>
+    {
+        public CreateOrderCV()
+        {
+            RuleFor(p => p.OrderInfo.OrderProducts)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.NoProducts)
+                    .WithMessage("No products to order");
+            RuleFor(p => p.OrderInfo.Street)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                    .WithMessage("Street should not be empty");
+            RuleFor(p => p.OrderInfo.City)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                    .WithMessage("City should not be empty");
+            RuleFor(p => p.OrderInfo.State)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                    .WithMessage("State should not be empty");
+            RuleFor(p => p.OrderInfo.Country)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                    .WithMessage("Country should not be empty");
+            RuleFor(p => p.OrderInfo.PostalCode)
+                .NotEmpty()
+                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                    .WithMessage("Postal should not be empty");
+        }
+    }
     public class CreateOrderQH : ICommandHandler<CreateOrder>
     {
         private readonly CoreDbContext dbContext;

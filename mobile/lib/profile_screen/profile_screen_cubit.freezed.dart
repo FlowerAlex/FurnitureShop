@@ -282,12 +282,12 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ProfileScreenLoadingState &&
-            (identical(other.userInfo, userInfo) ||
-                other.userInfo == userInfo));
+            const DeepCollectionEquality().equals(other.userInfo, userInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userInfo);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(userInfo));
 
   @JsonKey(ignore: true)
   @override
@@ -431,12 +431,12 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ProfileScreenSuccessState &&
-            (identical(other.userInfo, userInfo) ||
-                other.userInfo == userInfo));
+            const DeepCollectionEquality().equals(other.userInfo, userInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userInfo);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(userInfo));
 
   @JsonKey(ignore: true)
   @override
