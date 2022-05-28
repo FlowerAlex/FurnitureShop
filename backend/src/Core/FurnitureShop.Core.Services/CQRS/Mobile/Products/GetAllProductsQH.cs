@@ -23,6 +23,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         {
             var productsInShoppingCart = await GetProductsInShoppingCart(context);
             var productsInFavourites = await GetProductsInFavourites(context);
+
             if (query.CategoryId.HasValue)
             {
                 return await dbContext.Products
@@ -69,10 +70,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .ToPaginatedResultAsync(query);
             }
         }
+
         private async Task<List<Guid>> GetProductsInShoppingCart(CoreContext context)
         {
             var shoppingCart = dbContext.ShoppingCarts.Where(sh => sh.UserId == context.UserId).FirstOrDefault();
-            if (shoppingCart == null) 
+            if (shoppingCart == null)
             {
                 return new List<Guid>();
             }
