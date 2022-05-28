@@ -13,6 +13,7 @@ namespace FurnitureShop.Core.Domain
         public string Surname { get; set; }
         public string Username { get; set; }
         public string EmailAddress { get; set; }
+        public int Funds { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Complaint> Complaints { get; set; }
@@ -31,6 +32,7 @@ namespace FurnitureShop.Core.Domain
             Surname = surname;
             Username = username;
             EmailAddress = emailAddress;
+            Funds = 0;
             Orders = new List<Order>();
             Reviews = new List<Review>();
             Complaints = new List<Complaint>();
