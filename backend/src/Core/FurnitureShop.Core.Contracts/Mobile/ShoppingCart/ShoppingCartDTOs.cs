@@ -4,17 +4,11 @@ using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
 {
-    public class ShoppingCartInfoDTO
+    public class ShoppingCartDTO
     {
         public Guid? UserId { get; set; }
         public double Price { get; set; }
         public IEnumerable<ShoppingCartProductDTO> ShoppingCartProducts { get; set; }
-    }
-
-    public class ShoppingCartDTO
-    {
-        public Guid Id { get; set; }
-        public ShoppingCartInfoDTO ShoppingCartInfo { get; set; }
 
     }
     public class ShoppingCartProductDTO 

@@ -79,12 +79,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var ShoppingCart = result.Result;
             Assert.NotNull(ShoppingCart);
-            Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.Count());
-            Assert.Equal(TestShoppingCart.Id, ShoppingCart.Id);
-            Assert.Equal(TestShoppingCart.UserId, ShoppingCart.ShoppingCartInfo.UserId);
-            Assert.Equal(TestProduct.Price *TestProductAmount,ShoppingCart.ShoppingCartInfo.Price);
-            Assert.Equal(TestShoppingCartProduct.ProductId.Value,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().Product.Id);
-            Assert.Equal(TestProductAmount,ShoppingCart.ShoppingCartInfo.ShoppingCartProducts.First().Amount);
+            Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartProducts.Count());
+            Assert.Equal(TestShoppingCart.UserId, ShoppingCart.UserId);
+            Assert.Equal(TestProduct.Price *TestProductAmount,ShoppingCart.Price);
+            Assert.Equal(TestShoppingCartProduct.ProductId.Value,ShoppingCart.ShoppingCartProducts.First().Product.Id);
+            Assert.Equal(TestProductAmount,ShoppingCart.ShoppingCartProducts.First().Amount);
         }
         [Fact]
         public void AddProductToShoppingCartTest()

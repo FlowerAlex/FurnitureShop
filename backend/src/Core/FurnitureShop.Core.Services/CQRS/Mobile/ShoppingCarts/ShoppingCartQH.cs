@@ -27,9 +27,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 .Where(p => p.UserId == context.UserId)
                 .Select(p => new ShoppingCartDTO
                 {
-                    ShoppingCartInfo = new ShoppingCartInfoDTO
-                    {
-                        ShoppingCartProducts = dbContext.Products
+                    ShoppingCartProducts = dbContext.Products
                         .Join(
 
                             dbContext.ShoppingCartProduct.Where(s => s.ShoppingCartId == p.Id),
@@ -53,12 +51,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                             }
                         ).ToList(),
                         UserId = p.UserId,
-                    },
-                    Id = p.Id,
                 })
                 .FirstOrDefaultAsync();
             if (ret == null) { return null; }
-            ret.ShoppingCartInfo.Price = ret.ShoppingCartInfo.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
+            ret.Price = ret.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
             return ret;
         }
     }
