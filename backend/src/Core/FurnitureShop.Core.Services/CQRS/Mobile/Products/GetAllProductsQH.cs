@@ -21,11 +21,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
         public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
         {
+            var productsInShoppingCart = await GetProductsInShoppingCart(context);
+            var productsInFavourites = await GetProductsInFavourites(context);
             if (query.CategoryId.HasValue)
             {
                 return await dbContext.Products
                 .FilterBy(query)
                 .Where(p => p.CategoryId == query.CategoryId)
+                .Include(p => p.Reviews)
                 .Select(p => new ProductDTO
                 {
                     ProductInfo = new ProductInfoDTO
@@ -33,10 +36,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         Name = p.Name,
                         Price = p.Price,
                         PreviewPhotoURL = p.ModelUrl,
-                        AverageRating = p.Reviews.Average(r => r.Rating),
+                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         CategoryId = p.CategoryId,
-                        InFavourites = dbContext.Favourites
-                            .Where(f => f.UserId == context.UserId && f.ProductId == p.Id).Any(),
+                        InFavourites = productsInFavourites.Contains(p.Id),
+                        InShoppingCart = productsInShoppingCart.Contains(p.Id),
                     },
                     Id = p.Id,
                 })
@@ -47,6 +50,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             {
                 return await dbContext.Products
                 .FilterBy(query)
+                .Include(p => p.Reviews)
                 .Select(p => new ProductDTO
                 {
                     ProductInfo = new ProductInfoDTO
@@ -54,16 +58,34 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         Name = p.Name,
                         Price = p.Price,
                         PreviewPhotoURL = p.ModelUrl,
-                        AverageRating = p.Reviews.Average(r => r.Rating),
+                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         CategoryId = p.CategoryId,
-                        InFavourites = dbContext.Favourites
-                            .Where(f => f.UserId == context.UserId && f.ProductId == p.Id).Any(),
+                        InFavourites = productsInFavourites.Contains(p.Id),
+                        InShoppingCart = productsInShoppingCart.Contains(p.Id),
                     },
                     Id = p.Id,
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
             }
+        }
+        private async Task<List<Guid>> GetProductsInShoppingCart(CoreContext context)
+        {
+            var shoppingCart = dbContext.ShoppingCarts.Where(sh => sh.UserId == context.UserId).FirstOrDefault();
+            if (shoppingCart == null) 
+            {
+                return new List<Guid>();
+            }
+            var shoppingCartId = shoppingCart.Id;
+            return await dbContext.ShoppingCartProduct
+                .Where(shp => shp.Id == shoppingCartId.Value)
+                .Select(shp => shp.ProductId.Value.Value).ToListAsync();
+        }
+        private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
+        {
+            return await dbContext.Favourites
+                .Where(f => f.UserId == context.UserId.Value)
+                .Select(f => f.ProductId.Value.Value).ToListAsync();
         }
     }
 
