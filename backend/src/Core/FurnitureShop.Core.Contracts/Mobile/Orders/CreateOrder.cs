@@ -12,6 +12,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         {
             public const int NoProducts = 1;
             public const int IncorrectAddress = 2;
+            public const int NotEnoughFunds = 3;
         }
     }
 }

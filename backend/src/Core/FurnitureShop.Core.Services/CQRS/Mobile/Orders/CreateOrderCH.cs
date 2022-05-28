@@ -9,6 +9,7 @@ using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.Services;
 using LeanCode.DomainModels.Model;
 using LeanCode.CQRS.Validation.Fluent;
+using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 {
@@ -40,6 +41,23 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Postal should not be empty");
+             RuleForAsync(p => p.OrderInfo.Price, DoesUserHaveEnoughMoney)
+                .Equal(false)
+                    .WithMessage("Not enough funds to pay for the order.")
+                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
+        }
+        private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, double price)
+        {
+            var uid = ctx.AppContext<CoreContext>().UserId;
+            var dbContext = ctx.GetService<CoreDbContext>();
+            var user = await dbContext.Users
+                .Where(u => u.Id == uid).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
+
+            return user.Funds >= (int)price;
         }
     }
     public class CreateOrderQH : ICommandHandler<CreateOrder>

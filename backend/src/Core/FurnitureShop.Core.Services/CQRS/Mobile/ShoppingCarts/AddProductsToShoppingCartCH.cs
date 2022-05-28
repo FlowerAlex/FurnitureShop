@@ -37,17 +37,25 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         {
             var shc = await dbContext.ShoppingCarts.Include(sp => sp.ShoppingCartProducts)
                 .Where(sp => sp.UserId == context.UserId).FirstOrDefaultAsync();
-            var shp = new ShoppingCartProduct
-            {
-                Amount = cmd.Amount,
-                ProductId = Id<Product>.From(cmd.ProductId),
-            };
             if (shc == null)
             {
                 return;
             }
+            var product = shc.ShoppingCartProducts.Where( p => p.Id == cmd.ProductId).FirstOrDefault();
+            if(product != null)
+            {
+                product.Amount += cmd.Amount;
+            }
+            else
+            {
+                var shp = new ShoppingCartProduct
+                {
+                    Amount = cmd.Amount,
+                    ProductId = Id<Product>.From(cmd.ProductId),
+                };
 
             shc.ShoppingCartProducts.Add(shp);
+            } 
             dbContext.ShoppingCarts.Update(shc);
             await dbContext.SaveChangesAsync();
         }
