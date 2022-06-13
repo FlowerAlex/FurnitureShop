@@ -18,6 +18,7 @@ class FavoritesScreen extends HookWidget {
             textEditingController: searchTextEditingController,
             withFilter: true,
             categories: const [], // TODO
+            onChangeCategoryPressed: (_) {},
             activeCategoryId: null, // TODO
           ),
         ],

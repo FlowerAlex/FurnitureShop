@@ -27,6 +27,7 @@ class ProductsScreen extends HookWidget {
                 withFilter: true,
                 textEditingController: searchTextEditingController,
                 categories: state.categories,
+                onChangeCategoryPressed: cubit.changeActiveCategory,
                 activeCategoryId: state.activeCategory?.id,
               ),
               Expanded(
@@ -36,26 +37,22 @@ class ProductsScreen extends HookWidget {
                     hasMore:
                         state.totalCount > (state.currentPage + 1) * pageSize,
                     items: state.products,
-                    fetchPage: (int page) =>
-                        context.read<ProductsScreenCubit>().fetch(page: page),
+                    fetchPage: (int page) => cubit.fetch(page: page),
                     getNextPageKey: (_) => state.currentPage + 1,
                   ),
                   builderDelegate: PagedChildBuilderDelegate<ProductDTO>(
-                    itemBuilder: (context, item, index) {
+                    itemBuilder: (context, product, index) {
                       return ProductTile(
-                        productName:
-                            state.products.elementAt(index).productInfo.name,
-                        productPrice: state.products
-                                .elementAt(index)
-                                .productInfo
-                                .price
-                                .toString() +
-                            '\$',
-                        productLikeClicked: () => cubit.likeProduct(item.id),
+                        product: product,
+                        productLikeClicked: () => cubit.likeProduct(product.id),
                         productShoppingCartClicked: () =>
-                            cubit.addProductToShoppingCart(item.id),
+                            cubit.addProductToShoppingCart(product.id),
                       );
                     },
+                    firstPageProgressIndicatorBuilder: (context) =>
+                        const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ),
               ),

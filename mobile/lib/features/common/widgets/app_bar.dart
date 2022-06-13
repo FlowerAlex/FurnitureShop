@@ -15,9 +15,14 @@ class CustomAppBar extends StatelessWidget {
     this.activeCategoryId,
     this.categories,
     this.withFilter = false,
+    this.onChangeCategoryPressed,
     this.textEditingController,
-  })  : assert((categories != null && withFilter == true) ||
-            categories == null && withFilter == false),
+  })  : assert((categories != null &&
+                onChangeCategoryPressed != null &&
+                withFilter == true) ||
+            categories == null &&
+                onChangeCategoryPressed == null &&
+                withFilter == false),
         super(key: key);
 
   final String title;
@@ -26,6 +31,7 @@ class CustomAppBar extends StatelessWidget {
 
   final String? activeCategoryId;
   final List<CategoryDTO>? categories;
+  final ValueChanged<CategoryDTO>? onChangeCategoryPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class CustomAppBar extends StatelessWidget {
         context,
         categories: categories!,
         activeCategoryId: activeCategoryId,
+        onChangeCategoryPressed: onChangeCategoryPressed!,
       );
     }
 

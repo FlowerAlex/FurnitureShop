@@ -1,20 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({
     Key? key,
-    required this.productName,
-    required this.productPrice,
+    required this.product,
     this.productLikeClicked,
     this.productShoppingCartClicked,
   }) : super(key: key);
 
-  final String productName;
-  final String productPrice;
+  final ProductDTO product;
 
   final VoidCallback? productLikeClicked;
   final VoidCallback? productShoppingCartClicked;
@@ -50,7 +49,7 @@ class ProductTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(productName),
+                    Text(product.productInfo.name),
                     const AvaregeScore(rating: 3), // get from product
                   ],
                 ),
@@ -72,13 +71,15 @@ class ProductTile extends StatelessWidget {
                               const SizedBox(width: 12),
                               InkWell(
                                 onTap: productShoppingCartClicked,
-                                child: Assets.icons.addToCart.image(),
+                                child: product.productInfo.inShoppingCart
+                                    ? Assets.icons.selectedAddToCart.image()
+                                    : Assets.icons.addToCart.image(),
                               ),
                             ],
                           ],
                         ),
                         Text(
-                          productPrice,
+                          product.productInfo.price.toString() + '\$',
                         ),
                       ],
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_show_dialog.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
@@ -10,9 +9,10 @@ import 'package:furniture_shop/resources/app_text_styles.dart';
 Future<T?> showFilterDialog<T>(
   BuildContext context, {
   required String? activeCategoryId,
+  required ValueChanged<CategoryDTO> onChangeCategoryPressed,
   required List<CategoryDTO> categories,
 }) =>
-    showAppDialog(
+    showAppDialog<T>(
       context: context,
       title: 'Filter details',
       bottomWidgetBuilder: (context) {
@@ -39,9 +39,7 @@ Future<T?> showFilterDialog<T>(
                         FilterCategoryTile(
                           active: activeCategoryId == category.id,
                           categoryName: category.name,
-                          onPressed: () => context
-                              .read<ProductsScreenCubit>()
-                              .changeActiveCategory(category),
+                          onPressed: () => onChangeCategoryPressed(category),
                         ),
                         const SizedBox(height: 8),
                       ],

@@ -80,7 +80,18 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
   Future<void> likeProduct(String productId) async {
     try {
-      // _cqrs.run();
+      final state = this.state;
+
+      if (state is! ProductsScreenReadyState) {
+        return;
+      }
+      try {
+        await _cqrs.run(AddToFavourites(productId: productId));
+
+        await fetch(page: state.currentPage);
+      } catch (e, _) {
+        emit(ProductsScreenErrorState(errorMessage: e.toString()));
+      }
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }
@@ -98,7 +109,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         amount: 1,
       ));
 
-      // await fetch(page: state.currentPage); uncomment when ProductDTO will have fields isFavorite and isInShoppingCart
+      await fetch(page: state.currentPage);
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }

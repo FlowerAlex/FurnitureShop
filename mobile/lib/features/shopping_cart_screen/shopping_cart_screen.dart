@@ -29,6 +29,8 @@ class ShoppingCartScreen extends HookWidget {
             activeCategoryId: state is ShoppingCartReadyState
                 ? state.activeCategory.id
                 : null,
+            onChangeCategoryPressed:
+                context.read<ShoppingCartScreenCubit>().changeActiveCategory,
           ),
           Expanded(
             child:
@@ -70,7 +72,7 @@ class _ShoppingCartReadyBody extends HookWidget {
         usePagingController<int, ShoppingCartProductDTO>(
       firstPageKey: 0,
       hasMore: state.totalCount > state.currentPage * pageSize,
-      items: state.shoppingCart.shoppingCartInfo.shoppingCartProducts,
+      items: state.shoppingCart.shoppingCartProducts,
       fetchPage: (int page) => cubit.fetch(page: page),
       getNextPageKey: (_) => state.currentPage + 1,
     );
@@ -80,17 +82,17 @@ class _ShoppingCartReadyBody extends HookWidget {
       pagingController: paginatingController,
       builderDelegate: PagedChildBuilderDelegate<ShoppingCartProductDTO>(
         itemBuilder: (context, item, index) {
-          final product = state
-              .shoppingCart.shoppingCartInfo.shoppingCartProducts
-              .elementAt(index)
-              .product;
+          final product =
+              state.shoppingCart.shoppingCartProducts.elementAt(index).product;
           return ProductTile(
-            productName: product.productInfo.name,
-            productPrice: product.productInfo.price.toString() + '\$',
+            product: product,
             productShoppingCartClicked: () =>
                 cubit.removeProductFromShoppingCart(item.product.id),
           );
         },
+        firstPageProgressIndicatorBuilder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
