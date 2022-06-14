@@ -14,10 +14,8 @@ namespace FurnitureShop.Core.Services.Services
 {
     public interface IBlobStorageService
     {
-        Task UploadPhoto(string localFilePath, string blobName);
-        Task UploadModel(string localFilePath, string blobName);
-        string GetPhotoUrl(string blobName);
-        string GetModelUrl(string blobName);
+        Task<string> GetPhotoUploadLink(string blobName);
+        Task<string> GetModelUploadLink(string blobName);
         Task<List<string>> GetPhotosUrls();
         Task<List<string>> GetModelsUrls();
     }
@@ -48,13 +46,13 @@ namespace FurnitureShop.Core.Services.Services
         {
             return await GetAllBlobsUrlsFromContainer(_modelsContainerName);
         }
-        public string GetPhotoUrl(string blobName)
+        public async Task<string> GetPhotoUploadLink(string blobName)
         {
-            return GetBlobUrl(_photosContainerName,blobName);
+            return await GetBlobUploadLink(_photosContainerName,blobName);
         }
-        public string GetModelUrl(string blobName)
+        public async Task<string> GetModelUploadLink(string blobName)
         {
-            return GetBlobUrl(_modelsContainerName,blobName);
+            return await GetBlobUploadLink(_modelsContainerName,blobName);
         }
         private async Task UploadBlob(string localFilePath, string blobName, string blobContainerName)
         {
@@ -64,11 +62,12 @@ namespace FurnitureShop.Core.Services.Services
             using FileStream fs = File.OpenRead(localFilePath);
             await blobClient.UploadAsync(fs,true);
         }
-        private string GetBlobUrl(string blobContainerName, string blobName)
+        private async Task<string> GetBlobUploadLink(string blobContainerName, string blobName)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_blobConnectionString);
             BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
             BlobClient blob = blobContainerClient.GetBlobClient(blobName);
+            await blob.UploadAsync(System.IO.MemoryStream.Null);
             return blobContainerClient.Uri.AbsoluteUri + "/" + blob.Name;
         }
        

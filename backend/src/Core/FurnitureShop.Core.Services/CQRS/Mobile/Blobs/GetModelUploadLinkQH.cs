@@ -10,20 +10,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Blobs
 {
-    public class GetModelUrlQH : IQueryHandler<GetModelUrl,string>
+    public class GetModelUploadLinkQH : IQueryHandler<GetModelUploadLink,string>
     {
         private readonly CoreDbContext dbContext;
         private readonly IBlobStorageService blobStorageService;
 
-        public GetModelUrlQH(CoreDbContext dbContext, IBlobStorageService blobStorageService)
+        public GetModelUploadLinkQH(CoreDbContext dbContext, IBlobStorageService blobStorageService)
         {
             this.dbContext = dbContext;
             this.blobStorageService = blobStorageService;
         }
 
-        public async Task<string> ExecuteAsync(CoreContext context, GetModelUrl query)
+        public async Task<string> ExecuteAsync(CoreContext context, GetModelUploadLink query)
         { 
-            return blobStorageService.GetModelUrl(query.BlobName);
+            return await blobStorageService.GetModelUploadLink(query.BlobName);
         }
     }
 }

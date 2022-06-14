@@ -6,7 +6,7 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Mobile.Blobs
 {
     [AllowUnauthorized]
-    public class GetModelUrl : IRemoteQuery<string>
+    public class GetModelUploadLink : IRemoteQuery<string>
     {
         public string BlobName { get; set; }
         public static class ErrorCodes
