@@ -44,11 +44,14 @@ namespace FurnitureShop.Api
         protected static IAppModule[] ConfigureModules(IWebHostEnvironment hostEnv, IConfiguration config)
         {
             var dbConnStr = Config.SqlServer.ConnectionString(config);
+            var blobConnStr = Config.BlobStorage.ConnectionString(config);
+            var modelsContainerName = Config.BlobStorage.ModelsContainerName(config);
+            var photosContainerName = Config.BlobStorage.PhotosContainerName(config);
 
             var modules = new List<IAppModule>
             {
                 new ApiModule(config, hostEnv),
-                new CoreModule(dbConnStr),
+                new CoreModule(dbConnStr, blobConnStr, modelsContainerName, photosContainerName),
                 new AuthModule(hostEnv, config),
 
                 new CQRSModule()

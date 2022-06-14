@@ -14,10 +14,16 @@ namespace FurnitureShop.Core.Services
     public class CoreModule : AppModule
     {
         private readonly string connectionString;
+        private readonly string blobConnectionString;
+        private readonly string modelsContainerName;
+        private readonly string photosContainerName;
 
-        public CoreModule(string connectionString)
+        public CoreModule(string connectionString, string blobConnectionString, string modelsContainerName, string photosContainerName)
         {
             this.connectionString = connectionString;
+            this.blobConnectionString = blobConnectionString;
+            this.modelsContainerName = modelsContainerName;
+            this.photosContainerName = photosContainerName;
         }
 
         public override void ConfigureServices(IServiceCollection services)
@@ -29,7 +35,7 @@ namespace FurnitureShop.Core.Services
             services.AddIdentity<AuthUser, AuthRole>()
                 .AddEntityFrameworkStores<CoreDbContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'*+-/=?^_`{|}~.""(),:;<>@[\] ";
@@ -39,6 +45,8 @@ namespace FurnitureShop.Core.Services
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             });
+
+            services.AddTransient<IBlobStorageService,BlobStorageService>(/*b => new BlobStorageService(blobConnectionString,modelsContainerName,photosContainerName)*/);
         }
 
         protected override void Load(ContainerBuilder builder)

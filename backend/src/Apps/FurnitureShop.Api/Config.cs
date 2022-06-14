@@ -35,7 +35,9 @@ namespace FurnitureShop.Api
 
         public static class BlobStorage
         {
-            public static string ConnectionString(IConfiguration cfg) => cfg.GetString("SqlServer:ConnectionString");
+            public static string ConnectionString(IConfiguration cfg) => cfg.GetString("BlobStorage:ConnectionString");
+            public static string ModelsContainerName(IConfiguration cfg) => cfg.GetString("BlobStorage:ModelsContainerName");
+            public static string PhotosContainerName(IConfiguration cfg) => cfg.GetString("BlobStorage:PhotosContainerName");
         }
 
         public static class Services
