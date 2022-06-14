@@ -36,7 +36,6 @@ namespace FurnitureShop.Core.Services
                 .AddEntityFrameworkStores<CoreDbContext>()
                 .AddDefaultTokenProviders();
             
-            services.AddTransient<IBlobStorageService>(x => new BlobStorageService(connectionString,modelsContainerName,photosContainerName));
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'*+-/=?^_`{|}~.""(),:;<>@[\] ";
@@ -46,6 +45,8 @@ namespace FurnitureShop.Core.Services
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             });
+
+            services.AddTransient<IBlobStorageService,BlobStorageService>(/*b => new BlobStorageService(blobConnectionString,modelsContainerName,photosContainerName)*/);
         }
 
         protected override void Load(ContainerBuilder builder)
