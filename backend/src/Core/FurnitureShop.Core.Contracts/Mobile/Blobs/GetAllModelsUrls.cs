@@ -5,7 +5,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Blobs
 {
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class GetAllModelsUrls : IRemoteQuery<List<string>>
     {
         public static class ErrorCodes

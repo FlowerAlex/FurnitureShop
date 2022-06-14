@@ -5,7 +5,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Blobs
 {
-    [AllowUnauthorized]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class GetPhotoUploadLink : IRemoteQuery<string>
     {
         public string BlobName { get; set; }
