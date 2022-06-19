@@ -453,6 +453,46 @@ class UpdateComplaintErrorCodes {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
+class MyFavourites
+    with EquatableMixin
+    implements SortablePaginatedQuery<ProductDTO, ProductsSortFieldDTO?> {
+  MyFavourites({
+    required this.pageNumber,
+    required this.pageSize,
+    this.filterBy,
+    this.sortBy,
+    required this.sortByDescending,
+    this.categoryId,
+  });
+
+  factory MyFavourites.fromJson(Map<String, dynamic> json) =>
+      _$MyFavouritesFromJson(json);
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  final String? filterBy;
+
+  final ProductsSortFieldDTO? sortBy;
+
+  final bool sortByDescending;
+
+  final String? categoryId;
+
+  get props =>
+      [pageNumber, pageSize, filterBy, sortBy, sortByDescending, categoryId];
+
+  Map<String, dynamic> toJson() => _$MyFavouritesToJson(this);
+  PaginatedResult<ProductDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$ProductDTOFromJson(e as Map<String, dynamic>));
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Favourites.MyFavourites';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class CreateOrder with EquatableMixin implements Command {
   CreateOrder({
     required this.orderInfo,

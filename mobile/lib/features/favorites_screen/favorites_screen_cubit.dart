@@ -9,8 +9,8 @@ const pageSize = 10;
 
 final allCategories = CategoryDTO(id: 'all_categories_id', name: 'all');
 
-class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
-  FavoritesScreenCubit({
+class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
+  FavouritesScreenCubit({
     required CQRS cqrs,
   })  : _cqrs = cqrs,
         super(const FavoritesLoadingState());
@@ -18,21 +18,38 @@ class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
   final CQRS _cqrs;
 
   Future<void> fetch({int page = 0}) async {
+    var state = this.state;
+
+    if (state is! FavoritesReadyState) {
+      state = const FavoritesReadyState(
+        categories: [],
+        products: [],
+        currentPage: 0,
+        totalCount: 0,
+        activeCategory: null,
+      );
+    }
+
     try {
       final categories = await _cqrs.get(GetAllCategories());
-      final shoppingCart = await _cqrs.get(ShoppingCart());
+      final favoriteProducts = await _cqrs.get(MyFavourites(
+        pageNumber: page,
+        pageSize: pageSize,
+        sortByDescending: false,
+        sortBy: ProductsSortFieldDTO.name,
+      ));
 
-      if (shoppingCart != null) {
-        emit(
-          FavoritesReadyState(
-            shoppingCart: shoppingCart,
-            categories: categories,
-            activeCategory: allCategories,
-          ),
-        );
-      } else {
-        emit(const FavoritesErrorState(error: 'Could not load data'));
-      }
+      emit(
+        FavoritesReadyState(
+          categories: categories,
+          currentPage: page,
+          totalCount: favoriteProducts.totalCount,
+          products: page != 0
+              ? [...state.products, ...favoriteProducts.items]
+              : favoriteProducts.items,
+          activeCategory: allCategories,
+        ),
+      );
     } catch (e) {
       emit(FavoritesErrorState(error: e.toString()));
     }
@@ -55,15 +72,42 @@ class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
       emit(FavoritesErrorState(error: e.toString()));
     }
   }
+
+  Future<void> addProductToShoppingCart(String productId) async {
+    final state = this.state;
+
+    if (state is! FavoritesReadyState) {
+      return;
+    }
+    try {
+      final product =
+          state.products.firstWhere((element) => element.id == productId);
+
+      if (product.productInfo.inShoppingCart) {
+        await _cqrs.run(RemoveProductFromShoppingCart(
+          productId: productId,
+        ));
+      } else {
+        await _cqrs.run(AddProductsToShoppingCart(
+          productId: productId,
+          amount: 1,
+        ));
+      }
+
+      await fetch(page: state.currentPage);
+    } catch (e, _) {
+      emit(FavoritesErrorState(error: e.toString()));
+    }
+  }
 }
 
 @freezed
 class FavoritesScreenState with _$FavoritesScreenState {
   const factory FavoritesScreenState.loading() = FavoritesLoadingState;
   const factory FavoritesScreenState.ready({
-    required ShoppingCartDTO shoppingCart,
-    required CategoryDTO activeCategory,
+    required List<ProductDTO> products,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
+    CategoryDTO? activeCategory,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
   }) = FavoritesReadyState;

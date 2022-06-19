@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/features/favorites_screen/favorites_screen.dart';
+import 'package:furniture_shop/features/favorites_screen/favorites_screen_cubit.dart';
 import 'package:furniture_shop/features/main_screen/bottom_bar.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
@@ -55,6 +56,9 @@ class MainScreen extends HookWidget {
         break;
       case Screen.shoppingCart:
         context.read<ShoppingCartScreenCubit>().fetch();
+        break;
+      case Screen.favorites:
+        context.read<FavouritesScreenCubit>().fetch();
         break;
       default:
         break;

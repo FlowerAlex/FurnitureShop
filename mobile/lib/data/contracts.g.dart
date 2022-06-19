@@ -205,6 +205,31 @@ Map<String, dynamic> _$UpdateComplaintToJson(UpdateComplaint instance) =>
       'ComplaintInfo': instance.complaintInfo,
     };
 
+MyFavourites _$MyFavouritesFromJson(Map<String, dynamic> json) => MyFavourites(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+      filterBy: json['FilterBy'] as String?,
+      sortBy:
+          $enumDecodeNullable(_$ProductsSortFieldDTOEnumMap, json['SortBy']),
+      sortByDescending: json['SortByDescending'] as bool,
+      categoryId: json['CategoryId'] as String?,
+    );
+
+Map<String, dynamic> _$MyFavouritesToJson(MyFavourites instance) =>
+    <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+      'FilterBy': instance.filterBy,
+      'SortBy': _$ProductsSortFieldDTOEnumMap[instance.sortBy],
+      'SortByDescending': instance.sortByDescending,
+      'CategoryId': instance.categoryId,
+    };
+
+const _$ProductsSortFieldDTOEnumMap = {
+  ProductsSortFieldDTO.name: 0,
+  ProductsSortFieldDTO.rating: 1,
+};
+
 CreateOrder _$CreateOrderFromJson(Map<String, dynamic> json) => CreateOrder(
       orderInfo:
           OrderInfoDTO.fromJson(json['OrderInfo'] as Map<String, dynamic>),
@@ -380,11 +405,6 @@ Map<String, dynamic> _$GetAllProductsToJson(GetAllProducts instance) =>
       'SortByDescending': instance.sortByDescending,
       'CategoryId': instance.categoryId,
     };
-
-const _$ProductsSortFieldDTOEnumMap = {
-  ProductsSortFieldDTO.name: 0,
-  ProductsSortFieldDTO.rating: 1,
-};
 
 ProductById _$ProductByIdFromJson(Map<String, dynamic> json) => ProductById(
       id: json['Id'] as String,
