@@ -11,9 +11,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
         public IEnumerable<ShoppingCartProductDTO> ShoppingCartProducts { get; set; }
 
     }
-    public class ShoppingCartProductDTO 
+    public class ShoppingCartProductDTO
     {
         public int Amount { get; set; }
-        public ProductDTO Product {get;set;}
+        public ProductDTO Product { get; set; }
     }
 }

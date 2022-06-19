@@ -7,7 +7,7 @@ namespace FurnitureShop.Core.Domain
 {
     public class ShoppingCartProduct : IAggregateRoot<Id<ShoppingCartProduct>>
     {
-        
+
         public Id<ShoppingCartProduct> Id { get; set; }
         public Id<ShoppingCart>? ShoppingCartId { get; set; }
         public Id<Product>? ProductId { get; set; }
@@ -16,7 +16,7 @@ namespace FurnitureShop.Core.Domain
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
         public ShoppingCartProduct()
-        {          
+        {
             Id = Id<ShoppingCartProduct>.New();
         }
     }

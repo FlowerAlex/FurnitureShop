@@ -38,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                         OrderState = p.OrderState.ToString(),
                         OrderedDate = p.OrderedDate,
                         DeliveredDate = p.DeliveredDate,
-                        OrderProducts  = dbContext.Products
+                        OrderProducts = dbContext.Products
                         .Join(
                             dbContext.OrderProduct,
                             prod => prod.Id,

@@ -25,7 +25,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
     }
     public class AddProductsToShoppingCartCH : ICommandHandler<AddProductsToShoppingCart>
     {
-        
+
         private readonly CoreDbContext dbContext;
 
         public AddProductsToShoppingCartCH(CoreDbContext dbContext)
@@ -41,8 +41,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
             {
                 return;
             }
-            var product = shc.ShoppingCartProducts.Where( p => p.Id == cmd.ProductId).FirstOrDefault();
-            if(product != null)
+            var product = shc.ShoppingCartProducts.Where(p => p.Id == cmd.ProductId).FirstOrDefault();
+            if (product != null)
             {
                 product.Amount += cmd.Amount;
             }
@@ -54,8 +54,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                     ProductId = Id<Product>.From(cmd.ProductId),
                 };
 
-            shc.ShoppingCartProducts.Add(shp);
-            } 
+                shc.ShoppingCartProducts.Add(shp);
+            }
             dbContext.ShoppingCarts.Update(shc);
             await dbContext.SaveChangesAsync();
         }

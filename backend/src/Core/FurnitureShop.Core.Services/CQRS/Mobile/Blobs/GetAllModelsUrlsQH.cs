@@ -22,7 +22,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Blobs
         }
 
         public async Task<List<string>> ExecuteAsync(CoreContext context, GetAllModelsUrls query)
-        { 
+        {
             return await blobStorageService.GetModelsUrls();
         }
     }

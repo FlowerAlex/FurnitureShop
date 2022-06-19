@@ -76,32 +76,32 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 {
                     case OrdersFilterFieldDTO.Country:
                         queryable = queryable.Where(c => c.Country.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.State:
                         queryable = queryable.Where(c => c.State.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.City:
                         queryable = queryable.Where(c => c.City.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.Street:
                         queryable = queryable.Where(c => c.Street.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.OrderState:
                         queryable = queryable.Where(c => c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant());
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.PostalCode:
                         queryable = queryable.Where(c => c.PostalCode == filter.Value);
-                    break;
+                        break;
                     case OrdersFilterFieldDTO.UserId:
-                        queryable = queryable.Where(c => c.UserId.ToString() == filter.Value );
-                    break;
+                        queryable = queryable.Where(c => c.UserId.ToString() == filter.Value);
+                        break;
                     default:
-                    break;
+                        break;
                 }
             }
             return queryable;
         }
-        
+
         public static IQueryable<OrderDTO> SortBy(this IQueryable<OrderDTO> queryable, GetAllOrders query)
         {
             if (!query.SortBy.HasValue)

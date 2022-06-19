@@ -50,7 +50,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                 }
                             }
                         ).ToList(),
-                        UserId = p.UserId,
+                    UserId = p.UserId,
                 })
                 .FirstOrDefaultAsync();
             if (ret == null) { return null; }
