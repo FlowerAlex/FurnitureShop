@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
