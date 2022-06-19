@@ -1,7 +1,7 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_router.dart';
+import 'package:furniture_shop/features/favorites_screen/favorites_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen_cubit.dart';
 import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
@@ -38,13 +38,16 @@ class GlobalProvider extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProductsScreenCubit(cqrs: context.read<CQRS>()),
+          create: (context) => ProductsScreenCubit(cqrs: context.read()),
         ),
         BlocProvider(
-          create: (context) => ProfileScreenCubit(cqrs: context.read<CQRS>()),
+          create: (context) => ProfileScreenCubit(cqrs: context.read()),
         ),
         BlocProvider(
           create: (context) => ShoppingCartScreenCubit(cqrs: context.read()),
+        ),
+        BlocProvider(
+          create: (context) => FavouritesScreenCubit(cqrs: context.read()),
         ),
       ],
       child: child,
