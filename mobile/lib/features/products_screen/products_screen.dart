@@ -4,8 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/use_paging_controller.dart';
 import 'package:furniture_shop/features/common/widgets/app_bar.dart';
-import 'package:furniture_shop/features/products_screen/product_tile.dart';
+import 'package:furniture_shop/features/common/widgets/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/resources/assets.gen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ProductsScreen extends HookWidget {
@@ -44,9 +45,22 @@ class ProductsScreen extends HookWidget {
                     itemBuilder: (context, product, index) {
                       return ProductTile(
                         product: product,
-                        productLikeClicked: () => cubit.likeProduct(product.id),
-                        productShoppingCartClicked: () =>
-                            cubit.addProductToShoppingCart(product.id),
+                        children: [
+                          InkWell(
+                            onTap: () => cubit.likeProduct(product.id),
+                            child: product.productInfo.inFavourites
+                                ? Assets.icons.selectedHeart.image()
+                                : Assets.icons.heart.image(),
+                          ),
+                          const SizedBox(width: 12),
+                          InkWell(
+                            onTap: () =>
+                                cubit.addProductToShoppingCart(product.id),
+                            child: product.productInfo.inShoppingCart
+                                ? Assets.icons.selectedAddToCart.image()
+                                : Assets.icons.addToCart.image(),
+                          ),
+                        ],
                       );
                     },
                     firstPageProgressIndicatorBuilder: (context) =>

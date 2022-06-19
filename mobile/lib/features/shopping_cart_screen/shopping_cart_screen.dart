@@ -4,8 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/use_paging_controller.dart';
 import 'package:furniture_shop/features/common/widgets/app_bar.dart';
-import 'package:furniture_shop/features/products_screen/product_tile.dart';
+import 'package:furniture_shop/features/common/widgets/product_tile.dart';
 import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen_cubit.dart';
+import 'package:furniture_shop/resources/assets.gen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ShoppingCartScreen extends HookWidget {
@@ -86,8 +87,12 @@ class _ShoppingCartReadyBody extends HookWidget {
               state.shoppingCart.shoppingCartProducts.elementAt(index).product;
           return ProductTile(
             product: product,
-            productShoppingCartClicked: () =>
-                cubit.removeProductFromShoppingCart(item.product.id),
+            children: [
+              InkWell(
+                onTap: () => cubit.removeProductFromShoppingCart(product.id),
+                child: Assets.icons.selectedAddToCart.image(),
+              ),
+            ],
           );
         },
         firstPageProgressIndicatorBuilder: (context) => const Center(

@@ -20,12 +20,12 @@ class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
   Future<void> fetch({int page = 0}) async {
     try {
       final categories = await _cqrs.get(GetAllCategories());
-      final result = await _cqrs.get(Favorites());
+      final shoppingCart = await _cqrs.get(ShoppingCart());
 
-      if (result != null) {
+      if (shoppingCart != null) {
         emit(
           FavoritesReadyState(
-            favorites: result,
+            shoppingCart: shoppingCart,
             categories: categories,
             activeCategory: allCategories,
           ),
@@ -47,9 +47,9 @@ class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
     emit(state.copyWith(activeCategory: activeCategory));
   }
 
-  Future<void> removeProductFromFavorites(String productId) async {
+  Future<void> removeProductFromFavourites(String productId) async {
     try {
-      await _cqrs.run(RemoveProductFromFavorites(productId: productId));
+      await _cqrs.run(RemoveFromFavourites(productId: productId));
       await fetch();
     } catch (e, _) {
       emit(FavoritesErrorState(error: e.toString()));
@@ -61,6 +61,7 @@ class FavoritesScreenCubit extends Cubit<FavoritesScreenState> {
 class FavoritesScreenState with _$FavoritesScreenState {
   const factory FavoritesScreenState.loading() = FavoritesLoadingState;
   const factory FavoritesScreenState.ready({
+    required ShoppingCartDTO shoppingCart,
     required CategoryDTO activeCategory,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(0) int currentPage,

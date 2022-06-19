@@ -3,20 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
-import 'package:furniture_shop/resources/assets.gen.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({
     Key? key,
     required this.product,
-    this.productLikeClicked,
-    this.productShoppingCartClicked,
+    this.children = const [],
   }) : super(key: key);
 
   final ProductDTO product;
-
-  final VoidCallback? productLikeClicked;
-  final VoidCallback? productShoppingCartClicked;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +46,9 @@ class ProductTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(product.productInfo.name),
-                    const AvaregeScore(rating: 3), // get from product
+                    AvaregeScore(
+                        rating: product.productInfo.averageRating ??
+                            0), // get from product
                   ],
                 ),
                 Expanded(
@@ -61,22 +59,25 @@ class ProductTile extends StatelessWidget {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            if (productLikeClicked != null)
-                              InkWell(
-                                onTap: productLikeClicked,
-                                child: Assets.icons.heart.image(),
-                              ),
-                            if (productShoppingCartClicked != null) ...[
-                              const SizedBox(width: 12),
-                              InkWell(
-                                onTap: productShoppingCartClicked,
-                                child: product.productInfo.inShoppingCart
-                                    ? Assets.icons.selectedAddToCart.image()
-                                    : Assets.icons.addToCart.image(),
-                              ),
-                            ],
-                          ],
+                          children: children,
+                          // [
+                          //   if (productLikeClicked != null)
+                          //     InkWell(
+                          //       onTap: productLikeClicked,
+                          //       child: product.productInfo.inFavourites
+                          //           ? Assets.icons.selectedHeart.image()
+                          //           : Assets.icons.heart.image(),
+                          //     ),
+                          //   if (productShoppingCartClicked != null) ...[
+                          //     const SizedBox(width: 12),
+                          //     InkWell(
+                          //       onTap: productShoppingCartClicked,
+                          //       child: product.productInfo.inShoppingCart
+                          //           ? Assets.icons.selectedAddToCart.image()
+                          //           : Assets.icons.addToCart.image(),
+                          //     ),
+                          //   ],
+                          // ],
                         ),
                         Text(
                           product.productInfo.price.toString() + '\$',

@@ -27,6 +27,38 @@ Scopes _$ScopesFromJson(Map<String, dynamic> json) => Scopes();
 
 Map<String, dynamic> _$ScopesToJson(Scopes instance) => <String, dynamic>{};
 
+GetAllModelsUrls _$GetAllModelsUrlsFromJson(Map<String, dynamic> json) =>
+    GetAllModelsUrls();
+
+Map<String, dynamic> _$GetAllModelsUrlsToJson(GetAllModelsUrls instance) =>
+    <String, dynamic>{};
+
+GetAllPhotosUrls _$GetAllPhotosUrlsFromJson(Map<String, dynamic> json) =>
+    GetAllPhotosUrls();
+
+Map<String, dynamic> _$GetAllPhotosUrlsToJson(GetAllPhotosUrls instance) =>
+    <String, dynamic>{};
+
+GetModelUploadLink _$GetModelUploadLinkFromJson(Map<String, dynamic> json) =>
+    GetModelUploadLink(
+      blobName: json['BlobName'] as String,
+    );
+
+Map<String, dynamic> _$GetModelUploadLinkToJson(GetModelUploadLink instance) =>
+    <String, dynamic>{
+      'BlobName': instance.blobName,
+    };
+
+GetPhotoUploadLink _$GetPhotoUploadLinkFromJson(Map<String, dynamic> json) =>
+    GetPhotoUploadLink(
+      blobName: json['BlobName'] as String,
+    );
+
+Map<String, dynamic> _$GetPhotoUploadLinkToJson(GetPhotoUploadLink instance) =>
+    <String, dynamic>{
+      'BlobName': instance.blobName,
+    };
+
 CategoryById _$CategoryByIdFromJson(Map<String, dynamic> json) => CategoryById(
       id: json['Id'] as String,
     );
@@ -560,6 +592,19 @@ Map<String, dynamic> _$AddProductsToShoppingCartToJson(
       'Amount': instance.amount,
     };
 
+ChangeProductAmount _$ChangeProductAmountFromJson(Map<String, dynamic> json) =>
+    ChangeProductAmount(
+      productId: json['ProductId'] as String,
+      newAmount: json['NewAmount'] as int,
+    );
+
+Map<String, dynamic> _$ChangeProductAmountToJson(
+        ChangeProductAmount instance) =>
+    <String, dynamic>{
+      'ProductId': instance.productId,
+      'NewAmount': instance.newAmount,
+    };
+
 RemoveProductFromShoppingCart _$RemoveProductFromShoppingCartFromJson(
         Map<String, dynamic> json) =>
     RemoveProductFromShoppingCart(
@@ -607,6 +652,14 @@ Map<String, dynamic> _$ShoppingCartProductDTOToJson(
     <String, dynamic>{
       'Amount': instance.amount,
       'Product': instance.product,
+    };
+
+AddFunds _$AddFundsFromJson(Map<String, dynamic> json) => AddFunds(
+      fundsToAdd: json['FundsToAdd'] as int,
+    );
+
+Map<String, dynamic> _$AddFundsToJson(AddFunds instance) => <String, dynamic>{
+      'FundsToAdd': instance.fundsToAdd,
     };
 
 RegisterUser _$RegisterUserFromJson(Map<String, dynamic> json) => RegisterUser(

@@ -22,13 +22,13 @@ class _$FavoritesScreenStateTearOff {
   }
 
   FavoritesReadyState ready(
-      {required FavoritesDTO favorites,
+      {required ShoppingCartDTO shoppingCart,
       required CategoryDTO activeCategory,
       List<CategoryDTO> categories = const <CategoryDTO>[],
       int currentPage = 0,
       int totalCount = 0}) {
     return FavoritesReadyState(
-      favorites: favorites,
+      shoppingCart: shoppingCart,
       activeCategory: activeCategory,
       categories: categories,
       currentPage: currentPage,
@@ -52,7 +52,7 @@ mixin _$FavoritesScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FavoritesDTO favorites,
+            ShoppingCartDTO shoppingCart,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -64,7 +64,7 @@ mixin _$FavoritesScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -73,7 +73,7 @@ mixin _$FavoritesScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -164,7 +164,7 @@ class _$FavoritesLoadingState implements FavoritesLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FavoritesDTO favorites,
+            ShoppingCartDTO shoppingCart,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -179,7 +179,7 @@ class _$FavoritesLoadingState implements FavoritesLoadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -191,7 +191,7 @@ class _$FavoritesLoadingState implements FavoritesLoadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -248,7 +248,7 @@ abstract class $FavoritesReadyStateCopyWith<$Res> {
           FavoritesReadyState value, $Res Function(FavoritesReadyState) then) =
       _$FavoritesReadyStateCopyWithImpl<$Res>;
   $Res call(
-      {FavoritesDTO favorites,
+      {ShoppingCartDTO shoppingCart,
       CategoryDTO activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
@@ -268,17 +268,17 @@ class _$FavoritesReadyStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? favorites = freezed,
+    Object? shoppingCart = freezed,
     Object? activeCategory = freezed,
     Object? categories = freezed,
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
     return _then(FavoritesReadyState(
-      favorites: favorites == freezed
-          ? _value.favorites
-          : favorites // ignore: cast_nullable_to_non_nullable
-              as FavoritesDTO,
+      shoppingCart: shoppingCart == freezed
+          ? _value.shoppingCart
+          : shoppingCart // ignore: cast_nullable_to_non_nullable
+              as ShoppingCartDTO,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -303,14 +303,14 @@ class _$FavoritesReadyStateCopyWithImpl<$Res>
 
 class _$FavoritesReadyState implements FavoritesReadyState {
   const _$FavoritesReadyState(
-      {required this.favorites,
+      {required this.shoppingCart,
       required this.activeCategory,
       this.categories = const <CategoryDTO>[],
       this.currentPage = 0,
       this.totalCount = 0});
 
   @override
-  final FavoritesDTO favorites;
+  final ShoppingCartDTO shoppingCart;
   @override
   final CategoryDTO activeCategory;
   @JsonKey()
@@ -325,7 +325,7 @@ class _$FavoritesReadyState implements FavoritesReadyState {
 
   @override
   String toString() {
-    return 'FavoritesScreenState.ready(favorites: $favorites, activeCategory: $activeCategory, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
+    return 'FavoritesScreenState.ready(shoppingCart: $shoppingCart, activeCategory: $activeCategory, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
@@ -333,7 +333,8 @@ class _$FavoritesReadyState implements FavoritesReadyState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is FavoritesReadyState &&
-            const DeepCollectionEquality().equals(other.favorites, favorites) &&
+            const DeepCollectionEquality()
+                .equals(other.shoppingCart, shoppingCart) &&
             const DeepCollectionEquality()
                 .equals(other.activeCategory, activeCategory) &&
             const DeepCollectionEquality()
@@ -347,7 +348,7 @@ class _$FavoritesReadyState implements FavoritesReadyState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(favorites),
+      const DeepCollectionEquality().hash(shoppingCart),
       const DeepCollectionEquality().hash(activeCategory),
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(currentPage),
@@ -363,7 +364,7 @@ class _$FavoritesReadyState implements FavoritesReadyState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FavoritesDTO favorites,
+            ShoppingCartDTO shoppingCart,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -372,27 +373,27 @@ class _$FavoritesReadyState implements FavoritesReadyState {
     required TResult Function(String error) error,
   }) {
     return ready(
-        favorites, activeCategory, categories, currentPage, totalCount);
+        shoppingCart, activeCategory, categories, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
     return ready?.call(
-        favorites, activeCategory, categories, currentPage, totalCount);
+        shoppingCart, activeCategory, categories, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -400,7 +401,7 @@ class _$FavoritesReadyState implements FavoritesReadyState {
   }) {
     if (ready != null) {
       return ready(
-          favorites, activeCategory, categories, currentPage, totalCount);
+          shoppingCart, activeCategory, categories, currentPage, totalCount);
     }
     return orElse();
   }
@@ -442,13 +443,13 @@ class _$FavoritesReadyState implements FavoritesReadyState {
 
 abstract class FavoritesReadyState implements FavoritesScreenState {
   const factory FavoritesReadyState(
-      {required FavoritesDTO favorites,
+      {required ShoppingCartDTO shoppingCart,
       required CategoryDTO activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
       int totalCount}) = _$FavoritesReadyState;
 
-  FavoritesDTO get favorites;
+  ShoppingCartDTO get shoppingCart;
   CategoryDTO get activeCategory;
   List<CategoryDTO> get categories;
   int get currentPage;
@@ -525,7 +526,7 @@ class _$FavoritesErrorState implements FavoritesErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            FavoritesDTO favorites,
+            ShoppingCartDTO shoppingCart,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -540,7 +541,7 @@ class _$FavoritesErrorState implements FavoritesErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
@@ -552,7 +553,7 @@ class _$FavoritesErrorState implements FavoritesErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FavoritesDTO favorites, CategoryDTO activeCategory,
+    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
             List<CategoryDTO> categories, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,

@@ -81,12 +81,19 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   Future<void> likeProduct(String productId) async {
     try {
       final state = this.state;
-
       if (state is! ProductsScreenReadyState) {
         return;
       }
+
       try {
-        await _cqrs.run(AddToFavourites(productId: productId));
+        final product =
+            state.products.firstWhere((element) => element.id == productId);
+
+        if (product.productInfo.inFavourites) {
+          await _cqrs.run(RemoveFromFavourites(productId: productId));
+        } else {
+          await _cqrs.run(AddToFavourites(productId: productId));
+        }
 
         await fetch(page: state.currentPage);
       } catch (e, _) {
@@ -104,10 +111,19 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
     try {
-      await _cqrs.run(AddProductsToShoppingCart(
-        productId: productId,
-        amount: 1,
-      ));
+      final product =
+          state.products.firstWhere((element) => element.id == productId);
+
+      if (product.productInfo.inShoppingCart) {
+        await _cqrs.run(RemoveProductFromShoppingCart(
+          productId: productId,
+        ));
+      } else {
+        await _cqrs.run(AddProductsToShoppingCart(
+          productId: productId,
+          amount: 1,
+        ));
+      }
 
       await fetch(page: state.currentPage);
     } catch (e, _) {
