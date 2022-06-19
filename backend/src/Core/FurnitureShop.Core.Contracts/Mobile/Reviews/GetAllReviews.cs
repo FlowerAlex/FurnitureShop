@@ -5,8 +5,8 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
-    [AuthorizeWhenHasAnyOf(Auth.Roles.User,Auth.Roles.Admin)]
-    public class GetAllReviews : PaginatedQuery<ReviewDTO> 
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
+    public class GetAllReviews : PaginatedQuery<ReviewDTO>
     {
         public Guid ProductId { get; set; }
     }

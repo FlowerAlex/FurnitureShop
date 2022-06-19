@@ -27,7 +27,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
             var shoppingCart = await dbContext.ShoppingCarts.Where(s => s.UserId == context.UserId).FirstOrDefaultAsync();
             if (shoppingCart == null)
             {
-                return ;
+                return;
             }
             var shp = await dbContext.ShoppingCartProduct.Where(
                 s => s.ShoppingCartId == shoppingCart.Id && s.ProductId == cmd.ProductId)

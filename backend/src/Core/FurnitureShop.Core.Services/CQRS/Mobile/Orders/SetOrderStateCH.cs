@@ -29,12 +29,12 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
         public async Task ExecuteAsync(CoreContext context, SetOrderState command)
         {
-            var order = dbContext.Orders.Where( o => o.Id == command.Id).FirstOrDefault();
+            var order = dbContext.Orders.Where(o => o.Id == command.Id).FirstOrDefault();
             if (order == null)
             {
                 return;
             }
-            order.OrderState = Enum.Parse<OrderState>(command.OrderState,ignoreCase:true);
+            order.OrderState = Enum.Parse<OrderState>(command.OrderState, ignoreCase: true);
             await dbContext.SaveChangesAsync();
         }
     }

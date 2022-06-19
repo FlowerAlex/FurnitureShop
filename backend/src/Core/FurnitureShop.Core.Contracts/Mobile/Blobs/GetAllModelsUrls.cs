@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
@@ -11,6 +10,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Blobs
         public static class ErrorCodes
         {
             public const int ConnectionError = 1;
-        }       
+        }
     }
 }

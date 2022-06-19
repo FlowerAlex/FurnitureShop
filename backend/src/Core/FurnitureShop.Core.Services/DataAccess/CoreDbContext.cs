@@ -150,19 +150,19 @@ namespace FurnitureShop.Core.Services.DataAccess
                    .WithMany(p => p.ShoppingCartProducts)
                    .HasForeignKey(o => o.ProductId);
            });
-           builder.Entity<UserProduct>(o =>
-           {
-               o.HasKey(o => o.Id);
-               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
-               o.Property(o => o.UserId).IsTypedId();
-               o.Property(o => o.ProductId).IsTypedId();
-               o.HasOne<User>()
-                   .WithMany(u => u.Favourites)
-                   .HasForeignKey(o => o.UserId);
-               o.HasOne<Product>()
-                   .WithMany()
-                   .HasForeignKey(o => o.ProductId);
-           });
+            builder.Entity<UserProduct>(o =>
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+                o.Property(o => o.UserId).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
+                o.HasOne<User>()
+                    .WithMany(u => u.Favourites)
+                    .HasForeignKey(o => o.UserId);
+                o.HasOne<Product>()
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId);
+            });
         }
 
         public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);

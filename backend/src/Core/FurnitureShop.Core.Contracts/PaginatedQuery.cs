@@ -18,12 +18,12 @@ namespace FurnitureShop.Core.Contracts
     }
     public abstract class SortableMulitiFilterPaginatedQuery<TResult, TBy, TFBy> : PaginatedQuery<TResult>
     {
-        public Dictionary<TFBy,string> FilterBy { get; set; }
+        public Dictionary<TFBy, string> FilterBy { get; set; }
 
         public TBy SortBy { get; set; }
         public bool SortByDescending { get; set; }
     }
-    
+
     public class PaginatedResult<TResult>
     {
         public List<TResult> Items { get; set; }

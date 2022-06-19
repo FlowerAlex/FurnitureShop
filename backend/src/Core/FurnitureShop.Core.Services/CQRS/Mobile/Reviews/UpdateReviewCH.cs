@@ -20,7 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                     .WithCode(UpdateReview.ErrorCodes.EmptyReviewText)
                     .WithMessage("Review text should not be empty");
             RuleFor(p => p.ReviewInfo.Rating)
-                .InclusiveBetween(0.0,5.0)
+                .InclusiveBetween(0.0, 5.0)
                     .WithCode(UpdateReview.ErrorCodes.IncorrectRating)
                     .WithMessage("Incorrect rating");
         }

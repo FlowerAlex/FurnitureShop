@@ -38,8 +38,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         ModelUrl = p.ModelUrl,
                         InFavourites = dbContext.Favourites
                             .Where(f => f.UserId == context.UserId && f.ProductId == query.Id).Any(),
-                        InShoppingCart = shoppingCartExists? dbContext.ShoppingCartProduct
-                        .Where(shp => shp.Id == shoppingCart.Id.Value && shp.ProductId == p.Id).Any() : false,                
+                        InShoppingCart = shoppingCartExists ? dbContext.ShoppingCartProduct
+                        .Where(shp => shp.Id == shoppingCart.Id.Value && shp.ProductId == p.Id).Any() : false,
                     },
                     Id = p.Id,
                 })

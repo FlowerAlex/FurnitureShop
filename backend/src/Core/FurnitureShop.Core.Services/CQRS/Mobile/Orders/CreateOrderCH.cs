@@ -41,10 +41,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Postal should not be empty");
-             RuleForAsync(p => p.OrderInfo.Price, DoesUserHaveEnoughMoney)
-                .Equal(false)
-                    .WithMessage("Not enough funds to pay for the order.")
-                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
+            RuleForAsync(p => p.OrderInfo.Price, DoesUserHaveEnoughMoney)
+               .Equal(false)
+                   .WithMessage("Not enough funds to pay for the order.")
+                   .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
         private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, double price)
         {
