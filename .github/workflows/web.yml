@@ -1,0 +1,34 @@
+name: Web
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Verify Changed Files
+        uses: tj-actions/changed-files@v23
+        id: changed-files
+        with:
+          files: |
+            web/*
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.10.5"
+
+      - name: Run Flutter Tests
+        if: steps.changed-files.outputs.any_changed == 'true'
+
+        run: |
+          flutter pub get 
+          flutter test
