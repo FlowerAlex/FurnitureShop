@@ -1,13 +1,11 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
-using FurnitureShop.Core.Services.CQRS;
+using FurnitureShop.Core.Services.CQRS.Mobile.Favourites;
 using FurnitureShop.Core.Services.CQRS.Mobile.Products;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -45,9 +43,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.Products.Add(TestProduct2);
             context.SaveChanges();
 
-            context.Favourites.Add(new UserProduct(){UserId = Id<User>.From(TestUserId), ProductId = TestProduct2.Id});
+            context.Favourites.Add(new UserProduct() { UserId = Id<User>.From(TestUserId), ProductId = TestProduct2.Id });
             context.SaveChanges();
-        } 
+        }
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -165,13 +163,13 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var favourite = dbContext.Favourites.Where(f => f.UserId == TestUserId && f.ProductId == TestProduct.Id).First();
-            Assert.Equal(TestProduct.Id,favourite.ProductId);
+            Assert.Equal(TestProduct.Id, favourite.ProductId);
         }
-        [Fact] 
+        [Fact]
         public void RemoveFromFavouritesTest()
-        {     
+        {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
-            using var dbContext = new CoreDbContext(ContextOptions);            
+            using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new RemoveFromFavouritesCH(dbContext);
             var command = new RemoveFromFavourites
             {
