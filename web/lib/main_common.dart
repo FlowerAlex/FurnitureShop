@@ -1,11 +1,11 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture_shop/app.dart';
 import 'package:furniture_shop/config/app_config.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
+import 'package:furniture_shop/features/auth/auth_router.dart';
+import 'package:furniture_shop/features/auth/flutter_secure_credentials_storage.dart';
+import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:logging/logging.dart';
 import 'package:login_client/login_client.dart';
-import 'package:login_client_flutter/login_client_flutter.dart';
 import 'package:provider/provider.dart';
 
 Future<void> mainCommon(AppConfig config) async {
@@ -16,7 +16,7 @@ Future<void> mainCommon(AppConfig config) async {
   final loginClient = LoginClient(
     oAuthSettings: OAuthSettings(
       authorizationUri: config.apiUri.resolve('/auth/connect/token'),
-      clientId: 'client_app',
+      clientId: 'admin_app',
       scopes: [
         'internal_api',
         'offline_access',
@@ -24,6 +24,7 @@ Future<void> mainCommon(AppConfig config) async {
     ),
     credentialsStorage: const FlutterSecureCredentialsStorage(),
   );
+
   await loginClient.initialize();
 
   final cqrs = CQRS(
@@ -31,18 +32,28 @@ Future<void> mainCommon(AppConfig config) async {
     config.apiUri.resolve('/api/'),
   );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        Provider.value(value: cqrs),
-        Provider(
-          lazy: false,
-          create: (context) => AuthCubit(loginClient)..initialize(),
-        ),
-      ],
-      builder: (context, _) => const App(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: [
+      Provider.value(value: cqrs),
+      Provider(
+        lazy: false,
+        create: (context) => AuthCubit(loginClient)..initialize(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Furniture Shop Web',
+      home: AuthRouter(),
+    );
+  }
 }
 
 Future<void> _setupLogger(AppConfig config) async {
