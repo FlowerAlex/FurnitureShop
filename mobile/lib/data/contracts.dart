@@ -74,9 +74,87 @@ class Scopes with EquatableMixin {
   Map<String, dynamic> toJson() => _$ScopesToJson(this);
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class CategoryById with EquatableMixin implements Query<CategoryDTO> {
+class GetAllModelsUrls with EquatableMixin implements Query<List<String>> {
+  GetAllModelsUrls();
+
+  factory GetAllModelsUrls.fromJson(Map<String, dynamic> json) =>
+      _$GetAllModelsUrlsFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$GetAllModelsUrlsToJson(this);
+  List<String> resultFactory(dynamic decodedJson) =>
+      (decodedJson as Iterable<dynamic>)
+          .map((dynamic e) => e as String)
+          .toList();
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Blobs.GetAllModelsUrls';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class GetAllPhotosUrls with EquatableMixin implements Query<List<String>> {
+  GetAllPhotosUrls();
+
+  factory GetAllPhotosUrls.fromJson(Map<String, dynamic> json) =>
+      _$GetAllPhotosUrlsFromJson(json);
+
+  get props => [];
+
+  Map<String, dynamic> toJson() => _$GetAllPhotosUrlsToJson(this);
+  List<String> resultFactory(dynamic decodedJson) =>
+      (decodedJson as Iterable<dynamic>)
+          .map((dynamic e) => e as String)
+          .toList();
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Blobs.GetAllPhotosUrls';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class GetModelUploadLink with EquatableMixin implements Query<String> {
+  GetModelUploadLink({
+    required this.blobName,
+  });
+
+  factory GetModelUploadLink.fromJson(Map<String, dynamic> json) =>
+      _$GetModelUploadLinkFromJson(json);
+
+  final String blobName;
+
+  get props => [blobName];
+
+  Map<String, dynamic> toJson() => _$GetModelUploadLinkToJson(this);
+  String resultFactory(dynamic decodedJson) => decodedJson as String;
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Blobs.GetModelUploadLink';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class GetPhotoUploadLink with EquatableMixin implements Query<String> {
+  GetPhotoUploadLink({
+    required this.blobName,
+  });
+
+  factory GetPhotoUploadLink.fromJson(Map<String, dynamic> json) =>
+      _$GetPhotoUploadLinkFromJson(json);
+
+  final String blobName;
+
+  get props => [blobName];
+
+  Map<String, dynamic> toJson() => _$GetPhotoUploadLinkToJson(this);
+  String resultFactory(dynamic decodedJson) => decodedJson as String;
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Blobs.GetPhotoUploadLink';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class CategoryById with EquatableMixin implements Query<CategoryDTO?> {
   CategoryById({
     required this.id,
   });
@@ -89,8 +167,9 @@ class CategoryById with EquatableMixin implements Query<CategoryDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$CategoryByIdToJson(this);
-  CategoryDTO resultFactory(dynamic decodedJson) =>
-      _$CategoryDTOFromJson(decodedJson as Map<String, dynamic>);
+  CategoryDTO? resultFactory(dynamic decodedJson) => decodedJson == null
+      ? null
+      : _$CategoryDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Categories.CategoryById';
 }
@@ -134,10 +213,10 @@ class CreateCategory with EquatableMixin implements Command {
 }
 
 class CreateCategoryErrorCodes {
-  static const emptyArgs = 1;
+  static const incorrectName = 1;
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class DeleteCategory with EquatableMixin implements Command {
   DeleteCategory({
@@ -156,11 +235,9 @@ class DeleteCategory with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.Categories.DeleteCategory';
 }
 
-class DeleteCategoryErrorCodes {
-  static const emptyArgs = 1;
-}
+class DeleteCategoryErrorCodes {}
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class GetAllCategories with EquatableMixin implements Query<List<CategoryDTO>> {
   GetAllCategories();
@@ -179,7 +256,7 @@ class GetAllCategories with EquatableMixin implements Query<List<CategoryDTO>> {
       'FurnitureShop.Core.Contracts.Mobile.Categories.GetAllCategories';
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UpdateCategory with EquatableMixin implements Command {
   UpdateCategory({
@@ -202,12 +279,12 @@ class UpdateCategory with EquatableMixin implements Command {
 }
 
 class UpdateCategoryErrorCodes {
-  static const emptyArgs = 1;
+  static const incorrectName = 1;
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ComplaintById with EquatableMixin implements Query<ComplaintDTO> {
+class ComplaintById with EquatableMixin implements Query<ComplaintDTO?> {
   ComplaintById({
     required this.id,
   });
@@ -220,8 +297,9 @@ class ComplaintById with EquatableMixin implements Query<ComplaintDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$ComplaintByIdToJson(this);
-  ComplaintDTO resultFactory(dynamic decodedJson) =>
-      _$ComplaintDTOFromJson(decodedJson as Map<String, dynamic>);
+  ComplaintDTO? resultFactory(dynamic decodedJson) => decodedJson == null
+      ? null
+      : _$ComplaintDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Complaints.ComplaintById';
 }
@@ -295,9 +373,11 @@ class CreateComplaint with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.Complaints.CreateComplaint';
 }
 
-class CreateComplaintErrorCodes {}
+class CreateComplaintErrorCodes {
+  static const emptyComplaintText = 1;
+}
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class DeleteComplaint with EquatableMixin implements Command {
   DeleteComplaint({
@@ -345,7 +425,7 @@ class GetAllComplaints
       'FurnitureShop.Core.Contracts.Mobile.Complaints.GetAllComplaints';
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UpdateComplaint with EquatableMixin implements Command {
   UpdateComplaint({
@@ -367,7 +447,9 @@ class UpdateComplaint with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.Complaints.UpdateComplaint';
 }
 
-class UpdateComplaintErrorCodes {}
+class UpdateComplaintErrorCodes {
+  static const emptyComplaintText = 1;
+}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -389,9 +471,11 @@ class CreateOrder with EquatableMixin implements Command {
 }
 
 class CreateOrderErrorCodes {
-  static const incorrectAddress = 1;
+  static const noProducts = 1;
 
-  static const noProducts = 2;
+  static const incorrectAddress = 2;
+
+  static const notEnoughFunds = 3;
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
@@ -435,7 +519,7 @@ class GetAllOrders
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class OrderById with EquatableMixin implements Query<OrderDTO> {
+class OrderById with EquatableMixin implements Query<OrderDTO?> {
   OrderById({
     required this.id,
   });
@@ -448,8 +532,9 @@ class OrderById with EquatableMixin implements Query<OrderDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$OrderByIdToJson(this);
-  OrderDTO resultFactory(dynamic decodedJson) =>
-      _$OrderDTOFromJson(decodedJson as Map<String, dynamic>);
+  OrderDTO? resultFactory(dynamic decodedJson) => decodedJson == null
+      ? null
+      : _$OrderDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Orders.OrderById';
 }
@@ -602,6 +687,27 @@ class SetOrderStateErrorCodes {
   static const incorrectState = 1;
 }
 
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class AddToFavourites with EquatableMixin implements Command {
+  AddToFavourites({
+    required this.productId,
+  });
+
+  factory AddToFavourites.fromJson(Map<String, dynamic> json) =>
+      _$AddToFavouritesFromJson(json);
+
+  final String productId;
+
+  get props => [productId];
+
+  Map<String, dynamic> toJson() => _$AddToFavouritesToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Products.AddToFavourites';
+}
+
+class AddToFavouritesErrorCodes {}
+
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class CreateProduct with EquatableMixin implements Command {
@@ -629,7 +735,7 @@ class CreateProductErrorCodes {
   static const incorrectPrice = 3;
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class DeleteProduct with EquatableMixin implements Command {
   DeleteProduct({
@@ -690,9 +796,9 @@ class GetAllProducts
       'FurnitureShop.Core.Contracts.Mobile.Products.GetAllProducts';
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductById with EquatableMixin implements Query<ProductWithDetailsDTO> {
+class ProductById with EquatableMixin implements Query<ProductWithDetailsDTO?> {
   ProductById({
     required this.id,
   });
@@ -705,8 +811,10 @@ class ProductById with EquatableMixin implements Query<ProductWithDetailsDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$ProductByIdToJson(this);
-  ProductWithDetailsDTO resultFactory(dynamic decodedJson) =>
-      _$ProductWithDetailsDTOFromJson(decodedJson as Map<String, dynamic>);
+  ProductWithDetailsDTO? resultFactory(dynamic decodedJson) => decodedJson ==
+          null
+      ? null
+      : _$ProductWithDetailsDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Products.ProductById';
 }
@@ -718,6 +826,8 @@ class ProductDetailsDTO with EquatableMixin implements ProductInfoDTO {
     required this.price,
     this.averageRating,
     this.previewPhotoURL,
+    required this.inFavourites,
+    required this.inShoppingCart,
     this.categoryId,
     required this.description,
     this.modelUrl,
@@ -734,6 +844,10 @@ class ProductDetailsDTO with EquatableMixin implements ProductInfoDTO {
 
   final String? previewPhotoURL;
 
+  final bool inFavourites;
+
+  final bool inShoppingCart;
+
   final String? categoryId;
 
   final String description;
@@ -745,6 +859,8 @@ class ProductDetailsDTO with EquatableMixin implements ProductInfoDTO {
         price,
         averageRating,
         previewPhotoURL,
+        inFavourites,
+        inShoppingCart,
         categoryId,
         description,
         modelUrl
@@ -779,6 +895,8 @@ class ProductInfoDTO with EquatableMixin {
     required this.price,
     this.averageRating,
     this.previewPhotoURL,
+    required this.inFavourites,
+    required this.inShoppingCart,
     this.categoryId,
   });
 
@@ -793,9 +911,21 @@ class ProductInfoDTO with EquatableMixin {
 
   final String? previewPhotoURL;
 
+  final bool inFavourites;
+
+  final bool inShoppingCart;
+
   final String? categoryId;
 
-  get props => [name, price, averageRating, previewPhotoURL, categoryId];
+  get props => [
+        name,
+        price,
+        averageRating,
+        previewPhotoURL,
+        inFavourites,
+        inShoppingCart,
+        categoryId
+      ];
 
   Map<String, dynamic> toJson() => _$ProductInfoDTOToJson(this);
 }
@@ -826,7 +956,28 @@ class ProductWithDetailsDTO with EquatableMixin {
   Map<String, dynamic> toJson() => _$ProductWithDetailsDTOToJson(this);
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class RemoveFromFavourites with EquatableMixin implements Command {
+  RemoveFromFavourites({
+    required this.productId,
+  });
+
+  factory RemoveFromFavourites.fromJson(Map<String, dynamic> json) =>
+      _$RemoveFromFavouritesFromJson(json);
+
+  final String productId;
+
+  get props => [productId];
+
+  Map<String, dynamic> toJson() => _$RemoveFromFavouritesToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Products.RemoveFromFavourites';
+}
+
+class RemoveFromFavouritesErrorCodes {}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UpdateProduct with EquatableMixin implements Command {
   UpdateProduct({
@@ -856,7 +1007,7 @@ class UpdateProductErrorCodes {
   static const incorrectPrice = 3;
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class CreateReview with EquatableMixin implements Command {
   CreateReview({
@@ -875,9 +1026,13 @@ class CreateReview with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.Reviews.CreateReview';
 }
 
-class CreateReviewErrorCodes {}
+class CreateReviewErrorCodes {
+  static const emptyReviewText = 1;
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+  static const incorrectRating = 2;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class DeleteReview with EquatableMixin implements Command {
   DeleteReview({
@@ -926,9 +1081,9 @@ class GetAllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
       'FurnitureShop.Core.Contracts.Mobile.Reviews.GetAllReviews';
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ReviewById with EquatableMixin implements Query<ReviewDTO> {
+class ReviewById with EquatableMixin implements Query<ReviewDTO?> {
   ReviewById({
     required this.id,
   });
@@ -941,8 +1096,9 @@ class ReviewById with EquatableMixin implements Query<ReviewDTO> {
   get props => [id];
 
   Map<String, dynamic> toJson() => _$ReviewByIdToJson(this);
-  ReviewDTO resultFactory(dynamic decodedJson) =>
-      _$ReviewDTOFromJson(decodedJson as Map<String, dynamic>);
+  ReviewDTO? resultFactory(dynamic decodedJson) => decodedJson == null
+      ? null
+      : _$ReviewDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Reviews.ReviewById';
 }
@@ -994,7 +1150,7 @@ class ReviewInfoDTO with EquatableMixin {
   Map<String, dynamic> toJson() => _$ReviewInfoDTOToJson(this);
 }
 
-/// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UpdateReview with EquatableMixin implements Command {
   UpdateReview({
@@ -1016,7 +1172,11 @@ class UpdateReview with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.Reviews.UpdateReview';
 }
 
-class UpdateReviewErrorCodes {}
+class UpdateReviewErrorCodes {
+  static const emptyReviewText = 1;
+
+  static const incorrectRating = 2;
+}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -1042,10 +1202,32 @@ class AddProductsToShoppingCart with EquatableMixin implements Command {
 
 class AddProductsToShoppingCartErrorCodes {
   static const incorrectAmount = 1;
+}
 
-  static const productNotFound = 2;
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ChangeProductAmount with EquatableMixin implements Command {
+  ChangeProductAmount({
+    required this.productId,
+    required this.newAmount,
+  });
 
-  static const shoppingCartNotFound = 3;
+  factory ChangeProductAmount.fromJson(Map<String, dynamic> json) =>
+      _$ChangeProductAmountFromJson(json);
+
+  final String productId;
+
+  final int newAmount;
+
+  get props => [productId, newAmount];
+
+  Map<String, dynamic> toJson() => _$ChangeProductAmountToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ChangeProductAmount';
+}
+
+class ChangeProductAmountErrorCodes {
+  static const incorrectAmount = 1;
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -1067,13 +1249,11 @@ class RemoveProductFromShoppingCart with EquatableMixin implements Command {
       'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.RemoveProductFromShoppingCart';
 }
 
-class RemoveProductFromShoppingCartErrorCodes {
-  static const shoppingCartNotFound = 1;
-}
+class RemoveProductFromShoppingCartErrorCodes {}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
+class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO?> {
   ShoppingCart();
 
   factory ShoppingCart.fromJson(Map<String, dynamic> json) =>
@@ -1082,8 +1262,9 @@ class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
   get props => [];
 
   Map<String, dynamic> toJson() => _$ShoppingCartToJson(this);
-  ShoppingCartDTO resultFactory(dynamic decodedJson) =>
-      _$ShoppingCartDTOFromJson(decodedJson as Map<String, dynamic>);
+  ShoppingCartDTO? resultFactory(dynamic decodedJson) => decodedJson == null
+      ? null
+      : _$ShoppingCartDTOFromJson(decodedJson as Map<String, dynamic>);
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.ShoppingCart.ShoppingCart';
 }
@@ -1091,32 +1272,13 @@ class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO> {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ShoppingCartDTO with EquatableMixin {
   ShoppingCartDTO({
-    required this.id,
-    required this.shoppingCartInfo,
-  });
-
-  factory ShoppingCartDTO.fromJson(Map<String, dynamic> json) =>
-      _$ShoppingCartDTOFromJson(json);
-
-  final String id;
-
-  final ShoppingCartInfoDTO shoppingCartInfo;
-
-  get props => [id, shoppingCartInfo];
-
-  Map<String, dynamic> toJson() => _$ShoppingCartDTOToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class ShoppingCartInfoDTO with EquatableMixin {
-  ShoppingCartInfoDTO({
     this.userId,
     required this.price,
     required this.shoppingCartProducts,
   });
 
-  factory ShoppingCartInfoDTO.fromJson(Map<String, dynamic> json) =>
-      _$ShoppingCartInfoDTOFromJson(json);
+  factory ShoppingCartDTO.fromJson(Map<String, dynamic> json) =>
+      _$ShoppingCartDTOFromJson(json);
 
   final String? userId;
 
@@ -1126,7 +1288,7 @@ class ShoppingCartInfoDTO with EquatableMixin {
 
   get props => [userId, price, shoppingCartProducts];
 
-  Map<String, dynamic> toJson() => _$ShoppingCartInfoDTOToJson(this);
+  Map<String, dynamic> toJson() => _$ShoppingCartDTOToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -1134,7 +1296,6 @@ class ShoppingCartProductDTO with EquatableMixin {
   ShoppingCartProductDTO({
     required this.amount,
     required this.product,
-    required this.shoppingCartId,
   });
 
   factory ShoppingCartProductDTO.fromJson(Map<String, dynamic> json) =>
@@ -1144,11 +1305,31 @@ class ShoppingCartProductDTO with EquatableMixin {
 
   final ProductDTO product;
 
-  final String shoppingCartId;
-
-  get props => [amount, product, shoppingCartId];
+  get props => [amount, product];
 
   Map<String, dynamic> toJson() => _$ShoppingCartProductDTOToJson(this);
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class AddFunds with EquatableMixin implements Command {
+  AddFunds({
+    required this.fundsToAdd,
+  });
+
+  factory AddFunds.fromJson(Map<String, dynamic> json) =>
+      _$AddFundsFromJson(json);
+
+  final int fundsToAdd;
+
+  get props => [fundsToAdd];
+
+  Map<String, dynamic> toJson() => _$AddFundsToJson(this);
+  String getFullName() => 'FurnitureShop.Core.Contracts.Mobile.Users.AddFunds';
+}
+
+class AddFundsErrorCodes {
+  static const incorrectAmount = 1;
 }
 
 /// LeanCode.CQRS.Security.AllowUnauthorizedAttribute()

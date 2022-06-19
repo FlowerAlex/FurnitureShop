@@ -8,5 +8,12 @@ final userInfoTest = UserInfoDTO(
 );
 final category1Test = CategoryDTO(id: 'id', name: 'name');
 
-final productDTO1Test =
-    ProductDTO(id: 'id', productInfo: ProductInfoDTO(name: 'name', price: 10));
+final productDTO1Test = ProductDTO(
+  id: 'id',
+  productInfo: ProductInfoDTO(
+    name: 'name',
+    price: 10,
+    inFavourites: false,
+    inShoppingCart: false,
+  ),
+);

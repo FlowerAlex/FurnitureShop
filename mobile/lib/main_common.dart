@@ -20,6 +20,7 @@ Future<void> mainCommon(AppConfig config) async {
       clientId: 'client_app',
       scopes: [
         'internal_api',
+        'offline_access',
       ],
     ),
     credentialsStorage: const FlutterSecureCredentialsStorage(),

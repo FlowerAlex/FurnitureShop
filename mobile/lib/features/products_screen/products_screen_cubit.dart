@@ -80,7 +80,25 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
   Future<void> likeProduct(String productId) async {
     try {
-      // _cqrs.run();
+      final state = this.state;
+      if (state is! ProductsScreenReadyState) {
+        return;
+      }
+
+      try {
+        final product =
+            state.products.firstWhere((element) => element.id == productId);
+
+        if (product.productInfo.inFavourites) {
+          await _cqrs.run(RemoveFromFavourites(productId: productId));
+        } else {
+          await _cqrs.run(AddToFavourites(productId: productId));
+        }
+
+        await fetch(page: state.currentPage);
+      } catch (e, _) {
+        emit(ProductsScreenErrorState(errorMessage: e.toString()));
+      }
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }
@@ -93,12 +111,21 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
     try {
-      await _cqrs.run(AddProductsToShoppingCart(
-        productId: productId,
-        amount: 1,
-      ));
+      final product =
+          state.products.firstWhere((element) => element.id == productId);
 
-      // await fetch(page: state.currentPage); uncomment when ProductDTO will have fields isFavorite and isInShoppingCart
+      if (product.productInfo.inShoppingCart) {
+        await _cqrs.run(RemoveProductFromShoppingCart(
+          productId: productId,
+        ));
+      } else {
+        await _cqrs.run(AddProductsToShoppingCart(
+          productId: productId,
+          amount: 1,
+        ));
+      }
+
+      await fetch(page: state.currentPage);
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }

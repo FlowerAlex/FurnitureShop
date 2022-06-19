@@ -36,6 +36,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/loupe.png
   AssetGenImage get loupe => const AssetGenImage('assets/icons/loupe.png');
 
+  /// File path: assets/icons/selected-add-to-cart.png
+  AssetGenImage get selectedAddToCart =>
+      const AssetGenImage('assets/icons/selected-add-to-cart.png');
+
+  /// File path: assets/icons/selected-heart.png
+  AssetGenImage get selectedHeart =>
+      const AssetGenImage('assets/icons/selected-heart.png');
+
   /// File path: assets/icons/squares.png
   AssetGenImage get squares => const AssetGenImage('assets/icons/squares.png');
 
