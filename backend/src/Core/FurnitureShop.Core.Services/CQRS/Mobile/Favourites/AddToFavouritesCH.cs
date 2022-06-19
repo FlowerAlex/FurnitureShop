@@ -7,7 +7,7 @@ using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
+namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 {
     public class AddToFavouritesCH : ICommandHandler<AddToFavourites>
     {
