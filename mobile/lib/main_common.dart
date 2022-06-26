@@ -1,5 +1,6 @@
 import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/app.dart';
 import 'package:furniture_shop/config/app_config.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
@@ -35,7 +36,7 @@ Future<void> mainCommon(AppConfig config) async {
     MultiProvider(
       providers: [
         Provider.value(value: cqrs),
-        Provider(
+        BlocProvider(
           lazy: false,
           create: (context) => AuthCubit(loginClient)..initialize(),
         ),
