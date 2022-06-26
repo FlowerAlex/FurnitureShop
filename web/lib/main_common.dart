@@ -3,6 +3,7 @@ import 'package:furniture_shop/config/app_config.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/auth/auth_router.dart';
 import 'package:furniture_shop/features/auth/flutter_secure_credentials_storage.dart';
+import 'package:furniture_shop/resources/app_theme.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:logging/logging.dart';
 import 'package:login_client/login_client.dart';
@@ -49,9 +50,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Furniture Shop Web',
-      home: AuthRouter(),
+      theme: AppTheme.getTheme(AppThemeType.light),
+      home: const AuthRouter(),
     );
   }
 }

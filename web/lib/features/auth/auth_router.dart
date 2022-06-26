@@ -22,7 +22,7 @@ class AuthRouter extends HookWidget {
           if (authCubitState is AuthLoggedInState)
             const MainPage()
           else
-            const LoginPage()
+            LoginPage()
         ],
         onPopPage: (route, dynamic result) => route.didPop(result),
       ),
