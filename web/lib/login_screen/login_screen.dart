@@ -15,10 +15,11 @@ class LoginScreen extends HookWidget {
     final loginFormKey = useMemoized(GlobalKey<FormState>.new);
     final obscurePassword = useState(true);
 
-    final loginTextEditingController = TextEditingController();
-    final passwordTextEditingController = TextEditingController();
+    final loginTextEditingController = useMemoized(TextEditingController.new);
+    final passwordTextEditingController =
+        useMemoized(TextEditingController.new);
 
-    final cubit = context.read<LogInScreenCubit>();
+    final cubit = context.watch<LogInScreenCubit>();
 
     return Scaffold(
       body: Form(
@@ -69,15 +70,36 @@ class LoginScreen extends HookWidget {
                   ],
                 ),
                 OutlinedButton(
-                    onPressed: () async {
-                      if (loginFormKey.currentState!.validate()) {
-                        await cubit.logIn(
-                          loginTextEditingController.text,
-                          passwordTextEditingController.text,
-                        );
-                      }
-                    },
-                    child: const Text('Login')),
+                  onPressed: () async {
+                    if (loginFormKey.currentState!.validate()) {
+                      await cubit.logIn(
+                        loginTextEditingController.text,
+                        passwordTextEditingController.text,
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Login',
+                  ),
+                ),
+                if (cubit.state.networkError)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Network Error Occurred',
+                      style: theme.textTheme.bodyMedium
+                          ?.copyWith(color: theme.errorColor),
+                    ),
+                  ),
+                if (cubit.state.unknownError)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Error: ${cubit.state.errorText}',
+                      style: theme.textTheme.bodyMedium
+                          ?.copyWith(color: theme.errorColor),
+                    ),
+                  ),
               ].spaced(20),
             ),
           ),

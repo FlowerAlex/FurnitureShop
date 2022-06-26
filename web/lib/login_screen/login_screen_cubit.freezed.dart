@@ -21,12 +21,14 @@ class _$LogInScreenStateTearOff {
       {bool loading = false,
       bool invalidCredentials = false,
       bool networkError = false,
-      bool unknownError = false}) {
+      bool unknownError = false,
+      String errorText = ''}) {
     return LogInScreenReadyState(
       loading: loading,
       invalidCredentials: invalidCredentials,
       networkError: networkError,
       unknownError: unknownError,
+      errorText: errorText,
     );
   }
 }
@@ -40,25 +42,26 @@ mixin _$LogInScreenState {
   bool get invalidCredentials => throw _privateConstructorUsedError;
   bool get networkError => throw _privateConstructorUsedError;
   bool get unknownError => throw _privateConstructorUsedError;
+  String get errorText => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool loading, bool invalidCredentials,
-            bool networkError, bool unknownError)
+            bool networkError, bool unknownError, String errorText)
         ready,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool loading, bool invalidCredentials, bool networkError,
-            bool unknownError)?
+            bool unknownError, String errorText)?
         ready,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool loading, bool invalidCredentials, bool networkError,
-            bool unknownError)?
+            bool unknownError, String errorText)?
         ready,
     required TResult orElse(),
   }) =>
@@ -94,7 +97,8 @@ abstract class $LogInScreenStateCopyWith<$Res> {
       {bool loading,
       bool invalidCredentials,
       bool networkError,
-      bool unknownError});
+      bool unknownError,
+      String errorText});
 }
 
 /// @nodoc
@@ -112,6 +116,7 @@ class _$LogInScreenStateCopyWithImpl<$Res>
     Object? invalidCredentials = freezed,
     Object? networkError = freezed,
     Object? unknownError = freezed,
+    Object? errorText = freezed,
   }) {
     return _then(_value.copyWith(
       loading: loading == freezed
@@ -130,6 +135,10 @@ class _$LogInScreenStateCopyWithImpl<$Res>
           ? _value.unknownError
           : unknownError // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorText: errorText == freezed
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -145,7 +154,8 @@ abstract class $LogInScreenReadyStateCopyWith<$Res>
       {bool loading,
       bool invalidCredentials,
       bool networkError,
-      bool unknownError});
+      bool unknownError,
+      String errorText});
 }
 
 /// @nodoc
@@ -165,6 +175,7 @@ class _$LogInScreenReadyStateCopyWithImpl<$Res>
     Object? invalidCredentials = freezed,
     Object? networkError = freezed,
     Object? unknownError = freezed,
+    Object? errorText = freezed,
   }) {
     return _then(LogInScreenReadyState(
       loading: loading == freezed
@@ -183,6 +194,10 @@ class _$LogInScreenReadyStateCopyWithImpl<$Res>
           ? _value.unknownError
           : unknownError // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorText: errorText == freezed
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -194,7 +209,8 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
       {this.loading = false,
       this.invalidCredentials = false,
       this.networkError = false,
-      this.unknownError = false});
+      this.unknownError = false,
+      this.errorText = ''});
 
   @JsonKey()
   @override
@@ -208,10 +224,13 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
   @JsonKey()
   @override
   final bool unknownError;
+  @JsonKey()
+  @override
+  final String errorText;
 
   @override
   String toString() {
-    return 'LogInScreenState.ready(loading: $loading, invalidCredentials: $invalidCredentials, networkError: $networkError, unknownError: $unknownError)';
+    return 'LogInScreenState.ready(loading: $loading, invalidCredentials: $invalidCredentials, networkError: $networkError, unknownError: $unknownError, errorText: $errorText)';
   }
 
   @override
@@ -225,7 +244,8 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
             const DeepCollectionEquality()
                 .equals(other.networkError, networkError) &&
             const DeepCollectionEquality()
-                .equals(other.unknownError, unknownError));
+                .equals(other.unknownError, unknownError) &&
+            const DeepCollectionEquality().equals(other.errorText, errorText));
   }
 
   @override
@@ -234,7 +254,8 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(invalidCredentials),
       const DeepCollectionEquality().hash(networkError),
-      const DeepCollectionEquality().hash(unknownError));
+      const DeepCollectionEquality().hash(unknownError),
+      const DeepCollectionEquality().hash(errorText));
 
   @JsonKey(ignore: true)
   @override
@@ -246,32 +267,35 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool loading, bool invalidCredentials,
-            bool networkError, bool unknownError)
+            bool networkError, bool unknownError, String errorText)
         ready,
   }) {
-    return ready(loading, invalidCredentials, networkError, unknownError);
+    return ready(
+        loading, invalidCredentials, networkError, unknownError, errorText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool loading, bool invalidCredentials, bool networkError,
-            bool unknownError)?
+            bool unknownError, String errorText)?
         ready,
   }) {
-    return ready?.call(loading, invalidCredentials, networkError, unknownError);
+    return ready?.call(
+        loading, invalidCredentials, networkError, unknownError, errorText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool loading, bool invalidCredentials, bool networkError,
-            bool unknownError)?
+            bool unknownError, String errorText)?
         ready,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(loading, invalidCredentials, networkError, unknownError);
+      return ready(
+          loading, invalidCredentials, networkError, unknownError, errorText);
     }
     return orElse();
   }
@@ -310,7 +334,8 @@ abstract class LogInScreenReadyState implements LogInScreenState {
       {bool loading,
       bool invalidCredentials,
       bool networkError,
-      bool unknownError}) = _$LogInScreenReadyState;
+      bool unknownError,
+      String errorText}) = _$LogInScreenReadyState;
 
   @override
   bool get loading;
@@ -320,6 +345,8 @@ abstract class LogInScreenReadyState implements LogInScreenState {
   bool get networkError;
   @override
   bool get unknownError;
+  @override
+  String get errorText;
   @override
   @JsonKey(ignore: true)
   $LogInScreenReadyStateCopyWith<LogInScreenReadyState> get copyWith =>
