@@ -28,7 +28,10 @@ class LogInScreenCubit extends Cubit<LogInScreenState> {
     } on SocketException {
       emit(const LogInScreenReadyState(networkError: true));
     } catch (e) {
-      emit(const LogInScreenReadyState(unknownError: true));
+      emit(LogInScreenReadyState(
+        unknownError: true,
+        errorText: e.toString(),
+      ));
     }
   }
 }
@@ -40,5 +43,6 @@ class LogInScreenState with _$LogInScreenState {
     @Default(false) bool invalidCredentials,
     @Default(false) bool networkError,
     @Default(false) bool unknownError,
+    @Default('') String errorText,
   }) = LogInScreenReadyState;
 }
