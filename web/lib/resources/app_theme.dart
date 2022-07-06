@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/resources/app_colors.dart';
 
 abstract class AppTheme {
   static ThemeData getTheme(AppThemeType type) {
@@ -8,7 +9,52 @@ abstract class AppTheme {
         break;
     }
 
+    const colorTheme = ColorScheme.light(
+      primary: AppColors.primaryText,
+    );
+
+    const textTheme = TextTheme(
+      // H1
+      headlineLarge: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+        color: AppColors.primaryText,
+        height: 30 / 22,
+      ),
+      // H2
+      headlineMedium: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+        color: AppColors.primaryText,
+        height: 26 / 20,
+      ),
+      // Body Bold
+      bodyLarge: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+        color: AppColors.primaryText,
+        height: 22 / 18,
+      ),
+      // Body Regular
+      bodyMedium: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
+        color: AppColors.primaryText,
+        height: 22 / 18,
+      ),
+      // Body Small Regular
+      bodySmall: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+        color: AppColors.primaryText,
+        height: 20 / 16,
+      ),
+    );
+
     return ThemeData(
+      colorScheme: colorTheme,
+      primaryColor: AppColors.primaryText,
+      textTheme: textTheme,
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
       ),
@@ -23,6 +69,13 @@ abstract class AppTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+        textStyle: textTheme.bodyLarge,
+        primary: AppColors.primaryText,
+      )),
     );
   }
 }

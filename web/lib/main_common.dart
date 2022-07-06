@@ -34,16 +34,18 @@ Future<void> mainCommon(AppConfig config) async {
     config.apiUri.resolve('/api/'),
   );
 
-  runApp(MultiProvider(
-    providers: [
-      Provider.value(value: cqrs),
-      BlocProvider(
-        lazy: false,
-        create: (context) => AuthCubit(loginClient)..initialize(),
-      ),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider.value(value: cqrs),
+        BlocProvider(
+          lazy: false,
+          create: (context) => AuthCubit(loginClient)..initialize(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:furniture_shop/login_screen/login_screen_cubit.dart';
+import 'package:furniture_shop/features/login_screen/login_screen_cubit.dart';
 import 'package:furniture_shop/utils/spaced.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
