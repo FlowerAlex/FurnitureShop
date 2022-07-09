@@ -26,9 +26,9 @@ namespace FurnitureShop.Core.Services.Services
         private string _photosContainerName;
         public BlobStorageService()
         {
-            _blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=furniturestoreblob1;AccountKey=7RElTWiIcqNeijKRBODpw6cBG9xxVOsWzriCs3bEXkLkGBt026Lvfcdi+Oec8Gg0Jn6eNDj4MEAVm365iIEb0g==;EndpointSuffix=core.windows.net";
-            _modelsContainerName = "furniturestoremodels";
-            _photosContainerName = "furniturestorephotos"; // narazie tutaj na sztywno póki nie wyjasnie czemu dependecy incejtion nie działa
+            _blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net";
+            _modelsContainerName = "models";
+            _photosContainerName = "images"; // narazie tutaj na sztywno póki nie wyjasnie czemu dependecy incejtion nie działa
         }
         public async Task UploadPhoto(string localFilePath, string blobName)
         {
