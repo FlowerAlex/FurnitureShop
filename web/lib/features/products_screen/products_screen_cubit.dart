@@ -36,7 +36,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           sortBy: ProductsSortFieldDTO.name,
         ),
       );
-      print(products.items.map((e) => e.toString()));
+
       emit(
         state.copyWith(
           currentPage: page,
