@@ -7,10 +7,10 @@ import 'package:furniture_shop/features/main_screen/bottom_bar.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/features/profile_screen/profile_screen.dart';
+import 'package:furniture_shop/features/profile_screen/profile_screen_cubit.dart';
 import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen.dart';
 import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen_cubit.dart';
-import 'package:furniture_shop/profile_screen/profile_screen.dart';
-import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
 
 class MainScreen extends HookWidget {
   MainScreen({Key? key}) : super(key: key);

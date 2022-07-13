@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_router.dart';
 import 'package:furniture_shop/features/favorites_screen/favorites_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/features/profile_screen/profile_screen_cubit.dart';
 import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_screen_cubit.dart';
-import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
 import 'package:furniture_shop/resources/app_theme.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 

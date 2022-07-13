@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
+import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/utils/spaced.dart';
 import 'package:furniture_shop/utils/text_button.dart';
 
@@ -88,9 +89,7 @@ class _MainScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (currentSection) {
       case MainScreenSection.products:
-        return const Center(
-          child: Text('Products'),
-        );
+        return const ProductsScreen();
       case MainScreenSection.categories:
         return const Center(
           child: Text('Categories'),
