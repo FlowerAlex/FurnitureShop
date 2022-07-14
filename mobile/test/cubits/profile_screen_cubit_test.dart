@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:cqrs/contracts.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:furniture_shop/data/contracts.dart';
-import 'package:furniture_shop/profile_screen/profile_screen_cubit.dart';
+import 'package:furniture_shop/features/profile_screen/profile_screen_cubit.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../register_fallback_values.dart';
