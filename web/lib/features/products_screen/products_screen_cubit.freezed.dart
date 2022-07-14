@@ -18,7 +18,7 @@ class _$ProductsScreenStateTearOff {
   const _$ProductsScreenStateTearOff();
 
   ProductsScreenStateReady ready(
-      {List<ProductDTO> products = const <ProductDTO>[],
+      {Map<int, List<ProductDTO>> products = const <int, List<ProductDTO>>{},
       int currentPage = 0,
       int totalCount = 0,
       PlatformFile? currentFile}) {
@@ -44,24 +44,24 @@ const $ProductsScreenState = _$ProductsScreenStateTearOff();
 mixin _$ProductsScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ProductDTO> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            int currentPage, int totalCount, PlatformFile? currentFile)
         ready,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -111,7 +111,7 @@ abstract class $ProductsScreenStateReadyCopyWith<$Res> {
           $Res Function(ProductsScreenStateReady) then) =
       _$ProductsScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
-      {List<ProductDTO> products,
+      {Map<int, List<ProductDTO>> products,
       int currentPage,
       int totalCount,
       PlatformFile? currentFile});
@@ -140,7 +140,7 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductDTO>,
+              as Map<int, List<ProductDTO>>,
       currentPage: currentPage == freezed
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -161,14 +161,14 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
 
 class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   const _$ProductsScreenStateReady(
-      {this.products = const <ProductDTO>[],
+      {this.products = const <int, List<ProductDTO>>{},
       this.currentPage = 0,
       this.totalCount = 0,
       this.currentFile});
 
   @JsonKey()
   @override
-  final List<ProductDTO> products;
+  final Map<int, List<ProductDTO>> products;
   @JsonKey()
   @override
   final int currentPage;
@@ -214,8 +214,8 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ProductDTO> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            int currentPage, int totalCount, PlatformFile? currentFile)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -225,8 +225,8 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -236,8 +236,8 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -282,12 +282,12 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
 
 abstract class ProductsScreenStateReady implements ProductsScreenState {
   const factory ProductsScreenStateReady(
-      {List<ProductDTO> products,
+      {Map<int, List<ProductDTO>> products,
       int currentPage,
       int totalCount,
       PlatformFile? currentFile}) = _$ProductsScreenStateReady;
 
-  List<ProductDTO> get products;
+  Map<int, List<ProductDTO>> get products;
   int get currentPage;
   int get totalCount;
   PlatformFile? get currentFile;
@@ -363,8 +363,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ProductDTO> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            int currentPage, int totalCount, PlatformFile? currentFile)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -374,8 +374,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -385,8 +385,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ProductDTO> products, int currentPage, int totalCount,
-            PlatformFile? currentFile)?
+    TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
+            int totalCount, PlatformFile? currentFile)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),

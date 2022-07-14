@@ -9,7 +9,7 @@ import 'package:path/path.dart' as p;
 
 part 'products_screen_cubit.freezed.dart';
 
-const pageSize = 10;
+const pageSize = 8;
 
 class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   ProductsScreenCubit({
@@ -27,8 +27,14 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
 
+    if (page != 0) {
+      if (page < 0 || page >= (state.totalCount - 1) / pageSize) {
+        return;
+      }
+    }
+
     try {
-      final products = await _cqrs.get(
+      final result = await _cqrs.get(
         GetAllProducts(
           pageNumber: page,
           pageSize: pageSize,
@@ -40,10 +46,11 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       emit(
         state.copyWith(
           currentPage: page,
-          totalCount: products.totalCount,
-          products: page != 0
-              ? [...state.products, ...products.items]
-              : products.items,
+          totalCount: result.totalCount,
+          products: {
+            ...state.products,
+            page: result.items,
+          },
         ),
       );
     } catch (err, st) {
@@ -107,7 +114,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 @freezed
 class ProductsScreenState with _$ProductsScreenState {
   const factory ProductsScreenState.ready({
-    @Default(<ProductDTO>[]) List<ProductDTO> products,
+    @Default(<int, List<ProductDTO>>{}) Map<int, List<ProductDTO>> products,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
     PlatformFile? currentFile,
@@ -115,4 +122,8 @@ class ProductsScreenState with _$ProductsScreenState {
   const factory ProductsScreenState.error({
     required String error,
   }) = ProductsScreenStateError;
+}
+
+extension ProductsScreenStateReadyEx on ProductsScreenStateReady {
+  List<ProductDTO> get currentPageProducts => products[currentPage] ?? [];
 }

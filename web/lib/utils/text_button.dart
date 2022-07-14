@@ -10,7 +10,7 @@ class AppTextButton extends StatelessWidget {
   }) : super(key: key);
 
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool selected;
 
   @override
