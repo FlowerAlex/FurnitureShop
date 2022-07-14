@@ -64,11 +64,14 @@ class MainScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Align(
             alignment: Alignment.topRight,
-            child: OutlinedButton(
-              onPressed: () async {
-                await authCubit.logOut();
-              },
-              child: const Text('Log out'),
+            child: Material(
+              borderRadius: BorderRadius.circular(100),
+              child: OutlinedButton(
+                onPressed: () async {
+                  await authCubit.logOut();
+                },
+                child: const Text('Log out'),
+              ),
             ),
           ),
         ),
