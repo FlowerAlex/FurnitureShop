@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Categories;
+using FurnitureShop.Core.Contracts.Web.Categories;
 using Xunit;
 
 namespace FurnitureShop.IntegrationTests.Example

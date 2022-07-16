@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Complaints;
+using FurnitureShop.Core.Contracts.Web.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using FurnitureShop.Core.Contracts.Dtos;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
+namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
 {
     public class ComplaintByIdQH : IQueryHandler<ComplaintById, ComplaintDTO?>
     {
