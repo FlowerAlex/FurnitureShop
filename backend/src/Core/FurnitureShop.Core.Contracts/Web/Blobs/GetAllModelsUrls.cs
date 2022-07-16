@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Blobs
+namespace FurnitureShop.Core.Contracts.Web.Blobs
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class GetAllModelsUrls : IRemoteQuery<List<string>>

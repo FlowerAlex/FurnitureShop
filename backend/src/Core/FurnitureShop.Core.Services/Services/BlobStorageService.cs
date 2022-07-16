@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using LeanCode.Time;
-using FurnitureShop.Core.Contracts.Mobile.Blobs;
+using FurnitureShop.Core.Services.Services;
 
 namespace FurnitureShop.Core.Services.Services
 {

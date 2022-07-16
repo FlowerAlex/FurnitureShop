@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Blobs;
+using FurnitureShop.Core.Contracts.Web.Blobs;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Blobs
+namespace FurnitureShop.Core.Services.CQRS.Web.Blobs
 {
-    public class GetPhotoUploadLinkQH : IQueryHandler<GetPhotoUploadLink, string>
+    public class GetAllModelsUrlsQH : IQueryHandler<GetAllModelsUrls, List<string>>
     {
         private readonly CoreDbContext dbContext;
         private readonly IBlobStorageService blobStorageService;
 
-        public GetPhotoUploadLinkQH(CoreDbContext dbContext, IBlobStorageService blobStorageService)
+        public GetAllModelsUrlsQH(CoreDbContext dbContext, IBlobStorageService blobStorageService)
         {
             this.dbContext = dbContext;
             this.blobStorageService = blobStorageService;
         }
 
-        public async Task<string> ExecuteAsync(CoreContext context, GetPhotoUploadLink query)
+        public async Task<List<string>> ExecuteAsync(CoreContext context, GetAllModelsUrls query)
         {
-            return await blobStorageService.GetPhotoUploadLink(query.BlobName);
+            return await blobStorageService.GetModelsUrls();
         }
     }
 }
