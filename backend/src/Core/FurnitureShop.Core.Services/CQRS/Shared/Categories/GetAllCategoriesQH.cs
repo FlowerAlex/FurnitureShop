@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Categories;
+using FurnitureShop.Core.Contracts.Shared.Categories;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using FurnitureShop.Core.Contracts.Dtos;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
+namespace FurnitureShop.Core.Services.CQRS.Shared.Categories
 {
     public class GetAllCategoriesQH : IQueryHandler<GetAllCategories, List<CategoryDTO>>
     {

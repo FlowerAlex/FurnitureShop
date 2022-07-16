@@ -2,7 +2,7 @@ using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Categories
+namespace FurnitureShop.Core.Contracts.Web.Categories
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class DeleteCategory : IRemoteCommand

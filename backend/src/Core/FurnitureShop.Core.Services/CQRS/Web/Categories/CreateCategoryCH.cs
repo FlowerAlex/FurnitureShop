@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
 using FluentValidation;
-using FurnitureShop.Core.Contracts.Mobile.Categories;
+using FurnitureShop.Core.Contracts.Web.Categories;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
+using FurnitureShop.Core.Contracts.Dtos;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Categories
+namespace FurnitureShop.Core.Services.CQRS.Web.Categories
 {
     public class CreateCategoryCV : ContextualValidator<CreateCategory>
     {
