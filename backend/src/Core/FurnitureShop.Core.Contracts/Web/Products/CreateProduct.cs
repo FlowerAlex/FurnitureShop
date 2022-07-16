@@ -1,13 +1,13 @@
 using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
+using FurnitureShop.Core.Contracts.Dtos;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Products
+namespace FurnitureShop.Core.Contracts.Web.Products
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class UpdateProduct : IRemoteCommand
+    public class CreateProduct : IRemoteCommand
     {
-        public Guid Id { get; set; }
         public ProductDetailsDTO ProductDetails { get; set; }
         public static class ErrorCodes
         {

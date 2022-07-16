@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
@@ -47,10 +48,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                             {
                                 Amount = ord.Amount,
                                 OrderId = ord.OrderId.Value,
-                                Product = new Contracts.Mobile.Products.ProductDTO
+                                Product = new ProductDTO
                                 {
                                     Id = prod.Id,
-                                    ProductInfo = new Contracts.Mobile.Products.ProductInfoDTO
+                                    ProductInfo = new ProductInfoDTO
                                     {
                                         Name = prod.Name,
                                         Price = prod.Price,

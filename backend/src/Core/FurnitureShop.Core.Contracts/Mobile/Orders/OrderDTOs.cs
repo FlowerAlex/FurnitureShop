@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders

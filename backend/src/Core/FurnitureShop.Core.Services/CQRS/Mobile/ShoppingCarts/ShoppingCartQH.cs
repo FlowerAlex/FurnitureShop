@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
+using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.ShoppingCart;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
@@ -37,10 +38,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                             (prod, shp) => new ShoppingCartProductDTO
                             {
                                 Amount = shp.Amount,
-                                Product = new Contracts.Mobile.Products.ProductDTO
+                                Product = new ProductDTO
                                 {
                                     Id = prod.Id,
-                                    ProductInfo = new Contracts.Mobile.Products.ProductInfoDTO
+                                    ProductInfo = new ProductInfoDTO
                                     {
                                         Name = prod.Name,
                                         Price = prod.Price,

@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
+namespace FurnitureShop.Core.Services.CQRS.Web.Products
 {
     public class UpdateProductCV : ContextualValidator<UpdateProduct>
     {
