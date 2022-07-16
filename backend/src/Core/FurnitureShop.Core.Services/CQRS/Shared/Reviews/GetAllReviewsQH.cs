@@ -2,10 +2,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
-using FurnitureShop.Core.Contracts.Mobile.Reviews;
+using FurnitureShop.Core.Contracts.Dtos;
+using FurnitureShop.Core.Contracts.Shared.Reviews;
 using FurnitureShop.Core.Services.DataAccess;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
+namespace FurnitureShop.Core.Services.CQRS.Shared.Reviews
 {
     public class GetAllReviewsQH : IQueryHandler<GetAllReviews, PaginatedResult<ReviewDTO>>
     {

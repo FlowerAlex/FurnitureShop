@@ -1,6 +1,6 @@
 using System;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Reviews
+namespace FurnitureShop.Core.Contracts.Dtos
 {
     public class ReviewDTO
     {
