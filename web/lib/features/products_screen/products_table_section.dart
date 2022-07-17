@@ -6,6 +6,7 @@ import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/product_details/product_details_body.dart';
 import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/resources/assets.gen.dart';
 import 'package:furniture_shop/utils/app_dialog.dart';
 import 'package:furniture_shop/utils/spaced.dart';
 
@@ -119,7 +120,7 @@ class _ProductsTableNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: 80,
       child: Row(
         children: [
           TextButton(
@@ -135,18 +136,20 @@ class _ProductsTableNavigationBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          TextButton(
+          IconButton(
             onPressed: onPrevPressed,
-            child: const Text('Left arrow'),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            icon: Assets.icons.arrowLeft.svg(),
           ),
           const SizedBox(width: 8),
           Text(
             '${(currentPage * pageSize + 1).toString()}-${min((currentPage + 1) * pageSize, totalCount)} from ${totalCount.toString()}',
           ),
           const SizedBox(width: 8),
-          TextButton(
+          IconButton(
             onPressed: onNextPressed,
-            child: const Text('Right arrow'),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            icon: Assets.icons.arrowRight.svg(),
           ),
         ],
       ),

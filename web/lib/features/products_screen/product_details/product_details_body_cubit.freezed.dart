@@ -17,9 +17,22 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProductDetailsBodyStateTearOff {
   const _$ProductDetailsBodyStateTearOff();
 
-  ProductDetailsBodyStateReady ready({PlatformFile? currentFile}) {
+  ProductDetailsBodyStateReady ready(
+      {List<CategoryDTO> categories = const <CategoryDTO>[],
+      String? name,
+      String? price,
+      String? description,
+      String? selectedCategoryId,
+      PlatformFile? currentImage,
+      PlatformFile? currentModel}) {
     return ProductDetailsBodyStateReady(
-      currentFile: currentFile,
+      categories: categories,
+      name: name,
+      price: price,
+      description: description,
+      selectedCategoryId: selectedCategoryId,
+      currentImage: currentImage,
+      currentModel: currentModel,
     );
   }
 
@@ -37,19 +50,43 @@ const $ProductDetailsBodyState = _$ProductDetailsBodyStateTearOff();
 mixin _$ProductDetailsBodyState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PlatformFile? currentFile) ready,
+    required TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)
+        ready,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -98,7 +135,14 @@ abstract class $ProductDetailsBodyStateReadyCopyWith<$Res> {
           ProductDetailsBodyStateReady value,
           $Res Function(ProductDetailsBodyStateReady) then) =
       _$ProductDetailsBodyStateReadyCopyWithImpl<$Res>;
-  $Res call({PlatformFile? currentFile});
+  $Res call(
+      {List<CategoryDTO> categories,
+      String? name,
+      String? price,
+      String? description,
+      String? selectedCategoryId,
+      PlatformFile? currentImage,
+      PlatformFile? currentModel});
 }
 
 /// @nodoc
@@ -116,12 +160,42 @@ class _$ProductDetailsBodyStateReadyCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? currentFile = freezed,
+    Object? categories = freezed,
+    Object? name = freezed,
+    Object? price = freezed,
+    Object? description = freezed,
+    Object? selectedCategoryId = freezed,
+    Object? currentImage = freezed,
+    Object? currentModel = freezed,
   }) {
     return _then(ProductDetailsBodyStateReady(
-      currentFile: currentFile == freezed
-          ? _value.currentFile
-          : currentFile // ignore: cast_nullable_to_non_nullable
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryDTO>,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedCategoryId: selectedCategoryId == freezed
+          ? _value.selectedCategoryId
+          : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentImage: currentImage == freezed
+          ? _value.currentImage
+          : currentImage // ignore: cast_nullable_to_non_nullable
+              as PlatformFile?,
+      currentModel: currentModel == freezed
+          ? _value.currentModel
+          : currentModel // ignore: cast_nullable_to_non_nullable
               as PlatformFile?,
     ));
   }
@@ -130,14 +204,34 @@ class _$ProductDetailsBodyStateReadyCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProductDetailsBodyStateReady implements ProductDetailsBodyStateReady {
-  const _$ProductDetailsBodyStateReady({this.currentFile});
+  const _$ProductDetailsBodyStateReady(
+      {this.categories = const <CategoryDTO>[],
+      this.name,
+      this.price,
+      this.description,
+      this.selectedCategoryId,
+      this.currentImage,
+      this.currentModel});
 
+  @JsonKey()
   @override
-  final PlatformFile? currentFile;
+  final List<CategoryDTO> categories;
+  @override
+  final String? name;
+  @override
+  final String? price;
+  @override
+  final String? description;
+  @override
+  final String? selectedCategoryId;
+  @override
+  final PlatformFile? currentImage;
+  @override
+  final PlatformFile? currentModel;
 
   @override
   String toString() {
-    return 'ProductDetailsBodyState.ready(currentFile: $currentFile)';
+    return 'ProductDetailsBodyState.ready(categories: $categories, name: $name, price: $price, description: $description, selectedCategoryId: $selectedCategoryId, currentImage: $currentImage, currentModel: $currentModel)';
   }
 
   @override
@@ -146,12 +240,29 @@ class _$ProductDetailsBodyStateReady implements ProductDetailsBodyStateReady {
         (other.runtimeType == runtimeType &&
             other is ProductDetailsBodyStateReady &&
             const DeepCollectionEquality()
-                .equals(other.currentFile, currentFile));
+                .equals(other.categories, categories) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedCategoryId, selectedCategoryId) &&
+            const DeepCollectionEquality()
+                .equals(other.currentImage, currentImage) &&
+            const DeepCollectionEquality()
+                .equals(other.currentModel, currentModel));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(currentFile));
+      runtimeType,
+      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(selectedCategoryId),
+      const DeepCollectionEquality().hash(currentImage),
+      const DeepCollectionEquality().hash(currentModel));
 
   @JsonKey(ignore: true)
   @override
@@ -162,30 +273,57 @@ class _$ProductDetailsBodyStateReady implements ProductDetailsBodyStateReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PlatformFile? currentFile) ready,
+    required TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)
+        ready,
     required TResult Function(String error) error,
   }) {
-    return ready(currentFile);
+    return ready(categories, name, price, description, selectedCategoryId,
+        currentImage, currentModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(currentFile);
+    return ready?.call(categories, name, price, description, selectedCategoryId,
+        currentImage, currentModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(currentFile);
+      return ready(categories, name, price, description, selectedCategoryId,
+          currentImage, currentModel);
     }
     return orElse();
   }
@@ -223,10 +361,22 @@ class _$ProductDetailsBodyStateReady implements ProductDetailsBodyStateReady {
 }
 
 abstract class ProductDetailsBodyStateReady implements ProductDetailsBodyState {
-  const factory ProductDetailsBodyStateReady({PlatformFile? currentFile}) =
-      _$ProductDetailsBodyStateReady;
+  const factory ProductDetailsBodyStateReady(
+      {List<CategoryDTO> categories,
+      String? name,
+      String? price,
+      String? description,
+      String? selectedCategoryId,
+      PlatformFile? currentImage,
+      PlatformFile? currentModel}) = _$ProductDetailsBodyStateReady;
 
-  PlatformFile? get currentFile;
+  List<CategoryDTO> get categories;
+  String? get name;
+  String? get price;
+  String? get description;
+  String? get selectedCategoryId;
+  PlatformFile? get currentImage;
+  PlatformFile? get currentModel;
   @JsonKey(ignore: true)
   $ProductDetailsBodyStateReadyCopyWith<ProductDetailsBodyStateReady>
       get copyWith => throw _privateConstructorUsedError;
@@ -301,7 +451,15 @@ class _$ProductDetailsBodyStateError implements ProductDetailsBodyStateError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PlatformFile? currentFile) ready,
+    required TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)
+        ready,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -310,7 +468,15 @@ class _$ProductDetailsBodyStateError implements ProductDetailsBodyStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -319,7 +485,15 @@ class _$ProductDetailsBodyStateError implements ProductDetailsBodyStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PlatformFile? currentFile)? ready,
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
