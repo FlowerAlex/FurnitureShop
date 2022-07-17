@@ -9,9 +9,4 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     {
         public Guid? CategoryId { get; set; }
     }
-    public enum ProductsSortFieldDTO
-    {
-        Name = 0,
-        Rating = 1,
-    }
 }

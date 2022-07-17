@@ -114,6 +114,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             {
                 ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.ProductInfo.Name, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.ProductInfo.AverageRating, query.SortByDescending),
+                ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.ProductInfo.Price, query.SortByDescending).ThenBy(s => s.Id),
                 _ => queryable
             };
         }

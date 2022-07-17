@@ -29,4 +29,10 @@ namespace FurnitureShop.Core.Contracts.Dtos
         public Guid Id { get; set; }
         public ProductInfoDTO ProductInfo { get; set; }
     }
+    public enum ProductsSortFieldDTO
+    {
+        Name = 0,
+        Rating = 1,
+        Price = 2,
+    }
 }
