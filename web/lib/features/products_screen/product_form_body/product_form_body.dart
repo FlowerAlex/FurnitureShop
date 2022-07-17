@@ -2,29 +2,29 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:furniture_shop/features/products_screen/product_details/product_details_body_cubit.dart';
+import 'package:furniture_shop/features/products_screen/product_form_body/product_form_body_cubit.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/utils/forms/form_row.dart';
 import 'package:furniture_shop/utils/spaced.dart';
 import 'package:furniture_shop/utils/text_button.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
-class ProductDetailsBody extends StatelessWidget {
-  const ProductDetailsBody({
+class ProductFormBody extends StatelessWidget {
+  const ProductFormBody({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProductDetailsBodyCubit>(
-      create: (context) => ProductDetailsBodyCubit(
+    return BlocProvider<ProductFormBodyCubit>(
+      create: (context) => ProductFormBodyCubit(
         cqrs: context.read(),
       )..init(),
-      child: BlocBuilder<ProductDetailsBodyCubit, ProductDetailsBodyState>(
+      child: BlocBuilder<ProductFormBodyCubit, ProductFormBodyState>(
         builder: (context, state) {
           return state.map(
               ready: (state) {
-                return _ProductDetailsBodyReady(state: state);
+                return _ProductFormBodyReady(state: state);
               },
               error: (state) => Center(
                     child: Text(
@@ -37,17 +37,17 @@ class ProductDetailsBody extends StatelessWidget {
   }
 }
 
-class _ProductDetailsBodyReady extends HookWidget {
-  const _ProductDetailsBodyReady({
+class _ProductFormBodyReady extends HookWidget {
+  const _ProductFormBodyReady({
     Key? key,
     required this.state,
   }) : super(key: key);
 
-  final ProductDetailsBodyStateReady state;
+  final ProductFormBodyStateReady state;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ProductDetailsBodyCubit>();
+    final cubit = context.read<ProductFormBodyCubit>();
 
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final autovalidateMode = useState(AutovalidateMode.disabled);

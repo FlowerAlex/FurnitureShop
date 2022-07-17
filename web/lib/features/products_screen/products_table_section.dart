@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/data/contracts.dart';
-import 'package:furniture_shop/features/products_screen/product_details/product_details_body.dart';
+import 'package:furniture_shop/features/products_screen/product_form_body/product_form_body.dart';
 import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
-import 'package:furniture_shop/resources/assets.gen.dart';
-import 'package:furniture_shop/utils/app_dialog.dart';
-import 'package:furniture_shop/utils/spaced.dart';
+import 'package:furniture_shop/utils/table_section.dart';
 
 class ProductsTableSection extends StatelessWidget {
   const ProductsTableSection({
@@ -20,42 +16,21 @@ class ProductsTableSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentPageProducts = state.currentPageProducts;
     final cubit = context.read<ProductsScreenCubit>();
 
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Text('Products list'),
-        ),
-        Card(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 400,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (final product in currentPageProducts)
-                        _ProductItem(
-                          product: product,
-                          onPressed: () {},
-                        )
-                    ].spacedWith(const Divider(height: 0)),
-                  ),
-                ),
-              ),
-              _ProductsTableNavigationBar(
-                currentPage: state.currentPage,
-                totalCount: state.totalCount,
-                onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
-                onNextPressed: () => cubit.fetch(page: state.currentPage + 1),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return TableSection<ProductDTO>(
+      title: 'Products list',
+      items: state.currentPageProducts,
+      currentPage: state.currentPage,
+      totalCount: state.totalCount,
+      onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
+      onNextPressed: () => cubit.fetch(page: state.currentPage + 1),
+      createItemButtonLabel: 'Create new product',
+      createItemPressed: ProductFormBody.new,
+      itemBuilder: (product) => _ProductItem(
+        product: product,
+        onPressed: () {},
+      ),
     );
   }
 }
@@ -97,61 +72,6 @@ class _ProductItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ProductsTableNavigationBar extends StatelessWidget {
-  const _ProductsTableNavigationBar({
-    Key? key,
-    required this.currentPage,
-    required this.totalCount,
-    required this.onPrevPressed,
-    required this.onNextPressed,
-  }) : super(key: key);
-
-  final int currentPage;
-  final int totalCount;
-
-  final VoidCallback onPrevPressed;
-  final VoidCallback onNextPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: Row(
-        children: [
-          TextButton(
-            onPressed: () {
-              AppDialog.show<ProductDTO>(
-                context: context,
-                titleText: 'Create product form',
-                child: const ProductDetailsBody(),
-              );
-            },
-            child: const Text(
-              'Create product',
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: onPrevPressed,
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            icon: Assets.icons.arrowLeft.svg(),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            '${(currentPage * pageSize + 1).toString()}-${min((currentPage + 1) * pageSize, totalCount)} from ${totalCount.toString()}',
-          ),
-          const SizedBox(width: 8),
-          IconButton(
-            onPressed: onNextPressed,
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            icon: Assets.icons.arrowRight.svg(),
-          ),
-        ],
       ),
     );
   }

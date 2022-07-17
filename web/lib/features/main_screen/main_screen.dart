@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
+import 'package:furniture_shop/features/categories_screen/categories_screen.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/utils/spaced.dart';
@@ -36,6 +37,7 @@ class MainScreen extends StatelessWidget {
             SizedBox(
               width: 300,
               child: SingleChildScrollView(
+                controller: ScrollController(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -94,10 +96,7 @@ class _MainScreenBody extends StatelessWidget {
       case MainScreenSection.products:
         return const ProductsScreen();
       case MainScreenSection.categories:
-        return const Center(
-          child: Text('Categories'),
-        );
-
+        return const CategoriesScreen();
       case MainScreenSection.users:
         return const Center(
           child: Text('Users'),

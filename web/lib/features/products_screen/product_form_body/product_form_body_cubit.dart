@@ -7,21 +7,21 @@ import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
-part 'product_details_body_cubit.freezed.dart';
+part 'product_form_body_cubit.freezed.dart';
 
-class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
-  ProductDetailsBodyCubit({
+class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
+  ProductFormBodyCubit({
     required CQRS cqrs,
   })  : _cqrs = cqrs,
-        super(const ProductDetailsBodyStateReady());
+        super(const ProductFormBodyStateReady());
 
   final CQRS _cqrs;
-  final _logger = Logger('ProductDetailsBodyCubit');
+  final _logger = Logger('ProductFormBodyCubit');
 
   Future<void> init() async {
     final categories = await _cqrs.get(GetAllCategories());
 
-    emit(ProductDetailsBodyState.ready(
+    emit(ProductFormBodyState.ready(
       categories: categories,
     ));
   }
@@ -33,7 +33,7 @@ class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
     String? selectedCategoryId,
   }) {
     final state = this.state;
-    if (state is! ProductDetailsBodyStateReady) {
+    if (state is! ProductFormBodyStateReady) {
       return;
     }
 
@@ -49,7 +49,7 @@ class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
 
   Future<void> pickFile(AppBlobType blobType) async {
     final state = this.state;
-    if (state is! ProductDetailsBodyStateReady) {
+    if (state is! ProductFormBodyStateReady) {
       return;
     }
 
@@ -80,7 +80,7 @@ class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
   Future<void> createProduct() async {
     // _cqrs.run(
     //   CreateProduct(
-    //     productDetails: ProductDetailsDTO(),
+    //     ProductForm: ProductFormDTO(),
     //   ),
     // );
   }
@@ -89,7 +89,7 @@ class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
   // ignore: unused_element
   Future<void> _uploadFiles() async {
     final state = this.state;
-    if (state is! ProductDetailsBodyStateReady) {
+    if (state is! ProductFormBodyStateReady) {
       return;
     }
 
@@ -131,14 +131,14 @@ class ProductDetailsBodyCubit extends Cubit<ProductDetailsBodyState> {
       }
     } catch (err, st) {
       _logger.severe(err, st);
-      emit(ProductDetailsBodyState.error(error: err.toString()));
+      emit(ProductFormBodyState.error(error: err.toString()));
     }
   }
 }
 
 @freezed
-class ProductDetailsBodyState with _$ProductDetailsBodyState {
-  const factory ProductDetailsBodyState.ready({
+class ProductFormBodyState with _$ProductFormBodyState {
+  const factory ProductFormBodyState.ready({
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     String? name,
     String? price,
@@ -146,10 +146,10 @@ class ProductDetailsBodyState with _$ProductDetailsBodyState {
     String? selectedCategoryId,
     PlatformFile? currentImage,
     PlatformFile? currentModel,
-  }) = ProductDetailsBodyStateReady;
-  const factory ProductDetailsBodyState.error({
+  }) = ProductFormBodyStateReady;
+  const factory ProductFormBodyState.error({
     required String error,
-  }) = ProductDetailsBodyStateError;
+  }) = ProductFormBodyStateError;
 }
 
 enum AppBlobType {
