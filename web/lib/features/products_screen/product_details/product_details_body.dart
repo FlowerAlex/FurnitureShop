@@ -19,7 +19,7 @@ class ProductDetailsBody extends StatelessWidget {
     return BlocProvider<ProductDetailsBodyCubit>(
       create: (context) => ProductDetailsBodyCubit(
         cqrs: context.read(),
-      ),
+      )..init(),
       child: BlocBuilder<ProductDetailsBodyCubit, ProductDetailsBodyState>(
         builder: (context, state) {
           return state.map(
@@ -51,50 +51,97 @@ class _ProductDetailsBodyReady extends HookWidget {
 
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final autovalidateMode = useState(AutovalidateMode.disabled);
-    final currentFile = state.currentFile;
+    final currentImage = state.currentImage;
+    final currentModel = state.currentModel;
 
     return Form(
       key: formKey,
       autovalidateMode: autovalidateMode.value,
-      child: Column(
-        children: [
-          FormRow(
-            childrenFlex: const {1: 2, 2: 5},
-            children: [
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            FormRow(
+              childrenFlex: const {1: 2, 2: 5},
+              children: [
+                const SizedBox(),
+                const Text('Name'),
+                TextFormField(
+                  validator: Validators.required('Enter value'),
+                ),
+              ],
+            ),
+            FormRow(
+              childrenFlex: const {1: 2, 2: 5},
+              children: [
+                const SizedBox(),
+                const Text('Price'),
+                TextFormField(
+                  validator: Validators.required('Enter value'),
+                ),
+              ],
+            ),
+            FormRow(
+              childrenFlex: const {1: 2, 2: 5},
+              children: [
+                const SizedBox(),
+                const Text('Description'),
+                TextFormField(
+                  validator: Validators.required('Enter value'),
+                  maxLines: null,
+                ),
+              ],
+            ),
+            FormRow(childrenFlex: const {
+              1: 2,
+              2: 5
+            }, children: [
               const SizedBox(),
-              const Text('Name'),
-              TextFormField(
+              const Text('Category'),
+              DropdownButtonFormField<String>(
+                items: state.categories
+                    .map(
+                      (e) => DropdownMenuItem<String>(
+                        child: Text(e.name),
+                        value: e.id,
+                      ),
+                    )
+                    .toList(),
+                value: state.selectedCategoryId,
+                onChanged: (selectedCategoryId) => cubit.updateProduct(
+                  selectedCategoryId: selectedCategoryId,
+                ),
+                focusColor: Colors.transparent,
                 validator: Validators.required('Enter value'),
               ),
-            ],
-          ),
-          FormRow(
-            childrenFlex: const {1: 2, 2: 5},
-            children: [
-              const SizedBox(),
-              const Text('Price'),
-              TextFormField(
-                validator: Validators.required('Enter value'),
-              ),
-            ],
-          ),
-          PickFileSection(
-            context: context,
-            currentFile: currentFile,
-            onPickFilePressed: cubit.pickFile,
-            isValid: currentFile != null,
-          ),
-          AppTextButton(
-            text: 'Create product',
-            onPressed: () async {
-              autovalidateMode.value = AutovalidateMode.onUserInteraction;
+            ]),
+            PickFileSection(
+              context: context,
+              title: 'Preview photo',
+              currentFile: currentImage,
+              buttonLabel: 'Pick image',
+              onPickFilePressed: () => cubit.pickFile(AppBlobType.image),
+              isValid: currentImage != null,
+            ),
+            PickFileSection(
+              context: context,
+              title: 'Model of the product',
+              currentFile: currentModel,
+              buttonLabel: 'Pick model',
+              onPickFilePressed: () => cubit.pickFile(AppBlobType.model),
+              isValid: true,
+            ),
+            AppTextButton(
+              text: 'Create product',
+              onPressed: () async {
+                autovalidateMode.value = AutovalidateMode.onUserInteraction;
 
-              if (formKey.currentState?.validate() ?? false) {
-                await cubit.createProduct();
-              }
-            },
-          ),
-        ].spaced(16),
+                if (formKey.currentState?.validate() ?? false) {
+                  await cubit.createProduct();
+                }
+              },
+            ),
+          ].spaced(16),
+        ),
       ),
     );
   }
@@ -105,6 +152,8 @@ class PickFileSection extends FormField<bool> {
     Key? key,
     required BuildContext context,
     required bool isValid,
+    required String title,
+    required String buttonLabel,
     required VoidCallback onPickFilePressed,
     required PlatformFile? currentFile,
   }) : super(
@@ -127,26 +176,30 @@ class PickFileSection extends FormField<bool> {
 
             final errorText = state.errorText;
 
-            return Column(
-              children: [
-                AppTextButton(
-                  text: 'Pick file',
-                  onPressed: onPickFilePressed,
-                ),
-                if (currentFile != null) ...[
-                  const SizedBox(height: 8),
-                  Text(currentFile.name),
-                ],
-                if (errorText != null) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    errorText,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.errorRed,
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Text(title),
+                    AppTextButton(
+                      text: buttonLabel,
+                      onPressed: onPickFilePressed,
                     ),
-                  ),
-                ],
-              ],
+                    if (currentFile != null) ...[
+                      Text(currentFile.name),
+                    ],
+                    if (errorText != null) ...[
+                      Text(
+                        errorText,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: AppColors.errorRed,
+                        ),
+                      ),
+                    ],
+                  ].spaced(8),
+                ),
+              ),
             );
           },
         );
