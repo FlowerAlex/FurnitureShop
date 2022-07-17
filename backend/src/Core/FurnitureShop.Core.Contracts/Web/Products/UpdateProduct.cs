@@ -8,8 +8,7 @@ namespace FurnitureShop.Core.Contracts.Web.Products
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class UpdateProduct : IRemoteCommand
     {
-        public Guid Id { get; set; }
-        public ProductDetailsDTO ProductDetails { get; set; }
+        public ProductWithDetailsDTO ProductDetails { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

@@ -5,8 +5,8 @@ using FurnitureShop.Core.Contracts.Dtos;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Products
 {
-    [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
-    public class ProductById : IRemoteQuery<ProductWithDetailsDTO?>
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
+    public class ProductById : IRemoteQuery<ProductWithDetailsUDTO?>
     {
         public Guid Id { get; set; }
     }

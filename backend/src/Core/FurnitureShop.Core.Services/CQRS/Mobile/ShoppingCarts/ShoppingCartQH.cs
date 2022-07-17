@@ -41,13 +41,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                 Product = new ProductDTO
                                 {
                                     Id = prod.Id,
-                                    ProductInfo = new ProductInfoDTO
-                                    {
-                                        Name = prod.Name,
-                                        Price = prod.Price,
-                                        PreviewPhotoURL = prod.PreviewPhotoUrl,
-                                        CategoryId = prod.CategoryId,
-                                    }
+                                    Name = prod.Name,
+                                    Price = prod.Price,
+                                    PreviewPhotoURL = prod.PreviewPhotoUrl,
+                                    CategoryId = prod.CategoryId,
                                 }
                             }
                         ).ToList(),
@@ -55,7 +52,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 })
                 .FirstOrDefaultAsync();
             if (ret == null) { return null; }
-            ret.Price = ret.ShoppingCartProducts.Sum(shp => shp.Product.ProductInfo.Price * shp.Amount);
+            ret.Price = ret.ShoppingCartProducts.Sum(shp => shp.Product.Price * shp.Amount);
             return ret;
         }
     }

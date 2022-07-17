@@ -44,7 +44,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
         public async Task ExecuteAsync(CoreContext context, UpdateProduct command)
         {
-            var product = await dbContext.Products.Where(c => c.Id == command.Id).FirstOrDefaultAsync();
+            var product = await dbContext.Products.Where(c => c.Id == command.ProductDetails.Id).FirstOrDefaultAsync();
             if (product == null)
             {
                 return;

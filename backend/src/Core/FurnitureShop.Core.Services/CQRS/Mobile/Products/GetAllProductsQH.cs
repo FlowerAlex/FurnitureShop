@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class GetAllProductsQH : IQueryHandler<GetAllProducts, PaginatedResult<ProductDTO>>
+    public class GetAllProductsQH : IQueryHandler<GetAllProducts, PaginatedResult<ProductUDTO>>
     {
         private readonly CoreDbContext dbContext;
 
@@ -20,55 +20,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
+        public async Task<PaginatedResult<ProductUDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
         {
-            var productsInShoppingCart = await GetProductsInShoppingCart(context);
-            var productsInFavourites = await GetProductsInFavourites(context);
-
             if (query.CategoryId.HasValue)
             {
-                return await dbContext.Products
-                .FilterBy(query)
-                .Where(p => p.CategoryId == query.CategoryId)
-                .Include(p => p.Reviews)
-                .Select(p => new ProductDTO
-                {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Price = p.Price,
-                        PreviewPhotoURL = p.ModelUrl,
-                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                        CategoryId = p.CategoryId,
-                        InFavourites = productsInFavourites.Contains(p.Id),
-                        InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    },
-                    Id = p.Id,
-                })
-                .SortBy(query)
-                .ToPaginatedResultAsync(query);
+                return await GetProducts(dbContext.Products.Where(p => p.CategoryId == query.CategoryId), query, context);
             }
             else
             {
-                return await dbContext.Products
-                .FilterBy(query)
-                .Include(p => p.Reviews)
-                .Select(p => new ProductDTO
-                {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Price = p.Price,
-                        PreviewPhotoURL = p.ModelUrl,
-                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                        CategoryId = p.CategoryId,
-                        InFavourites = productsInFavourites.Contains(p.Id),
-                        InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    },
-                    Id = p.Id,
-                })
-                .SortBy(query)
-                .ToPaginatedResultAsync(query);
+                return await GetProducts(dbContext.Products, query, context);
             }
         }
 
@@ -90,6 +50,27 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(f => f.UserId == context.UserId && f.ProductId != null)
                 .Select(f => f.ProductId!.Value.Value).ToListAsync();
         }
+        private async Task<PaginatedResult<ProductUDTO>> GetProducts(IQueryable<Product> queryable, GetAllProducts query, CoreContext context)
+        {
+            var productsInShoppingCart = await GetProductsInShoppingCart(context);
+            var productsInFavourites = await GetProductsInFavourites(context);
+
+            return await queryable.FilterBy(query)
+                .Include(p => p.Reviews)
+                .Select(p => new ProductUDTO
+                {
+                    Name = p.Name,
+                    Price = p.Price,
+                    PreviewPhotoURL = p.ModelUrl,
+                    AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
+                    CategoryId = p.CategoryId,
+                    InFavourites = productsInFavourites.Contains(p.Id),
+                    InShoppingCart = productsInShoppingCart.Contains(p.Id),
+                    Id = p.Id,
+                })
+                .SortBy(query)
+                .ToPaginatedResultAsync(query);
+        }
     }
 
     internal static class ProductQHExtensions
@@ -103,7 +84,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             };
         }
 
-        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, GetAllProducts query)
+        public static IQueryable<ProductUDTO> SortBy(this IQueryable<ProductUDTO> queryable, GetAllProducts query)
         {
             if (!query.SortBy.HasValue)
             {
@@ -112,9 +93,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
             return query.SortBy switch
             {
-                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.ProductInfo.Name, query.SortByDescending).ThenBy(s => s.Id),
-                ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.ProductInfo.AverageRating, query.SortByDescending),
-                ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.ProductInfo.Price, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
                 _ => queryable
             };
         }

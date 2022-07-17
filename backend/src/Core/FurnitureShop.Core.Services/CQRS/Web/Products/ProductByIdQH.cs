@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Dtos;
-using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
+namespace FurnitureShop.Core.Services.CQRS.Web.Products
 {
-    public class ProductByIdQH : IQueryHandler<ProductById, ProductWithDetailsUDTO?>
+    public class ProductByIdQH : IQueryHandler<ProductById, ProductWithDetailsDTO?>
     {
         private readonly CoreDbContext dbContext;
 
@@ -19,14 +19,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<ProductWithDetailsUDTO?> ExecuteAsync(CoreContext context, ProductById query)
+        public async Task<ProductWithDetailsDTO?> ExecuteAsync(CoreContext context, ProductById query)
         {
             var shoppingCart = dbContext.ShoppingCarts.Where(sh => sh.UserId == context.UserId).FirstOrDefault();
             var shoppingCartExists = shoppingCart != null;
             shoppingCartExists = false;
             return await dbContext.Products
                 .Where(p => p.Id == query.Id).Include(p => p.Reviews)
-                .Select(p => new ProductWithDetailsUDTO
+                .Select(p => new ProductWithDetailsDTO
                 {
                         Name = p.Name,
                         Price = p.Price,
@@ -34,11 +34,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         PreviewPhotoURL = p.PreviewPhotoUrl,
                         AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         Description = p.Description,
-                        ModelUrl = p.ModelUrl,
-                        InFavourites = dbContext.Favourites
-                            .Where(f => f.UserId == context.UserId && f.ProductId == query.Id).Any(),
-                        InShoppingCart = shoppingCartExists ? dbContext.ShoppingCartProduct
-                        .Where(shp => shp.Id == shoppingCart.Id.Value && shp.ProductId == p.Id).Any() : false,                   
+                        ModelUrl = p.ModelUrl,                  
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

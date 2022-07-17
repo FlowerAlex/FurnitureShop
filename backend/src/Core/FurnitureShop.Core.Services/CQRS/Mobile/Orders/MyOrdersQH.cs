@@ -52,13 +52,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                                 Product = new ProductDTO
                                 {
                                     Id = prod.Id,
-                                    ProductInfo = new ProductInfoDTO
-                                    {
-                                        Name = prod.Name,
-                                        Price = prod.Price,
-                                        PreviewPhotoURL = prod.PreviewPhotoUrl,
-                                        CategoryId = prod.CategoryId,
-                                    }
+                                    Name = prod.Name,
+                                    Price = prod.Price,
+                                    PreviewPhotoURL = prod.PreviewPhotoUrl,
+                                    CategoryId = prod.CategoryId,
                                 }
                             }
                         ).Where(ord => ord.OrderId == p.Id).ToList(),
