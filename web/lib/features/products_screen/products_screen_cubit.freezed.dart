@@ -20,13 +20,11 @@ class _$ProductsScreenStateTearOff {
   ProductsScreenStateReady ready(
       {Map<int, List<ProductDTO>> products = const <int, List<ProductDTO>>{},
       int currentPage = 0,
-      int totalCount = 0,
-      PlatformFile? currentFile}) {
+      int totalCount = 0}) {
     return ProductsScreenStateReady(
       products: products,
       currentPage: currentPage,
       totalCount: totalCount,
-      currentFile: currentFile,
     );
   }
 
@@ -45,7 +43,7 @@ mixin _$ProductsScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Map<int, List<ProductDTO>> products,
-            int currentPage, int totalCount, PlatformFile? currentFile)
+            int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) =>
@@ -53,7 +51,7 @@ mixin _$ProductsScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
@@ -61,7 +59,7 @@ mixin _$ProductsScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -111,10 +109,7 @@ abstract class $ProductsScreenStateReadyCopyWith<$Res> {
           $Res Function(ProductsScreenStateReady) then) =
       _$ProductsScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
-      {Map<int, List<ProductDTO>> products,
-      int currentPage,
-      int totalCount,
-      PlatformFile? currentFile});
+      {Map<int, List<ProductDTO>> products, int currentPage, int totalCount});
 }
 
 /// @nodoc
@@ -134,7 +129,6 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
     Object? products = freezed,
     Object? currentPage = freezed,
     Object? totalCount = freezed,
-    Object? currentFile = freezed,
   }) {
     return _then(ProductsScreenStateReady(
       products: products == freezed
@@ -149,10 +143,6 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
-      currentFile: currentFile == freezed
-          ? _value.currentFile
-          : currentFile // ignore: cast_nullable_to_non_nullable
-              as PlatformFile?,
     ));
   }
 }
@@ -163,8 +153,7 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   const _$ProductsScreenStateReady(
       {this.products = const <int, List<ProductDTO>>{},
       this.currentPage = 0,
-      this.totalCount = 0,
-      this.currentFile});
+      this.totalCount = 0});
 
   @JsonKey()
   @override
@@ -175,12 +164,10 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @JsonKey()
   @override
   final int totalCount;
-  @override
-  final PlatformFile? currentFile;
 
   @override
   String toString() {
-    return 'ProductsScreenState.ready(products: $products, currentPage: $currentPage, totalCount: $totalCount, currentFile: $currentFile)';
+    return 'ProductsScreenState.ready(products: $products, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
@@ -192,9 +179,7 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
             const DeepCollectionEquality()
                 .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality()
-                .equals(other.totalCount, totalCount) &&
-            const DeepCollectionEquality()
-                .equals(other.currentFile, currentFile));
+                .equals(other.totalCount, totalCount));
   }
 
   @override
@@ -202,8 +187,7 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
       runtimeType,
       const DeepCollectionEquality().hash(products),
       const DeepCollectionEquality().hash(currentPage),
-      const DeepCollectionEquality().hash(totalCount),
-      const DeepCollectionEquality().hash(currentFile));
+      const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
@@ -215,35 +199,35 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Map<int, List<ProductDTO>> products,
-            int currentPage, int totalCount, PlatformFile? currentFile)
+            int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
-    return ready(products, currentPage, totalCount, currentFile);
+    return ready(products, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(products, currentPage, totalCount, currentFile);
+    return ready?.call(products, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(products, currentPage, totalCount, currentFile);
+      return ready(products, currentPage, totalCount);
     }
     return orElse();
   }
@@ -284,13 +268,11 @@ abstract class ProductsScreenStateReady implements ProductsScreenState {
   const factory ProductsScreenStateReady(
       {Map<int, List<ProductDTO>> products,
       int currentPage,
-      int totalCount,
-      PlatformFile? currentFile}) = _$ProductsScreenStateReady;
+      int totalCount}) = _$ProductsScreenStateReady;
 
   Map<int, List<ProductDTO>> get products;
   int get currentPage;
   int get totalCount;
-  PlatformFile? get currentFile;
   @JsonKey(ignore: true)
   $ProductsScreenStateReadyCopyWith<ProductsScreenStateReady> get copyWith =>
       throw _privateConstructorUsedError;
@@ -364,7 +346,7 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Map<int, List<ProductDTO>> products,
-            int currentPage, int totalCount, PlatformFile? currentFile)
+            int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -375,7 +357,7 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -386,7 +368,7 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Map<int, List<ProductDTO>> products, int currentPage,
-            int totalCount, PlatformFile? currentFile)?
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),

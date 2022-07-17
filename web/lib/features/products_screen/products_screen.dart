@@ -16,7 +16,7 @@ class ProductsScreen extends StatelessWidget {
       child: BlocBuilder<ProductsScreenCubit, ProductsScreenState>(
         builder: (context, state) {
           return state.map(
-            ready: (state) => ProductsScreenBody(state: state),
+            ready: (state) => _ProductsScreenBody(state: state),
             error: (state) => Center(
               child: Text('Error: ${state.error}'),
             ),
@@ -27,8 +27,8 @@ class ProductsScreen extends StatelessWidget {
   }
 }
 
-class ProductsScreenBody extends HookWidget {
-  const ProductsScreenBody({
+class _ProductsScreenBody extends HookWidget {
+  const _ProductsScreenBody({
     Key? key,
     required this.state,
   }) : super(key: key);
