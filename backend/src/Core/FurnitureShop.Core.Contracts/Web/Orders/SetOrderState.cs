@@ -2,7 +2,7 @@ using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Orders
+namespace FurnitureShop.Core.Contracts.Web.Orders
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class SetOrderState : IRemoteCommand

@@ -1,4 +1,5 @@
 using System;
+using FurnitureShop.Core.Contracts.Dtos;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 

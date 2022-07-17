@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using FurnitureShop.Core.Contracts.Mobile.Orders;
+using FurnitureShop.Core.Contracts.Web.Orders;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
+namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 {
     public class SetOrderStateCV : ContextualValidator<SetOrderState>
     {

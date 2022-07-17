@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 
-namespace FurnitureShop.Core.Contracts.Mobile.Orders
+namespace FurnitureShop.Core.Contracts.Dtos
 {
     public class OrderInfoDTO
     {

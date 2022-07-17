@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Dtos;
-using FurnitureShop.Core.Contracts.Mobile.Orders;
+using FurnitureShop.Core.Contracts.Web.Orders;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
+namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 {
     public class GetAllOrdersQH : IQueryHandler<GetAllOrders, PaginatedResult<OrderDTO>>
     {

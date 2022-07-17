@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Dtos;
-using FurnitureShop.Core.Contracts.Mobile.Orders;
-using FurnitureShop.Core.Contracts.Mobile.Products;
-using FurnitureShop.Core.Domain;
+using FurnitureShop.Core.Contracts.Shared.Orders;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
+namespace FurnitureShop.Core.Services.CQRS.Shared.Orders
 {
     public class OrderByIdQH : IQueryHandler<OrderById, OrderDTO?>
     {
