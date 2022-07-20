@@ -8,16 +8,16 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 namespace FurnitureShop.Core.Services.CQRS.Shared.Categories
 {
-    public class GetAllCategoriesQH : IQueryHandler<GetAllCategories, List<CategoryDTO>>
+    public class AllCategoriesQH : IQueryHandler<AllCategories, List<CategoryDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetAllCategoriesQH(CoreDbContext dbContext)
+        public AllCategoriesQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<List<CategoryDTO>> ExecuteAsync(CoreContext context, GetAllCategories query)
+        public async Task<List<CategoryDTO>> ExecuteAsync(CoreContext context, AllCategories query)
         {
             return await dbContext.Categories.Select(c => new CategoryDTO { Id = c.Id, Name = c.Name }).ToListAsync();
         }
