@@ -1,6 +1,6 @@
 using System;
 
-namespace FurnitureShop.Core.Contracts.Dtos
+namespace FurnitureShop.Core.Contracts.Shared.Categories
 {
     public class CategoryDTO
     {

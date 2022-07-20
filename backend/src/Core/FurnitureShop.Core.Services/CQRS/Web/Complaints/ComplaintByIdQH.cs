@@ -6,7 +6,6 @@ using FurnitureShop.Core.Contracts.Web.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using FurnitureShop.Core.Contracts.Dtos;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
 {
@@ -25,14 +24,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
                 .Where(p => p.Id == query.Id)
                 .Select(p => new ComplaintDTO
                 {
-                    ComplaintInfo = new ComplaintInfoDTO
-                    {
-                        Text = p.Text,
-                        Response = p.Response,
-                        UserId = p.UserId,
-                        OrderId = p.OrderId,
-                        Resolved = p.Resolved,
-                    },
+                    Text = p.Text,
+                    Response = p.Response,
+                    UserId = p.UserId,
+                    OrderId = p.OrderId,
+                    Resolved = p.Resolved,
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

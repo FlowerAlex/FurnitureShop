@@ -5,7 +5,6 @@ using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Web.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
-using FurnitureShop.Core.Contracts.Dtos;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
 {
@@ -23,15 +22,12 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
             return await dbContext.Complaints
             .Select(p => new ComplaintDTO
             {
-                ComplaintInfo = new ComplaintInfoDTO
-                {
-                    UserId = p.UserId,
-                    OrderId = p.OrderId,
-                    Text = p.Text,
-                    Response = p.Response,
-                    CreatedDate = p.CreatedDate,
-                    Resolved = p.Resolved,
-                },
+                UserId = p.UserId,
+                OrderId = p.OrderId,
+                Text = p.Text,
+                Response = p.Response,
+                CreatedDate = p.CreatedDate,
+                Resolved = p.Resolved,
                 Id = p.Id,
             })
             .ToPaginatedResultAsync(query);

@@ -15,7 +15,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
     {
         public UpdateComplaintCV()
         {
-            RuleFor(p => p.ComplaintInfo.Text)
+            RuleFor(p => p.UpdatedComplaint.Text)
                 .NotEmpty()
                     .WithCode(UpdateComplaint.ErrorCodes.EmptyComplaintText)
                     .WithMessage("Complaint text should not be empty");
@@ -32,15 +32,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 
         public async Task ExecuteAsync(CoreContext context, UpdateComplaint command)
         {
-            var toUpdate = await dbContext.Complaints.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
+            var toUpdate = await dbContext.Complaints.Where(p => p.Id == command.UpdatedComplaint.Id).FirstOrDefaultAsync();
             if (toUpdate == null)
             {
                 return;
             }
 
-            toUpdate.Resolved = command.ComplaintInfo.Resolved;
-            toUpdate.Response = command.ComplaintInfo.Response;
-            toUpdate.Text = command.ComplaintInfo.Text;
+            toUpdate.Resolved = command.UpdatedComplaint.Resolved;
+            toUpdate.Response = command.UpdatedComplaint.Response;
+            toUpdate.Text = command.UpdatedComplaint.Text;
             dbContext.Complaints.Update(toUpdate);
             await dbContext.SaveChangesAsync();
         }
