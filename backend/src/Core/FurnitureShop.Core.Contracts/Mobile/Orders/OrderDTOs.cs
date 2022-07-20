@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 
-namespace FurnitureShop.Core.Contracts.Dtos
+namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    public class OrderInfoDTO
+    public class OrderDTOBase
     {
         public Guid? UserId { get; set; }
         public double Price { get; set; }
@@ -20,10 +19,9 @@ namespace FurnitureShop.Core.Contracts.Dtos
         public List<OrderProductDTO> OrderProducts { get; set; }
     }
 
-    public class OrderDTO
+    public class OrderDTO : OrderDTOBase
     {
         public Guid Id { get; set; }
-        public OrderInfoDTO OrderInfo { get; set; }
     }
     public class OrderProductDTO
     {

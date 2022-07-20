@@ -5,7 +5,7 @@ using FurnitureShop.Core.Contracts.Dtos;
 namespace FurnitureShop.Core.Contracts.Web.Products
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class GetAllProducts : SortablePaginatedQuery<ProductDTO, ProductsSortFieldDTO?>
+    public class AllProducts : SortablePaginatedQuery<ProductDTO, ProductsSortFieldDTO?>
     {
         public Guid? CategoryId { get; set; }
     }

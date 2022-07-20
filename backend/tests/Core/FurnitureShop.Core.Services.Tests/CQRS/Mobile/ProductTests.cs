@@ -89,7 +89,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                ProductDetails = new ProductWithDetailsDTO
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
                 {
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
@@ -131,7 +131,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new UpdateProductCH(dbContext);
             var command = new UpdateProduct
             {
-                ProductDetails = new ProductWithDetailsDTO
+                UpdatedProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
                 {
                     Id = TestProduct.Id,
                     Description = NewProdctDescription,

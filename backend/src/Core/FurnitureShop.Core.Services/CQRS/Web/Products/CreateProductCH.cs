@@ -12,18 +12,18 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
     {
         public CreateProductCV()
         {
-            RuleFor(p => p.ProductDetails.Name)
+            RuleFor(p => p.NewProduct.Name)
                 .NotEmpty()
                     .WithCode(CreateProduct.ErrorCodes.IncorrectName)
                     .WithMessage("Product name should not be empty");
-            RuleFor(p => p.ProductDetails.Price)
+            RuleFor(p => p.NewProduct.Price)
                 .NotEmpty()
                     .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should not be empty")
                 .GreaterThan(0)
                     .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should be a positive number");
-            RuleFor(p => p.ProductDetails.Description)
+            RuleFor(p => p.NewProduct.Description)
                 .NotEmpty()
                     .WithCode(CreateProduct.ErrorCodes.IncorrectDescription)
                     .WithMessage("Product description should not be empty");
@@ -41,11 +41,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
             var result = await dbContext.Products.AddAsync(
-                new Product(command.ProductDetails.Name, command.ProductDetails.Description, command.ProductDetails.Price)
+                new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
                 {
-                    ModelUrl = command.ProductDetails.ModelUrl,
-                    CategoryId = Id<Category>.From(command.ProductDetails.CategoryId),
-                    PreviewPhotoUrl = command.ProductDetails.PreviewPhotoURL,
+                    ModelUrl = command.NewProduct.ModelUrl,
+                    CategoryId = Id<Category>.From(command.NewProduct.CategoryId),
+                    PreviewPhotoUrl = command.NewProduct.PreviewPhotoURL,
                 });
             await dbContext.SaveChangesAsync();
         }

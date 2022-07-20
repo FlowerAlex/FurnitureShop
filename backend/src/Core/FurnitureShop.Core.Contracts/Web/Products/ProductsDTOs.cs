@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FurnitureShop.Core.Contracts.Dtos
+namespace FurnitureShop.Core.Contracts.Web.Products
 {
     public class ProductDTOBase
     {
@@ -11,29 +11,19 @@ namespace FurnitureShop.Core.Contracts.Dtos
         public string? PreviewPhotoURL { get; set; }
         public Guid? CategoryId { get; set; }
     }
-    public class ProductWithDetailsDTOBase : ProductDTOBase
+    public class ProducDetailsDTOBase : ProductDTOBase
     {
         public string Description { get; set; }
         public string? ModelUrl { get; set; }
     }
 
-    public class ProductWithDetailsDTO : ProductWithDetailsDTOBase
+    public class ProductDetailsDTO : ProducDetailsDTOBase
     {
         public Guid Id { get; set; }
     }
     public class ProductDTO : ProductDTOBase
     {
         public Guid Id { get; set; }
-    }
-    public class ProductUDTO : ProductDTO
-    {
-        public bool InFavourites { get; set; }
-        public bool InShoppingCart { get; set; }
-    }
-    public class ProductWithDetailsUDTO : ProductWithDetailsDTO
-    {
-        public bool InFavourites { get; set; }
-        public bool InShoppingCart { get; set; }
     }
     public enum ProductsSortFieldDTO
     {

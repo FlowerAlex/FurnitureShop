@@ -11,16 +11,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class GetAllProductsQH : IQueryHandler<GetAllProducts, PaginatedResult<ProductUDTO>>
+    public class AllProductsQH : IQueryHandler<AllProducts, PaginatedResult<ProductUSerViewDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetAllProductsQH(CoreDbContext dbContext)
+        public AllProductsQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductUDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
+        public async Task<PaginatedResult<ProductUSerViewDTO>> ExecuteAsync(CoreContext context, AllProducts query)
         {
             if (query.CategoryId.HasValue)
             {
@@ -50,14 +50,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(f => f.UserId == context.UserId && f.ProductId != null)
                 .Select(f => f.ProductId!.Value.Value).ToListAsync();
         }
-        private async Task<PaginatedResult<ProductUDTO>> GetProducts(IQueryable<Product> queryable, GetAllProducts query, CoreContext context)
+        private async Task<PaginatedResult<ProductUSerViewDTO>> GetProducts(IQueryable<Product> queryable, AllProducts query, CoreContext context)
         {
             var productsInShoppingCart = await GetProductsInShoppingCart(context);
             var productsInFavourites = await GetProductsInFavourites(context);
 
             return await queryable.FilterBy(query)
                 .Include(p => p.Reviews)
-                .Select(p => new ProductUDTO
+                .Select(p => new ProductUSerViewDTO
                 {
                     Name = p.Name,
                     Price = p.Price,
@@ -75,7 +75,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 
     internal static class ProductQHExtensions
     {
-        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, GetAllProducts query)
+        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, AllProducts query)
         {
             return query.FilterBy switch
             {
@@ -84,7 +84,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             };
         }
 
-        public static IQueryable<ProductUDTO> SortBy(this IQueryable<ProductUDTO> queryable, GetAllProducts query)
+        public static IQueryable<ProductUSerViewDTO> SortBy(this IQueryable<ProductUSerViewDTO> queryable, AllProducts query)
         {
             if (!query.SortBy.HasValue)
             {

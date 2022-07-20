@@ -8,16 +8,16 @@ using FurnitureShop.Core.Services.DataAccess;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
 {
-    public class GetAllComplaintsQH : IQueryHandler<GetAllComplaints, PaginatedResult<ComplaintDTO>>
+    public class AllComplaintsQH : IQueryHandler<AllComplaints, PaginatedResult<ComplaintDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetAllComplaintsQH(CoreDbContext dbContext)
+        public AllComplaintsQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ComplaintDTO>> ExecuteAsync(CoreContext context, GetAllComplaints query)
+        public async Task<PaginatedResult<ComplaintDTO>> ExecuteAsync(CoreContext context, AllComplaints query)
         {
             return await dbContext.Complaints
             .Select(p => new ComplaintDTO

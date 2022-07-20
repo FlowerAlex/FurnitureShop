@@ -15,18 +15,18 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
     {
         public UpdateProductCV()
         {
-            RuleFor(p => p.ProductDetails.Name)
+            RuleFor(p => p.UpdatedProduct.Name)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
                     .WithMessage("Product name should not be empty");
-            RuleFor(p => p.ProductDetails.Price)
+            RuleFor(p => p.UpdatedProduct.Price)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should not be empty")
                 .GreaterThan(0)
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
                     .WithMessage("Price should be a positive number");
-            RuleFor(p => p.ProductDetails.Description)
+            RuleFor(p => p.UpdatedProduct.Description)
                 .NotEmpty()
                     .WithCode(UpdateProduct.ErrorCodes.IncorrectDescription)
                     .WithMessage("Product description should not be empty");
@@ -44,17 +44,17 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
         public async Task ExecuteAsync(CoreContext context, UpdateProduct command)
         {
-            var product = await dbContext.Products.Where(c => c.Id == command.ProductDetails.Id).FirstOrDefaultAsync();
+            var product = await dbContext.Products.Where(c => c.Id == command.UpdatedProduct.Id).FirstOrDefaultAsync();
             if (product == null)
             {
                 return;
             }
 
-            var updated = command.ProductDetails;
+            var updated = command.UpdatedProduct;
             product.Name = updated.Name;
             product.Description = updated.Description;
             product.Price = updated.Price;
-            product.ModelUrl = command.ProductDetails.ModelUrl;
+            product.ModelUrl = command.UpdatedProduct.ModelUrl;
             product.CategoryId = Id<Category>.From(updated.CategoryId);
             product.PreviewPhotoUrl = updated.PreviewPhotoURL;
 

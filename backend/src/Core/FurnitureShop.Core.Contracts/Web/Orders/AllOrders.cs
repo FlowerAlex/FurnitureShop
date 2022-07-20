@@ -7,7 +7,7 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Web.Orders
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class GetAllOrders : SortableMulitiFilterPaginatedQuery<OrderDTO, OrdersSortFieldDTO?, OrdersFilterFieldDTO>
+    public class AllOrders : SortableMulitiFilterPaginatedQuery<OrderDTO, OrdersSortFieldDTO?, OrdersFilterFieldDTO>
     {
         public static class ErrorCodes
         {

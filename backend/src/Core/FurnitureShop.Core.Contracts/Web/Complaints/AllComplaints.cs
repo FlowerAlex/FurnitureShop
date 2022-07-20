@@ -4,6 +4,6 @@ using FurnitureShop.Core.Contracts.Dtos;
 namespace FurnitureShop.Core.Contracts.Web.Complaints
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class GetAllComplaints : PaginatedQuery<ComplaintDTO>
+    public class AllComplaints : PaginatedQuery<ComplaintDTO>
     { }
 }

@@ -18,31 +18,31 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            RuleFor(p => p.OrderInfo.OrderProducts)
+            RuleFor(p => p.NewOrder.OrderProducts)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
                     .WithMessage("No products to order");
-            RuleFor(p => p.OrderInfo.Street)
+            RuleFor(p => p.NewOrder.Street)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Street should not be empty");
-            RuleFor(p => p.OrderInfo.City)
+            RuleFor(p => p.NewOrder.City)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("City should not be empty");
-            RuleFor(p => p.OrderInfo.State)
+            RuleFor(p => p.NewOrder.State)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("State should not be empty");
-            RuleFor(p => p.OrderInfo.Country)
+            RuleFor(p => p.NewOrder.Country)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Country should not be empty");
-            RuleFor(p => p.OrderInfo.PostalCode)
+            RuleFor(p => p.NewOrder.PostalCode)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Postal should not be empty");
-            RuleForAsync(p => p.OrderInfo.Price, DoesUserHaveEnoughMoney)
+            RuleForAsync(p => p.NewOrder.Price, DoesUserHaveEnoughMoney)
                .Equal(false)
                    .WithMessage("Not enough funds to pay for the order.")
                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
@@ -72,14 +72,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
         {
             var result = await dbContext.Orders.AddAsync(// mapper.Map<Order>(command.NewOrder));
-                new Order(command.OrderInfo.Street, command.OrderInfo.City, command.OrderInfo.State,
-                    command.OrderInfo.PostalCode, command.OrderInfo.Country)
+                new Order(command.NewOrder.Street, command.NewOrder.City, command.NewOrder.State,
+                    command.NewOrder.PostalCode, command.NewOrder.Country)
                 {
                     UserId = Id<User>.From(context.UserId),
-                    Price = command.OrderInfo.Price,
+                    Price = command.NewOrder.Price,
                     OrderedDate = DateTime.Now,
                     OrderState = OrderState.Pending,
-                    OrdersProducts = command.OrderInfo.OrderProducts.Select(op => new OrderProduct
+                    OrdersProducts = command.NewOrder.OrderProducts.Select(op => new OrderProduct
                     {
                         ProductId = Id<Product>.From(op.Product.Id),
                         Amount = op.Amount,

@@ -11,16 +11,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Products
 {
-    public class GetAllProductsQH : IQueryHandler<GetAllProducts, PaginatedResult<ProductDTO>>
+    public class AllProductsQH : IQueryHandler<AllProducts, PaginatedResult<ProductDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetAllProductsQH(CoreDbContext dbContext)
+        public AllProductsQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, GetAllProducts query)
+        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, AllProducts query)
         {
             if (query.CategoryId.HasValue)
             {
@@ -38,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
     internal static class ProductQHExtensions
     {
-        public async static Task<PaginatedResult<ProductDTO>> GetProducts(this IQueryable<Product> queryable, GetAllProducts query)
+        public async static Task<PaginatedResult<ProductDTO>> GetProducts(this IQueryable<Product> queryable, AllProducts query)
         {
             return await queryable
                 .FilterBy(query)
@@ -55,7 +55,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
         }
-        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, GetAllProducts query)
+        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, AllProducts query)
         {
             return query.FilterBy switch
             {
@@ -64,7 +64,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             };
         }
 
-        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, GetAllProducts query)
+        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, AllProducts query)
         {
             if (!query.SortBy.HasValue)
             {

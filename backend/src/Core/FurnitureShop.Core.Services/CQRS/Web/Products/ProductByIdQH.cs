@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Products
 {
-    public class ProductByIdQH : IQueryHandler<ProductById, ProductWithDetailsDTO?>
+    public class ProductByIdQH : IQueryHandler<ProductById, ProductDetailsDTO?>
     {
         private readonly CoreDbContext dbContext;
 
@@ -19,14 +19,14 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<ProductWithDetailsDTO?> ExecuteAsync(CoreContext context, ProductById query)
+        public async Task<ProductDetailsDTO?> ExecuteAsync(CoreContext context, ProductById query)
         {
             var shoppingCart = dbContext.ShoppingCarts.Where(sh => sh.UserId == context.UserId).FirstOrDefault();
             var shoppingCartExists = shoppingCart != null;
             shoppingCartExists = false;
             return await dbContext.Products
                 .Where(p => p.Id == query.Id).Include(p => p.Reviews)
-                .Select(p => new ProductWithDetailsDTO
+                .Select(p => new ProductDetailsDTO
                 {
                         Name = p.Name,
                         Price = p.Price,

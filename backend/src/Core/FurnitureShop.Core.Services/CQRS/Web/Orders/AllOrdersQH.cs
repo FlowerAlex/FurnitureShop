@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Dtos;
+using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Contracts.Web.Orders;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Domain;
@@ -11,35 +11,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 {
-    public class GetAllOrdersQH : IQueryHandler<GetAllOrders, PaginatedResult<OrderDTO>>
+    public class AllOrdersQH : IQueryHandler<AllOrders, PaginatedResult<OrderDTO>>
     {
         private readonly CoreDbContext dbContext;
 
-        public GetAllOrdersQH(CoreDbContext dbContext)
+        public AllOrdersQH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, GetAllOrders query)
+        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, AllOrders query)
         {
             return await dbContext.Orders.Include(o => o.OrdersProducts)
                 .FilterBy(query)
                 .Select(p => new OrderDTO
                 {
                     Id = p.Id,
-                    OrderInfo = new OrderInfoDTO
-                    {
-                        Price = p.Price,
-                        UserId = p.UserId,
-                        State = p.State,
-                        Country = p.Country,
-                        Street = p.Street,
-                        City = p.City,
-                        PostalCode = p.PostalCode,
-                        OrderState = p.OrderState.ToString(),
-                        OrderedDate = p.OrderedDate,
-                        DeliveredDate = p.DeliveredDate,
-                        OrderProducts = dbContext.Products
+
+                    Price = p.Price,
+                    UserId = p.UserId,
+                    State = p.State,
+                    Country = p.Country,
+                    Street = p.Street,
+                    City = p.City,
+                    PostalCode = p.PostalCode,
+                    OrderState = p.OrderState.ToString(),
+                    OrderedDate = p.OrderedDate,
+                    DeliveredDate = p.DeliveredDate,
+                    OrderProducts = dbContext.Products
                         .Join(
                             dbContext.OrderProduct,
                             prod => prod.Id,
@@ -58,7 +57,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                                 }
                             }
                         ).Where(ord => ord.OrderId == p.Id).ToList(),
-                    },
+
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
@@ -66,7 +65,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
     }
     internal static class OrderQHExtensions
     {
-        public static IQueryable<Order> FilterBy(this IQueryable<Order> queryable, GetAllOrders query)
+        public static IQueryable<Order> FilterBy(this IQueryable<Order> queryable, AllOrders query)
         {
             foreach (var filter in query.FilterBy)
             {
@@ -100,7 +99,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             return queryable;
         }
 
-        public static IQueryable<OrderDTO> SortBy(this IQueryable<OrderDTO> queryable, GetAllOrders query)
+        public static IQueryable<OrderDTO> SortBy(this IQueryable<OrderDTO> queryable, AllOrders query)
         {
             if (!query.SortBy.HasValue)
             {
@@ -109,8 +108,8 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
             return query.SortBy switch
             {
-                OrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderInfo.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
-                OrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.OrderInfo.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
+                OrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
+                OrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
                 _ => queryable
             };
         }
