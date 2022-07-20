@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using FurnitureShop.Core.Contracts.Dtos;
-using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Web.Orders

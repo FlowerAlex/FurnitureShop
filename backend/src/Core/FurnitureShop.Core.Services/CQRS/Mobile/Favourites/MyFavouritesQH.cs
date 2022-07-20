@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
-using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Favourites;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;

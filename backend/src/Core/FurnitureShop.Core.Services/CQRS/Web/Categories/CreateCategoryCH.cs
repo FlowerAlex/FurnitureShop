@@ -4,7 +4,6 @@ using FurnitureShop.Core.Contracts.Web.Categories;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
-using FurnitureShop.Core.Contracts.Dtos;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Categories
 {

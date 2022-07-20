@@ -1,12 +1,10 @@
 using System;
 using System.Linq;
 using FurnitureShop.Core.Contracts;
-using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS.Mobile.Favourites;
-using FurnitureShop.Core.Services.CQRS.Mobile.Products;
 using FurnitureShop.Core.Services.CQRS.Web.Products;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;

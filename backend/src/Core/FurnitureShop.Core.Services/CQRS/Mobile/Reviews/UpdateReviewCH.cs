@@ -15,11 +15,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
     {
         public UpdateReviewCV()
         {
-            RuleFor(p => p.ReviewInfo.Text)
+            RuleFor(p => p.UpdatedReview.Text)
                 .NotEmpty()
                     .WithCode(UpdateReview.ErrorCodes.EmptyReviewText)
                     .WithMessage("Review text should not be empty");
-            RuleFor(p => p.ReviewInfo.Rating)
+            RuleFor(p => p.UpdatedReview.Rating)
                 .InclusiveBetween(0.0, 5.0)
                     .WithCode(UpdateReview.ErrorCodes.IncorrectRating)
                     .WithMessage("Incorrect rating");
@@ -36,14 +36,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
 
         public async Task ExecuteAsync(CoreContext context, UpdateReview command)
         {
-            var toUpdate = await dbContext.Reviews.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
+            var toUpdate = await dbContext.Reviews.Where(p => p.Id == command.UpdatedReview.Id).FirstOrDefaultAsync();
             if (toUpdate == null)
             {
                 return;
             }
 
-            toUpdate.Rating = command.ReviewInfo.Rating;
-            toUpdate.Text = command.ReviewInfo.Text;
+            toUpdate.Rating = command.UpdatedReview.Rating;
+            toUpdate.Text = command.UpdatedReview.Text;
             dbContext.Reviews.Update(toUpdate);
             await dbContext.SaveChangesAsync();
         }

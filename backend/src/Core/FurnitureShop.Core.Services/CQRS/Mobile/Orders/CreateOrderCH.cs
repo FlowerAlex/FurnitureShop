@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using FurnitureShop.Core.Contracts.Dtos;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
