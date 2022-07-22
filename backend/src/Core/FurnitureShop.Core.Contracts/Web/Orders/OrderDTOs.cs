@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FurnitureShop.Core.Contracts.Web.Products;
+using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Web.Orders
 {

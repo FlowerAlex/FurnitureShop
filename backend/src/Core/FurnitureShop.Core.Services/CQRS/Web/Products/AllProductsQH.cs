@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Products
 {
-    public class AllProductsQH : IQueryHandler<AllProducts, PaginatedResult<ProductDTO>>
+    public class AllProductsQH : IQueryHandler<FurnitureShop.Core.Contracts.Web.Products.AllProducts, PaginatedResult<ProductDTO>>
     {
         private readonly CoreDbContext dbContext;
 
@@ -19,7 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, AllProducts query)
+        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, FurnitureShop.Core.Contracts.Web.Products.AllProducts query)
         {
             if (query.CategoryId.HasValue)
             {
@@ -37,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
     internal static class ProductQHExtensions
     {
-        public async static Task<PaginatedResult<ProductDTO>> GetProducts(this IQueryable<Product> queryable, AllProducts query)
+        public async static Task<PaginatedResult<ProductDTO>> GetProducts(this IQueryable<Product> queryable, FurnitureShop.Core.Contracts.Web.Products.AllProducts query)
         {
             return await queryable
                 .FilterBy(query)
@@ -54,7 +55,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
         }
-        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, AllProducts query)
+        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, FurnitureShop.Core.Contracts.Web.Products.AllProducts query)
         {
             return query.FilterBy switch
             {
@@ -63,7 +64,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             };
         }
 
-        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, AllProducts query)
+        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, FurnitureShop.Core.Contracts.Web.Products.AllProducts query)
         {
             if (!query.SortBy.HasValue)
             {

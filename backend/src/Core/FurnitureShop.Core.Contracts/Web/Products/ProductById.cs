@@ -1,6 +1,7 @@
 using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
+using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Web.Products
 {
