@@ -6,7 +6,7 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Web.Blobs
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class ModelUploadLink : IRemoteQuery<string>
+    public class PhotoUploadId : IRemoteQuery<string>
     {
         public static class ErrorCodes
         {

@@ -14,8 +14,8 @@ namespace FurnitureShop.Core.Services.Services
 {
     public interface IBlobStorageService
     {
-        Task<string> GetPhotoUploadLink();
-        Task<string> GetModelUploadLink();
+        Task<string> GetPhotoUploadId();
+        Task<string> GetModelUploadId();
         Task<List<string>> GetPhotosUrls();
         Task<List<string>> GetModelsUrls();
     }
@@ -39,11 +39,11 @@ namespace FurnitureShop.Core.Services.Services
         {
             return await GetAllBlobsUrlsFromContainer(_modelsContainerName);
         }
-        public async Task<string> GetPhotoUploadLink()
+        public async Task<string> GetPhotoUploadId()
         {
             return await GetBlobUploadLink(_photosContainerName);
         }
-        public async Task<string> GetModelUploadLink()
+        public async Task<string> GetModelUploadId()
         {
             return await GetBlobUploadLink(_modelsContainerName);
         }
@@ -54,7 +54,7 @@ namespace FurnitureShop.Core.Services.Services
             string blobId = Guid.NewGuid().ToString();
             BlobClient blob = blobContainerClient.GetBlobClient(blobId);
             await blob.UploadAsync(System.IO.MemoryStream.Null);
-            return blobContainerClient.Uri.AbsoluteUri + "/" + blobId;
+            return blobId;
         }
 
         private async Task<List<string>> GetAllBlobsUrlsFromContainer(string blobContainerName)
