@@ -23,7 +23,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Blobs
 
         public async Task<string> ExecuteAsync(CoreContext context, PhotoUploadLink query)
         {
-            return await blobStorageService.GetPhotoUploadLink(query.BlobName);
+            return await blobStorageService.GetPhotoUploadLink();
         }
     }
 }

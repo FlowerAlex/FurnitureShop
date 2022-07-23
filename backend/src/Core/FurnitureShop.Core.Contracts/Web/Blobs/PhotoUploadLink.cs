@@ -8,7 +8,6 @@ namespace FurnitureShop.Core.Contracts.Web.Blobs
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class PhotoUploadLink : IRemoteQuery<string>
     {
-        public string BlobName { get; set; }
         public static class ErrorCodes
         {
             public const int ConnectionError = 1;
