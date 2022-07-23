@@ -4,7 +4,7 @@ using FurnitureShop.Core.Contracts.Mobile.Products;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    public class OrderInfoDTO
+    public class OrderDTOBase
     {
         public Guid? UserId { get; set; }
         public double Price { get; set; }
@@ -19,10 +19,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public List<OrderProductDTO> OrderProducts { get; set; }
     }
 
-    public class OrderDTO
+    public class OrderDTO : OrderDTOBase
     {
         public Guid Id { get; set; }
-        public OrderInfoDTO OrderInfo { get; set; }
     }
     public class OrderProductDTO
     {

@@ -2,12 +2,11 @@ using System;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
-    public class ReviewDTO
+    public class ReviewDTO : ReviewDTOBase
     {
         public Guid Id { get; set; }
-        public ReviewInfoDTO ReviewInfo { get; set; }
     }
-    public class ReviewInfoDTO
+    public class ReviewDTOBase
     {
         public Guid? UserId { get; set; }
         public Guid? ProductId { get; set; }

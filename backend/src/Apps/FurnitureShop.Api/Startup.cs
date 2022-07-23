@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FurnitureShop.Api.Auth;
-using FurnitureShop.Core.Contracts.Mobile.Categories;
+using FurnitureShop.Core.Contracts.Web.Categories;
 using FurnitureShop.Core.Domain.Example.Events;
 using FurnitureShop.Core.Services;
 using LeanCode.Components;

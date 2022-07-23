@@ -38,16 +38,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                             .Include(p => p.Reviews)
                 .Select(p => new ProductDTO
                 {
-                    ProductInfo = new ProductInfoDTO
-                    {
-                        Name = p.Name,
-                        Price = p.Price,
-                        PreviewPhotoURL = p.ModelUrl,
-                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                        CategoryId = p.CategoryId,
-                        InFavourites = true,
-                        InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    },
+                    Name = p.Name,
+                    Price = p.Price,
+                    PreviewPhotoURL = p.ModelUrl,
+                    AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
+                    CategoryId = p.CategoryId,
+                    InFavourites = true,
+                    InShoppingCart = productsInShoppingCart.Contains(p.Id),
+                    
                     Id = p.Id,
                 })
                 .SortBy(query)
@@ -100,8 +98,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
             return query.SortBy switch
             {
-                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.ProductInfo.Name, query.SortByDescending).ThenBy(s => s.Id),
-                ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.ProductInfo.AverageRating, query.SortByDescending),
+                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
                 _ => queryable
             };
         }

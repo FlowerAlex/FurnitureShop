@@ -1,4 +1,3 @@
-using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
@@ -7,7 +6,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class CreateReview : IRemoteCommand
     {
-        public ReviewInfoDTO ReviewInfo { get; set; }
+        public ReviewDTOBase NewReview { get; set; }
         public static class ErrorCodes
         {
             public const int EmptyReviewText = 1;

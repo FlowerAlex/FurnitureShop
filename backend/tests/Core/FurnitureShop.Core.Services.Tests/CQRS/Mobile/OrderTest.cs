@@ -1,15 +1,16 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
+using FurnitureShop.Core.Contracts.Shared.Orders;
+using FurnitureShop.Core.Contracts.Web.Orders;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
-using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.Orders;
+using FurnitureShop.Core.Services.CQRS.Shared.Orders;
+using FurnitureShop.Core.Services.CQRS.Web.Orders;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -96,16 +97,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateOrderQH(dbContext);
             var command = new CreateOrder
             {
-                OrderInfo = new OrderInfoDTO
+                NewOrder = new FurnitureShop.Core.Contracts.Mobile.Orders.OrderDTOBase
                 {
                     Country = testCountry,
                     State = testState,
                     City = testCity,
                     Street = testStreet,
                     PostalCode = testPostalCode,
-                    OrderProducts = new List<OrderProductDTO>
+                    OrderProducts = new List<FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO>
                     {
-                        new OrderProductDTO()
+                        new FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO()
                         {
                             Product = new ProductDTO()
                             {
@@ -113,7 +114,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                             },
                             Amount = testProductAmount,
                         },
-                        new OrderProductDTO()
+                        new FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO()
                         {
                             Product = new ProductDTO()
                             {
@@ -146,8 +147,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new GetAllOrdersQH(dbContext);
-            var command = new GetAllOrders()
+            var handler = new AllOrdersQH(dbContext);
+            var command = new AllOrders()
             {
                 FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
             };
@@ -157,7 +158,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var Orders = dbContext.Orders.ToList();
             Assert.Equal(result.Result.TotalCount,Orders.Count());
 
-            command = new GetAllOrders()
+            command = new AllOrders()
             {
                 FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
             };
@@ -169,7 +170,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Orders = dbContext.Orders.Where(o => o.OrderState == OrderState.Cancelled).ToList();
             Assert.Equal(result.Result.TotalCount,Orders.Count());
             
-            command = new GetAllOrders()
+            command = new AllOrders()
             {
                 FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
             };

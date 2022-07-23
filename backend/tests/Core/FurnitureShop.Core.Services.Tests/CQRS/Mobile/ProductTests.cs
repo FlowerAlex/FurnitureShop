@@ -2,9 +2,10 @@ using System;
 using System.Linq;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS.Mobile.Favourites;
-using FurnitureShop.Core.Services.CQRS.Mobile.Products;
+using FurnitureShop.Core.Services.CQRS.Web.Products;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
@@ -65,17 +66,17 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new ProductByIdQH(dbContext);
-            var command = new ProductById { Id = TestProduct.Id };
+            var handler = new FurnitureShop.Core.Services.CQRS.Mobile.Products.ProductByIdQH(dbContext);
+            var command = new FurnitureShop.Core.Contracts.Mobile.Products.ProductById { Id = TestProduct.Id };
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
             Assert.NotNull(Product);
-            Assert.Equal(TestProduct.Name, Product.ProductDetails.Name);
-            Assert.Equal(TestProduct.Description, Product.ProductDetails.Description);
-            Assert.Equal(TestProduct.ModelUrl, Product.ProductDetails.ModelUrl);
-            Assert.Equal(TestProduct.Price, Product.ProductDetails.Price);
-            Assert.Equal(TestProduct.CategoryId, Product.ProductDetails.CategoryId);
+            Assert.Equal(TestProduct.Name, Product.Name);
+            Assert.Equal(TestProduct.Description, Product.Description);
+            Assert.Equal(TestProduct.ModelUrl, Product.ModelUrl);
+            Assert.Equal(TestProduct.Price, Product.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
         }
         [Fact]
@@ -86,7 +87,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                ProductDetails = new ProductDetailsDTO
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
                 {
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
@@ -128,9 +129,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new UpdateProductCH(dbContext);
             var command = new UpdateProduct
             {
-                Id = TestProduct.Id,
-                ProductDetails = new ProductDetailsDTO
+                UpdatedProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
                 {
+                    Id = TestProduct.Id,
                     Description = NewProdctDescription,
                     ModelUrl = NewProductModelUrl,
                     Name = NewProductName,

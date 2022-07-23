@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
+using FurnitureShop.Core.Contracts.Shared.Reviews;
 using FurnitureShop.Core.Domain;
-using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.Reviews;
+using FurnitureShop.Core.Services.CQRS.Shared.Reviews;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -68,10 +67,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Review = result.Result;
             Assert.NotNull(Review);
-            Assert.Equal(TestReview.Text, Review.ReviewInfo.Text);
-            Assert.Equal(TestReview.Rating, Review.ReviewInfo.Rating);
-            Assert.Equal(TestReview.ProductId, Review.ReviewInfo.ProductId  );
-            Assert.Equal(TestReview.CreatedDate, Review.ReviewInfo.CreatedDate  );
+            Assert.Equal(TestReview.Text, Review.Text);
+            Assert.Equal(TestReview.Rating, Review.Rating);
+            Assert.Equal(TestReview.ProductId, Review.ProductId  );
+            Assert.Equal(TestReview.CreatedDate, Review.CreatedDate  );
             Assert.Equal(TestReview.Id, Review.Id);
         }
         [Fact]
@@ -81,7 +80,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateReviewCH(dbContext);
             var command = new CreateReview {
-                ReviewInfo = new ReviewInfoDTO
+                NewReview = new ReviewDTOBase
                 {
                     Text = NewReviewText,
                     ProductId = NewReviewProductId,
@@ -120,12 +119,13 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateReviewCH(dbContext);
             var command = new UpdateReview{
-                ReviewInfo = new ReviewInfoDTO
+                UpdatedReview = new ReviewDTO
                 {
+                    Id = TestReview.Id,
                     Text = NewReviewText,
                     UserId = TestUserId,
                     Rating = NewReviewRating,
-                },Id = TestReview.Id};
+                }};
             
             var result = handler.ExecuteAsync(coreContext,command);
             

@@ -2,7 +2,7 @@ using System;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Complaints
 {
-    public class ComplaintInfoDTO
+    public class ComplaintDTOBase
     {
         public Guid? UserId { get; set; }
         public Guid? OrderId { get; set; }
@@ -11,9 +11,8 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
         public DateTime CreatedDate { get; set; }
         public bool Resolved { get; set; }
     }
-    public class ComplaintDTO
+    public class ComplaintDTO : ComplaintDTOBase
     {
         public Guid Id { get; set; }
-        public ComplaintInfoDTO ComplaintInfo { get; set; }
     }
 }

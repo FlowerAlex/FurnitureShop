@@ -8,14 +8,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using LeanCode.Time;
-using FurnitureShop.Core.Contracts.Mobile.Blobs;
+using FurnitureShop.Core.Services.Services;
 
 namespace FurnitureShop.Core.Services.Services
 {
     public interface IBlobStorageService
     {
-        Task<string> GetPhotoUploadLink(string blobName);
-        Task<string> GetModelUploadLink(string blobName);
+        Task<string> GetPhotoUploadId();
+        Task<string> GetModelUploadId();
         Task<List<string>> GetPhotosUrls();
         Task<List<string>> GetModelsUrls();
     }
@@ -30,14 +30,7 @@ namespace FurnitureShop.Core.Services.Services
             _modelsContainerName = "models";
             _photosContainerName = "images"; // narazie tutaj na sztywno póki nie wyjasnie czemu dependecy incejtion nie działa
         }
-        public async Task UploadPhoto(string localFilePath, string blobName)
-        {
-            await UploadBlob(localFilePath, blobName, _photosContainerName);
-        }
-        public async Task UploadModel(string localFilePath, string blobName)
-        {
-            await UploadBlob(localFilePath, blobName, _modelsContainerName);
-        }
+ 
         public async Task<List<string>> GetPhotosUrls()
         {
             return await GetAllBlobsUrlsFromContainer(_photosContainerName);
@@ -46,29 +39,22 @@ namespace FurnitureShop.Core.Services.Services
         {
             return await GetAllBlobsUrlsFromContainer(_modelsContainerName);
         }
-        public async Task<string> GetPhotoUploadLink(string blobName)
+        public async Task<string> GetPhotoUploadId()
         {
-            return await GetBlobUploadLink(_photosContainerName, blobName);
+            return await GetBlobUploadLink(_photosContainerName);
         }
-        public async Task<string> GetModelUploadLink(string blobName)
+        public async Task<string> GetModelUploadId()
         {
-            return await GetBlobUploadLink(_modelsContainerName, blobName);
+            return await GetBlobUploadLink(_modelsContainerName);
         }
-        private async Task UploadBlob(string localFilePath, string blobName, string blobContainerName)
+        private async Task<string> GetBlobUploadLink(string blobContainerName)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_blobConnectionString);
             BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
-            BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
-            using FileStream fs = File.OpenRead(localFilePath);
-            await blobClient.UploadAsync(fs, true);
-        }
-        private async Task<string> GetBlobUploadLink(string blobContainerName, string blobName)
-        {
-            BlobServiceClient blobServiceClient = new BlobServiceClient(_blobConnectionString);
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
-            BlobClient blob = blobContainerClient.GetBlobClient(blobName);
+            string blobId = Guid.NewGuid().ToString();
+            BlobClient blob = blobContainerClient.GetBlobClient(blobId);
             await blob.UploadAsync(System.IO.MemoryStream.Null);
-            return blobContainerClient.Uri.AbsoluteUri + "/" + blob.Name;
+            return blobId;
         }
 
         private async Task<List<string>> GetAllBlobsUrlsFromContainer(string blobContainerName)

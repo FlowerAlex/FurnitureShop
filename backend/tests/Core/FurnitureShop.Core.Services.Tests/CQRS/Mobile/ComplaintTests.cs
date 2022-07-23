@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Complaints;
+using FurnitureShop.Core.Contracts.Web.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.Complaints;
+using FurnitureShop.Core.Services.CQRS.Web.Complaints;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
@@ -67,17 +69,17 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new ComplaintByIdQH(dbContext);
             var command = new ComplaintById { Id = TestComplaint.Id };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = result.Result;
             Assert.NotNull(Complaint);
-            Assert.Equal(TestComplaint.Text, Complaint.ComplaintInfo.Text);
-            Assert.Equal(TestComplaint.Response, Complaint.ComplaintInfo.Response);
-            Assert.Equal(TestComplaint.Resolved, Complaint.ComplaintInfo.Resolved);
-            Assert.Equal(TestComplaint.OrderId, Complaint.ComplaintInfo.OrderId);
-            Assert.Equal(TestComplaint.UserId, Complaint.ComplaintInfo.UserId);
+            Assert.Equal(TestComplaint.Text, Complaint.Text);
+            Assert.Equal(TestComplaint.Response, Complaint.Response);
+            Assert.Equal(TestComplaint.Resolved, Complaint.Resolved);
+            Assert.Equal(TestComplaint.OrderId, Complaint.OrderId);
+            Assert.Equal(TestComplaint.UserId, Complaint.UserId);
             Assert.Equal(TestComplaint.Id, Complaint.Id);
         }
         [Fact]
@@ -88,7 +90,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateComplaintCH(dbContext);
             var command = new CreateComplaint
             {
-                ComplaintInfo = new ComplaintInfoDTO
+                ComplaintInfo = new FurnitureShop.Core.Contracts.Mobile.Complaints.ComplaintDTOBase
                 {
                     Text = NewComplaintText,
                     Resolved = NewComplaintResolved,
@@ -96,9 +98,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     OrderId = TestOrder.Id
                 }
             };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Where(c => c.Text == NewComplaintText).FirstOrDefault();
             Assert.NotNull(Complaint);
@@ -113,9 +115,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteComplaintCH(dbContext);
             var command = new DeleteComplaint { Id = TestComplaint.Id };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Find(TestComplaint.Id);
             Assert.Null(Complaint);
@@ -128,9 +130,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new UpdateComplaintCH(dbContext);
             var command = new UpdateComplaint
             {
-                Id = TestComplaint.Id,
-                ComplaintInfo = new ComplaintInfoDTO
+                UpdatedComplaint = new FurnitureShop.Core.Contracts.Mobile.Complaints.ComplaintDTO
                 {
+                    Id = TestComplaint.Id,
                     Text = NewComplaintText,
                     Response = NewComplaintResponse,
                     Resolved = NewComplaintResolved,
@@ -138,9 +140,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     OrderId = TestOrder.Id
                 }
             };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Complaint = dbContext.Complaints.Where(c => c.Text == NewComplaintText).FirstOrDefault();
             Assert.NotNull(Complaint);
