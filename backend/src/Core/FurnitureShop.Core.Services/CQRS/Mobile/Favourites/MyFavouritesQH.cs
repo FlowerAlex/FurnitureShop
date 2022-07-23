@@ -36,7 +36,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
             var result = await filteredProducts
                             .Include(p => p.Reviews)
-                .Select(p => new ProductUSerViewDTO
+                .Select(p => new ProductDTO
                 {
                     Name = p.Name,
                     Price = p.Price,

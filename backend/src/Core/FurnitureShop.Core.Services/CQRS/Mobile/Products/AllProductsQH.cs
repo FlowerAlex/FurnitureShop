@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
 {
-    public class AllProductsQH : IQueryHandler<AllProducts, PaginatedResult<ProductUSerViewDTO>>
+    public class AllProductsQH : IQueryHandler<AllProducts, PaginatedResult<ProductDTO>>
     {
         private readonly CoreDbContext dbContext;
 
@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductUSerViewDTO>> ExecuteAsync(CoreContext context, AllProducts query)
+        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, AllProducts query)
         {
             if (query.CategoryId.HasValue)
             {
@@ -49,14 +49,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 .Where(f => f.UserId == context.UserId && f.ProductId != null)
                 .Select(f => f.ProductId!.Value.Value).ToListAsync();
         }
-        private async Task<PaginatedResult<ProductUSerViewDTO>> GetProducts(IQueryable<Product> queryable, AllProducts query, CoreContext context)
+        private async Task<PaginatedResult<ProductDTO>> GetProducts(IQueryable<Product> queryable, AllProducts query, CoreContext context)
         {
             var productsInShoppingCart = await GetProductsInShoppingCart(context);
             var productsInFavourites = await GetProductsInFavourites(context);
 
             return await queryable.FilterBy(query)
                 .Include(p => p.Reviews)
-                .Select(p => new ProductUSerViewDTO
+                .Select(p => new ProductDTO
                 {
                     Name = p.Name,
                     Price = p.Price,
@@ -83,7 +83,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             };
         }
 
-        public static IQueryable<ProductUSerViewDTO> SortBy(this IQueryable<ProductUSerViewDTO> queryable, AllProducts query)
+        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, AllProducts query)
         {
             if (!query.SortBy.HasValue)
             {
