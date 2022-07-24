@@ -144,10 +144,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new AllOrdersQH(dbContext);
-            var command = new AllOrders()
+            var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.AllOrdersQH(dbContext);
+            var command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
+                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
             };
             var result = handler.ExecuteAsync(coreContext, command);
 
@@ -155,11 +155,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var Orders = dbContext.Orders.ToList();
             Assert.Equal(result.Result.TotalCount, Orders.Count());
 
-            command = new AllOrders()
+            command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
+                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
             };
-            command.FilterBy.Add(OrdersFilterFieldDTO.OrderState, "Cancelled");
+            command.FilterBy.Add(FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.OrderState, "Cancelled");
 
             result = handler.ExecuteAsync(coreContext, command);
 
@@ -167,11 +167,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Orders = dbContext.Orders.Where(o => o.OrderState == OrderState.Cancelled).ToList();
             Assert.Equal(result.Result.TotalCount, Orders.Count());
 
-            command = new AllOrders()
+            command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
+                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
             };
-            command.FilterBy.Add(OrdersFilterFieldDTO.City, "test_city2");
+            command.FilterBy.Add(FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.City, "test_city2");
 
             result = handler.ExecuteAsync(coreContext, command);
 
@@ -208,8 +208,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new SetOrderStateCH(dbContext);
-            var command = new SetOrderState()
+            var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.SetOrderStateCH(dbContext);
+            var command = new FurnitureShop.Core.Contracts.Web.Orders.SetOrderState()
             {
                 Id = TestOrder.Id,
                 OrderState = OrderState.InProgress.ToString(),
