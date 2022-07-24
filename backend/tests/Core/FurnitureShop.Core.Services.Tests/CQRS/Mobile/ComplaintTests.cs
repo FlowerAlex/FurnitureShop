@@ -1,15 +1,12 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Contracts.Web.Complaints;
 using FurnitureShop.Core.Domain;
-using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.Complaints;
 using FurnitureShop.Core.Services.CQRS.Web.Complaints;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

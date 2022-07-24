@@ -31,7 +31,7 @@ class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
     }
 
     try {
-      final categories = await _cqrs.get(GetAllCategories());
+      final categories = await _cqrs.get(AllCategories());
       final favoriteProducts = await _cqrs.get(MyFavourites(
         pageNumber: page,
         pageSize: pageSize,
@@ -83,7 +83,7 @@ class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
       final product =
           state.products.firstWhere((element) => element.id == productId);
 
-      if (product.productInfo.inShoppingCart) {
+      if (product.inShoppingCart) {
         await _cqrs.run(RemoveProductFromShoppingCart(
           productId: productId,
         ));

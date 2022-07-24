@@ -31,7 +31,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
     try {
       final result = await _cqrs.get(
-        GetAllProducts(
+        AllProducts(
           pageNumber: page,
           pageSize: pageSize,
           sortByDescending: false,

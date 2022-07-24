@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
@@ -17,7 +16,7 @@ class CategoryFormBodyCubit extends Cubit<CategoryFormBodyState> {
   final _logger = Logger('CategoryFormBodyCubit');
 
   Future<void> init() async {
-    final categories = await _cqrs.get(GetAllCategories());
+    final categories = await _cqrs.get(AllCategories());
 
     emit(CategoryFormBodyState.ready(
       categories: categories,

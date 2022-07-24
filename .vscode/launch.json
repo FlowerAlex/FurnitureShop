@@ -5,11 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter web",
+            "name": "Furniture shop web",
             "request": "launch",
             "program": "web/lib/main.dart",
             "type": "dart",
             "args": ["-d", "chrome","--web-port", "51265"],
+        },
+        {
+            "name": "Furniture shop mobile",
+            "request": "launch",
+            "program": "mobile/lib/main.dart",
+            "type": "dart",
         }
     ]
 }

@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.ShoppingCart;
 using FurnitureShop.Core.Domain;
-using FurnitureShop.Core.Services.CQRS;
 using FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.CQRS;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -81,9 +78,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(ShoppingCart);
             Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartProducts.Count());
             Assert.Equal(TestShoppingCart.UserId, ShoppingCart.UserId);
-            Assert.Equal(TestProduct.Price *TestProductAmount,ShoppingCart.Price);
-            Assert.Equal(TestShoppingCartProduct.ProductId.Value,ShoppingCart.ShoppingCartProducts.First().Product.Id);
-            Assert.Equal(TestProductAmount,ShoppingCart.ShoppingCartProducts.First().Amount);
+            Assert.Equal(TestProduct.Price * TestProductAmount, ShoppingCart.Price);
+            Assert.Equal(TestShoppingCartProduct.ProductId.Value, ShoppingCart.ShoppingCartProducts.First().Product.Id);
+            Assert.Equal(TestProductAmount, ShoppingCart.ShoppingCartProducts.First().Amount);
         }
         [Fact]
         public void AddProductToShoppingCartTest()
@@ -101,11 +98,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var Shpc = dbContext.ShoppingCarts.Where(p => p.Id == TestShoppingCart.Id).First();
-            Assert.Equal(2,Shpc.ShoppingCartProducts.Count);
+            Assert.Equal(2, Shpc.ShoppingCartProducts.Count);
             var addedProduct = Shpc.ShoppingCartProducts.Where(p => p.ProductId == TestProduct2.Id).First();
-            Assert.Equal(TestProduct2.Id,addedProduct.ProductId);
-            Assert.Equal(productAmount,addedProduct.Amount);
-            Assert.Equal(Shpc.Id,addedProduct.ShoppingCartId);
+            Assert.Equal(TestProduct2.Id, addedProduct.ProductId);
+            Assert.Equal(productAmount, addedProduct.Amount);
+            Assert.Equal(Shpc.Id, addedProduct.ShoppingCartId);
         }
         [Fact]
         public void RemoveProductFromShoppintCartTest()

@@ -19,7 +19,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
   final _logger = Logger('ProductFormBodyCubit');
 
   Future<void> init() async {
-    final categories = await _cqrs.get(GetAllCategories());
+    final categories = await _cqrs.get(AllCategories());
 
     emit(ProductFormBodyState.ready(
       categories: categories,
@@ -100,9 +100,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
           'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net');
 
       if (currentImage != null) {
-        final result = await _cqrs.get(GetPhotoUploadLink(
-          blobName: currentImage.name,
-        ));
+        final result = await _cqrs.get(PhotoUploadId());
 
         final contentType = p.extension(currentImage.name).replaceAll('.', '');
 
@@ -116,9 +114,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
       final currentModel = state.currentModel;
 
       if (currentModel != null) {
-        final result = await _cqrs.get(GetPhotoUploadLink(
-          blobName: currentModel.name,
-        ));
+        final result = await _cqrs.get(ModelUploadId());
 
         final contentType = p.extension(currentModel.name).replaceAll('.', '');
 
