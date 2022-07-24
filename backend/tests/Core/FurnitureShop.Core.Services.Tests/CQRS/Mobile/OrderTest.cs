@@ -101,7 +101,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     City = testCity,
                     Street = testStreet,
                     PostalCode = testPostalCode,
-                    OrderProducts = new List<ProductInOrderDTO>
+                    Products = new List<ProductInOrderDTO>
                     {
                         new ProductInOrderDTO()
                         {

@@ -17,7 +17,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            RuleFor(p => p.NewOrder.OrderProducts)
+            RuleFor(p => p.NewOrder.Products)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
                     .WithMessage("No products to order");
@@ -78,7 +78,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     Price = command.NewOrder.Price,
                     OrderedDate = DateTime.Now,
                     OrderState = OrderState.Pending,
-                    OrdersProducts = command.NewOrder.OrderProducts.Select(op => new OrderProduct
+                    OrdersProducts = command.NewOrder.Products.Select(op => new OrderProduct
                     {
                         ProductId = Id<Product>.From(op.Product.Id),
                         Amount = op.Amount,

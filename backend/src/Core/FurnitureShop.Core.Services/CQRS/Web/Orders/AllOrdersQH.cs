@@ -37,7 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                     OrderState = p.OrderState.ToString(),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-                    OrderProducts = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
+                    Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
                         .Join(
                             dbContext.Products,
                             ord => ord.ProductId,

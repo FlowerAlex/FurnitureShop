@@ -16,7 +16,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public string OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
-        public List<ProductInOrderDTO> OrderProducts { get; set; }
+        public List<ProductInOrderDTO> Products { get; set; }
     }
 
     public class OrderDTO : OrderDTOBase
