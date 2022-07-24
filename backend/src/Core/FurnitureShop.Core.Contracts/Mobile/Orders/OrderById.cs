@@ -1,11 +1,10 @@
 using System;
-using FurnitureShop.Core.Contracts.Mobile.Orders;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
 
-namespace FurnitureShop.Core.Contracts.Shared.Orders
+namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class OrderById : IRemoteQuery<OrderDTO?>
     {
         public Guid Id { get; set; }

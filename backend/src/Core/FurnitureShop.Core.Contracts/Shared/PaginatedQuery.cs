@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using LeanCode.CQRS;
 
-namespace FurnitureShop.Core.Contracts
+namespace FurnitureShop.Core.Contracts.Shared
 {
     public abstract class PaginatedQuery<TResult> : IRemoteQuery<PaginatedResult<TResult>>
     {

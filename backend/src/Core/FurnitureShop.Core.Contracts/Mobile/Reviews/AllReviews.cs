@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
-using FurnitureShop.Core.Contracts.Mobile.Reviews;
+using FurnitureShop.Core.Contracts.Shared;
 
-namespace FurnitureShop.Core.Contracts.Shared.Reviews
+namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
     public class AllReviews : PaginatedQuery<ReviewDTO>

@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Contracts.Web.Complaints;
-using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Complaints

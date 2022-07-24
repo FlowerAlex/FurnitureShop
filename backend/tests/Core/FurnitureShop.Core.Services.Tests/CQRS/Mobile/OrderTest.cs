@@ -3,13 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
-using FurnitureShop.Core.Contracts.Shared.Orders;
-using FurnitureShop.Core.Contracts.Web.Orders;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS.Mobile.Orders;
 using FurnitureShop.Core.Services.CQRS.Shared.Orders;
-using FurnitureShop.Core.Services.CQRS.Web.Orders;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +27,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             UserId = Id<User>.From(TestUserId),
         };
-         private readonly Order TestOrder2 = new Order("test_street2", "test_city2",
-            "test_state2", "test_postal_code2", "test_country2")
+        private readonly Order TestOrder2 = new Order("test_street2", "test_city2",
+           "test_state2", "test_postal_code2", "test_country2")
         {
             UserId = Id<User>.From(TestUserId),
             OrderState = OrderState.Cancelled,
@@ -97,24 +94,24 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateOrderQH(dbContext);
             var command = new CreateOrder
             {
-                NewOrder = new FurnitureShop.Core.Contracts.Mobile.Orders.OrderDTOBase
+                NewOrder = new OrderDTOBase
                 {
                     Country = testCountry,
                     State = testState,
                     City = testCity,
                     Street = testStreet,
                     PostalCode = testPostalCode,
-                    OrderProducts = new List<FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO>
+                    OrderProducts = new List<OrderProductDTO>
                     {
-                        new FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO()
+                        new OrderProductDTO()
                         {
                             Product = new ProductDTO()
                             {
-                                Id = TestProduct.Id,                                
+                                Id = TestProduct.Id,
                             },
                             Amount = testProductAmount,
                         },
-                        new FurnitureShop.Core.Contracts.Mobile.Orders.OrderProductDTO()
+                        new OrderProductDTO()
                         {
                             Product = new ProductDTO()
                             {
@@ -137,10 +134,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(testCountry, Order.Country);
             Assert.Equal(OrderState.Pending, Order.OrderState);
             Assert.Equal(2, Order.OrdersProducts.Count);
-            Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId|| TestProduct.Id == Order.OrdersProducts[1].ProductId);
+            Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId || TestProduct.Id == Order.OrdersProducts[1].ProductId);
             //Assert.True(TestProduct2.Id.Value == Order.OrdersProducts[0].ProductId.Value,$"{TestProduct.Id}, expected {Order.OrdersProducts[0].ProductId} or {Order.OrdersProducts[1].ProductId}");
-            Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount,$"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
-            Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount,$"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
+            Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount, $"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
+            Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount, $"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
         }
         [Fact]
         public void GetAllOrdersTest()
@@ -156,48 +153,48 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
             Assert.True(result.IsCompletedSuccessfully);
             var Orders = dbContext.Orders.ToList();
-            Assert.Equal(result.Result.TotalCount,Orders.Count());
+            Assert.Equal(result.Result.TotalCount, Orders.Count());
 
             command = new AllOrders()
             {
                 FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
             };
-            command.FilterBy.Add(OrdersFilterFieldDTO.OrderState,"Cancelled");
-            
+            command.FilterBy.Add(OrdersFilterFieldDTO.OrderState, "Cancelled");
+
             result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
             Orders = dbContext.Orders.Where(o => o.OrderState == OrderState.Cancelled).ToList();
-            Assert.Equal(result.Result.TotalCount,Orders.Count());
-            
+            Assert.Equal(result.Result.TotalCount, Orders.Count());
+
             command = new AllOrders()
             {
                 FilterBy = new Dictionary<OrdersFilterFieldDTO, string>(),
             };
-            command.FilterBy.Add(OrdersFilterFieldDTO.City,"test_city2");
-            
+            command.FilterBy.Add(OrdersFilterFieldDTO.City, "test_city2");
+
             result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
             Orders = dbContext.Orders.Where(o => o.City == "test_city2").ToList();
-            Assert.Equal(result.Result.TotalCount,Orders.Count());
+            Assert.Equal(result.Result.TotalCount, Orders.Count());
         }
         [Fact]
         public void OrderByIdTest()
-        { 
+        {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new OrderByIdQH(dbContext);
-            var command = new OrderById(){Id = TestOrder.Id};
+            var command = new OrderById() { Id = TestOrder.Id };
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
-            var Order = dbContext.Orders.Where(o => o.Id == TestOrder.Id).Include( o => o.OrdersProducts).FirstOrDefault();
+            var Order = dbContext.Orders.Where(o => o.Id == TestOrder.Id).Include(o => o.OrdersProducts).FirstOrDefault();
             Assert.Equal(TestOrder.Street, Order.Street);
             Assert.Equal(TestOrder.City, Order.City);
             Assert.Equal(TestOrder.State, Order.State);
             Assert.Equal(TestOrder.Country, Order.Country);
-            Assert.Equal(TestOrder.UserId,Order.UserId);
+            Assert.Equal(TestOrder.UserId, Order.UserId);
             Assert.Equal(TestOrder.OrdersProducts.Count(), Order.OrdersProducts.Count);
             var prod1 = TestOrder.OrdersProducts[0];
             var prod2 = TestOrder.OrdersProducts[1];
@@ -216,12 +213,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             {
                 Id = TestOrder.Id,
                 OrderState = OrderState.InProgress.ToString(),
-            };      
+            };
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
             var Order = dbContext.Orders.Where(c => c.Id == TestOrder.Id).FirstOrDefault();
-            Assert.Equal(OrderState.InProgress,Order.OrderState);
+            Assert.Equal(OrderState.InProgress, Order.OrderState);
         }
     }
 }

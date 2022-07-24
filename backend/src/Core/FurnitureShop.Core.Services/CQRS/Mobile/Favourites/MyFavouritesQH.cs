@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Favourites;
 using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                     CategoryId = p.CategoryId,
                     InFavourites = true,
                     InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    
+
                     Id = p.Id,
                 })
                 .SortBy(query)
