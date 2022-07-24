@@ -101,9 +101,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     City = testCity,
                     Street = testStreet,
                     PostalCode = testPostalCode,
-                    OrderProducts = new List<OrderProductDTO>
+                    Products = new List<ProductInOrderDTO>
                     {
-                        new OrderProductDTO()
+                        new ProductInOrderDTO()
                         {
                             Product = new ProductDTO()
                             {
@@ -111,7 +111,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                             },
                             Amount = testProductAmount,
                         },
-                        new OrderProductDTO()
+                        new ProductInOrderDTO()
                         {
                             Product = new ProductDTO()
                             {

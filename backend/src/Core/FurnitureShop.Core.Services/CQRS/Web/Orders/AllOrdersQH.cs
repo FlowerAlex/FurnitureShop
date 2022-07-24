@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Contracts.Web.Orders;
+using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -36,16 +37,15 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                     OrderState = p.OrderState.ToString(),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-                    OrderProducts = dbContext.Products
+                    Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
                         .Join(
-                            dbContext.OrderProduct,
-                            prod => prod.Id,
+                            dbContext.Products,
                             ord => ord.ProductId,
-                            (prod, ord) => new OrderProductDTO
+                            prod => prod.Id,
+                            (ord, prod) => new ProductInOrderDTO
                             {
                                 Amount = ord.Amount,
-                                OrderId = ord.OrderId.Value,
-                                Product = new FurnitureShop.Core.Contracts.Web.Products.ProductDTO
+                                Product = new ProductDTO
                                 {
                                     Id = prod.Id,
                                     Name = prod.Name,
@@ -54,7 +54,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                                     CategoryId = prod.CategoryId,
                                 }
                             }
-                        ).Where(ord => ord.OrderId == p.Id).ToList(),
+                        ).ToList(),
 
                 })
                 .SortBy(query)

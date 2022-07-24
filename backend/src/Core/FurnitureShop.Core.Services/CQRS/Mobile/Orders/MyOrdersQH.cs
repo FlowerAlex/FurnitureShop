@@ -38,15 +38,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     OrderState = p.OrderState.ToString(),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-                    OrderProducts = dbContext.Products
+                    Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
                         .Join(
-                            dbContext.OrderProduct,
-                            prod => prod.Id,
+                            dbContext.Products,
                             ord => ord.ProductId,
-                            (prod, ord) => new OrderProductDTO
+                            prod => prod.Id,
+                            (ord, prod) => new ProductInOrderDTO
                             {
                                 Amount = ord.Amount,
-                                OrderId = ord.OrderId.Value,
                                 Product = new ProductDTO
                                 {
                                     Id = prod.Id,
@@ -56,7 +55,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                                     CategoryId = prod.CategoryId,
                                 }
                             }
-                        ).Where(ord => ord.OrderId == p.Id).ToList(),
+                        ).ToList(),
 
                 })
                 .SortBy(query)
