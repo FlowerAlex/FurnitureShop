@@ -1,13 +1,16 @@
 using System;
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
-using FurnitureShop.Core.Contracts.Mobile.Reviews;
 
-namespace FurnitureShop.Core.Contracts.Shared.Reviews
+namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
-    public class ReviewById : IRemoteQuery<ReviewDTO?>
+    public class DeleteReview : IRemoteCommand
     {
         public Guid Id { get; set; }
+        public static class ErrorCodes
+        {
+
+        }
     }
 }

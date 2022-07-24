@@ -1,5 +1,6 @@
 using System;
 using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Shared;
 using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Favourites

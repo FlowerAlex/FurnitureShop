@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using LeanCode.CQRS;
+using FurnitureShop.Core.Contracts.Shared;
 using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Contracts.Mobile.Products;
-using FurnitureShop.Core.Contracts.Shared.Orders;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 

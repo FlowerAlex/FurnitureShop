@@ -2,10 +2,8 @@ using System;
 using System.Linq;
 using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
-using FurnitureShop.Core.Contracts.Shared.Reviews;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS.Mobile.Reviews;
-using FurnitureShop.Core.Services.CQRS.Shared.Reviews;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +21,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         };
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100);
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
-        
+
         private string NewReviewText = "new Review";
         private Guid NewReviewProductId = Guid.Parse("a063c7ce-b477-4d27-ac16-c771b9fef4e0");
         private double NewReviewRating = 3;
@@ -36,7 +34,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.Products.Add(TestProduct);
             context.SaveChanges();
             TestReview.ProductId = context.Products.
-                Where(c => c.Name == TestProduct.Name).FirstOrDefault().Id;   
+                Where(c => c.Name == TestProduct.Name).FirstOrDefault().Id;
             context.Reviews.Add(TestReview);
             context.SaveChanges();
         }
@@ -61,16 +59,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new ReviewByIdQH(dbContext);
             var command = new ReviewById { Id = TestReview.Id };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Review = result.Result;
             Assert.NotNull(Review);
             Assert.Equal(TestReview.Text, Review.Text);
             Assert.Equal(TestReview.Rating, Review.Rating);
-            Assert.Equal(TestReview.ProductId, Review.ProductId  );
-            Assert.Equal(TestReview.CreatedDate, Review.CreatedDate  );
+            Assert.Equal(TestReview.ProductId, Review.ProductId);
+            Assert.Equal(TestReview.CreatedDate, Review.CreatedDate);
             Assert.Equal(TestReview.Id, Review.Id);
         }
         [Fact]
@@ -79,7 +77,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateReviewCH(dbContext);
-            var command = new CreateReview {
+            var command = new CreateReview
+            {
                 NewReview = new ReviewDTOBase
                 {
                     Text = NewReviewText,
@@ -88,15 +87,15 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Rating = NewReviewRating,
                 }
             };
-            
+
             var result = handler.ExecuteAsync(coreContext, command);
-            
+
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Where(c => c.Text == NewReviewText).FirstOrDefault();
             Assert.NotNull(Review);
             Assert.Equal(NewReviewRating, Review.Rating);
             Assert.Equal(NewReviewText, Review.Text);
-            Assert.Equal(NewReviewProductId,Review.ProductId.Value);
+            Assert.Equal(NewReviewProductId, Review.ProductId.Value);
         }
         [Fact]
         public void DeleteReviewTest()
@@ -104,10 +103,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteReviewCH(dbContext);
-            var command = new DeleteReview{Id = TestReview.Id};
-            
-            var result = handler.ExecuteAsync(coreContext,command);
-            
+            var command = new DeleteReview { Id = TestReview.Id };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Find(TestReview.Id);
             Assert.Null(Review);
@@ -118,17 +117,19 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateReviewCH(dbContext);
-            var command = new UpdateReview{
+            var command = new UpdateReview
+            {
                 UpdatedReview = new ReviewDTO
                 {
                     Id = TestReview.Id,
                     Text = NewReviewText,
                     UserId = TestUserId,
                     Rating = NewReviewRating,
-                }};
-            
-            var result = handler.ExecuteAsync(coreContext,command);
-            
+                }
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+
             Assert.True(result.IsCompletedSuccessfully);
             var Review = dbContext.Reviews.Where(c => c.Id == TestReview.Id).FirstOrDefault();
             Assert.NotNull(Review);

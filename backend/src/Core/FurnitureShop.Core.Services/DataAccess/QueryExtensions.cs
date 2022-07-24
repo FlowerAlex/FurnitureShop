@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts;
+using FurnitureShop.Core.Contracts.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.DataAccess
