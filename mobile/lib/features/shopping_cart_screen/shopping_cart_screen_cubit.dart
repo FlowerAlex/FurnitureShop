@@ -19,7 +19,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
 
   Future<void> fetch({int page = 0}) async {
     try {
-      final categories = await _cqrs.get(GetAllCategories());
+      final categories = await _cqrs.get(AllCategories());
       final result = await _cqrs.get(ShoppingCart());
 
       if (result != null) {

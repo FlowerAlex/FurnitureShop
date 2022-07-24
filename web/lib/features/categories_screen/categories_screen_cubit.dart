@@ -21,7 +21,7 @@ class CategoriesScreenCubit extends Cubit<CategoriesScreenState> {
   Future<void> init() async {
     try {
       final result = await _cqrs.get(
-        GetAllCategories(),
+        AllCategories(),
       );
 
       final categories = result.split(pageSize).asMap();

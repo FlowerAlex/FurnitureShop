@@ -1,5 +1,4 @@
 using System;
-using FurnitureShop.Core.Services.CQRS.Mobile.Users;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

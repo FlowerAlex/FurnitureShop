@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Contracts.Shared.Categories;
 using FurnitureShop.Core.Contracts.Web.Categories;
-using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 

@@ -45,10 +45,9 @@ class ProductTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.productInfo.name),
+                    Text(product.name),
                     AvaregeScore(
-                        rating: product.productInfo.averageRating ??
-                            0), // get from product
+                        rating: product.averageRating ?? 0), // get from product
                   ],
                 ),
                 Expanded(
@@ -80,7 +79,7 @@ class ProductTile extends StatelessWidget {
                           // ],
                         ),
                         Text(
-                          product.productInfo.price.toString() + '\$',
+                          product.price.toString() + '\$',
                         ),
                       ],
                     ),

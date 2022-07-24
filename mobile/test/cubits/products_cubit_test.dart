@@ -16,8 +16,8 @@ void main() {
       late MockCQRS cqrs;
 
       setUpAll(() {
-        registerFallbackValue(GetAllCategories());
-        registerFallbackValue(GetAllProducts(
+        registerFallbackValue(AllCategories());
+        registerFallbackValue(AllProducts(
           sortByDescending: false,
           pageSize: 10,
           pageNumber: 0,
@@ -50,10 +50,11 @@ void main() {
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch successfully',
         build: () {
-          when(() => cqrs.get<List<CategoryDTO>>(
-              any(that: isA<GetAllCategories>()))).thenAnswer((_) async => []);
+          when(() =>
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+              .thenAnswer((_) async => []);
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<GetAllProducts>())))
+                  any(that: isA<AllProducts>())))
               .thenAnswer(
                   (_) async => PaginatedResult(items: [], totalCount: 0));
           return buildCubit();
@@ -73,11 +74,12 @@ void main() {
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch unsuccessfully',
         build: () {
-          when(() => cqrs.get<List<CategoryDTO>>(
-              any(that: isA<GetAllCategories>()))).thenThrow(Exception(''));
+          when(() =>
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+              .thenThrow(Exception(''));
 
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-              any(that: isA<GetAllProducts>()))).thenThrow(Exception(''));
+              any(that: isA<AllProducts>()))).thenThrow(Exception(''));
 
           return buildCubit();
         },
@@ -91,11 +93,12 @@ void main() {
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch for 2 pages successfully',
         build: () {
-          when(() => cqrs.get<List<CategoryDTO>>(
-              any(that: isA<GetAllCategories>()))).thenAnswer((_) async => []);
+          when(() =>
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+              .thenAnswer((_) async => []);
 
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<GetAllProducts>())))
+                  any(that: isA<AllProducts>())))
               .thenAnswer((_) async =>
                   PaginatedResult(items: [productDTO1Test], totalCount: 2));
 

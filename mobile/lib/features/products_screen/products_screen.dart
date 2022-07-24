@@ -48,7 +48,7 @@ class ProductsScreen extends HookWidget {
                         children: [
                           InkWell(
                             onTap: () => cubit.likeProduct(product.id),
-                            child: product.productInfo.inFavourites
+                            child: product.inFavourites
                                 ? Assets.icons.selectedHeart.image()
                                 : Assets.icons.heart.image(),
                           ),
@@ -56,7 +56,7 @@ class ProductsScreen extends HookWidget {
                           InkWell(
                             onTap: () =>
                                 cubit.addProductToShoppingCart(product.id),
-                            child: product.productInfo.inShoppingCart
+                            child: product.inShoppingCart
                                 ? Assets.icons.selectedAddToCart.image()
                                 : Assets.icons.addToCart.image(),
                           ),

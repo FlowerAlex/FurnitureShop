@@ -24,7 +24,7 @@ class FavoritesScreen extends HookWidget {
           child: Column(
             children: [
               CustomAppBar(
-                title: 'Products',
+                title: 'Favorites',
                 withFilter: true,
                 textEditingController: searchTextEditingController,
                 categories: state.categories,
@@ -55,7 +55,7 @@ class FavoritesScreen extends HookWidget {
                           InkWell(
                             onTap: () =>
                                 cubit.addProductToShoppingCart(product.id),
-                            child: product.productInfo.inShoppingCart
+                            child: product.inShoppingCart
                                 ? Assets.icons.selectedAddToCart.image()
                                 : Assets.icons.addToCart.image(),
                           ),

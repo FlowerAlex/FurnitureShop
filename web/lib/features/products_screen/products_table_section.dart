@@ -4,6 +4,7 @@ import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/product_form_body/product_form_body.dart';
 import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
+import 'package:furniture_shop/utils/app_dialog.dart';
 import 'package:furniture_shop/utils/table_section.dart';
 
 class ProductsTableSection extends StatelessWidget {
@@ -26,7 +27,13 @@ class ProductsTableSection extends StatelessWidget {
       onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
       onNextPressed: () => cubit.fetch(page: state.currentPage + 1),
       createItemButtonLabel: 'Create new product',
-      createItemPressed: ProductFormBody.new,
+      createItemPressed: () {
+        AppDialog.show<ProductDTO>(
+          context: context,
+          titleText: 'Create product form',
+          child: const ProductFormBody(),
+        );
+      },
       itemBuilder: (product) => _ProductItem(
         product: product,
         onPressed: () {},
@@ -47,7 +54,7 @@ class _ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    final imageUrl = product.productInfo.previewPhotoURL;
+    final imageUrl = product.previewPhotoURL;
 
     return Material(
       child: InkWell(
@@ -65,8 +72,8 @@ class _ProductItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(product.productInfo.name),
-                  AvaregeScore(rating: product.productInfo.averageRating ?? 0),
+                  Text(product.name),
+                  AvaregeScore(rating: product.averageRating ?? 0),
                 ],
               ),
             ],

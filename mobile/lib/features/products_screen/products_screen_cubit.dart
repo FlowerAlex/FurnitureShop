@@ -38,9 +38,9 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     }
 
     try {
-      final categories = await _cqrs.get(GetAllCategories());
+      final categories = await _cqrs.get(AllCategories());
       final products = await _cqrs.get(
-        GetAllProducts(
+        AllProducts(
           pageNumber: page,
           pageSize: pageSize,
           sortByDescending: false,
@@ -89,7 +89,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         final product =
             state.products.firstWhere((element) => element.id == productId);
 
-        if (product.productInfo.inFavourites) {
+        if (product.inFavourites) {
           await _cqrs.run(RemoveFromFavourites(productId: productId));
         } else {
           await _cqrs.run(AddToFavourites(productId: productId));
@@ -114,7 +114,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       final product =
           state.products.firstWhere((element) => element.id == productId);
 
-      if (product.productInfo.inShoppingCart) {
+      if (product.inShoppingCart) {
         await _cqrs.run(RemoveProductFromShoppingCart(
           productId: productId,
         ));
