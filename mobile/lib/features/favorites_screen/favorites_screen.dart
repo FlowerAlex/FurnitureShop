@@ -14,8 +14,6 @@ class FavoritesScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchTextEditingController = useTextEditingController();
-
     final cubit = context.watch<FavouritesScreenCubit>();
 
     return Scaffold(
@@ -26,7 +24,6 @@ class FavoritesScreen extends HookWidget {
               CustomAppBar(
                 title: 'Favorites',
                 withFilter: true,
-                textEditingController: searchTextEditingController,
                 categories: state.categories,
                 onChangeCategoryPressed: cubit.changeActiveCategory,
                 activeCategoryId: state.activeCategory?.id,

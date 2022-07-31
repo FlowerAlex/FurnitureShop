@@ -9,13 +9,11 @@ import 'package:furniture_shop/features/shopping_cart_screen/shopping_cart_scree
 import 'package:furniture_shop/resources/assets.gen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class ShoppingCartScreen extends HookWidget {
+class ShoppingCartScreen extends StatelessWidget {
   const ShoppingCartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final searchTextEditingController = useTextEditingController();
-
     final state = context.watch<ShoppingCartScreenCubit>().state;
 
     return Scaffold(
@@ -24,7 +22,6 @@ class ShoppingCartScreen extends HookWidget {
         children: [
           CustomAppBar(
             title: 'Shopping cart',
-            textEditingController: searchTextEditingController,
             withFilter: true,
             categories: state is ShoppingCartReadyState ? state.categories : [],
             activeCategoryId: state is ShoppingCartReadyState

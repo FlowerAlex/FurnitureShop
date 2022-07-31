@@ -42,7 +42,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
         name: name ?? state.name,
         price: price ?? state.price,
         description: description ?? state.description,
-        selectedCategoryId: selectedCategoryId ?? selectedCategoryId,
+        selectedCategoryId: selectedCategoryId ?? state.selectedCategoryId,
       ),
     );
   }
@@ -78,56 +78,78 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
   }
 
   Future<void> createProduct() async {
-    // _cqrs.run(
-    //   CreateProduct(
-    //     ProductForm: ProductFormDTO(),
-    //   ),
-    // );
-  }
-
-  // use in create product function
-  // ignore: unused_element
-  Future<void> _uploadFiles() async {
     final state = this.state;
     if (state is! ProductFormBodyStateReady) {
       return;
     }
 
-    try {
-      final currentImage = state.currentImage;
+    final name = state.name;
+    final currentImage = state.currentImage;
+    final currentModel = state.currentModel;
+    final description = state.description;
+    final price = state.price;
+    final selectedCategoryId = state.selectedCategoryId;
 
-      var storage = AzureStorage.parse(
-          'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net');
+    if (name != null &&
+        currentImage != null &&
+        currentModel != null &&
+        description != null &&
+        price != null &&
+        selectedCategoryId != null) {
+      try {
+        final currentImage = state.currentImage;
+        final currentModel = state.currentModel;
 
-      if (currentImage != null) {
-        final result = await _cqrs.get(PhotoUploadId());
+        var storage = AzureStorage.parse(
+            'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net');
 
-        final contentType = p.extension(currentImage.name).replaceAll('.', '');
+        String? blobImageId;
+        if (currentImage != null) {
+          final blobImageId = await _cqrs.get(PhotoUploadId());
 
-        await storage.putBlob(
-          '/images/$result',
-          bodyBytes: currentImage.bytes,
-          contentType: contentType,
-          type: BlobType.BlockBlob,
+          final contentType =
+              p.extension(currentImage.name).replaceAll('.', '');
+
+          await storage.putBlob(
+            '/images/$blobImageId',
+            bodyBytes: currentImage.bytes,
+            contentType: contentType,
+            type: BlobType.BlockBlob,
+          );
+        }
+
+        String? blobModelId;
+        if (currentModel != null) {
+          final blobModelId = await _cqrs.get(ModelUploadId());
+
+          final contentType =
+              p.extension(currentModel.name).replaceAll('.', '');
+
+          await storage.putBlob(
+            '/models/$blobModelId',
+            bodyBytes: currentModel.bytes,
+            contentType: contentType,
+            type: BlobType.BlockBlob,
+          );
+        }
+
+        await _cqrs.run(
+          CreateProduct(
+            newProduct: ProducDetailsDTOBase(
+              name: name,
+              description: description,
+              price: double.parse(price),
+              averageRating: 1,
+              categoryId: selectedCategoryId,
+              modelUrl: blobModelId,
+              previewPhotoURL: blobImageId,
+            ),
+          ),
         );
+      } catch (err, st) {
+        _logger.severe(err, st);
+        emit(ProductFormBodyState.error(error: err.toString()));
       }
-      final currentModel = state.currentModel;
-
-      if (currentModel != null) {
-        final result = await _cqrs.get(ModelUploadId());
-
-        final contentType = p.extension(currentModel.name).replaceAll('.', '');
-
-        await storage.putBlob(
-          '/models/$result',
-          bodyBytes: currentModel.bytes,
-          contentType: contentType,
-          type: BlobType.BlockBlob,
-        );
-      }
-    } catch (err, st) {
-      _logger.severe(err, st);
-      emit(ProductFormBodyState.error(error: err.toString()));
     }
   }
 }

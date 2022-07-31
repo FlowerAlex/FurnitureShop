@@ -23,7 +23,8 @@ class _$ProductsScreenStateTearOff {
       int currentPage = 0,
       int totalCount = 0,
       CategoryDTO? activeCategory,
-      bool isLoading = false}) {
+      bool isLoading = false,
+      String search = ''}) {
     return ProductsScreenReadyState(
       categories: categories,
       products: products,
@@ -31,6 +32,7 @@ class _$ProductsScreenStateTearOff {
       totalCount: totalCount,
       activeCategory: activeCategory,
       isLoading: isLoading,
+      search: search,
     );
   }
 
@@ -54,7 +56,8 @@ mixin _$ProductsScreenState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)
+            bool isLoading,
+            String search)
         ready,
     required TResult Function(String errorMessage) error,
   }) =>
@@ -67,7 +70,8 @@ mixin _$ProductsScreenState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
   }) =>
@@ -80,7 +84,8 @@ mixin _$ProductsScreenState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
     required TResult orElse(),
@@ -135,7 +140,8 @@ abstract class $ProductsScreenReadyStateCopyWith<$Res> {
       int currentPage,
       int totalCount,
       CategoryDTO? activeCategory,
-      bool isLoading});
+      bool isLoading,
+      String search});
 }
 
 /// @nodoc
@@ -158,6 +164,7 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
     Object? totalCount = freezed,
     Object? activeCategory = freezed,
     Object? isLoading = freezed,
+    Object? search = freezed,
   }) {
     return _then(ProductsScreenReadyState(
       categories: categories == freezed
@@ -184,6 +191,10 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      search: search == freezed
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -197,7 +208,8 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
       this.currentPage = 0,
       this.totalCount = 0,
       this.activeCategory,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.search = ''});
 
   @JsonKey()
   @override
@@ -216,10 +228,13 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   @JsonKey()
   @override
   final bool isLoading;
+  @JsonKey()
+  @override
+  final String search;
 
   @override
   String toString() {
-    return 'ProductsScreenState.ready(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory, isLoading: $isLoading)';
+    return 'ProductsScreenState.ready(categories: $categories, products: $products, currentPage: $currentPage, totalCount: $totalCount, activeCategory: $activeCategory, isLoading: $isLoading, search: $search)';
   }
 
   @override
@@ -236,7 +251,8 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
                 .equals(other.totalCount, totalCount) &&
             const DeepCollectionEquality()
                 .equals(other.activeCategory, activeCategory) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading));
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
+            const DeepCollectionEquality().equals(other.search, search));
   }
 
   @override
@@ -247,7 +263,8 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount),
       const DeepCollectionEquality().hash(activeCategory),
-      const DeepCollectionEquality().hash(isLoading));
+      const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(search));
 
   @JsonKey(ignore: true)
   @override
@@ -264,12 +281,13 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)
+            bool isLoading,
+            String search)
         ready,
     required TResult Function(String errorMessage) error,
   }) {
     return ready(categories, products, currentPage, totalCount, activeCategory,
-        isLoading);
+        isLoading, search);
   }
 
   @override
@@ -281,12 +299,13 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
   }) {
     return ready?.call(categories, products, currentPage, totalCount,
-        activeCategory, isLoading);
+        activeCategory, isLoading, search);
   }
 
   @override
@@ -298,14 +317,15 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
       return ready(categories, products, currentPage, totalCount,
-          activeCategory, isLoading);
+          activeCategory, isLoading, search);
     }
     return orElse();
   }
@@ -349,7 +369,8 @@ abstract class ProductsScreenReadyState implements ProductsScreenState {
       int currentPage,
       int totalCount,
       CategoryDTO? activeCategory,
-      bool isLoading}) = _$ProductsScreenReadyState;
+      bool isLoading,
+      String search}) = _$ProductsScreenReadyState;
 
   List<CategoryDTO> get categories;
   List<ProductDTO> get products;
@@ -357,6 +378,7 @@ abstract class ProductsScreenReadyState implements ProductsScreenState {
   int get totalCount;
   CategoryDTO? get activeCategory;
   bool get isLoading;
+  String get search;
   @JsonKey(ignore: true)
   $ProductsScreenReadyStateCopyWith<ProductsScreenReadyState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -436,7 +458,8 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)
+            bool isLoading,
+            String search)
         ready,
     required TResult Function(String errorMessage) error,
   }) {
@@ -452,7 +475,8 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
   }) {
@@ -468,7 +492,8 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
-            bool isLoading)?
+            bool isLoading,
+            String search)?
         ready,
     TResult Function(String errorMessage)? error,
     required TResult orElse(),
