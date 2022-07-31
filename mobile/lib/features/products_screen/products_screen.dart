@@ -14,8 +14,6 @@ class ProductsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchTextEditingController = useTextEditingController();
-
     final cubit = context.watch<ProductsScreenCubit>();
 
     return Scaffold(
@@ -26,7 +24,7 @@ class ProductsScreen extends HookWidget {
               CustomAppBar(
                 title: 'Products',
                 withFilter: true,
-                textEditingController: searchTextEditingController,
+                onSearchChanged: (value) => cubit.updateFilters(search: value),
                 categories: state.categories,
                 onChangeCategoryPressed: cubit.changeActiveCategory,
                 activeCategoryId: state.activeCategory?.id,

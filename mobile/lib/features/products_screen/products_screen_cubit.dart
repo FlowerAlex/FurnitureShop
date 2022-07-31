@@ -17,20 +17,23 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
   final CQRS _cqrs;
 
-  Future<void> fetch({int page = 0}) async {
-    final state = this.state;
+  Future<void> fetch({
+    int page = 0,
+    bool clearOldData = false,
+  }) async {
+    var state = this.state;
 
     if (state is! ProductsScreenReadyState) {
       emit(const ProductsScreenReadyState(isLoading: true));
     } else {
-      emit(ProductsScreenReadyState(
+      state = state.copyWith(
         isLoading: true,
-        categories: state.categories,
-        products: state.products,
-        currentPage: state.currentPage,
-        totalCount: state.totalCount,
-        activeCategory: state.activeCategory,
-      ));
+        products: clearOldData ? state.products : [],
+        currentPage: clearOldData ? state.currentPage : 0,
+        totalCount: clearOldData ? state.totalCount : 0,
+      );
+
+      emit(state);
     }
 
     if (state is! ProductsScreenReadyState) {
@@ -45,6 +48,10 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           pageSize: pageSize,
           sortByDescending: false,
           sortBy: ProductsSortFieldDTO.name,
+          categoryId: state.activeCategory?.id == allCategories.id
+              ? null
+              : state.activeCategory?.id,
+          filterBy: state.search,
         ),
       );
 
@@ -56,7 +63,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           products: page != 0
               ? [...state.products, ...products.items]
               : products.items,
-          activeCategory: allCategories,
+          activeCategory: state.activeCategory,
         ),
       );
     } catch (e, _) {
@@ -68,7 +75,22 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     }
   }
 
-  void changeActiveCategory(CategoryDTO activeCategory) {
+  Future<void> updateFilters({
+    String? search,
+  }) async {
+    final state = this.state;
+    if (state is! ProductsScreenReadyState) {
+      return;
+    }
+
+    emit(state.copyWith(
+      search: search ?? state.search,
+    ));
+
+    await fetch(clearOldData: true);
+  }
+
+  Future<void> changeActiveCategory(CategoryDTO activeCategory) async {
     final state = this.state;
 
     if (state is! ProductsScreenReadyState) {
@@ -76,6 +98,8 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     }
 
     emit(state.copyWith(activeCategory: activeCategory));
+
+    await fetch(clearOldData: true);
   }
 
   Future<void> likeProduct(String productId) async {
@@ -141,6 +165,7 @@ class ProductsScreenState with _$ProductsScreenState {
     @Default(0) int totalCount,
     CategoryDTO? activeCategory,
     @Default(false) bool isLoading,
+    @Default('') String search,
   }) = ProductsScreenReadyState;
   const factory ProductsScreenState.error({
     required String errorMessage,

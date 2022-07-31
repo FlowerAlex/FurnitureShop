@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
     this.categories,
     this.withFilter = false,
     this.onChangeCategoryPressed,
-    this.textEditingController,
+    this.onSearchChanged,
   })  : assert((categories != null &&
                 onChangeCategoryPressed != null &&
                 withFilter == true) ||
@@ -27,11 +27,11 @@ class CustomAppBar extends StatelessWidget {
 
   final String title;
   final bool withFilter;
-  final TextEditingController? textEditingController;
 
   final String? activeCategoryId;
   final List<CategoryDTO>? categories;
   final ValueChanged<CategoryDTO>? onChangeCategoryPressed;
+  final ValueChanged<String>? onSearchChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +60,15 @@ class CustomAppBar extends StatelessWidget {
               style: AppTextStyles.reg16,
             ),
           ),
-          if (textEditingController != null) ...[
+          if (onSearchChanged != null) ...[
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Row(
                 children: [
                   Flexible(
                     child: AppTextField(
-                      controller: textEditingController,
                       hintText: 'Search',
+                      onChanged: onSearchChanged,
                       prefix: AssetIcon(
                         asset: Assets.icons.loupe,
                       ),

@@ -16,6 +16,7 @@ class AppTextField extends StatelessWidget {
     this.readOnly = false,
     this.autofillHints,
     this.keyboardType,
+    this.onChanged,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -29,6 +30,7 @@ class AppTextField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final bool autocorrect;
   final TextInputType? keyboardType;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class AppTextField extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
+            onChanged: onChanged,
             cursorColor: AppColors.primaryText,
             obscureText: obscureText,
             readOnly: readOnly,

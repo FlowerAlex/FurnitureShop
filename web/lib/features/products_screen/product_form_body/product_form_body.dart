@@ -67,6 +67,9 @@ class _ProductFormBodyReady extends HookWidget {
                 const Text('Name'),
                 TextFormField(
                   validator: Validators.required('Enter value'),
+                  onChanged: (value) => cubit.updateProduct(
+                    name: value,
+                  ),
                 ),
               ],
             ),
@@ -77,6 +80,9 @@ class _ProductFormBodyReady extends HookWidget {
                 const Text('Price'),
                 TextFormField(
                   validator: Validators.required('Enter value'),
+                  onChanged: (value) => cubit.updateProduct(
+                    price: value,
+                  ),
                 ),
               ],
             ),
@@ -87,6 +93,9 @@ class _ProductFormBodyReady extends HookWidget {
                 const Text('Description'),
                 TextFormField(
                   validator: Validators.required('Enter value'),
+                  onChanged: (value) => cubit.updateProduct(
+                    description: value,
+                  ),
                   maxLines: null,
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_show_dialog.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
@@ -16,42 +17,67 @@ Future<T?> showFilterDialog<T>(
       context: context,
       title: 'Filter details',
       bottomWidgetBuilder: (context) {
-        final updatedCategories = [allCategories, ...categories];
-
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.5,
-          ),
-          child: SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const Text(
-                    'Categories',
-                    style: AppTextStyles.med16,
-                  ),
-                  const SizedBox(height: 8),
-                  Column(
-                    children: [
-                      for (final category in updatedCategories) ...[
-                        FilterCategoryTile(
-                          active: activeCategoryId == category.id,
-                          categoryName: category.name,
-                          onPressed: () => onChangeCategoryPressed(category),
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+        return _BottomFilterDialogBody(
+          categories: categories,
+          onChangeCategoryPressed: onChangeCategoryPressed,
         );
       },
     );
+
+class _BottomFilterDialogBody extends HookWidget {
+  const _BottomFilterDialogBody({
+    Key? key,
+    required this.categories,
+    required this.onChangeCategoryPressed,
+  }) : super(key: key);
+
+  final List<CategoryDTO> categories;
+  final ValueChanged<CategoryDTO> onChangeCategoryPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final updatedCategories = [allCategories, ...categories];
+    final activeCategoryId = useState(allCategories.id);
+
+    useEffect(() {
+      onChangeCategoryPressed(updatedCategories
+          .firstWhere((category) => category.id == activeCategoryId.value));
+      return null;
+    }, [activeCategoryId.value]);
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.5,
+      ),
+      child: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const Text(
+                'Categories',
+                style: AppTextStyles.med16,
+              ),
+              const SizedBox(height: 8),
+              Column(
+                children: [
+                  for (final category in updatedCategories) ...[
+                    FilterCategoryTile(
+                        active: activeCategoryId.value == category.id,
+                        categoryName: category.name,
+                        onPressed: () => activeCategoryId.value = category.id),
+                    const SizedBox(height: 8),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class FilterCategoryTile extends StatelessWidget {
   const FilterCategoryTile({
