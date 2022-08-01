@@ -28,9 +28,9 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     } else {
       state = state.copyWith(
         isLoading: true,
-        products: clearOldData ? state.products : [],
-        currentPage: clearOldData ? state.currentPage : 0,
-        totalCount: clearOldData ? state.totalCount : 0,
+        products: !clearOldData ? state.products : [],
+        currentPage: !clearOldData ? state.currentPage : 0,
+        totalCount: !clearOldData ? state.totalCount : 0,
       );
 
       emit(state);

@@ -4,7 +4,8 @@ import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/product_form_body/product_form_body.dart';
 import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
-import 'package:furniture_shop/utils/app_dialog.dart';
+import 'package:furniture_shop/resources/app_colors.dart';
+import 'package:furniture_shop/utils/dialogs/app_dialog.dart';
 import 'package:furniture_shop/utils/table_section.dart';
 
 class ProductsTableSection extends StatelessWidget {
@@ -27,16 +28,19 @@ class ProductsTableSection extends StatelessWidget {
       onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
       onNextPressed: () => cubit.fetch(page: state.currentPage + 1),
       createItemButtonLabel: 'Create new product',
-      createItemPressed: () {
-        AppDialog.show<ProductDTO>(
+      createItemPressed: () async {
+        await AppDialog.show<void>(
           context: context,
           titleText: 'Create product form',
           child: const ProductFormBody(),
         );
+
+        await cubit.fetch();
       },
       itemBuilder: (product) => _ProductItem(
         product: product,
-        onPressed: () {},
+        isCurrent: product.id == state.currentProduct?.id,
+        onPressed: () => cubit.changeCurrentProduct(productId: product.id),
       ),
     );
   }
@@ -46,17 +50,21 @@ class _ProductItem extends StatelessWidget {
   const _ProductItem({
     Key? key,
     required this.product,
+    required this.isCurrent,
     this.onPressed,
   }) : super(key: key);
 
   final ProductDTO product;
   final VoidCallback? onPressed;
+  final bool isCurrent;
+
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    final imageUrl = product.previewPhotoURL;
+    final previewPhotoId = product.previewPhotoId;
 
     return Material(
+      color: isCurrent ? AppColors.grey1 : null,
       child: InkWell(
         onTap: onPressed,
         child: SizedBox(
@@ -64,7 +72,7 @@ class _ProductItem extends StatelessWidget {
           child: Row(
             children: [
               Image.network(
-                'https://images.pexels.com/photos/5591708/pexels-photo-5591708.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                'https://furnitureshopstorage.blob.core.windows.net/images/$previewPhotoId',
                 fit: BoxFit.contain,
               ),
               const SizedBox(width: 20),

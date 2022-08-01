@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/features/product_details/product_details_screen.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 
 class ProductTile extends StatelessWidget {
@@ -16,10 +17,13 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _productTilePressed() {}
+    void productTilePressed() {
+      Navigator.of(context)
+          .push(ProductDetailsScreenRoute(productId: product.id));
+    }
 
     return InkWell(
-      onTap: _productTilePressed,
+      onTap: productTilePressed,
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -59,24 +63,6 @@ class ProductTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: children,
-                          // [
-                          //   if (productLikeClicked != null)
-                          //     InkWell(
-                          //       onTap: productLikeClicked,
-                          //       child: product.productInfo.inFavourites
-                          //           ? Assets.icons.selectedHeart.image()
-                          //           : Assets.icons.heart.image(),
-                          //     ),
-                          //   if (productShoppingCartClicked != null) ...[
-                          //     const SizedBox(width: 12),
-                          //     InkWell(
-                          //       onTap: productShoppingCartClicked,
-                          //       child: product.productInfo.inShoppingCart
-                          //           ? Assets.icons.selectedAddToCart.image()
-                          //           : Assets.icons.addToCart.image(),
-                          //     ),
-                          //   ],
-                          // ],
                         ),
                         Text(
                           product.price.toString() + '\$',

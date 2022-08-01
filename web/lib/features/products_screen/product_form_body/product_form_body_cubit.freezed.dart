@@ -36,6 +36,10 @@ class _$ProductFormBodyStateTearOff {
     );
   }
 
+  ProductFormBodyStateFinished finished() {
+    return const ProductFormBodyStateFinished();
+  }
+
   ProductFormBodyStateError error({required String error}) {
     return ProductFormBodyStateError(
       error: error,
@@ -59,6 +63,7 @@ mixin _$ProductFormBodyState {
             PlatformFile? currentImage,
             PlatformFile? currentModel)
         ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,6 +78,7 @@ mixin _$ProductFormBodyState {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -87,6 +93,7 @@ mixin _$ProductFormBodyState {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -94,18 +101,21 @@ mixin _$ProductFormBodyState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ProductFormBodyStateReady value) ready,
+    required TResult Function(ProductFormBodyStateFinished value) finished,
     required TResult Function(ProductFormBodyStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
     required TResult orElse(),
   }) =>
@@ -280,6 +290,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
             PlatformFile? currentImage,
             PlatformFile? currentModel)
         ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) {
     return ready(categories, name, price, description, selectedCategoryId,
@@ -298,6 +309,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) {
     return ready?.call(categories, name, price, description, selectedCategoryId,
@@ -316,6 +328,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -330,6 +343,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ProductFormBodyStateReady value) ready,
+    required TResult Function(ProductFormBodyStateFinished value) finished,
     required TResult Function(ProductFormBodyStateError value) error,
   }) {
     return ready(this);
@@ -339,6 +353,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
   }) {
     return ready?.call(this);
@@ -348,6 +363,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
     required TResult orElse(),
   }) {
@@ -378,6 +394,145 @@ abstract class ProductFormBodyStateReady implements ProductFormBodyState {
   @JsonKey(ignore: true)
   $ProductFormBodyStateReadyCopyWith<ProductFormBodyStateReady> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProductFormBodyStateFinishedCopyWith<$Res> {
+  factory $ProductFormBodyStateFinishedCopyWith(
+          ProductFormBodyStateFinished value,
+          $Res Function(ProductFormBodyStateFinished) then) =
+      _$ProductFormBodyStateFinishedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ProductFormBodyStateFinishedCopyWithImpl<$Res>
+    extends _$ProductFormBodyStateCopyWithImpl<$Res>
+    implements $ProductFormBodyStateFinishedCopyWith<$Res> {
+  _$ProductFormBodyStateFinishedCopyWithImpl(
+      ProductFormBodyStateFinished _value,
+      $Res Function(ProductFormBodyStateFinished) _then)
+      : super(_value, (v) => _then(v as ProductFormBodyStateFinished));
+
+  @override
+  ProductFormBodyStateFinished get _value =>
+      super._value as ProductFormBodyStateFinished;
+}
+
+/// @nodoc
+
+class _$ProductFormBodyStateFinished implements ProductFormBodyStateFinished {
+  const _$ProductFormBodyStateFinished();
+
+  @override
+  String toString() {
+    return 'ProductFormBodyState.finished()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ProductFormBodyStateFinished);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)
+        ready,
+    required TResult Function() finished,
+    required TResult Function(String error) error,
+  }) {
+    return finished();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
+    TResult Function()? finished,
+    TResult Function(String error)? error,
+  }) {
+    return finished?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<CategoryDTO> categories,
+            String? name,
+            String? price,
+            String? description,
+            String? selectedCategoryId,
+            PlatformFile? currentImage,
+            PlatformFile? currentModel)?
+        ready,
+    TResult Function()? finished,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProductFormBodyStateReady value) ready,
+    required TResult Function(ProductFormBodyStateFinished value) finished,
+    required TResult Function(ProductFormBodyStateError value) error,
+  }) {
+    return finished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
+    TResult Function(ProductFormBodyStateError value)? error,
+  }) {
+    return finished?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
+    TResult Function(ProductFormBodyStateError value)? error,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ProductFormBodyStateFinished implements ProductFormBodyState {
+  const factory ProductFormBodyStateFinished() = _$ProductFormBodyStateFinished;
 }
 
 /// @nodoc
@@ -456,6 +611,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
             PlatformFile? currentImage,
             PlatformFile? currentModel)
         ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -473,6 +629,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -490,6 +647,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
             PlatformFile? currentImage,
             PlatformFile? currentModel)?
         ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -503,6 +661,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ProductFormBodyStateReady value) ready,
+    required TResult Function(ProductFormBodyStateFinished value) finished,
     required TResult Function(ProductFormBodyStateError value) error,
   }) {
     return error(this);
@@ -512,6 +671,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
   }) {
     return error?.call(this);
@@ -521,6 +681,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProductFormBodyStateReady value)? ready,
+    TResult Function(ProductFormBodyStateFinished value)? finished,
     TResult Function(ProductFormBodyStateError value)? error,
     required TResult orElse(),
   }) {

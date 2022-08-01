@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/categories_screen/categories_screen_cubit.dart';
 import 'package:furniture_shop/features/categories_screen/category_form_body/category_form_body.dart';
-import 'package:furniture_shop/utils/app_dialog.dart';
+import 'package:furniture_shop/utils/dialogs/app_dialog.dart';
 import 'package:furniture_shop/utils/table_section.dart';
 
 class CategoriesTableSection extends StatelessWidget {

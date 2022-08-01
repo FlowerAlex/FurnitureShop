@@ -59,12 +59,46 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       );
     }
   }
+
+  Future<void> changeCurrentProduct({
+    required String productId,
+  }) async {
+    final state = this.state;
+
+    if (state is! ProductsScreenStateReady) {
+      return;
+    }
+
+    final res = await _cqrs.get(ProductById(id: productId));
+
+    emit(state.copyWith(currentProduct: res));
+  }
+
+  Future<void> deleteProduct({
+    required String productId,
+  }) async {
+    final state = this.state;
+    if (state is! ProductsScreenStateReady) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(DeleteProduct(id: productId));
+      emit(state.copyWith(currentProduct: null));
+      await fetch();
+    } catch (err, st) {
+      _logger.severe(err, st);
+      emit(ProductsScreenState.error(error: err.toString()));
+      return;
+    }
+  }
 }
 
 @freezed
 class ProductsScreenState with _$ProductsScreenState {
   const factory ProductsScreenState.ready({
     @Default(<int, List<ProductDTO>>{}) Map<int, List<ProductDTO>> products,
+    ProductDetailsDTO? currentProduct,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
   }) = ProductsScreenStateReady;

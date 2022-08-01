@@ -1,3 +1,4 @@
+import 'package:azblob/azblob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/config/app_config.dart';
@@ -34,10 +35,14 @@ Future<void> mainCommon(AppConfig config) async {
     config.apiUri.resolve('/api/'),
   );
 
+  var storage = AzureStorage.parse(
+      'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net');
+
   runApp(
     MultiProvider(
       providers: [
         Provider.value(value: cqrs),
+        Provider.value(value: storage),
         BlocProvider(
           lazy: false,
           create: (context) => AuthCubit(loginClient)..initialize(),

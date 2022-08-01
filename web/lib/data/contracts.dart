@@ -602,20 +602,36 @@ enum OrdersSortFieldDTO {
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductInOrderDTO with EquatableMixin {
+class ProductInOrderDTO with EquatableMixin implements ProductDTO {
   ProductInOrderDTO({
-    required this.product,
+    required this.name,
+    required this.price,
+    this.averageRating,
+    this.previewPhotoId,
+    this.categoryId,
+    required this.id,
     required this.amount,
   });
 
   factory ProductInOrderDTO.fromJson(Map<String, dynamic> json) =>
       _$ProductInOrderDTOFromJson(json);
 
-  final ProductDTO product;
+  final String name;
+
+  final double price;
+
+  final double? averageRating;
+
+  final String? previewPhotoId;
+
+  final String? categoryId;
+
+  final String id;
 
   final int amount;
 
-  get props => [product, amount];
+  get props =>
+      [name, price, averageRating, previewPhotoId, categoryId, id, amount];
 
   Map<String, dynamic> toJson() => _$ProductInOrderDTOToJson(this);
 }
@@ -740,10 +756,11 @@ class ProducDetailsDTOBase with EquatableMixin implements ProductDTOBase {
     required this.name,
     required this.price,
     this.averageRating,
-    this.previewPhotoURL,
+    this.previewPhotoId,
     this.categoryId,
     required this.description,
-    this.modelUrl,
+    this.modelId,
+    required this.photosIds,
   });
 
   factory ProducDetailsDTOBase.fromJson(Map<String, dynamic> json) =>
@@ -755,22 +772,25 @@ class ProducDetailsDTOBase with EquatableMixin implements ProductDTOBase {
 
   final double? averageRating;
 
-  final String? previewPhotoURL;
+  final String? previewPhotoId;
 
   final String? categoryId;
 
   final String description;
 
-  final String? modelUrl;
+  final String? modelId;
+
+  final List<String> photosIds;
 
   get props => [
         name,
         price,
         averageRating,
-        previewPhotoURL,
+        previewPhotoId,
         categoryId,
         description,
-        modelUrl
+        modelId,
+        photosIds
       ];
 
   Map<String, dynamic> toJson() => _$ProducDetailsDTOBaseToJson(this);
@@ -804,10 +824,11 @@ class ProductDetailsDTO with EquatableMixin implements ProducDetailsDTOBase {
     required this.name,
     required this.price,
     this.averageRating,
-    this.previewPhotoURL,
+    this.previewPhotoId,
     this.categoryId,
     required this.description,
-    this.modelUrl,
+    this.modelId,
+    required this.photosIds,
     required this.id,
   });
 
@@ -820,13 +841,15 @@ class ProductDetailsDTO with EquatableMixin implements ProducDetailsDTOBase {
 
   final double? averageRating;
 
-  final String? previewPhotoURL;
+  final String? previewPhotoId;
 
   final String? categoryId;
 
   final String description;
 
-  final String? modelUrl;
+  final String? modelId;
+
+  final List<String> photosIds;
 
   final String id;
 
@@ -834,10 +857,11 @@ class ProductDetailsDTO with EquatableMixin implements ProducDetailsDTOBase {
         name,
         price,
         averageRating,
-        previewPhotoURL,
+        previewPhotoId,
         categoryId,
         description,
-        modelUrl,
+        modelId,
+        photosIds,
         id
       ];
 
@@ -850,7 +874,7 @@ class ProductDTO with EquatableMixin implements ProductDTOBase {
     required this.name,
     required this.price,
     this.averageRating,
-    this.previewPhotoURL,
+    this.previewPhotoId,
     this.categoryId,
     required this.id,
   });
@@ -864,13 +888,13 @@ class ProductDTO with EquatableMixin implements ProductDTOBase {
 
   final double? averageRating;
 
-  final String? previewPhotoURL;
+  final String? previewPhotoId;
 
   final String? categoryId;
 
   final String id;
 
-  get props => [name, price, averageRating, previewPhotoURL, categoryId, id];
+  get props => [name, price, averageRating, previewPhotoId, categoryId, id];
 
   Map<String, dynamic> toJson() => _$ProductDTOToJson(this);
 }
@@ -881,7 +905,7 @@ class ProductDTOBase with EquatableMixin {
     required this.name,
     required this.price,
     this.averageRating,
-    this.previewPhotoURL,
+    this.previewPhotoId,
     this.categoryId,
   });
 
@@ -894,11 +918,11 @@ class ProductDTOBase with EquatableMixin {
 
   final double? averageRating;
 
-  final String? previewPhotoURL;
+  final String? previewPhotoId;
 
   final String? categoryId;
 
-  get props => [name, price, averageRating, previewPhotoURL, categoryId];
+  get props => [name, price, averageRating, previewPhotoId, categoryId];
 
   Map<String, dynamic> toJson() => _$ProductDTOBaseToJson(this);
 }
