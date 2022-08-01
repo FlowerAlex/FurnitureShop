@@ -1,5 +1,5 @@
-mobile/*/data/contracts.dart linguist-generated=true
-mobile/*/data/contracts.g.dart linguist-generated=true
-mobile/*freezed.dart linguist-generated=true
-mobile/*test.dart linguist-generated=true
-mobile/*gen.dart linguist-generated=true
+*/data/contracts.dart linguist-generated=true
+*/data/contracts.g.dart linguist-generated=true
+*freezed.dart linguist-generated=true
+*test.dart linguist-generated=true
+*gen.dart linguist-generated=true
