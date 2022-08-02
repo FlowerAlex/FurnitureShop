@@ -8,7 +8,7 @@ namespace FurnitureShop.Core.Domain
     public class Order : IAggregateRoot<Id<Order>>
     {
         public Id<Order> Id { get; set; }
-        public Id<User>? UserId { get; set; }
+        public Id<User> UserId { get; set; }
         public Id<Complaint>? ComplaintId { get; set; }
         public List<OrderProduct> OrdersProducts { get; set; }
         public OrderState OrderState { get; set; }
