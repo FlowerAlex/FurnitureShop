@@ -30,14 +30,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                         Name = p.Name,
                         Price = p.Price,
                         CategoryId = p.CategoryId,
-                        PreviewPhotoURL = p.PreviewPhotoUrl,
+                        PreviewPhotoId = p.PreviewPhotoId,
                         AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         Description = p.Description,
-                        ModelUrl = p.ModelUrl,
+                        ModelId = p.ModelId,
                         InFavourites = dbContext.Favourites
                             .Where(f => f.UserId == context.UserId && f.ProductId == query.Id).Any(),
                         InShoppingCart = shoppingCartExists ? dbContext.ShoppingCartProduct
-                        .Where(shp => shp.Id == shoppingCart.Id.Value && shp.ProductId == p.Id).Any() : false,                   
+                        .Where(shp => shp.Id == shoppingCart.Id.Value && shp.ProductId == p.Id).Any() : false,
+                        PhotosIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),                   
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

@@ -44,7 +44,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                 {
                     Name = p.Name,
                     Price = p.Price,
-                    PreviewPhotoURL = p.ModelUrl,
+                    PreviewPhotoId = p.ModelId,
                     AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                     CategoryId = p.CategoryId,
                     Id = p.Id,

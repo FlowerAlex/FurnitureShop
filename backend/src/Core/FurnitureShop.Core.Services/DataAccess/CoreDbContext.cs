@@ -33,6 +33,7 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<ShoppingCartProduct> ShoppingCartProduct => Set<ShoppingCartProduct>();
         public DbSet<OrderProduct> OrderProduct => Set<OrderProduct>();
         public DbSet<UserProduct> Favourites => Set<UserProduct>();
+        public DbSet<Photo> Photos => Set<Photo>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -88,6 +89,11 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .WithOne()
                     .HasPrincipalKey(p => p.Id)
                     .HasForeignKey(r => r.ProductId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+                b.HasMany<Photo>()
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Id)
+                    .HasForeignKey(p => p.ProductId)
                     .OnDelete(DeleteBehavior.ClientCascade);
             });
             builder.Entity<OrderProduct>(o =>
@@ -159,6 +165,15 @@ namespace FurnitureShop.Core.Services.DataAccess
                 o.HasOne<User>()
                     .WithMany(u => u.Favourites)
                     .HasForeignKey(o => o.UserId);
+                o.HasOne<Product>()
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId);
+            });
+            builder.Entity<Photo>(o =>
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
                 o.HasOne<Product>()
                     .WithMany()
                     .HasForeignKey(o => o.ProductId);

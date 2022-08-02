@@ -48,7 +48,7 @@ namespace FurnitureShop.Core.Services.CQRS.Shared.Orders
                                     Id = prod.Id,
                                     Name = prod.Name,
                                     Price = prod.Price,
-                                    PreviewPhotoURL = prod.PreviewPhotoUrl,
+                                    PreviewPhotoId = prod.PreviewPhotoId,
                                     CategoryId = prod.CategoryId,
                                 }
                             }

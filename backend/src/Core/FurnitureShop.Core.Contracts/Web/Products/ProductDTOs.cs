@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FurnitureShop.Core.Contracts.Web.Products
 {
@@ -7,13 +8,14 @@ namespace FurnitureShop.Core.Contracts.Web.Products
         public string Name { get; set; }
         public double Price { get; set; }
         public double? AverageRating { get; set; }
-        public string? PreviewPhotoURL { get; set; }
+        public string? PreviewPhotoId { get; set; }
         public Guid? CategoryId { get; set; }
     }
     public class ProducDetailsDTOBase : ProductDTOBase
     {
         public string Description { get; set; }
-        public string? ModelUrl { get; set; }
+        public string? ModelId { get; set; }
+        public List<Guid> PhotosIds { get; set; }
     }
 
     public class ProductDetailsDTO : ProducDetailsDTOBase

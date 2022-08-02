@@ -54,9 +54,9 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             product.Name = updated.Name;
             product.Description = updated.Description;
             product.Price = updated.Price;
-            product.ModelUrl = command.UpdatedProduct.ModelUrl;
+            product.ModelId = command.UpdatedProduct.ModelId;
             product.CategoryId = Id<Category>.From(updated.CategoryId);
-            product.PreviewPhotoUrl = updated.PreviewPhotoURL;
+            product.PreviewPhotoId = updated.PreviewPhotoId;
 
             dbContext.Products.Update(product);
             await dbContext.SaveChangesAsync();

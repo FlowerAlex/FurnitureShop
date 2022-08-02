@@ -17,7 +17,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly Category TestCategory = new Category("test_category");
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
-            ModelUrl = "https://some.url.com",
+            ModelId = "https://some.url.com",
         };
         private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 200);
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");

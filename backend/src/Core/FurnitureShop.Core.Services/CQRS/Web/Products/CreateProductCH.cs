@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation;
 using FurnitureShop.Core.Contracts.Web.Products;
@@ -43,10 +44,17 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
             var result = await dbContext.Products.AddAsync(
                 new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
                 {
-                    ModelUrl = command.NewProduct.ModelUrl,
+                    ModelId = command.NewProduct.ModelId,
                     CategoryId = Id<Category>.From(command.NewProduct.CategoryId),
-                    PreviewPhotoUrl = command.NewProduct.PreviewPhotoURL,
+                    PreviewPhotoId = command.NewProduct.PreviewPhotoId,
                 });
+            if (result != null)
+            {
+                foreach (var photo in command.NewProduct.PhotosIds)
+                    await dbContext.Photos.AddAsync(
+                        new Photo(Id<Photo>.From(photo), Id<Product>.From(result.Entity.Id))
+                );
+            }
             await dbContext.SaveChangesAsync();
         }
     }

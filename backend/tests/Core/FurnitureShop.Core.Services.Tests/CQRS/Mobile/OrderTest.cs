@@ -37,11 +37,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly int testProductAmount2 = 2;
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
-            ModelUrl = "https://some.url.com",
+            ModelId = "https://some.url.com",
         };
         private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
         {
-            ModelUrl = "https://some.url2.com",
+            ModelId = "https://some.url2.com",
         };
         private static readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
         private readonly string TestUserRole = Auth.Roles.User;

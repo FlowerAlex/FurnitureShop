@@ -60,7 +60,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 {
                     Name = p.Name,
                     Price = p.Price,
-                    PreviewPhotoURL = p.ModelUrl,
+                    PreviewPhotoId = p.ModelId,
                     AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                     CategoryId = p.CategoryId,
                     InFavourites = productsInFavourites.Contains(p.Id),
