@@ -27,10 +27,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                         Name = p.Name,
                         Price = p.Price,
                         CategoryId = p.CategoryId,
-                        PreviewPhotoURL = p.PreviewPhotoUrl,
+                        PreviewPhotoId = p.PreviewPhotoId,
                         AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                         Description = p.Description,
-                        ModelUrl = p.ModelUrl,                  
+                        ModelId = p.ModelId,  
+                        PhotosIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),                
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

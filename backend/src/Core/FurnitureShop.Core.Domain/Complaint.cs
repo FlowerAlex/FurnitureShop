@@ -8,8 +8,8 @@ namespace FurnitureShop.Core.Domain
     public class Complaint : IAggregateRoot<Id<Complaint>>
     {
         public Id<Complaint> Id { get; set; }
-        public Id<User>? UserId { get; set; }
-        public Id<Order>? OrderId { get; set; }
+        public Id<User> UserId { get; set; }
+        public Id<Order> OrderId { get; set; }
         public string Text { get; set; }
         public string? Response { get; set; }
         public DateTime CreatedDate { get; set; }

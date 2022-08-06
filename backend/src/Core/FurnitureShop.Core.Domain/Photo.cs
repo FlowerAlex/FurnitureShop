@@ -1,20 +1,19 @@
 using System;
-using System.Collections.Generic;
 using LeanCode.DomainModels.Model;
-using LeanCode.Time;
 
 namespace FurnitureShop.Core.Domain
 {
-    public class UserProduct : IAggregateRoot<Id<UserProduct>>
+    public class Photo : IAggregateRoot<Id<Photo>>
     {
-        public Id<UserProduct> Id { get; set; }
-        public Id<User> UserId { get; set; }
+        public Id<Photo> Id { get; set; }
         public Id<Product> ProductId { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
-        public UserProduct()
+
+        public Photo(Id<Photo> id, Id<Product> productId)
         {
-            Id = Id<UserProduct>.New();
+            ProductId = productId;
+            Id = id;
         }
     }
 }

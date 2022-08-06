@@ -4,14 +4,16 @@ using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FurnitureShop.Migrations.CoreDbMigrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220802203529_Photos")]
+    partial class Photos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,7 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Resolved")
@@ -55,7 +57,7 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -105,7 +107,7 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -127,10 +129,10 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -202,7 +204,10 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Rating")
@@ -211,12 +216,14 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductId1");
 
                     b.HasIndex("UserId");
 
@@ -228,13 +235,14 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -247,10 +255,10 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoppingCartId")
+                    b.Property<Guid?>("ShoppingCartId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -296,10 +304,10 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -564,36 +572,31 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.HasOne("FurnitureShop.Core.Domain.User", null)
                         .WithMany("Complaints")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.Order", b =>
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Complaint", null)
                         .WithOne()
-                        .HasForeignKey("FurnitureShop.Core.Domain.Order", "ComplaintId");
+                        .HasForeignKey("FurnitureShop.Core.Domain.Order", "ComplaintId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("FurnitureShop.Core.Domain.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.OrderProduct", b =>
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Order", null)
                         .WithMany("OrdersProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
                         .WithMany("OrdersProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.Photo", b =>
@@ -601,7 +604,7 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
@@ -613,22 +616,25 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Category", null)
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.Review", b =>
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.HasOne("FurnitureShop.Core.Domain.Product", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId1");
 
                     b.HasOne("FurnitureShop.Core.Domain.User", null)
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.ShoppingCart", b =>
@@ -636,38 +642,29 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                     b.HasOne("FurnitureShop.Core.Domain.User", null)
                         .WithOne()
                         .HasForeignKey("FurnitureShop.Core.Domain.ShoppingCart", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.ShoppingCartProduct", b =>
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
                         .WithMany("ShoppingCartProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("FurnitureShop.Core.Domain.ShoppingCart", null)
                         .WithMany("ShoppingCartProducts")
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShoppingCartId");
                 });
 
             modelBuilder.Entity("FurnitureShop.Core.Domain.UserProduct", b =>
                 {
                     b.HasOne("FurnitureShop.Core.Domain.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("FurnitureShop.Core.Domain.User", null)
                         .WithMany("Favourites")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("LeanCode.DomainModels.MassTransitRelay.Outbox.RaisedEvent", b =>

@@ -46,14 +46,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                             (ord, prod) => new ProductInOrderDTO
                             {
                                 Amount = ord.Amount,
-                                Product = new ProductDTO
-                                {
-                                    Id = prod.Id,
-                                    Name = prod.Name,
-                                    Price = prod.Price,
-                                    PreviewPhotoURL = prod.PreviewPhotoUrl,
-                                    CategoryId = prod.CategoryId,
-                                }
+                                Id = prod.Id,
+                                Name = prod.Name,
+                                Price = prod.Price,
+                                PreviewPhotoId = prod.PreviewPhotoId,
+                                CategoryId = prod.CategoryId,
                             }
                         ).ToList(),
 

@@ -9,8 +9,8 @@ namespace FurnitureShop.Core.Domain
     {
 
         public Id<ShoppingCartProduct> Id { get; set; }
-        public Id<ShoppingCart>? ShoppingCartId { get; set; }
-        public Id<Product>? ProductId { get; set; }
+        public Id<ShoppingCart> ShoppingCartId { get; set; }
+        public Id<Product> ProductId { get; set; }
         public int Amount { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }

@@ -7,8 +7,8 @@ namespace FurnitureShop.Core.Domain
     public class Review : IAggregateRoot<Id<Review>>
     {
         public Id<Review> Id { get; set; }
-        public Id<User>? UserId { get; set; }
-        public Id<Product>? ProductId { get; set; }
+        public Id<User> UserId { get; set; }
+        public Id<Product> ProductId { get; set; }
         public string? Text { get; set; }
         public double Rating { get; set; }
         public DateTime CreatedDate { get; set; }

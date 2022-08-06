@@ -21,6 +21,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
         public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, AllOrders query)
         {
+            var products = await dbContext.Products.ToListAsync(); 
             return await dbContext.Orders.Include(o => o.OrdersProducts)
                 .FilterBy(query)
                 .Select(p => new OrderDTO
@@ -37,30 +38,35 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                     OrderState = p.OrderState.ToString(),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-                    Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
-                        .Join(
-                            dbContext.Products,
-                            ord => ord.ProductId,
-                            prod => prod.Id,
-                            (ord, prod) => new ProductInOrderDTO
-                            {
-                                Amount = ord.Amount,
-                                Product = new ProductDTO
-                                {
-                                    Id = prod.Id,
-                                    Name = prod.Name,
-                                    Price = prod.Price,
-                                    PreviewPhotoURL = prod.PreviewPhotoUrl,
-                                    CategoryId = prod.CategoryId,
-                                }
-                            }
-                        ).ToList(),
+                    Products = GetProductsInOrder(p,products).Result,
 
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
         }
+        private async Task<List<ProductInOrderDTO>> GetProductsInOrder(Order order, List<Product> products)
+        {
+            var orderProducts = await dbContext.OrderProduct.Where(o => o.OrderId == order.Id).ToListAsync();
+            
+            if(orderProducts != null && products != null)
+            return orderProducts
+                .Join(
+                    products,
+                    ord => ord.ProductId,
+                    prod => prod.Id,
+                    (ord, prod) => new ProductInOrderDTO()
+                    {
+                        Amount = ord.Amount,
+                        Id = prod.Id,
+                        Name = prod.Name,
+                        Price = prod.Price,
+                        PreviewPhotoId = prod.PreviewPhotoId,
+                        CategoryId = prod.CategoryId,
+                    }).ToList();
+            return new List<ProductInOrderDTO>();
+        }
     }
+    
     internal static class OrderQHExtensions
     {
         public static IQueryable<Order> FilterBy(this IQueryable<Order> queryable, AllOrders query)

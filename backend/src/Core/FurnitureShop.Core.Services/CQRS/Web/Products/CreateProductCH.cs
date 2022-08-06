@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using FurnitureShop.Core.Contracts.Web.Products;
@@ -40,13 +42,14 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
-            var result = await dbContext.Products.AddAsync(
-                new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
+            var product = new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
                 {
-                    ModelUrl = command.NewProduct.ModelUrl,
-                    CategoryId = Id<Category>.From(command.NewProduct.CategoryId),
-                    PreviewPhotoUrl = command.NewProduct.PreviewPhotoURL,
-                });
+                    ModelId = command.NewProduct.ModelId,
+                    CategoryId = command.NewProduct.CategoryId != null ? Id<Category>.From(command.NewProduct.CategoryId) : null,
+                    PreviewPhotoId = command.NewProduct.PreviewPhotoId,
+                };
+            product.Photos = command.NewProduct.PhotosIds.Select( photo => new Photo(Id<Photo>.From(photo), Id<Product>.From(product.Id))).ToList();
+            var result = await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
         }
     }

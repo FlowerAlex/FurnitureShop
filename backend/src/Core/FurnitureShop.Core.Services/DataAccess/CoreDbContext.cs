@@ -33,6 +33,7 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<ShoppingCartProduct> ShoppingCartProduct => Set<ShoppingCartProduct>();
         public DbSet<OrderProduct> OrderProduct => Set<OrderProduct>();
         public DbSet<UserProduct> Favourites => Set<UserProduct>();
+        public DbSet<Photo> Photos => Set<Photo>();
 
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
             : base(options)
@@ -55,18 +56,15 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.HasMany(u => u.Orders)
                     .WithOne()
                     .HasPrincipalKey(u => u.Id)
-                    .HasForeignKey(o => o.UserId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(o => o.UserId);
                 b.HasMany(u => u.Reviews)
                     .WithOne()
                     .HasPrincipalKey(u => u.Id)
-                    .HasForeignKey(r => r.UserId)
-                    .OnDelete(DeleteBehavior.ClientCascade);
+                    .HasForeignKey(r => r.UserId);
                 b.HasMany(u => u.Complaints)
                     .WithOne()
                     .HasPrincipalKey(u => u.Id)
-                    .HasForeignKey(c => c.UserId)
-                    .OnDelete(DeleteBehavior.ClientCascade);
+                    .HasForeignKey(c => c.UserId);
             });
 
             builder.Entity<Category>(b =>
@@ -75,8 +73,7 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                 b.HasMany<Product>()
                     .WithOne()
-                    .HasForeignKey(p => p.CategoryId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(p => p.CategoryId);
             });
 
             builder.Entity<Product>(b =>
@@ -87,8 +84,11 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.HasMany<Review>()
                     .WithOne()
                     .HasPrincipalKey(p => p.Id)
-                    .HasForeignKey(r => r.ProductId)
-                    .OnDelete(DeleteBehavior.ClientCascade);
+                    .HasForeignKey(r => r.ProductId);
+                b.HasMany<Photo>()
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Id)
+                    .HasForeignKey(p => p.ProductId);
             });
             builder.Entity<OrderProduct>(o =>
            {
@@ -110,8 +110,7 @@ namespace FurnitureShop.Core.Services.DataAccess
                b.Property(e => e.UserId).IsTypedId();
                b.HasOne<Complaint>()
                    .WithOne()
-                   .HasForeignKey<Order>(o => o.ComplaintId)
-                   .OnDelete(DeleteBehavior.ClientCascade);
+                   .HasForeignKey<Order>(o => o.ComplaintId);
            });
             builder.Entity<Review>(b =>
             {
@@ -119,6 +118,9 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                 b.Property(e => e.UserId).IsTypedId();
                 b.Property(e => e.ProductId).IsTypedId();
+                b.HasOne<Product>()
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(r => r.ProductId);
             });
             builder.Entity<Complaint>(b =>
             {
@@ -126,6 +128,9 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                 b.Property(e => e.UserId).IsTypedId();
                 b.Property(e => e.OrderId).IsTypedId();
+                b.HasOne<Order>()
+                    .WithOne()
+                    .HasForeignKey<Order>(o => o.ComplaintId);
             });
             builder.Entity<ShoppingCart>(b =>
             {
@@ -134,8 +139,7 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.UserId).IsTypedId();
                 b.HasOne<User>()
                     .WithOne()
-                    .HasForeignKey<ShoppingCart>(s => s.UserId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey<ShoppingCart>(s => s.UserId);
             });
             builder.Entity<ShoppingCartProduct>(o =>
            {
@@ -159,6 +163,15 @@ namespace FurnitureShop.Core.Services.DataAccess
                 o.HasOne<User>()
                     .WithMany(u => u.Favourites)
                     .HasForeignKey(o => o.UserId);
+                o.HasOne<Product>()
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId);
+            });
+            builder.Entity<Photo>(o =>
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
                 o.HasOne<Product>()
                     .WithMany()
                     .HasForeignKey(o => o.ProductId);

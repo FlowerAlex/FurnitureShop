@@ -11,12 +11,13 @@ namespace FurnitureShop.Core.Domain
         public Id<Category>? CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string? ModelUrl { get; set; }
-        public string? PreviewPhotoUrl { get; set; }
+        public string? ModelId { get; set; }
         public double Price { get; set; }
+        public string? PreviewPhotoId { get; set; }
         public List<Review> Reviews { get; set; }
         public List<OrderProduct> OrdersProducts { get; set; }
         public List<ShoppingCartProduct> ShoppingCartProducts { get; set; }
+        public List<Photo> Photos { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
@@ -29,6 +30,7 @@ namespace FurnitureShop.Core.Domain
             OrdersProducts = new List<OrderProduct>();
             ShoppingCartProducts = new List<ShoppingCartProduct>();
             Reviews = new List<Review>();
+            Photos = new List<Photo>();
         }
     }
 }

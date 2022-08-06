@@ -18,11 +18,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly Category TestCategory = new Category("test_category");
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
-            ModelUrl = "https://some.url.com",
+            ModelId = "https://some.url.com",
         };
         private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
         {
-            ModelUrl = "https://some.url2.com",
+            ModelId = "https://some.url2.com",
         };
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
 
@@ -74,7 +74,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(Product);
             Assert.Equal(TestProduct.Name, Product.Name);
             Assert.Equal(TestProduct.Description, Product.Description);
-            Assert.Equal(TestProduct.ModelUrl, Product.ModelUrl);
+            Assert.Equal(TestProduct.ModelId, Product.ModelId);
             Assert.Equal(TestProduct.Price, Product.Price);
             Assert.Equal(TestProduct.CategoryId, Product.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
@@ -87,12 +87,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProducDetailsDTOBase
                 {
                     Description = NewProdctDescription,
-                    ModelUrl = NewProductModelUrl,
+                    ModelId = NewProductModelUrl,
                     Name = NewProductName,
                     Price = NewProductPrice,
+                    CategoryId = dbContext.Categories.First().Id,
+                    PhotosIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
                 }
             };
 
@@ -103,9 +105,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(Product);
             Assert.Equal(NewProductName, Product.Name);
             Assert.Equal(NewProdctDescription, Product.Description);
-            Assert.Equal(NewProductModelUrl, Product.ModelUrl);
+            Assert.Equal(NewProductModelUrl, Product.ModelId);
             Assert.Equal(NewProductPrice, Product.Price);
-            Assert.Null(Product.CategoryId);
+            Assert.Equal(1,Product.Photos.Count);
         }
         [Fact]
         public void DeleteProductTest()
@@ -133,7 +135,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 {
                     Id = TestProduct.Id,
                     Description = NewProdctDescription,
-                    ModelUrl = NewProductModelUrl,
+                    ModelId = NewProductModelUrl,
                     Name = NewProductName,
                     Price = NewProductPrice,
                 }
@@ -146,7 +148,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(Product);
             Assert.Equal(NewProductName, Product.Name);
             Assert.Equal(NewProdctDescription, Product.Description);
-            Assert.Equal(NewProductModelUrl, Product.ModelUrl);
+            Assert.Equal(NewProductModelUrl, Product.ModelId);
             Assert.Equal(NewProductPrice, Product.Price);
             Assert.Null(Product.CategoryId);
         }

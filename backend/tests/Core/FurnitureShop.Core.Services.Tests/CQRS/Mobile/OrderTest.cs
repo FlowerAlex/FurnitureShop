@@ -6,7 +6,7 @@ using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.CQRS.Mobile.Orders;
-using FurnitureShop.Core.Services.CQRS.Shared.Orders;
+using FurnitureShop.Core.Services.CQRS.Web.Orders;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.DomainModels.Model;
 using Microsoft.EntityFrameworkCore;
@@ -37,11 +37,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly int testProductAmount2 = 2;
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
-            ModelUrl = "https://some.url.com",
+            ModelId = "https://some.url.com",
         };
         private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
         {
-            ModelUrl = "https://some.url2.com",
+            ModelId = "https://some.url2.com",
         };
         private static readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
         private readonly string TestUserRole = Auth.Roles.User;
@@ -56,6 +56,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.SaveChanges();
             context.Products.Add(TestProduct2);
             context.SaveChanges();
+            context.Orders.Add(TestOrder);
+            context.Orders.Add(TestOrder2);
+            context.SaveChanges();
             TestOrder.OrdersProducts = new List<OrderProduct>()
             {
                 new OrderProduct(){
@@ -69,8 +72,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Amount = testProductAmount2,
                 },
             };
-            context.Orders.Add(TestOrder);
-            context.Orders.Add(TestOrder2);
             context.SaveChanges();
         }
         public void Dispose()
@@ -94,29 +95,23 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateOrderQH(dbContext);
             var command = new CreateOrder
             {
-                NewOrder = new OrderDTOBase
+                NewOrder = new CreateOrderDTO
                 {
                     Country = testCountry,
                     State = testState,
                     City = testCity,
                     Street = testStreet,
                     PostalCode = testPostalCode,
-                    Products = new List<ProductInOrderDTO>
+                    Products = new List<ProductInOrderCreateDTO>
                     {
-                        new ProductInOrderDTO()
+                        new ProductInOrderCreateDTO()
                         {
-                            Product = new ProductDTO()
-                            {
-                                Id = TestProduct.Id,
-                            },
+                            Id = TestProduct.Id,
                             Amount = testProductAmount,
                         },
-                        new ProductInOrderDTO()
+                        new ProductInOrderCreateDTO()
                         {
-                            Product = new ProductDTO()
-                            {
-                                Id = TestProduct2.Id,
-                            },
+                            Id = TestProduct.Id,
                             Amount = testProductAmount2,
                         }
                     }
@@ -184,8 +179,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new OrderByIdQH(dbContext);
-            var command = new OrderById() { Id = TestOrder.Id };
+            var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.OrderByIdQH(dbContext);
+            var command = new FurnitureShop.Core.Contracts.Web.Orders.OrderById() { Id = TestOrder.Id };
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
