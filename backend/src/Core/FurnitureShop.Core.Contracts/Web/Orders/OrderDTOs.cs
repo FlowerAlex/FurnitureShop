@@ -23,9 +23,8 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public Guid Id { get; set; }
     }
-    public class ProductInOrderDTO
+    public class ProductInOrderDTO :ProductDTO
     {
-        public ProductDTO Product { get; set; }
         public int Amount { get; set; }
     }
 }

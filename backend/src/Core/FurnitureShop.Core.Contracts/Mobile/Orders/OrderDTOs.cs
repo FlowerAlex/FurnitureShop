@@ -16,16 +16,25 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public string OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
-        public List<ProductInOrderDTO> Products { get; set; }
     }
 
     public class OrderDTO : OrderDTOBase
     {
         public Guid Id { get; set; }
+        public List<ProductInOrderDTO> Products { get; set; }
     }
-    public class ProductInOrderDTO
+    public class CreateOrderDTO : OrderDTOBase
     {
-        public ProductDTO Product { get; set; }
+        public List<ProductInOrderCreateDTO> Products { get; set; }
+
+    }
+    public class ProductInOrderDTO : ProductDTO
+    {
+        public int Amount { get; set; }
+    }
+    public class ProductInOrderCreateDTO
+    {   
+        public Guid Id { get; set; }
         public int Amount { get; set; }
     }
 }

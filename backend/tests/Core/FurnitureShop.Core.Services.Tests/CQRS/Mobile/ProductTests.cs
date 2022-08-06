@@ -87,12 +87,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProducDetailsDTOBase
                 {
                     Description = NewProdctDescription,
                     ModelId = NewProductModelUrl,
                     Name = NewProductName,
                     Price = NewProductPrice,
+                    CategoryId = dbContext.Categories.First().Id,
+                    PhotosIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
                 }
             };
 
@@ -105,7 +107,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewProdctDescription, Product.Description);
             Assert.Equal(NewProductModelUrl, Product.ModelId);
             Assert.Equal(NewProductPrice, Product.Price);
-            Assert.Null(Product.CategoryId);
+            Assert.Equal(1,Product.Photos.Count);
         }
         [Fact]
         public void DeleteProductTest()
