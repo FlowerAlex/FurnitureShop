@@ -4,7 +4,7 @@ using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Web.Users
 {
-    [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class BanUser : IRemoteCommand
     {
         public Guid UserId {get;set;}

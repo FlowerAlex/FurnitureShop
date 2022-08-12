@@ -29,7 +29,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
         {
             var user = await userManager.FindByIdAsync(command.UserId.ToString());
             var claims = await userManager.GetClaimsAsync(user);
-            await userManager.RemoveClaimsAsync(user,claims);
+            await userManager.RemoveClaimsAsync(user,claims.Where(c => c.Value == Auth.Roles.BannedUser));
             await userManager.AddClaimAsync(user, new IdentityUserClaim<Guid>()
                     {
                         ClaimType = Auth.KnownClaims.Role,
