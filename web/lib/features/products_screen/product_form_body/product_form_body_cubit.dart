@@ -162,6 +162,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
     }
 
     // TODO check if all functionality ok
+    // ignore: unused_element
     Future<void> editProduct() async {
       final state = this.state;
       if (state is! ProductFormBodyStateReady) {
