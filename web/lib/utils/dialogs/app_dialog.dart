@@ -42,7 +42,7 @@ class AppDialog extends StatelessWidget {
                 children: [
                   Text(
                     titleText,
-                    style: Theme.of(context).dialogTheme.titleTextStyle,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   TextButton(
                     onPressed: Navigator.of(context).pop,

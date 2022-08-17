@@ -8,7 +8,8 @@ analyzer:
     - "**.mocks.dart"
   strong-mode:
     implicit-dynamic: false
-
+  errors:
+    todo: ignore
 linter:
   rules:
     sort_constructors_first: true

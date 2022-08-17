@@ -281,13 +281,23 @@ Map<String, dynamic> _$OrderDTOBaseToJson(OrderDTOBase instance) =>
 
 ProductInOrderDTO _$ProductInOrderDTOFromJson(Map<String, dynamic> json) =>
     ProductInOrderDTO(
-      product: ProductDTO.fromJson(json['Product'] as Map<String, dynamic>),
+      name: json['Name'] as String,
+      price: (json['Price'] as num).toDouble(),
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
+      previewPhotoId: json['PreviewPhotoId'] as String?,
+      categoryId: json['CategoryId'] as String?,
+      id: json['Id'] as String,
       amount: json['Amount'] as int,
     );
 
 Map<String, dynamic> _$ProductInOrderDTOToJson(ProductInOrderDTO instance) =>
     <String, dynamic>{
-      'Product': instance.product,
+      'Name': instance.name,
+      'Price': instance.price,
+      'AverageRating': instance.averageRating,
+      'PreviewPhotoId': instance.previewPhotoId,
+      'CategoryId': instance.categoryId,
+      'Id': instance.id,
       'Amount': instance.amount,
     };
 
@@ -356,10 +366,12 @@ ProducDetailsDTOBase _$ProducDetailsDTOBaseFromJson(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoURL: json['PreviewPhotoURL'] as String?,
+      previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       description: json['Description'] as String,
-      modelUrl: json['ModelUrl'] as String?,
+      modelId: json['ModelId'] as String?,
+      photosIds:
+          (json['PhotosIds'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$ProducDetailsDTOBaseToJson(
@@ -368,10 +380,11 @@ Map<String, dynamic> _$ProducDetailsDTOBaseToJson(
       'Name': instance.name,
       'Price': instance.price,
       'AverageRating': instance.averageRating,
-      'PreviewPhotoURL': instance.previewPhotoURL,
+      'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Description': instance.description,
-      'ModelUrl': instance.modelUrl,
+      'ModelId': instance.modelId,
+      'PhotosIds': instance.photosIds,
     };
 
 ProductById _$ProductByIdFromJson(Map<String, dynamic> json) => ProductById(
@@ -388,10 +401,12 @@ ProductDetailsDTO _$ProductDetailsDTOFromJson(Map<String, dynamic> json) =>
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoURL: json['PreviewPhotoURL'] as String?,
+      previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       description: json['Description'] as String,
-      modelUrl: json['ModelUrl'] as String?,
+      modelId: json['ModelId'] as String?,
+      photosIds:
+          (json['PhotosIds'] as List<dynamic>).map((e) => e as String).toList(),
       id: json['Id'] as String,
     );
 
@@ -400,10 +415,11 @@ Map<String, dynamic> _$ProductDetailsDTOToJson(ProductDetailsDTO instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'AverageRating': instance.averageRating,
-      'PreviewPhotoURL': instance.previewPhotoURL,
+      'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Description': instance.description,
-      'ModelUrl': instance.modelUrl,
+      'ModelId': instance.modelId,
+      'PhotosIds': instance.photosIds,
       'Id': instance.id,
     };
 
@@ -411,7 +427,7 @@ ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) => ProductDTO(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoURL: json['PreviewPhotoURL'] as String?,
+      previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       id: json['Id'] as String,
     );
@@ -421,7 +437,7 @@ Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'AverageRating': instance.averageRating,
-      'PreviewPhotoURL': instance.previewPhotoURL,
+      'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Id': instance.id,
     };
@@ -431,7 +447,7 @@ ProductDTOBase _$ProductDTOBaseFromJson(Map<String, dynamic> json) =>
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoURL: json['PreviewPhotoURL'] as String?,
+      previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
     );
 
@@ -440,7 +456,7 @@ Map<String, dynamic> _$ProductDTOBaseToJson(ProductDTOBase instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'AverageRating': instance.averageRating,
-      'PreviewPhotoURL': instance.previewPhotoURL,
+      'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
     };
 

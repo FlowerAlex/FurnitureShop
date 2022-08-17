@@ -46,8 +46,7 @@ class ProductTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(product.name),
-                    AvaregeScore(
-                        rating: product.averageRating ?? 0), // get from product
+                    AvaregeScore(rating: product.averageRating ?? 0),
                   ],
                 ),
                 Expanded(
@@ -59,24 +58,6 @@ class ProductTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: children,
-                          // [
-                          //   if (productLikeClicked != null)
-                          //     InkWell(
-                          //       onTap: productLikeClicked,
-                          //       child: product.productInfo.inFavourites
-                          //           ? Assets.icons.selectedHeart.image()
-                          //           : Assets.icons.heart.image(),
-                          //     ),
-                          //   if (productShoppingCartClicked != null) ...[
-                          //     const SizedBox(width: 12),
-                          //     InkWell(
-                          //       onTap: productShoppingCartClicked,
-                          //       child: product.productInfo.inShoppingCart
-                          //           ? Assets.icons.selectedAddToCart.image()
-                          //           : Assets.icons.addToCart.image(),
-                          //     ),
-                          //   ],
-                          // ],
                         ),
                         Text(
                           product.price.toString() + '\$',
@@ -87,7 +68,6 @@ class ProductTile extends StatelessWidget {
                 ),
               ],
             ),
-            // Text(product.productInfo.description),
             const UserComment(),
             const SizedBox(height: 20),
           ],
@@ -124,6 +104,6 @@ class UserComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(); // TODO: add user comment
   }
 }
