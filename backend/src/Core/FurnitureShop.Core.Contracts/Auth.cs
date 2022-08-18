@@ -6,6 +6,7 @@ namespace FurnitureShop.Core.Contracts
         {
             public const string User = "user";
             public const string Admin = "admin";
+            public const string BannedUser = "banned_user";
         }
 
         public static class KnownClaims
