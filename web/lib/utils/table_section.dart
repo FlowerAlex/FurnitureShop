@@ -97,8 +97,9 @@ class _TableNavigationBar<T extends Object> extends StatelessWidget {
     final createItemPressed = this.createItemPressed;
     final createItemButtonLabel = this.createItemButtonLabel;
 
-    return SizedBox(
+    return Container(
       height: 80,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           if (createItemPressed != null && createItemButtonLabel != null)
@@ -111,17 +112,15 @@ class _TableNavigationBar<T extends Object> extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onPrevPressed,
-            padding: const EdgeInsets.symmetric(horizontal: 28),
             icon: Assets.icons.arrowLeft.svg(),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 16),
           Text(
             '${(currentPage * pageSize + 1).toString()}-${min((currentPage + 1) * pageSize, totalCount)} from ${totalCount.toString()}',
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 16),
           IconButton(
             onPressed: onNextPressed,
-            padding: const EdgeInsets.symmetric(horizontal: 28),
             icon: Assets.icons.arrowRight.svg(),
           ),
         ],

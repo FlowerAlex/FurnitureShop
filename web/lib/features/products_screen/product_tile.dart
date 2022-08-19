@@ -36,7 +36,7 @@ class ProductTile extends StatelessWidget {
                   child: CachedNetworkImage(
                     fit: BoxFit.contain,
                     imageUrl:
-                        'https://e7.pngegg.com/pngimages/952/954/png-clipart-table-wood-furniture-table-angle-rectangle.png',
+                        '',
                     errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
                   ),
