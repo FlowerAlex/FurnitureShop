@@ -15,16 +15,17 @@ class CategoryFormBodyCubit extends Cubit<CategoryFormBodyState> {
   final CQRS _cqrs;
   final _logger = Logger('CategoryFormBodyCubit');
 
-  Future<void> init() async {
+  Future<void> init({String? categoryId, String? name}) async {
     final categories = await _cqrs.get(AllCategories());
 
     emit(CategoryFormBodyState.ready(
       categories: categories,
+      name: name ?? '',
     ));
   }
 
-  void updateCategory({
-    String? name,
+  void updateCategoryText({
+    required String name,
   }) {
     final state = this.state;
 
@@ -33,6 +34,21 @@ class CategoryFormBodyCubit extends Cubit<CategoryFormBodyState> {
     }
 
     emit(state.copyWith(name: name));
+  }
+
+  Future<void> updateCategory(String categoryId) async {
+    final state = this.state;
+    if (state is! CategoryFormBodyStateReady) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(UpdateCategory(id: categoryId, newName: state.name));
+      emit(const CategoryFormBodyState.finished());
+    } catch (err, st) {
+      _logger.severe(err, st);
+      emit(CategoryFormBodyState.error(error: err.toString()));
+    }
   }
 
   Future<void> createCategory() async {
@@ -44,8 +60,10 @@ class CategoryFormBodyCubit extends Cubit<CategoryFormBodyState> {
     if (state.categories.map((e) => e.name).contains(state.name)) {
       return;
     }
+
     try {
-      await _cqrs.run(CreateCategory(categoryName: state.name!));
+      await _cqrs.run(CreateCategory(categoryName: state.name));
+      emit(const CategoryFormBodyState.finished());
     } catch (err, st) {
       _logger.severe(err, st);
       emit(CategoryFormBodyState.error(error: err.toString()));
@@ -57,8 +75,11 @@ class CategoryFormBodyCubit extends Cubit<CategoryFormBodyState> {
 class CategoryFormBodyState with _$CategoryFormBodyState {
   const factory CategoryFormBodyState.ready({
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
-    String? name,
+    @Default('') String name,
+    String? categoryId, // if not null then it's update category
   }) = CategoryFormBodyStateReady;
+  const factory CategoryFormBodyState.finished() =
+      CategoryFormBodyStateFinished;
   const factory CategoryFormBodyState.error({
     required String error,
   }) = CategoryFormBodyStateError;

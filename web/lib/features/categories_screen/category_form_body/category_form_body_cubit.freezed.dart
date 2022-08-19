@@ -18,11 +18,18 @@ class _$CategoryFormBodyStateTearOff {
   const _$CategoryFormBodyStateTearOff();
 
   CategoryFormBodyStateReady ready(
-      {List<CategoryDTO> categories = const <CategoryDTO>[], String? name}) {
+      {List<CategoryDTO> categories = const <CategoryDTO>[],
+      String name = '',
+      String? categoryId}) {
     return CategoryFormBodyStateReady(
       categories: categories,
       name: name,
+      categoryId: categoryId,
     );
+  }
+
+  CategoryFormBodyStateFinished finished() {
+    return const CategoryFormBodyStateFinished();
   }
 
   CategoryFormBodyStateError error({required String error}) {
@@ -39,19 +46,28 @@ const $CategoryFormBodyState = _$CategoryFormBodyStateTearOff();
 mixin _$CategoryFormBodyState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories, String? name) ready,
+    required TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)
+        ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -59,18 +75,21 @@ mixin _$CategoryFormBodyState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CategoryFormBodyStateReady value) ready,
+    required TResult Function(CategoryFormBodyStateFinished value) finished,
     required TResult Function(CategoryFormBodyStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
     required TResult orElse(),
   }) =>
@@ -99,7 +118,7 @@ abstract class $CategoryFormBodyStateReadyCopyWith<$Res> {
   factory $CategoryFormBodyStateReadyCopyWith(CategoryFormBodyStateReady value,
           $Res Function(CategoryFormBodyStateReady) then) =
       _$CategoryFormBodyStateReadyCopyWithImpl<$Res>;
-  $Res call({List<CategoryDTO> categories, String? name});
+  $Res call({List<CategoryDTO> categories, String name, String? categoryId});
 }
 
 /// @nodoc
@@ -118,6 +137,7 @@ class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? name = freezed,
+    Object? categoryId = freezed,
   }) {
     return _then(CategoryFormBodyStateReady(
       categories: categories == freezed
@@ -127,6 +147,10 @@ class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -136,17 +160,22 @@ class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
 
 class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   const _$CategoryFormBodyStateReady(
-      {this.categories = const <CategoryDTO>[], this.name});
+      {this.categories = const <CategoryDTO>[],
+      this.name = '',
+      this.categoryId});
 
   @JsonKey()
   @override
   final List<CategoryDTO> categories;
+  @JsonKey()
   @override
-  final String? name;
+  final String name;
+  @override
+  final String? categoryId;
 
   @override
   String toString() {
-    return 'CategoryFormBodyState.ready(categories: $categories, name: $name)';
+    return 'CategoryFormBodyState.ready(categories: $categories, name: $name, categoryId: $categoryId)';
   }
 
   @override
@@ -156,14 +185,17 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
             other is CategoryFormBodyStateReady &&
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryId, categoryId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(categories),
-      const DeepCollectionEquality().hash(name));
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(categoryId));
 
   @JsonKey(ignore: true)
   @override
@@ -175,30 +207,39 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories, String? name) ready,
+    required TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)
+        ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) {
-    return ready(categories, name);
+    return ready(categories, name, categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(categories, name);
+    return ready?.call(categories, name, categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(categories, name);
+      return ready(categories, name, categoryId);
     }
     return orElse();
   }
@@ -207,6 +248,7 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CategoryFormBodyStateReady value) ready,
+    required TResult Function(CategoryFormBodyStateFinished value) finished,
     required TResult Function(CategoryFormBodyStateError value) error,
   }) {
     return ready(this);
@@ -216,6 +258,7 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
   }) {
     return ready?.call(this);
@@ -225,6 +268,7 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
     required TResult orElse(),
   }) {
@@ -238,13 +282,137 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
 abstract class CategoryFormBodyStateReady implements CategoryFormBodyState {
   const factory CategoryFormBodyStateReady(
       {List<CategoryDTO> categories,
-      String? name}) = _$CategoryFormBodyStateReady;
+      String name,
+      String? categoryId}) = _$CategoryFormBodyStateReady;
 
   List<CategoryDTO> get categories;
-  String? get name;
+  String get name;
+  String? get categoryId;
   @JsonKey(ignore: true)
   $CategoryFormBodyStateReadyCopyWith<CategoryFormBodyStateReady>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CategoryFormBodyStateFinishedCopyWith<$Res> {
+  factory $CategoryFormBodyStateFinishedCopyWith(
+          CategoryFormBodyStateFinished value,
+          $Res Function(CategoryFormBodyStateFinished) then) =
+      _$CategoryFormBodyStateFinishedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$CategoryFormBodyStateFinishedCopyWithImpl<$Res>
+    extends _$CategoryFormBodyStateCopyWithImpl<$Res>
+    implements $CategoryFormBodyStateFinishedCopyWith<$Res> {
+  _$CategoryFormBodyStateFinishedCopyWithImpl(
+      CategoryFormBodyStateFinished _value,
+      $Res Function(CategoryFormBodyStateFinished) _then)
+      : super(_value, (v) => _then(v as CategoryFormBodyStateFinished));
+
+  @override
+  CategoryFormBodyStateFinished get _value =>
+      super._value as CategoryFormBodyStateFinished;
+}
+
+/// @nodoc
+
+class _$CategoryFormBodyStateFinished implements CategoryFormBodyStateFinished {
+  const _$CategoryFormBodyStateFinished();
+
+  @override
+  String toString() {
+    return 'CategoryFormBodyState.finished()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CategoryFormBodyStateFinished);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)
+        ready,
+    required TResult Function() finished,
+    required TResult Function(String error) error,
+  }) {
+    return finished();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
+    TResult Function(String error)? error,
+  }) {
+    return finished?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CategoryFormBodyStateReady value) ready,
+    required TResult Function(CategoryFormBodyStateFinished value) finished,
+    required TResult Function(CategoryFormBodyStateError value) error,
+  }) {
+    return finished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
+    TResult Function(CategoryFormBodyStateError value)? error,
+  }) {
+    return finished?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
+    TResult Function(CategoryFormBodyStateError value)? error,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CategoryFormBodyStateFinished implements CategoryFormBodyState {
+  const factory CategoryFormBodyStateFinished() =
+      _$CategoryFormBodyStateFinished;
 }
 
 /// @nodoc
@@ -315,7 +483,10 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryDTO> categories, String? name) ready,
+    required TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)
+        ready,
+    required TResult Function() finished,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -324,7 +495,10 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -333,7 +507,10 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryDTO> categories, String? name)? ready,
+    TResult Function(
+            List<CategoryDTO> categories, String name, String? categoryId)?
+        ready,
+    TResult Function()? finished,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -347,6 +524,7 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CategoryFormBodyStateReady value) ready,
+    required TResult Function(CategoryFormBodyStateFinished value) finished,
     required TResult Function(CategoryFormBodyStateError value) error,
   }) {
     return error(this);
@@ -356,6 +534,7 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
   }) {
     return error?.call(this);
@@ -365,6 +544,7 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CategoryFormBodyStateReady value)? ready,
+    TResult Function(CategoryFormBodyStateFinished value)? finished,
     TResult Function(CategoryFormBodyStateError value)? error,
     required TResult orElse(),
   }) {

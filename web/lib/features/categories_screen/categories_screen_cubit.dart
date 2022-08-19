@@ -44,7 +44,7 @@ class CategoriesScreenCubit extends Cubit<CategoriesScreenState> {
     }
   }
 
-  Future<void> fetch({int page = 0}) async {
+  Future<void> changePage({int page = 0}) async {
     final state = this.state;
 
     if (state is! CategoriesScreenStateReady) {
@@ -52,9 +52,29 @@ class CategoriesScreenCubit extends Cubit<CategoriesScreenState> {
     }
 
     if (page != 0) {
-      if (page < 0 || page >= (state.totalCount - 1) / pageSize) {
+      if (page < 0 || page * pageSize >= state.totalCount) {
         return;
       }
+    }
+
+    emit(state.copyWith(
+      currentPage: page,
+    ));
+  }
+
+  Future<void> deleteCategory(String categoryId) async {
+    final state = this.state;
+    if (state is! CategoriesScreenStateReady) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(DeleteCategory(id: categoryId));
+      await init();
+    } catch (err, st) {
+      _logger.warning(
+          'Failed deleting category with categoryId: $categoryId', err, st);
+      emit(CategoriesScreenState.error(error: err.toString()));
     }
   }
 }

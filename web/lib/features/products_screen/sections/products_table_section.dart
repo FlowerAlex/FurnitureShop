@@ -71,11 +71,14 @@ class _ProductItem extends StatelessWidget {
           height: 100,
           child: Row(
             children: [
-              Image.network(
-                'https://furnitureshopstorage.blob.core.windows.net/images/$previewPhotoId',
-                fit: BoxFit.contain,
-              ),
               const SizedBox(width: 20),
+              if (previewPhotoId != null) ...[
+                Image.network(
+                  'https://furnitureshopstorage.blob.core.windows.net/images/$previewPhotoId',
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 20),
+              ],
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -26,6 +26,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/arrow-up.svg
   SvgGenImage get arrowUp => const SvgGenImage('assets/icons/arrow-up.svg');
+
+  /// File path: assets/icons/trash.svg
+  SvgGenImage get trash => const SvgGenImage('assets/icons/trash.svg');
 }
 
 class Assets {
