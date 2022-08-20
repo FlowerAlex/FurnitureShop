@@ -34,7 +34,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             {
                 return;
             }
-            order.OrderState = Enum.Parse<OrderState>(command.OrderState, ignoreCase: true);
+            order.OrderState = Enum.Parse<FurnitureShop.Core.Domain.OrderState>(command.OrderState.ToString(), ignoreCase: true);
             await dbContext.SaveChangesAsync();
         }
     }
