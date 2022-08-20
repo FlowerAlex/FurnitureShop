@@ -207,7 +207,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var command = new FurnitureShop.Core.Contracts.Web.Orders.SetOrderState()
             {
                 Id = TestOrder.Id,
-                OrderState =FurnitureShop.Core.Contracts.Web.Orders.OrderState.InProgress,
+                OrderState =FurnitureShop.Core.Contracts.Web.Orders.OrderStateDTO.InProgress,
             };
             var result = handler.ExecuteAsync(coreContext, command);
 

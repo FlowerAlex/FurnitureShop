@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -31,9 +32,19 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                 Surname = user.Surname,
                 EmailAddress = user.EmailAddress,
                 Username = user.Username,
-                isBanned = dbContext.UserClaims.Where(uc => uc.UserId == user.Id).First().ClaimValue == Auth.Roles.BannedUser
+                isBanned = IsUserBanned(dbContext,user.Id),
             })
             .ToPaginatedResultAsync(query);
+        }
+        private bool IsUserBanned(CoreDbContext dbContext, Guid userId)
+        {
+            var claim = dbContext.UserClaims.Where(uc => uc.UserId == userId).FirstOrDefault();
+            if(claim == null)
+            {
+                return false;
+            }
+            else
+            return claim.ClaimValue == Auth.Roles.BannedUser;
         }
     }
 }

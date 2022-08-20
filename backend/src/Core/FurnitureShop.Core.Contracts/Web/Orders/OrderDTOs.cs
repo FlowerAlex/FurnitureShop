@@ -27,4 +27,11 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public int Amount { get; set; }
     }
+    public enum OrderStateDTO
+    {
+        Pending,
+        Cancelled,
+        InProgress,
+        Finished,
+    }
 }
