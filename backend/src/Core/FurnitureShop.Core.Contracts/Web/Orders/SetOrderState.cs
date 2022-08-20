@@ -8,10 +8,17 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     public class SetOrderState : IRemoteCommand
     {
         public Guid Id { get; set; }
-        public string OrderState { get; set; }
+        public OrderState OrderState { get; set; }
         public static class ErrorCodes
         {
             public const int IncorrectState = 1;
         }
+    }
+    public enum OrderState
+    {
+        Pending,
+        Cancelled,
+        InProgress,
+        Finished,
     }
 }
