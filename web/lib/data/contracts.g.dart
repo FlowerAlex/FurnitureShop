@@ -184,7 +184,7 @@ Map<String, dynamic> _$AllOrdersToJson(AllOrders instance) => <String, dynamic>{
       'PageNumber': instance.pageNumber,
       'PageSize': instance.pageSize,
       'FilterBy': instance.filterBy
-          .map((k, e) => MapEntry(_$OrdersFilterFieldDTOEnumMap[k], e)),
+          .map((k, e) => MapEntry(_$OrdersFilterFieldDTOEnumMap[k]!, e)),
       'SortBy': _$OrdersSortFieldDTOEnumMap[instance.sortBy],
       'SortByDescending': instance.sortByDescending,
     };
@@ -304,14 +304,21 @@ Map<String, dynamic> _$ProductInOrderDTOToJson(ProductInOrderDTO instance) =>
 SetOrderState _$SetOrderStateFromJson(Map<String, dynamic> json) =>
     SetOrderState(
       id: json['Id'] as String,
-      orderState: json['OrderState'] as String,
+      orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
     );
 
 Map<String, dynamic> _$SetOrderStateToJson(SetOrderState instance) =>
     <String, dynamic>{
       'Id': instance.id,
-      'OrderState': instance.orderState,
+      'OrderState': _$OrderStateDTOEnumMap[instance.orderState]!,
     };
+
+const _$OrderStateDTOEnumMap = {
+  OrderStateDTO.pending: 0,
+  OrderStateDTO.cancelled: 1,
+  OrderStateDTO.inProgress: 2,
+  OrderStateDTO.finished: 3,
+};
 
 AllProducts _$AllProductsFromJson(Map<String, dynamic> json) => AllProducts(
       pageNumber: json['PageNumber'] as int,
@@ -469,4 +476,47 @@ UpdateProduct _$UpdateProductFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UpdateProductToJson(UpdateProduct instance) =>
     <String, dynamic>{
       'UpdatedProduct': instance.updatedProduct,
+    };
+
+AllUsers _$AllUsersFromJson(Map<String, dynamic> json) => AllUsers(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+    );
+
+Map<String, dynamic> _$AllUsersToJson(AllUsers instance) => <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+    };
+
+BanUser _$BanUserFromJson(Map<String, dynamic> json) => BanUser(
+      userId: json['UserId'] as String,
+    );
+
+Map<String, dynamic> _$BanUserToJson(BanUser instance) => <String, dynamic>{
+      'UserId': instance.userId,
+    };
+
+UnbanUser _$UnbanUserFromJson(Map<String, dynamic> json) => UnbanUser(
+      userId: json['UserId'] as String,
+    );
+
+Map<String, dynamic> _$UnbanUserToJson(UnbanUser instance) => <String, dynamic>{
+      'UserId': instance.userId,
+    };
+
+UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
+      firstname: json['Firstname'] as String,
+      surname: json['Surname'] as String,
+      username: json['Username'] as String,
+      emailAddress: json['EmailAddress'] as String,
+      isBanned: json['isBanned'] as bool,
+    );
+
+Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
+    <String, dynamic>{
+      'Firstname': instance.firstname,
+      'Surname': instance.surname,
+      'Username': instance.username,
+      'EmailAddress': instance.emailAddress,
+      'isBanned': instance.isBanned,
     };

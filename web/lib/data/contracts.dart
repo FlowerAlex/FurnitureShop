@@ -600,6 +600,16 @@ enum OrdersSortFieldDTO {
   @JsonValue(1)
   deliveredDate
 }
+enum OrderStateDTO {
+  @JsonValue(0)
+  pending,
+  @JsonValue(1)
+  cancelled,
+  @JsonValue(2)
+  inProgress,
+  @JsonValue(3)
+  finished
+}
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ProductInOrderDTO with EquatableMixin implements ProductDTO {
@@ -649,7 +659,7 @@ class SetOrderState with EquatableMixin implements Command {
 
   final String id;
 
-  final String orderState;
+  final OrderStateDTO orderState;
 
   get props => [id, orderState];
 
@@ -961,4 +971,101 @@ class UpdateProductErrorCodes {
   static const incorrectDescription = 2;
 
   static const incorrectPrice = 3;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class AllUsers with EquatableMixin implements PaginatedQuery<UserInfoDTO> {
+  AllUsers({
+    required this.pageNumber,
+    required this.pageSize,
+  });
+
+  factory AllUsers.fromJson(Map<String, dynamic> json) =>
+      _$AllUsersFromJson(json);
+
+  final int pageNumber;
+
+  final int pageSize;
+
+  get props => [pageNumber, pageSize];
+
+  Map<String, dynamic> toJson() => _$AllUsersToJson(this);
+  PaginatedResult<UserInfoDTO> resultFactory(dynamic decodedJson) =>
+      _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
+          (e) => _$UserInfoDTOFromJson(e as Map<String, dynamic>));
+  String getFullName() => 'FurnitureShop.Core.Contracts.Web.Users.AllUsers';
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class BanUser with EquatableMixin implements Command {
+  BanUser({
+    required this.userId,
+  });
+
+  factory BanUser.fromJson(Map<String, dynamic> json) =>
+      _$BanUserFromJson(json);
+
+  final String userId;
+
+  get props => [userId];
+
+  Map<String, dynamic> toJson() => _$BanUserToJson(this);
+  String getFullName() => 'FurnitureShop.Core.Contracts.Web.Users.BanUser';
+}
+
+class BanUserErrorCodes {
+  static const userNotFound = 1;
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UnbanUser with EquatableMixin implements Command {
+  UnbanUser({
+    required this.userId,
+  });
+
+  factory UnbanUser.fromJson(Map<String, dynamic> json) =>
+      _$UnbanUserFromJson(json);
+
+  final String userId;
+
+  get props => [userId];
+
+  Map<String, dynamic> toJson() => _$UnbanUserToJson(this);
+  String getFullName() => 'FurnitureShop.Core.Contracts.Web.Users.UnbanUser';
+}
+
+class UnbanUserErrorCodes {
+  static const userNotFound = 1;
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UserInfoDTO with EquatableMixin {
+  UserInfoDTO({
+    required this.firstname,
+    required this.surname,
+    required this.username,
+    required this.emailAddress,
+    required this.isBanned,
+  });
+
+  factory UserInfoDTO.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoDTOFromJson(json);
+
+  final String firstname;
+
+  final String surname;
+
+  final String username;
+
+  final String emailAddress;
+
+  @JsonKey(name: 'isBanned')
+  final bool isBanned;
+
+  get props => [firstname, surname, username, emailAddress, isBanned];
+
+  Map<String, dynamic> toJson() => _$UserInfoDTOToJson(this);
 }

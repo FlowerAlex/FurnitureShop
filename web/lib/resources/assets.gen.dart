@@ -27,8 +27,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-up.svg
   SvgGenImage get arrowUp => const SvgGenImage('assets/icons/arrow-up.svg');
 
+  /// File path: assets/icons/ban-user.svg
+  SvgGenImage get banUser => const SvgGenImage('assets/icons/ban-user.svg');
+
   /// File path: assets/icons/trash.svg
   SvgGenImage get trash => const SvgGenImage('assets/icons/trash.svg');
+
+  /// File path: assets/icons/unban-user.svg
+  SvgGenImage get unbanUser => const SvgGenImage('assets/icons/unban-user.svg');
 }
 
 class Assets {

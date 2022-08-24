@@ -4,6 +4,7 @@ import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/categories_screen/categories_screen.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
+import 'package:furniture_shop/features/users_screen/users_screen.dart';
 import 'package:furniture_shop/utils/spaced.dart';
 import 'package:furniture_shop/utils/text_button.dart';
 
@@ -98,9 +99,7 @@ class _MainScreenBody extends StatelessWidget {
       case MainScreenSection.categories:
         return const CategoriesScreen();
       case MainScreenSection.users:
-        return const Center(
-          child: Text('Users'),
-        );
+        return const UsersScreen();
       case MainScreenSection.orders:
         return const Center(
           child: Text('Orders'),
