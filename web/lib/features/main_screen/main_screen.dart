@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/categories_screen/categories_screen.dart';
 import 'package:furniture_shop/features/main_screen/main_screen_cubit.dart';
+import 'package:furniture_shop/features/orders_screen/orders_screen.dart';
 import 'package:furniture_shop/features/products_screen/products_screen.dart';
 import 'package:furniture_shop/features/users_screen/users_screen.dart';
 import 'package:furniture_shop/utils/spaced.dart';
@@ -101,9 +102,7 @@ class _MainScreenBody extends StatelessWidget {
       case MainScreenSection.users:
         return const UsersScreen();
       case MainScreenSection.orders:
-        return const Center(
-          child: Text('Orders'),
-        );
+        return const OrdersScreen();
     }
   }
 }

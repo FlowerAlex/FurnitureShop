@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'users_screen_cubit.dart';
+part of 'orders_screen_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,36 +14,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$UsersScreenStateTearOff {
-  const _$UsersScreenStateTearOff();
+class _$OrdersScreenStateTearOff {
+  const _$OrdersScreenStateTearOff();
 
-  UsersScreenStateReady ready(
-      {Map<int, List<UserInfoDTO>> users = const <int, List<UserInfoDTO>>{},
+  OrdersScreenStateReady ready(
+      {Map<int, List<OrderDTO>> orders = const <int, List<OrderDTO>>{},
       int currentPage = 0,
       int totalCount = 0}) {
-    return UsersScreenStateReady(
-      users: users,
+    return OrdersScreenStateReady(
+      orders: orders,
       currentPage: currentPage,
       totalCount: totalCount,
     );
   }
 
-  UsersScreenStateError error({required String error}) {
-    return UsersScreenStateError(
+  OrdersScreenStateError error({required String error}) {
+    return OrdersScreenStateError(
       error: error,
     );
   }
 }
 
 /// @nodoc
-const $UsersScreenState = _$UsersScreenStateTearOff();
+const $OrdersScreenState = _$OrdersScreenStateTearOff();
 
 /// @nodoc
-mixin _$UsersScreenState {
+mixin _$OrdersScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) =>
@@ -51,7 +51,7 @@ mixin _$UsersScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
@@ -59,7 +59,7 @@ mixin _$UsersScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -67,73 +67,72 @@ mixin _$UsersScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UsersScreenStateReady value) ready,
-    required TResult Function(UsersScreenStateError value) error,
+    required TResult Function(OrdersScreenStateReady value) ready,
+    required TResult Function(OrdersScreenStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UsersScreenStateCopyWith<$Res> {
-  factory $UsersScreenStateCopyWith(
-          UsersScreenState value, $Res Function(UsersScreenState) then) =
-      _$UsersScreenStateCopyWithImpl<$Res>;
+abstract class $OrdersScreenStateCopyWith<$Res> {
+  factory $OrdersScreenStateCopyWith(
+          OrdersScreenState value, $Res Function(OrdersScreenState) then) =
+      _$OrdersScreenStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$UsersScreenStateCopyWithImpl<$Res>
-    implements $UsersScreenStateCopyWith<$Res> {
-  _$UsersScreenStateCopyWithImpl(this._value, this._then);
+class _$OrdersScreenStateCopyWithImpl<$Res>
+    implements $OrdersScreenStateCopyWith<$Res> {
+  _$OrdersScreenStateCopyWithImpl(this._value, this._then);
 
-  final UsersScreenState _value;
+  final OrdersScreenState _value;
   // ignore: unused_field
-  final $Res Function(UsersScreenState) _then;
+  final $Res Function(OrdersScreenState) _then;
 }
 
 /// @nodoc
-abstract class $UsersScreenStateReadyCopyWith<$Res> {
-  factory $UsersScreenStateReadyCopyWith(UsersScreenStateReady value,
-          $Res Function(UsersScreenStateReady) then) =
-      _$UsersScreenStateReadyCopyWithImpl<$Res>;
-  $Res call(
-      {Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount});
+abstract class $OrdersScreenStateReadyCopyWith<$Res> {
+  factory $OrdersScreenStateReadyCopyWith(OrdersScreenStateReady value,
+          $Res Function(OrdersScreenStateReady) then) =
+      _$OrdersScreenStateReadyCopyWithImpl<$Res>;
+  $Res call({Map<int, List<OrderDTO>> orders, int currentPage, int totalCount});
 }
 
 /// @nodoc
-class _$UsersScreenStateReadyCopyWithImpl<$Res>
-    extends _$UsersScreenStateCopyWithImpl<$Res>
-    implements $UsersScreenStateReadyCopyWith<$Res> {
-  _$UsersScreenStateReadyCopyWithImpl(
-      UsersScreenStateReady _value, $Res Function(UsersScreenStateReady) _then)
-      : super(_value, (v) => _then(v as UsersScreenStateReady));
+class _$OrdersScreenStateReadyCopyWithImpl<$Res>
+    extends _$OrdersScreenStateCopyWithImpl<$Res>
+    implements $OrdersScreenStateReadyCopyWith<$Res> {
+  _$OrdersScreenStateReadyCopyWithImpl(OrdersScreenStateReady _value,
+      $Res Function(OrdersScreenStateReady) _then)
+      : super(_value, (v) => _then(v as OrdersScreenStateReady));
 
   @override
-  UsersScreenStateReady get _value => super._value as UsersScreenStateReady;
+  OrdersScreenStateReady get _value => super._value as OrdersScreenStateReady;
 
   @override
   $Res call({
-    Object? users = freezed,
+    Object? orders = freezed,
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
-    return _then(UsersScreenStateReady(
-      users: users == freezed
-          ? _value.users
-          : users // ignore: cast_nullable_to_non_nullable
-              as Map<int, List<UserInfoDTO>>,
+    return _then(OrdersScreenStateReady(
+      orders: orders == freezed
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OrderDTO>>,
       currentPage: currentPage == freezed
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -148,15 +147,15 @@ class _$UsersScreenStateReadyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UsersScreenStateReady implements UsersScreenStateReady {
-  const _$UsersScreenStateReady(
-      {this.users = const <int, List<UserInfoDTO>>{},
+class _$OrdersScreenStateReady implements OrdersScreenStateReady {
+  const _$OrdersScreenStateReady(
+      {this.orders = const <int, List<OrderDTO>>{},
       this.currentPage = 0,
       this.totalCount = 0});
 
   @JsonKey()
   @override
-  final Map<int, List<UserInfoDTO>> users;
+  final Map<int, List<OrderDTO>> orders;
   @JsonKey()
   @override
   final int currentPage;
@@ -166,15 +165,15 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
 
   @override
   String toString() {
-    return 'UsersScreenState.ready(users: $users, currentPage: $currentPage, totalCount: $totalCount)';
+    return 'OrdersScreenState.ready(orders: $orders, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is UsersScreenStateReady &&
-            const DeepCollectionEquality().equals(other.users, users) &&
+            other is OrdersScreenStateReady &&
+            const DeepCollectionEquality().equals(other.orders, orders) &&
             const DeepCollectionEquality()
                 .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality()
@@ -184,49 +183,49 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(users),
+      const DeepCollectionEquality().hash(orders),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
-  $UsersScreenStateReadyCopyWith<UsersScreenStateReady> get copyWith =>
-      _$UsersScreenStateReadyCopyWithImpl<UsersScreenStateReady>(
+  $OrdersScreenStateReadyCopyWith<OrdersScreenStateReady> get copyWith =>
+      _$OrdersScreenStateReadyCopyWithImpl<OrdersScreenStateReady>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
-    return ready(users, currentPage, totalCount);
+    return ready(orders, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(users, currentPage, totalCount);
+    return ready?.call(orders, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(users, currentPage, totalCount);
+      return ready(orders, currentPage, totalCount);
     }
     return orElse();
   }
@@ -234,8 +233,8 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UsersScreenStateReady value) ready,
-    required TResult Function(UsersScreenStateError value) error,
+    required TResult Function(OrdersScreenStateReady value) ready,
+    required TResult Function(OrdersScreenStateError value) error,
   }) {
     return ready(this);
   }
@@ -243,8 +242,8 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
   }) {
     return ready?.call(this);
   }
@@ -252,8 +251,8 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
@@ -263,44 +262,44 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   }
 }
 
-abstract class UsersScreenStateReady implements UsersScreenState {
-  const factory UsersScreenStateReady(
-      {Map<int, List<UserInfoDTO>> users,
+abstract class OrdersScreenStateReady implements OrdersScreenState {
+  const factory OrdersScreenStateReady(
+      {Map<int, List<OrderDTO>> orders,
       int currentPage,
-      int totalCount}) = _$UsersScreenStateReady;
+      int totalCount}) = _$OrdersScreenStateReady;
 
-  Map<int, List<UserInfoDTO>> get users;
+  Map<int, List<OrderDTO>> get orders;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
-  $UsersScreenStateReadyCopyWith<UsersScreenStateReady> get copyWith =>
+  $OrdersScreenStateReadyCopyWith<OrdersScreenStateReady> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UsersScreenStateErrorCopyWith<$Res> {
-  factory $UsersScreenStateErrorCopyWith(UsersScreenStateError value,
-          $Res Function(UsersScreenStateError) then) =
-      _$UsersScreenStateErrorCopyWithImpl<$Res>;
+abstract class $OrdersScreenStateErrorCopyWith<$Res> {
+  factory $OrdersScreenStateErrorCopyWith(OrdersScreenStateError value,
+          $Res Function(OrdersScreenStateError) then) =
+      _$OrdersScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$UsersScreenStateErrorCopyWithImpl<$Res>
-    extends _$UsersScreenStateCopyWithImpl<$Res>
-    implements $UsersScreenStateErrorCopyWith<$Res> {
-  _$UsersScreenStateErrorCopyWithImpl(
-      UsersScreenStateError _value, $Res Function(UsersScreenStateError) _then)
-      : super(_value, (v) => _then(v as UsersScreenStateError));
+class _$OrdersScreenStateErrorCopyWithImpl<$Res>
+    extends _$OrdersScreenStateCopyWithImpl<$Res>
+    implements $OrdersScreenStateErrorCopyWith<$Res> {
+  _$OrdersScreenStateErrorCopyWithImpl(OrdersScreenStateError _value,
+      $Res Function(OrdersScreenStateError) _then)
+      : super(_value, (v) => _then(v as OrdersScreenStateError));
 
   @override
-  UsersScreenStateError get _value => super._value as UsersScreenStateError;
+  OrdersScreenStateError get _value => super._value as OrdersScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(UsersScreenStateError(
+    return _then(OrdersScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -311,22 +310,22 @@ class _$UsersScreenStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UsersScreenStateError implements UsersScreenStateError {
-  const _$UsersScreenStateError({required this.error});
+class _$OrdersScreenStateError implements OrdersScreenStateError {
+  const _$OrdersScreenStateError({required this.error});
 
   @override
   final String error;
 
   @override
   String toString() {
-    return 'UsersScreenState.error(error: $error)';
+    return 'OrdersScreenState.error(error: $error)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is UsersScreenStateError &&
+            other is OrdersScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -336,15 +335,15 @@ class _$UsersScreenStateError implements UsersScreenStateError {
 
   @JsonKey(ignore: true)
   @override
-  $UsersScreenStateErrorCopyWith<UsersScreenStateError> get copyWith =>
-      _$UsersScreenStateErrorCopyWithImpl<UsersScreenStateError>(
+  $OrdersScreenStateErrorCopyWith<OrdersScreenStateError> get copyWith =>
+      _$OrdersScreenStateErrorCopyWithImpl<OrdersScreenStateError>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -355,7 +354,7 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -366,7 +365,7 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<UserInfoDTO>> users, int currentPage, int totalCount)?
+            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -380,8 +379,8 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UsersScreenStateReady value) ready,
-    required TResult Function(UsersScreenStateError value) error,
+    required TResult Function(OrdersScreenStateReady value) ready,
+    required TResult Function(OrdersScreenStateError value) error,
   }) {
     return error(this);
   }
@@ -389,8 +388,8 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -398,8 +397,8 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UsersScreenStateReady value)? ready,
-    TResult Function(UsersScreenStateError value)? error,
+    TResult Function(OrdersScreenStateReady value)? ready,
+    TResult Function(OrdersScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -409,12 +408,12 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   }
 }
 
-abstract class UsersScreenStateError implements UsersScreenState {
-  const factory UsersScreenStateError({required String error}) =
-      _$UsersScreenStateError;
+abstract class OrdersScreenStateError implements OrdersScreenState {
+  const factory OrdersScreenStateError({required String error}) =
+      _$OrdersScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $UsersScreenStateErrorCopyWith<UsersScreenStateError> get copyWith =>
+  $OrdersScreenStateErrorCopyWith<OrdersScreenStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }
