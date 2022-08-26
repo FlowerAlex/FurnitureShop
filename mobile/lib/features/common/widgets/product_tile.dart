@@ -9,14 +9,26 @@ class ProductTile extends StatelessWidget {
   const ProductTile({
     Key? key,
     required this.product,
+    this.selectable = false,
+    this.selected,
+    this.onSelectedChanged,
     this.children = const [],
-  }) : super(key: key);
+  })  : assert(!selectable ||
+            (selectable && selected != null && onSelectedChanged != null)),
+        super(key: key);
 
   final ProductDTO product;
   final List<Widget> children;
 
+  final bool selectable;
+  final bool? selected;
+  final void Function(bool selected)? onSelectedChanged;
+
   @override
   Widget build(BuildContext context) {
+    final selected = this.selected;
+    final onSelectedChanged = this.onSelectedChanged;
+
     void productTilePressed() {
       Navigator.of(context)
           .push(ProductDetailsScreenRoute(productId: product.id));
@@ -34,6 +46,10 @@ class ProductTile extends StatelessWidget {
           children: [
             Row(
               children: [
+                if (selectable && selected != null && onSelectedChanged != null)
+                  Checkbox(
+                      value: selected,
+                      onChanged: (value) => onSelectedChanged(value ?? false)),
                 SizedBox(
                   width: 100,
                   height: 100,

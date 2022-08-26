@@ -13,7 +13,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
   ShoppingCartScreenCubit({
     required CQRS cqrs,
   })  : _cqrs = cqrs,
-        super(const ShoppingCartLoadingState());
+        super(const ShoppingCartScreenState.loading());
 
   final CQRS _cqrs;
 
@@ -24,23 +24,31 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
 
       if (result != null) {
         emit(
-          ShoppingCartReadyState(
-            shoppingCart: result,
+          ShoppingCartScreenState.ready(
+            shoppingCartProducts: result.shoppingCartProducts
+                .map(
+                  (e) => SelectableShoppingCartProduct(
+                    product: e,
+                    count: 1,
+                    selected: false,
+                  ),
+                )
+                .toList(),
             categories: categories,
             activeCategory: allCategories,
           ),
         );
       } else {
-        emit(const ShoppingCartErrorState(error: 'Could not load data'));
+        emit(const ShoppingCartScreenState.error(error: 'Could not load data'));
       }
     } catch (e) {
-      emit(ShoppingCartErrorState(error: e.toString()));
+      emit(ShoppingCartScreenState.error(error: e.toString()));
     }
   }
 
   void changeActiveCategory(CategoryDTO activeCategory) {
     final state = this.state;
-    if (state is! ShoppingCartReadyState) {
+    if (state is! ShoppingCartScreenStateReady) {
       return;
     }
 
@@ -52,22 +60,71 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
       await _cqrs.run(RemoveProductFromShoppingCart(productId: productId));
       await fetch();
     } catch (e, _) {
-      emit(ShoppingCartErrorState(error: e.toString()));
+      emit(ShoppingCartScreenState.error(error: e.toString()));
     }
+  }
+
+  Future<void> selectProduct({
+    required String productId,
+    required bool selected,
+  }) async {
+    final state = this.state;
+    if (state is! ShoppingCartScreenStateReady) {
+      return;
+    }
+
+    emit(
+      state.copyWith(shoppingCartProducts: [
+        for (final shoppingCartProduct in state.shoppingCartProducts)
+          productId == shoppingCartProduct.product.product.id
+              ? shoppingCartProduct.copyWith(selected: selected)
+              : shoppingCartProduct
+      ]),
+    );
+  }
+
+  Future<void> changeCountOfProduct({
+    required String productId,
+    required int count,
+  }) async {
+    final state = this.state;
+    if (state is! ShoppingCartScreenStateReady) {
+      return;
+    }
+
+    emit(
+      state.copyWith(shoppingCartProducts: [
+        for (final shoppingCartProduct in state.shoppingCartProducts)
+          productId == shoppingCartProduct.product.product.id
+              ? shoppingCartProduct.copyWith(count: count)
+              : shoppingCartProduct
+      ]),
+    );
   }
 }
 
 @freezed
 class ShoppingCartScreenState with _$ShoppingCartScreenState {
-  const factory ShoppingCartScreenState.loading() = ShoppingCartLoadingState;
+  const factory ShoppingCartScreenState.loading() =
+      ShoppingCartScreenStateLoading;
   const factory ShoppingCartScreenState.ready({
-    required ShoppingCartDTO shoppingCart,
+    required List<SelectableShoppingCartProduct> shoppingCartProducts,
     required CategoryDTO activeCategory,
+    @Default(<bool>[]) List<bool> selectedProdcuts,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
-  }) = ShoppingCartReadyState;
+  }) = ShoppingCartScreenStateReady;
   const factory ShoppingCartScreenState.error({
     required String error,
-  }) = ShoppingCartErrorState;
+  }) = ShoppingCartScreenStateError;
+}
+
+@freezed
+class SelectableShoppingCartProduct with _$SelectableShoppingCartProduct {
+  const factory SelectableShoppingCartProduct({
+    required ShoppingCartProductDTO product,
+    required int count,
+    required bool selected,
+  }) = _SelectableShoppingCartProduct;
 }

@@ -28,3 +28,16 @@ extension ProductDetailsDTOEx on ProductDetailsDTO {
         id: id ?? this.id,
       );
 }
+
+extension ShoppingCartDTOEx on ShoppingCartDTO {
+  ShoppingCartDTO copyWith({
+    String? userId,
+    double? price,
+    List<ShoppingCartProductDTO>? shoppingCartProducts,
+  }) =>
+      ShoppingCartDTO(
+        userId: userId ?? this.userId,
+        price: price ?? this.price,
+        shoppingCartProducts: shoppingCartProducts ?? this.shoppingCartProducts,
+      );
+}

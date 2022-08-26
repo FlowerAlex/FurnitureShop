@@ -23,8 +23,9 @@ class ShoppingCartScreen extends StatelessWidget {
           CustomAppBar(
             title: 'Shopping cart',
             withFilter: true,
-            categories: state is ShoppingCartReadyState ? state.categories : [],
-            activeCategoryId: state is ShoppingCartReadyState
+            categories:
+                state is ShoppingCartScreenStateReady ? state.categories : [],
+            activeCategoryId: state is ShoppingCartScreenStateReady
                 ? state.activeCategory.id
                 : null,
             onChangeCategoryPressed:
@@ -60,7 +61,7 @@ class _ShoppingCartReadyBody extends HookWidget {
     required this.state,
   }) : super(key: key);
 
-  final ShoppingCartReadyState state;
+  final ShoppingCartScreenStateReady state;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _ShoppingCartReadyBody extends HookWidget {
         usePagingController<int, ShoppingCartProductDTO>(
       firstPageKey: 0,
       hasMore: state.totalCount > state.currentPage * pageSize,
-      items: state.shoppingCart.shoppingCartProducts,
+      items: state.shoppingCartProducts.map((e) => e.product).toList(),
       fetchPage: (int page) => cubit.fetch(page: page),
       getNextPageKey: (_) => state.currentPage + 1,
     );
@@ -80,13 +81,19 @@ class _ShoppingCartReadyBody extends HookWidget {
       pagingController: paginatingController,
       builderDelegate: PagedChildBuilderDelegate<ShoppingCartProductDTO>(
         itemBuilder: (context, item, index) {
-          final product =
-              state.shoppingCart.shoppingCartProducts.elementAt(index).product;
+          final shoppingCartProduct =
+              state.shoppingCartProducts.elementAt(index);
+          final product = shoppingCartProduct.product;
+
           return ProductTile(
-            product: product,
+            selectable: true,
+            selected: false, // TODO:
+            onSelectedChanged: (selected) {}, // TODO:
+            product: product.product,
             children: [
               InkWell(
-                onTap: () => cubit.removeProductFromShoppingCart(product.id),
+                onTap: () =>
+                    cubit.removeProductFromShoppingCart(product.product.id),
                 child: Assets.icons.selectedAddToCart.image(),
               ),
             ],
