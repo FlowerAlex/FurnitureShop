@@ -54,33 +54,26 @@ class _UserItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
-          Row(
+          Column(
             children: [
-              Column(
-                children: [
-                  Text(user.firstname),
-                  Text(user.surname),
-                ],
-              ),
-              Column(
-                children: [
-                  Text('Username:' + user.username),
-                  Text(user.emailAddress),
-                ],
-              ),
+              Text(user.firstname),
+              Text(user.surname),
             ],
           ),
-          Row(
+          Column(
             children: [
-              Text(user.isBanned ? 'Unban user: ' : 'Ban user: '),
-              const SizedBox(width: 12),
-              IconButton(
-                onPressed: user.isBanned ? onBanPressed : onUnbanPressed,
-                icon: user.isBanned
-                    ? Assets.icons.banUser.svg()
-                    : Assets.icons.unbanUser.svg(),
-              ),
+              Text('Username:' + user.username),
+              Text(user.emailAddress),
             ],
+          ),
+          const Spacer(),
+          Text(user.isBanned ? 'Unban user: ' : 'Ban user: '),
+          const SizedBox(width: 12),
+          IconButton(
+            onPressed: user.isBanned ? onBanPressed : onUnbanPressed,
+            icon: user.isBanned
+                ? Assets.icons.banUser.svg()
+                : Assets.icons.unbanUser.svg(),
           ),
         ],
       ),

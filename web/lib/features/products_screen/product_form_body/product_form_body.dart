@@ -199,7 +199,7 @@ class PickFileSection extends FormField<bool> {
           },
           builder: (state) {
             if (isValid != state.value) {
-              WidgetsBinding.instance.scheduleFrameCallback((_) {
+              WidgetsBinding.instance?.scheduleFrameCallback((_) {
                 state.didChange(isValid);
               });
             }
