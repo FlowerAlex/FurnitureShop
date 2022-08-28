@@ -30,7 +30,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 .FirstOrDefaultAsync();
             if (shoppingCart == null) { return null; }
             var shopingCartProducts = dbContext.ShoppingCartProduct.Where(s => s.ShoppingCartId == shoppingCart.Id ).ToList();
-            var ret = new ShoppingCartDTO(){UserId = shoppingCart.UserId};
+            var ret = new ShoppingCartDTO();
             ret.ShoppingCartProducts = shopingCartProducts
                 .Join(
                     products,

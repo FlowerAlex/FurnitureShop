@@ -6,7 +6,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.ShoppingCart
 {
     public class ShoppingCartDTO
     {
-        public Guid? UserId { get; set; }
         public double Price { get; set; }
         public IEnumerable<ShoppingCartProductDTO> ShoppingCartProducts { get; set; }
 
