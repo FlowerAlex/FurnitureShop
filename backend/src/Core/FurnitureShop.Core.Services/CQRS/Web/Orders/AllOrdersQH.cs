@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
         public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, AllOrders query)
         {
-            var products = await dbContext.Products.ToListAsync(); 
-            return await dbContext.Orders.Include(o => o.OrdersProducts)
+            var products = await dbContext.Products.ToListAsync();
+            var orders = await dbContext.Orders
                 .FilterBy(query)
                 .Select(p => new OrderDTO
                 {
@@ -30,43 +31,44 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
                     Price = p.Price,
                     UserId = p.UserId,
-                    State = p.State,
-                    Country = p.Country,
-                    Street = p.Street,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    OrderState = p.OrderState.ToString(),
+                    Adress = p.Street + "," + p.PostalCode + p.City + p.Country,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-                    Products = GetProductsInOrder(p,products).Result,
 
                 })
-                .SortBy(query)
-                .ToPaginatedResultAsync(query);
+                .SortBy(query).ToPaginatedResultAsync(query);
+
+            foreach (var ord in orders.Items)
+            {
+                 ord.Products = await GetProductsInOrder(ord, products);
+            }
+
+            return orders;
         }
-        private async Task<List<ProductInOrderDTO>> GetProductsInOrder(Order order, List<Product> products)
+        private async Task<List<ProductInOrderDTO>> GetProductsInOrder(OrderDTO order, List<Product> products)
         {
             var orderProducts = await dbContext.OrderProduct.Where(o => o.OrderId == order.Id).ToListAsync();
-            
-            if(orderProducts != null && products != null)
-            return orderProducts
-                .Join(
-                    products,
-                    ord => ord.ProductId,
-                    prod => prod.Id,
-                    (ord, prod) => new ProductInOrderDTO()
-                    {
-                        Amount = ord.Amount,
-                        Id = prod.Id,
-                        Name = prod.Name,
-                        Price = prod.Price,
-                        PreviewPhotoId = prod.PreviewPhotoId,
-                        CategoryId = prod.CategoryId,
-                    }).ToList();
+
+            if (orderProducts != null && products != null)
+                return orderProducts
+                    .Join(
+                        products,
+                        ord => ord.ProductId,
+                        prod => prod.Id,
+                        (ord, prod) => new ProductInOrderDTO()
+                        {
+                            Amount = ord.Amount,
+                            Id = prod.Id,
+                            Name = prod.Name,
+                            Price = prod.Price,
+                            PreviewPhotoId = prod.PreviewPhotoId,
+                            CategoryId = prod.CategoryId,
+                        }).ToList();
             return new List<ProductInOrderDTO>();
         }
     }
-    
+
     internal static class OrderQHExtensions
     {
         public static IQueryable<Order> FilterBy(this IQueryable<Order> queryable, AllOrders query)
@@ -114,7 +116,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             {
                 OrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
                 OrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
-                _ => queryable
+                _ => queryable,
             };
         }
     }

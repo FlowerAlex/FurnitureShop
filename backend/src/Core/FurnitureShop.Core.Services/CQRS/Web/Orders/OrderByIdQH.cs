@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,12 +28,8 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
                     Price = p.Price,
                     UserId = p.UserId,
-                    State = p.State,
-                    Country = p.Country,
-                    Street = p.Street,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    OrderState = p.OrderState.ToString(),
+                    Adress = p.Street + "," + p.PostalCode  + p.City + p.Country,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
 

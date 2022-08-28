@@ -4,7 +4,7 @@ using FurnitureShop.Core.Contracts.Shared;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
-    [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
+    [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class AllReviews : PaginatedQuery<ReviewDTO>
     {
         public Guid ProductId { get; set; }
