@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
+using FurnitureShop.Core.Contracts.Shared.Orders;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     Street = p.Street,
                     City = p.City,
                     PostalCode = p.PostalCode,
-                    OrderState = p.OrderState.ToString(),
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
                     Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Shared.Orders;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
@@ -13,7 +14,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
-        public string OrderState { get; set; }
+        public OrderStateDTO OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FurnitureShop.Core.Contracts.Web.Products;
+using FurnitureShop.Core.Contracts.Shared.Orders;
 
 namespace FurnitureShop.Core.Contracts.Web.Orders
 {
@@ -8,12 +9,8 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public Guid? UserId { get; set; }
         public double Price { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
-        public string OrderState { get; set; }
+        public string Adress { get; set; }
+        public OrderStateDTO OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
         public List<ProductInOrderDTO> Products { get; set; }
@@ -23,7 +20,7 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public Guid Id { get; set; }
     }
-    public class ProductInOrderDTO :ProductDTO
+    public class ProductInOrderDTO : ProductDTO
     {
         public int Amount { get; set; }
     }
