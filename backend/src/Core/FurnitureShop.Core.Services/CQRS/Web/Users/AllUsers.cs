@@ -26,25 +26,20 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
 
         public async Task<PaginatedResult<UserInfoDTO>> ExecuteAsync(CoreContext context, AllUsers query)
         {
-            return await dbContext.Users.Select(user => new UserInfoDTO
-            {
-                Firstname = user.Firstname,
-                Surname = user.Surname,
-                EmailAddress = user.EmailAddress,
-                Username = user.Username,
-                isBanned = IsUserBanned(dbContext,user.Id),
-            })
-            .ToPaginatedResultAsync(query);
-        }
-        private bool IsUserBanned(CoreDbContext dbContext, Guid userId)
-        {
-            var claim = dbContext.UserClaims.Where(uc => uc.UserId == userId).FirstOrDefault();
-            if(claim == null)
-            {
-                return false;
-            }
-            else
-            return claim.ClaimValue == Auth.Roles.BannedUser;
+            return await dbContext.Users.Join(
+                dbContext.UserClaims.Where(c => 
+                    c.ClaimValue == Auth.Roles.BannedUser || c.ClaimValue == Auth.Roles.User),
+                u => u.Id,
+                c => c.UserId,
+                (u,c) => new UserInfoDTO()
+                    {
+                        Id = u.Id,
+                        Firstname = u.Firstname,
+                        Surname = u.Surname,
+                        EmailAddress = u.EmailAddress,
+                        Username = u.Username,
+                        isBanned = c.ClaimValue == Auth.Roles.BannedUser
+                    }).ToPaginatedResultAsync(query);
         }
     }
 }
