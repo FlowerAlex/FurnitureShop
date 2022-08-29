@@ -28,7 +28,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
                     Price = p.Price,
                     UserId = p.UserId,
-                    Adress = p.Street + "," + p.PostalCode  + p.City + p.Country,
+                    Adress = p.Address,
                     OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,

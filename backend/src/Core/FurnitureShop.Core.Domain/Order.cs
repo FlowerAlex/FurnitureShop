@@ -14,22 +14,14 @@ namespace FurnitureShop.Core.Domain
         public OrderState OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
+        public string Address { get; set; }
         public double Price { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
-        public Order(string street, string city, string state, string postalCode, string country)
+        public Order(string address)
         {
-            Street = street;
-            State = state;
-            City = city;
-            PostalCode = postalCode;
-            Country = country;
+            Address = address;
             Id = Id<Order>.New();
             OrderState = OrderState.Pending;
             OrdersProducts = new List<OrderProduct>();
