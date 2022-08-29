@@ -3,8 +3,8 @@ using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
-using LeanCode.DomainModels.Model;
 using LeanCode.CQRS.Validation.Fluent;
+using LeanCode.DomainModels.Model;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 {

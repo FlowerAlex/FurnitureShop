@@ -7,8 +7,8 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class UpdateProfile : IRemoteCommand
     {
-        public String? Firstname { get; set; }
-        public String? Surname { get; set; }
-        public String? Username { get; set; }
+        public string? Firstname { get; set; }
+        public string? Surname { get; set; }
+        public string? Username { get; set; }
     }
 }

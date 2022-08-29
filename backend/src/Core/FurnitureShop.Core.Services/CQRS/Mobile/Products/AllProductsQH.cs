@@ -40,7 +40,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             }
             var shoppingCartId = shoppingCart.Id;
             return await dbContext.ShoppingCartProduct
-                .Where(shp => shp.ShoppingCartId == shoppingCartId && shp.ProductId != null)
+                .Where(shp => shp.ShoppingCartId == shoppingCartId)
                 .Select(shp => shp.ProductId!.Value).ToListAsync();
         }
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
@@ -95,7 +95,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                 ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
-                _ => queryable
+                _ => queryable,
             };
         }
     }

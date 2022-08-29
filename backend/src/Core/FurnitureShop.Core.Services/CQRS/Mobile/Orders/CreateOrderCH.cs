@@ -93,7 +93,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 }
             }
             await dbContext.SaveChangesAsync();
-
         }
     }
 }

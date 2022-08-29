@@ -11,6 +11,7 @@ namespace FurnitureShop.Core.Contracts.Web.Products
         public string? PreviewPhotoId { get; set; }
         public Guid? CategoryId { get; set; }
     }
+
     public class ProducDetailsDTOBase : ProductDTOBase
     {
         public string Description { get; set; }
@@ -22,10 +23,12 @@ namespace FurnitureShop.Core.Contracts.Web.Products
     {
         public Guid Id { get; set; }
     }
+
     public class ProductDTO : ProductDTOBase
     {
         public Guid Id { get; set; }
     }
+    
     public enum ProductsSortFieldDTO
     {
         Name = 0,

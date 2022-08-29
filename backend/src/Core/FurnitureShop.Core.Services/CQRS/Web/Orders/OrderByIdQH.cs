@@ -28,32 +28,31 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
                     Price = p.Price,
                     UserId = p.UserId,
-                    Adress = p.Street + "," + p.PostalCode  + p.City + p.Country,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
+                    Adress = p.Street + "," + p.PostalCode + p.City + p.Country,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-
                 })
                 .FirstOrDefaultAsync();
             if (order != null)
             {
                 var orderProducts = await dbContext.OrderProduct.Where(o => o.OrderId == order.Id).ToListAsync();
                 var products = await dbContext.Products.ToListAsync();
-                if(orderProducts != null && products != null)
-                order.Products = orderProducts
-                    .Join(
-                        products,
-                        ord => ord.ProductId,
-                        prod => prod.Id,
-                        (ord, prod) => new ProductInOrderDTO()
-                        {
-                            Amount = ord.Amount,
-                            Id = prod.Id,
-                            Name = prod.Name,
-                            Price = prod.Price,
-                            PreviewPhotoId = prod.PreviewPhotoId,
-                            CategoryId = prod.CategoryId,
-                        }).ToList();
+                if (orderProducts != null && products != null)
+                    order.Products = orderProducts
+                        .Join(
+                            products,
+                            ord => ord.ProductId,
+                            prod => prod.Id,
+                            (ord, prod) => new ProductInOrderDTO()
+                            {
+                                Amount = ord.Amount,
+                                Id = prod.Id,
+                                Name = prod.Name,
+                                Price = prod.Price,
+                                PreviewPhotoId = prod.PreviewPhotoId,
+                                CategoryId = prod.CategoryId,
+                            }).ToList();
             }
             return order;
         }

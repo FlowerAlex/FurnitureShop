@@ -37,7 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                     Street = p.Street,
                     City = p.City,
                     PostalCode = p.PostalCode,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
                     Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
@@ -55,7 +55,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                                 CategoryId = prod.CategoryId,
                             }
                         ).ToList(),
-
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);

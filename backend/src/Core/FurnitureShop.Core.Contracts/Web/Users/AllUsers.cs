@@ -1,7 +1,5 @@
-using LeanCode.CQRS;
-using LeanCode.CQRS.Security;
 using FurnitureShop.Core.Contracts.Shared;
-using FurnitureShop.Core.Contracts.Mobile.Users;
+using LeanCode.CQRS.Security;
 
 namespace FurnitureShop.Core.Contracts.Web.Users
 {
@@ -12,8 +10,6 @@ namespace FurnitureShop.Core.Contracts.Web.Users
         {
             public const int UserNotFound = 1;
         }
-
     }
-
 
 }

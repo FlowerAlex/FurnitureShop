@@ -38,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                         Surname = u.Surname,
                         EmailAddress = u.EmailAddress,
                         Username = u.Username,
-                        isBanned = c.ClaimValue == Auth.Roles.BannedUser
+                        IsBanned = c.ClaimValue == Auth.Roles.BannedUser
                     }).ToPaginatedResultAsync(query);
         }
     }
