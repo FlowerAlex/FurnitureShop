@@ -66,6 +66,7 @@ namespace FurnitureShop.Api
 
             return modules.ToArray();
         }
+
         protected override void ConfigureApp(IApplicationBuilder app)
         {
             app
@@ -74,7 +75,7 @@ namespace FurnitureShop.Api
                 .UseCors(ApiModule.ApiCorsPolicy);
 
             app.Map("/auth", auth => auth.UseIdentityServer());
-            
+
             app.Map("/api", api =>
                     api
                         .UseAuthentication()

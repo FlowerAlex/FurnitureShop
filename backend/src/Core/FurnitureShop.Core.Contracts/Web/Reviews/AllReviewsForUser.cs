@@ -1,7 +1,7 @@
-using System;
 using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using LeanCode.CQRS.Security;
+using System;
 
 namespace FurnitureShop.Core.Contracts.Web.Reviews
 {

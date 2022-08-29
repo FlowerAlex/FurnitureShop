@@ -1,7 +1,6 @@
+using FurnitureShop.Core.Contracts.Web.Products;
 using System;
 using System.Collections.Generic;
-using FurnitureShop.Core.Contracts.Web.Products;
-using FurnitureShop.Core.Contracts.Shared.Orders;
 
 namespace FurnitureShop.Core.Contracts.Web.Orders
 {
@@ -20,10 +19,12 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public Guid Id { get; set; }
     }
+
     public class ProductInOrderDTO : ProductDTO
     {
         public int Amount { get; set; }
     }
+
     public enum OrderStateDTO
     {
         Pending,

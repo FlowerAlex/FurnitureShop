@@ -11,5 +11,4 @@ namespace FurnitureShop.Core.Contracts.Web.Users
             public const int UserNotFound = 1;
         }
     }
-
 }

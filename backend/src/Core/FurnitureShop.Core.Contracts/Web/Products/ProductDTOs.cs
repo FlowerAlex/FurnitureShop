@@ -28,7 +28,7 @@ namespace FurnitureShop.Core.Contracts.Web.Products
     {
         public Guid Id { get; set; }
     }
-    
+
     public enum ProductsSortFieldDTO
     {
         Name = 0,

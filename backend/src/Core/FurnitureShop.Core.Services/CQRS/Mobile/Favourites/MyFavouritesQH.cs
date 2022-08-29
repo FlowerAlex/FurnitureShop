@@ -51,7 +51,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
-
             return result;
         }
 
@@ -76,9 +75,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 .Where(f => f.UserId == context.UserId.Value && f.ProductId != null)
                 .Select(f => f.ProductId!.Value).ToListAsync();
         }
-
-
     }
+
     internal static class ProductQHExtensions
     {
         public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, MyFavourites query)
@@ -102,7 +100,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
-                _ => queryable
+                _ => queryable,
             };
         }
     }

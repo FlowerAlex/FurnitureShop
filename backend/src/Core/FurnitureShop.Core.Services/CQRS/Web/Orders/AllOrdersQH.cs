@@ -28,14 +28,12 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                 .Select(p => new OrderDTO
                 {
                     Id = p.Id,
-
                     Price = p.Price,
                     UserId = p.UserId,
                     Adress = p.Street + "," + p.PostalCode + p.City + p.Country,
                     OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
-
                 })
                 .SortBy(query).ToPaginatedResultAsync(query);
 
@@ -46,6 +44,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
             return orders;
         }
+
         private async Task<List<ProductInOrderDTO>> GetProductsInOrder(OrderDTO order, List<Product> products)
         {
             var orderProducts = await dbContext.OrderProduct.Where(o => o.OrderId == order.Id).ToListAsync();

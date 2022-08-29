@@ -27,7 +27,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
         public async Task<PaginatedResult<UserInfoDTO>> ExecuteAsync(CoreContext context, AllUsers query)
         {
             return await dbContext.Users.Join(
-                dbContext.UserClaims.Where(c => 
+                dbContext.UserClaims.Where(c =>
                     c.ClaimValue == Auth.Roles.BannedUser || c.ClaimValue == Auth.Roles.User),
                 u => u.Id,
                 c => c.UserId,
@@ -38,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                         Surname = u.Surname,
                         EmailAddress = u.EmailAddress,
                         Username = u.Username,
-                        IsBanned = c.ClaimValue == Auth.Roles.BannedUser
+                        IsBanned = c.ClaimValue == Auth.Roles.BannedUser,
                     }).ToPaginatedResultAsync(query);
         }
     }

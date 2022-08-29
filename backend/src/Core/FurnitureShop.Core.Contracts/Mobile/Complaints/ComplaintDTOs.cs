@@ -11,6 +11,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
         public DateTime CreatedDate { get; set; }
         public bool Resolved { get; set; }
     }
+
     public class ComplaintDTO : ComplaintDTOBase
     {
         public Guid Id { get; set; }

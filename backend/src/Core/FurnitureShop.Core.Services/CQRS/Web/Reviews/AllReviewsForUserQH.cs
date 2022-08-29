@@ -1,10 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using FurnitureShop.Core.Contracts.Web.Reviews;
 using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Services.DataAccess;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Reviews
 {
