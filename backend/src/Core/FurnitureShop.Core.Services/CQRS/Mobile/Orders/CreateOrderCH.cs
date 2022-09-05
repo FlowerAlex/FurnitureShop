@@ -21,26 +21,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
                     .WithMessage("No products to order");
-            RuleFor(p => p.NewOrder.Street)
+            RuleFor(p => p.NewOrder.Address)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("Street should not be empty");
-            RuleFor(p => p.NewOrder.City)
-                .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("City should not be empty");
-            RuleFor(p => p.NewOrder.State)
-                .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("State should not be empty");
-            RuleFor(p => p.NewOrder.Country)
-                .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("Country should not be empty");
-            RuleFor(p => p.NewOrder.PostalCode)
-                .NotEmpty()
-                    .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("Postal should not be empty");
             RuleForAsync(p => p.NewOrder.Price, DoesUserHaveEnoughMoney)
                .Equal(false)
                    .WithMessage("Not enough funds to pay for the order.")
@@ -71,8 +55,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
         {
             var result = await dbContext.Orders.AddAsync(
-                new Order(command.NewOrder.Street, command.NewOrder.City, command.NewOrder.State,
-                    command.NewOrder.PostalCode, command.NewOrder.Country)
+                new Order(command.NewOrder.Address)
                 {
                     UserId = context.UserId,
                     Price = command.NewOrder.Price,

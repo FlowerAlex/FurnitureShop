@@ -9,11 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     {
         public Guid? UserId { get; set; }
         public double Price { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
+        public string Address { get; set; }
         public OrderStateDTO OrderState { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime? DeliveredDate { get; set; }

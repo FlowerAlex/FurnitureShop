@@ -32,7 +32,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
                 command.UserInfo.Firstname,
                 command.UserInfo.Surname,
                 command.UserInfo.Username,
-                command.UserInfo.EmailAddress);
+                command.UserInfo.EmailAddress,
+                command.UserInfo.Address);
 
             var authUser = new AuthUser
             {
