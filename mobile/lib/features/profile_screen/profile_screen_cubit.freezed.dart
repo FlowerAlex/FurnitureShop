@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'profile_screen_cubit.dart';
@@ -33,8 +34,10 @@ class _$ProfileScreenStateTearOff {
     );
   }
 
-  ProfileScreenErrorState error() {
-    return const ProfileScreenErrorState();
+  ProfileScreenErrorState error({required String error}) {
+    return ProfileScreenErrorState(
+      error: error,
+    );
   }
 }
 
@@ -48,7 +51,7 @@ mixin _$ProfileScreenState {
     required TResult Function() initial,
     required TResult Function(UserInfoDTO? userInfo) loading,
     required TResult Function(UserInfoDTO userInfo) success,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,7 +59,7 @@ mixin _$ProfileScreenState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,7 +67,7 @@ mixin _$ProfileScreenState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -158,7 +161,7 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
     required TResult Function() initial,
     required TResult Function(UserInfoDTO? userInfo) loading,
     required TResult Function(UserInfoDTO userInfo) success,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return initial();
   }
@@ -169,7 +172,7 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
   }) {
     return initial?.call();
   }
@@ -180,7 +183,7 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -301,7 +304,7 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
     required TResult Function() initial,
     required TResult Function(UserInfoDTO? userInfo) loading,
     required TResult Function(UserInfoDTO userInfo) success,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return loading(userInfo);
   }
@@ -312,7 +315,7 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
   }) {
     return loading?.call(userInfo);
   }
@@ -323,7 +326,7 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -450,7 +453,7 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
     required TResult Function() initial,
     required TResult Function(UserInfoDTO? userInfo) loading,
     required TResult Function(UserInfoDTO userInfo) success,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
     return success(userInfo);
   }
@@ -461,7 +464,7 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
   }) {
     return success?.call(userInfo);
   }
@@ -472,7 +475,7 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -534,6 +537,7 @@ abstract class $ProfileScreenErrorStateCopyWith<$Res> {
   factory $ProfileScreenErrorStateCopyWith(ProfileScreenErrorState value,
           $Res Function(ProfileScreenErrorState) then) =
       _$ProfileScreenErrorStateCopyWithImpl<$Res>;
+  $Res call({String error});
 }
 
 /// @nodoc
@@ -546,26 +550,50 @@ class _$ProfileScreenErrorStateCopyWithImpl<$Res>
 
   @override
   ProfileScreenErrorState get _value => super._value as ProfileScreenErrorState;
+
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(ProfileScreenErrorState(
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ProfileScreenErrorState implements ProfileScreenErrorState {
-  const _$ProfileScreenErrorState();
+  const _$ProfileScreenErrorState({required this.error});
+
+  @override
+  final String error;
 
   @override
   String toString() {
-    return 'ProfileScreenState.error()';
+    return 'ProfileScreenState.error(error: $error)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ProfileScreenErrorState);
+        (other.runtimeType == runtimeType &&
+            other is ProfileScreenErrorState &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+
+  @JsonKey(ignore: true)
+  @override
+  $ProfileScreenErrorStateCopyWith<ProfileScreenErrorState> get copyWith =>
+      _$ProfileScreenErrorStateCopyWithImpl<ProfileScreenErrorState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -573,9 +601,9 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
     required TResult Function() initial,
     required TResult Function(UserInfoDTO? userInfo) loading,
     required TResult Function(UserInfoDTO userInfo) success,
-    required TResult Function() error,
+    required TResult Function(String error) error,
   }) {
-    return error();
+    return error(this.error);
   }
 
   @override
@@ -584,9 +612,9 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
   }) {
-    return error?.call();
+    return error?.call(this.error);
   }
 
   @override
@@ -595,11 +623,11 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
     TResult Function()? initial,
     TResult Function(UserInfoDTO? userInfo)? loading,
     TResult Function(UserInfoDTO userInfo)? success,
-    TResult Function()? error,
+    TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(this.error);
     }
     return orElse();
   }
@@ -643,5 +671,11 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
 }
 
 abstract class ProfileScreenErrorState implements ProfileScreenState {
-  const factory ProfileScreenErrorState() = _$ProfileScreenErrorState;
+  const factory ProfileScreenErrorState({required String error}) =
+      _$ProfileScreenErrorState;
+
+  String get error;
+  @JsonKey(ignore: true)
+  $ProfileScreenErrorStateCopyWith<ProfileScreenErrorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

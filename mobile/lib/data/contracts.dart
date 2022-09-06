@@ -232,11 +232,7 @@ class CreateOrderDTO with EquatableMixin implements OrderDTOBase {
   CreateOrderDTO({
     this.userId,
     required this.price,
-    required this.street,
-    required this.city,
-    required this.state,
-    required this.postalCode,
-    required this.country,
+    required this.address,
     required this.orderState,
     required this.orderedDate,
     this.deliveredDate,
@@ -250,17 +246,9 @@ class CreateOrderDTO with EquatableMixin implements OrderDTOBase {
 
   final double price;
 
-  final String street;
+  final String address;
 
-  final String city;
-
-  final String state;
-
-  final String postalCode;
-
-  final String country;
-
-  final String orderState;
+  final OrderStateDTO orderState;
 
   final DateTime orderedDate;
 
@@ -271,11 +259,7 @@ class CreateOrderDTO with EquatableMixin implements OrderDTOBase {
   get props => [
         userId,
         price,
-        street,
-        city,
-        state,
-        postalCode,
-        country,
+        address,
         orderState,
         orderedDate,
         deliveredDate,
@@ -361,11 +345,7 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
   OrderDTO({
     this.userId,
     required this.price,
-    required this.street,
-    required this.city,
-    required this.state,
-    required this.postalCode,
-    required this.country,
+    required this.address,
     required this.orderState,
     required this.orderedDate,
     this.deliveredDate,
@@ -380,17 +360,9 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
 
   final double price;
 
-  final String street;
+  final String address;
 
-  final String city;
-
-  final String state;
-
-  final String postalCode;
-
-  final String country;
-
-  final String orderState;
+  final OrderStateDTO orderState;
 
   final DateTime orderedDate;
 
@@ -403,11 +375,7 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
   get props => [
         userId,
         price,
-        street,
-        city,
-        state,
-        postalCode,
-        country,
+        address,
         orderState,
         orderedDate,
         deliveredDate,
@@ -423,11 +391,7 @@ class OrderDTOBase with EquatableMixin {
   OrderDTOBase({
     this.userId,
     required this.price,
-    required this.street,
-    required this.city,
-    required this.state,
-    required this.postalCode,
-    required this.country,
+    required this.address,
     required this.orderState,
     required this.orderedDate,
     this.deliveredDate,
@@ -440,34 +404,15 @@ class OrderDTOBase with EquatableMixin {
 
   final double price;
 
-  final String street;
+  final String address;
 
-  final String city;
-
-  final String state;
-
-  final String postalCode;
-
-  final String country;
-
-  final String orderState;
+  final OrderStateDTO orderState;
 
   final DateTime orderedDate;
 
   final DateTime? deliveredDate;
 
-  get props => [
-        userId,
-        price,
-        street,
-        city,
-        state,
-        postalCode,
-        country,
-        orderState,
-        orderedDate,
-        deliveredDate
-      ];
+  get props => [userId, price, address, orderState, orderedDate, deliveredDate];
 
   Map<String, dynamic> toJson() => _$OrderDTOBaseToJson(this);
 }
@@ -854,7 +799,7 @@ class RemoveFromFavourites with EquatableMixin implements Command {
 
 class RemoveFromFavouritesErrorCodes {}
 
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class AllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
   AllReviews({
@@ -1128,7 +1073,6 @@ class ShoppingCart with EquatableMixin implements Query<ShoppingCartDTO?> {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ShoppingCartDTO with EquatableMixin {
   ShoppingCartDTO({
-    this.userId,
     required this.price,
     required this.shoppingCartProducts,
   });
@@ -1136,13 +1080,11 @@ class ShoppingCartDTO with EquatableMixin {
   factory ShoppingCartDTO.fromJson(Map<String, dynamic> json) =>
       _$ShoppingCartDTOFromJson(json);
 
-  final String? userId;
-
   final double price;
 
   final List<ShoppingCartProductDTO> shoppingCartProducts;
 
-  get props => [userId, price, shoppingCartProducts];
+  get props => [price, shoppingCartProducts];
 
   Map<String, dynamic> toJson() => _$ShoppingCartDTOToJson(this);
 }
@@ -1266,6 +1208,7 @@ class UserInfoDTO with EquatableMixin {
     required this.surname,
     required this.username,
     required this.emailAddress,
+    required this.address,
   });
 
   factory UserInfoDTO.fromJson(Map<String, dynamic> json) =>
@@ -1279,7 +1222,9 @@ class UserInfoDTO with EquatableMixin {
 
   final String emailAddress;
 
-  get props => [firstname, surname, username, emailAddress];
+  final String address;
+
+  get props => [firstname, surname, username, emailAddress, address];
 
   Map<String, dynamic> toJson() => _$UserInfoDTOToJson(this);
 }
@@ -1320,6 +1265,17 @@ class CategoryDTO with EquatableMixin {
   get props => [id, name];
 
   Map<String, dynamic> toJson() => _$CategoryDTOToJson(this);
+}
+
+enum OrderStateDTO {
+  @JsonValue(0)
+  pending,
+  @JsonValue(1)
+  cancelled,
+  @JsonValue(2)
+  inProgress,
+  @JsonValue(3)
+  finished
 }
 
 abstract class PaginatedQuery<TResult>

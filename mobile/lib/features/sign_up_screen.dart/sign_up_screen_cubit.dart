@@ -23,6 +23,7 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
   Future<void> registerUser(
     String email,
     String password,
+    String address,
   ) async {
     emit(const SignUpScreenReadyState(loading: true));
     try {
@@ -33,6 +34,7 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
             firstname: '',
             surname: '',
             username: email,
+            address: address,
           ),
           password: password,
         ),

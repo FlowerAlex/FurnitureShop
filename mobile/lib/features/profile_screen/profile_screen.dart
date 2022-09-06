@@ -247,7 +247,7 @@ class ProfileScreen extends HookWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Something went wrong'),
+                  Text('Error:${state.error}'),
                   AppTextButton(
                     onPressed: _logOut,
                     withBorderSide: false,

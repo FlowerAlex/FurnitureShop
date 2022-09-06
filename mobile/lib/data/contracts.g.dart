@@ -130,12 +130,8 @@ CreateOrderDTO _$CreateOrderDTOFromJson(Map<String, dynamic> json) =>
     CreateOrderDTO(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
-      street: json['Street'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      postalCode: json['PostalCode'] as String,
-      country: json['Country'] as String,
-      orderState: json['OrderState'] as String,
+      address: json['Address'] as String,
+      orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
           ? null
@@ -150,16 +146,19 @@ Map<String, dynamic> _$CreateOrderDTOToJson(CreateOrderDTO instance) =>
     <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
-      'Street': instance.street,
-      'City': instance.city,
-      'State': instance.state,
-      'PostalCode': instance.postalCode,
-      'Country': instance.country,
-      'OrderState': instance.orderState,
+      'Address': instance.address,
+      'OrderState': _$OrderStateDTOEnumMap[instance.orderState],
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
       'Products': instance.products,
     };
+
+const _$OrderStateDTOEnumMap = {
+  OrderStateDTO.pending: 0,
+  OrderStateDTO.cancelled: 1,
+  OrderStateDTO.inProgress: 2,
+  OrderStateDTO.finished: 3,
+};
 
 MyOrders _$MyOrdersFromJson(Map<String, dynamic> json) => MyOrders(
       pageNumber: json['PageNumber'] as int,
@@ -202,12 +201,8 @@ Map<String, dynamic> _$OrderByIdToJson(OrderById instance) => <String, dynamic>{
 OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
-      street: json['Street'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      postalCode: json['PostalCode'] as String,
-      country: json['Country'] as String,
-      orderState: json['OrderState'] as String,
+      address: json['Address'] as String,
+      orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
           ? null
@@ -221,12 +216,8 @@ OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
 Map<String, dynamic> _$OrderDTOToJson(OrderDTO instance) => <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
-      'Street': instance.street,
-      'City': instance.city,
-      'State': instance.state,
-      'PostalCode': instance.postalCode,
-      'Country': instance.country,
-      'OrderState': instance.orderState,
+      'Address': instance.address,
+      'OrderState': _$OrderStateDTOEnumMap[instance.orderState],
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
       'Id': instance.id,
@@ -236,12 +227,8 @@ Map<String, dynamic> _$OrderDTOToJson(OrderDTO instance) => <String, dynamic>{
 OrderDTOBase _$OrderDTOBaseFromJson(Map<String, dynamic> json) => OrderDTOBase(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
-      street: json['Street'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      postalCode: json['PostalCode'] as String,
-      country: json['Country'] as String,
-      orderState: json['OrderState'] as String,
+      address: json['Address'] as String,
+      orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
           ? null
@@ -252,12 +239,8 @@ Map<String, dynamic> _$OrderDTOBaseToJson(OrderDTOBase instance) =>
     <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
-      'Street': instance.street,
-      'City': instance.city,
-      'State': instance.state,
-      'PostalCode': instance.postalCode,
-      'Country': instance.country,
-      'OrderState': instance.orderState,
+      'Address': instance.address,
+      'OrderState': _$OrderStateDTOEnumMap[instance.orderState],
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
     };
@@ -594,7 +577,6 @@ Map<String, dynamic> _$ShoppingCartToJson(ShoppingCart instance) =>
 
 ShoppingCartDTO _$ShoppingCartDTOFromJson(Map<String, dynamic> json) =>
     ShoppingCartDTO(
-      userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
       shoppingCartProducts: (json['ShoppingCartProducts'] as List<dynamic>)
           .map(
@@ -604,7 +586,6 @@ ShoppingCartDTO _$ShoppingCartDTOFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ShoppingCartDTOToJson(ShoppingCartDTO instance) =>
     <String, dynamic>{
-      'UserId': instance.userId,
       'Price': instance.price,
       'ShoppingCartProducts': instance.shoppingCartProducts,
     };
@@ -665,6 +646,7 @@ UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
       surname: json['Surname'] as String,
       username: json['Username'] as String,
       emailAddress: json['EmailAddress'] as String,
+      address: json['Address'] as String,
     );
 
 Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
@@ -673,6 +655,7 @@ Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
       'Surname': instance.surname,
       'Username': instance.username,
       'EmailAddress': instance.emailAddress,
+      'Address': instance.address,
     };
 
 AllCategories _$AllCategoriesFromJson(Map<String, dynamic> json) =>

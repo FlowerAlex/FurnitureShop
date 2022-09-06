@@ -29,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _loginTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
   final _repeatPasswordTextEditingController = TextEditingController();
+  final _addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context.read<SignUpScreenCubit>().registerUser(
               _loginTextEditingController.text,
               _passwordTextEditingController.text,
+              _addressController.text,
             );
       }
     }
@@ -173,6 +175,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         obscureRepeatPassword =
                                             !obscureRepeatPassword;
                                       }),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  AppTextFormField(
+                                    controller: _addressController,
+                                    label: 'Address',
+                                    validator: Validators.compose(
+                                      [
+                                        Validators.required(
+                                            'Field must be filled'),
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(height: 20),
