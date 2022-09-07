@@ -26,10 +26,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             var user = await users.FindAndEnsureExistsAsync(context.UserId);
             var authUser = await userManager.FindByIdAsync(context.UserId.ToString());
 
-            user.updateUser(
-                command.Firstname,
-                command.Surname,
-                command.Username);
+            user.updateUser(command.Firstname, command.Surname, command.Username, command.Address);
             if (command.Username != null)
             {
                 authUser.UserName = command.Username;

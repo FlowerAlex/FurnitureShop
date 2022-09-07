@@ -27,7 +27,8 @@ namespace FurnitureShop.Core.Domain
             string surname,
             string username,
             string emailAddress,
-            string address)
+            string address
+        )
         {
             Id = Id<User>.New();
             Firstname = firstname;
@@ -42,7 +43,12 @@ namespace FurnitureShop.Core.Domain
             Favourites = new List<UserProduct>();
         }
 
-        public void updateUser(string? firstname, string? surname, string? username)
+        public void updateUser(
+            string? firstname,
+            string? surname,
+            string? username,
+            string? address
+        )
         {
             if (firstname != null)
             {
@@ -55,6 +61,10 @@ namespace FurnitureShop.Core.Domain
             if (username != null)
             {
                 this.Username = username;
+            }
+            if (address != null)
+            {
+                this.Address = address;
             }
         }
     }

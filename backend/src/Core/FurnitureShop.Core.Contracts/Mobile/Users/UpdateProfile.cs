@@ -10,5 +10,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
         public String? Firstname { get; set; }
         public String? Surname { get; set; }
         public String? Username { get; set; }
+        public String? Address { get; set; }
     }
 }

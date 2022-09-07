@@ -14,16 +14,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
         {
             RuleForAsync(userInfo => userInfo, DoesUserExistAsync)
                 .Equal(false)
-                    .WithMessage("User not found.")
-                    .WithCode(UserInfo.ErrorCodes.UserNotFound);
+                .WithMessage("User not found.")
+                .WithCode(UserInfo.ErrorCodes.UserNotFound);
         }
 
         private static async Task<bool> DoesUserExistAsync(IValidationContext ctx, UserInfo cmd)
         {
             var uid = ctx.AppContext<CoreContext>().UserId;
             var dbContext = ctx.GetService<CoreDbContext>();
-            var count = await dbContext.Users
-                .Where(u => u.Id == uid).CountAsync();
+            var count = await dbContext.Users.Where(u => u.Id == uid).CountAsync();
             return count != 0;
         }
     }
@@ -39,13 +38,20 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
 
         public async Task<UserInfoDTO> ExecuteAsync(CoreContext context, UserInfo query)
         {
-            return await dbContext.Users.Where(user => user.Id == context.UserId).Select(user => new UserInfoDTO
-            {
-                Firstname = user.Firstname,
-                Surname = user.Surname,
-                EmailAddress = user.EmailAddress,
-                Username = user.Username,
-            }).FirstAsync();
+            return await dbContext.Users
+                .Where(user => user.Id == context.UserId)
+                .Select(
+                    user =>
+                        new UserInfoDTO
+                        {
+                            Firstname = user.Firstname,
+                            Surname = user.Surname,
+                            EmailAddress = user.EmailAddress,
+                            Username = user.Username,
+                            Address = user.Address,
+                        }
+                )
+                .FirstAsync();
         }
     }
 }
