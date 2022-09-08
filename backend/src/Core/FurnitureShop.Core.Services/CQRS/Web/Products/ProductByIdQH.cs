@@ -24,14 +24,14 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                 .Where(p => p.Id == query.Id).Include(p => p.Reviews)
                 .Select(p => new ProductDetailsDTO
                 {
-                        Name = p.Name,
-                        Price = p.Price,
-                        CategoryId = p.CategoryId,
-                        PreviewPhotoId = p.PreviewPhotoId,
-                        AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                        Description = p.Description,
-                        ModelId = p.ModelId,  
-                        PhotosIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),                
+                    Name = p.Name,
+                    Price = p.Price,
+                    CategoryId = p.CategoryId,
+                    PreviewPhotoId = p.PreviewPhotoId,
+                    AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
+                    Description = p.Description,
+                    ModelId = p.ModelId,
+                    PhotosIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

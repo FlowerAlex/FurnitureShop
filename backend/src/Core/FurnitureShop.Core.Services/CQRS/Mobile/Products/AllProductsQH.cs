@@ -46,7 +46,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
         {
             return await dbContext.Favourites
-                .Where(f => f.UserId == context.UserId && f.ProductId != null)
+                .Where(f => f.UserId == context.UserId)
                 .Select(f => f.ProductId!.Value).ToListAsync();
         }
         private async Task<PaginatedResult<ProductDTO>> GetProducts(IQueryable<Product> queryable, AllProducts query, CoreContext context)

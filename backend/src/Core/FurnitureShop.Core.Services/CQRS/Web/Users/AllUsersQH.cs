@@ -1,13 +1,11 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using FurnitureShop.Core.Contracts;
-using FurnitureShop.Core.Contracts.Web.Users;
 using FurnitureShop.Core.Contracts.Shared;
+using FurnitureShop.Core.Contracts.Web.Users;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
-using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Users
 {
@@ -31,15 +29,15 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                     c.ClaimValue == Auth.Roles.BannedUser || c.ClaimValue == Auth.Roles.User),
                 u => u.Id,
                 c => c.UserId,
-                (u,c) => new UserInfoDTO()
-                    {
-                        Id = u.Id,
-                        Firstname = u.Firstname,
-                        Surname = u.Surname,
-                        EmailAddress = u.EmailAddress,
-                        Username = u.Username,
-                        IsBanned = c.ClaimValue == Auth.Roles.BannedUser,
-                    }).ToPaginatedResultAsync(query);
+                (u, c) => new UserInfoDTO()
+                {
+                    Id = u.Id,
+                    Firstname = u.Firstname,
+                    Surname = u.Surname,
+                    EmailAddress = u.EmailAddress,
+                    Username = u.Username,
+                    IsBanned = c.ClaimValue == Auth.Roles.BannedUser,
+                }).ToPaginatedResultAsync(query);
         }
     }
 }

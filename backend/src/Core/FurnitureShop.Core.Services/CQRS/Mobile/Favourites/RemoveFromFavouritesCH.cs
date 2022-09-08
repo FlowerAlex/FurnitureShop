@@ -1,7 +1,7 @@
-using FurnitureShop.Core.Contracts.Mobile.Products;
-using FurnitureShop.Core.Services.DataAccess;
 using System.Linq;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Services.DataAccess;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 {

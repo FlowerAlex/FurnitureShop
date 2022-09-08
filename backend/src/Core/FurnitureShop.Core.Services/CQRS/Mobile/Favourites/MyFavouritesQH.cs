@@ -65,14 +65,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             var shoppingCartId = shoppingCart.Id;
 
             return await dbContext.ShoppingCartProduct
-                .Where(shp => shp.ShoppingCartId == shoppingCartId.Value && shp.ProductId != null)
+                .Where(shp => shp.ShoppingCartId == shoppingCartId.Value)
                 .Select(shp => shp.ProductId!.Value).ToListAsync();
         }
 
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
         {
             return await dbContext.Favourites
-                .Where(f => f.UserId == context.UserId.Value && f.ProductId != null)
+                .Where(f => f.UserId == context.UserId.Value)
                 .Select(f => f.ProductId!.Value).ToListAsync();
         }
     }

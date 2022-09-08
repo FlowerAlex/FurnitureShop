@@ -1,10 +1,10 @@
+using System.Linq;
+using System.Threading.Tasks;
 using FluentValidation;
 using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Services.DataAccess;
 using LeanCode.CQRS.Validation.Fluent;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 {

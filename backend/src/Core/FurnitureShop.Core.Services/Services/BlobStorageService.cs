@@ -1,8 +1,8 @@
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace FurnitureShop.Core.Services.Services
 {
@@ -23,21 +23,24 @@ namespace FurnitureShop.Core.Services.Services
         {
             blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net";
             modelsContainerName = "models";
-            photosContainerName = "images"; 
+            photosContainerName = "images";
         }
 
         public async Task<List<string>> GetPhotosUrls()
         {
             return await GetAllBlobsUrlsFromContainer(photosContainerName);
         }
+
         public async Task<List<string>> GetModelsUrls()
         {
             return await GetAllBlobsUrlsFromContainer(modelsContainerName);
         }
+
         public async Task<string> GetPhotoUploadId()
         {
             return await GetBlobUploadLink(photosContainerName);
         }
+
         public async Task<string> GetModelUploadId()
         {
             return await GetBlobUploadLink(modelsContainerName);
@@ -65,6 +68,7 @@ namespace FurnitureShop.Core.Services.Services
                     urls.Add(blobContainerClient.Uri.AbsoluteUri + "/" + blobItem.Name);
                 }
             }
+
             return urls;
         }
     }
