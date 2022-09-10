@@ -91,6 +91,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 });
             }
             var result = await dbContext.Orders.AddAsync(newOrder);
+            if(result != null)
+            {
+                dbContext.ShoppingCarts.Remove(shp);
+            }
             await dbContext.SaveChangesAsync();
         }
     }
