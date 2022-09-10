@@ -87,7 +87,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProducDetailsDTOBase
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.CreateProdcutDTO
                 {
                     Description = NewProdctDescription,
                     ModelId = NewProductModelUrl,

@@ -78,7 +78,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(ShoppingCart);
             Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartProducts.Count());
             Assert.Equal(TestProduct.Price * TestProductAmount, ShoppingCart.Price);
-            Assert.Equal(TestShoppingCartProduct.ProductId.Value, ShoppingCart.ShoppingCartProducts.First().Product.Id);
+            Assert.Equal(TestShoppingCartProduct.ProductId.Value, ShoppingCart.ShoppingCartProducts.First().Id);
             Assert.Equal(TestProductAmount, ShoppingCart.ShoppingCartProducts.First().Amount);
         }
         [Fact]
