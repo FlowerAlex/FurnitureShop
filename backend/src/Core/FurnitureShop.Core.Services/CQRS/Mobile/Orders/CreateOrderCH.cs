@@ -17,31 +17,49 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            RuleFor(p => p.NewOrder.Products)
+            RuleFor(p => p.Address, IsShoppingCartEmpty)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
-                    .WithMessage("No products to order");
-            RuleFor(p => p.NewOrder.Address)
+                    .WithMessage("Shopping cart is empty");
+            RuleFor(p => p.Address)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("Street should not be empty");
-            RuleForAsync(p => p.NewOrder.Price, DoesUserHaveEnoughMoney)
+                    .WithMessage("User and Order have no addres set");
+            RuleForAsync(p => p.Address, DoesUserHaveEnoughMoney)
                .Equal(false)
                    .WithMessage("Not enough funds to pay for the order.")
                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
-        private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, double price)
+        private static bool IsShoppingCartEmpty(IValidationContext ctx, string address)
         {
-            var uid = ctx.AppContext<CoreContext>().UserId;
             var dbContext = ctx.GetService<CoreDbContext>();
-            var user = await dbContext.Users
-                .Where(u => u.Id == uid).FirstOrDefaultAsync();
+            return ctx.AppContext<CoreContext>().GetProductsInShoppingCart(dbContext).GetAwaiter().GetResult().Any();
+        }
+        private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, string address)
+        {
+            var dbContext = ctx.GetService<CoreDbContext>();
+            var user = await GetCurrentUser(ctx, dbContext);
             if (user == null)
             {
                 return false;
             }
-
-            return user.Funds >= (int)price;
+            return user.Funds >= (int)ctx.AppContext<CoreContext>().GetShoppingCartPrice(dbContext);
+        }
+        private static async Task<bool> IsAddressSet(IValidationContext ctx, string address)
+        {
+            var dbContext = ctx.GetService<CoreDbContext>();
+            var user = await GetCurrentUser(ctx, dbContext);
+            if (user == null)
+            {
+                return false;
+            }
+            return !string.IsNullOrWhiteSpace(address) && !string.IsNullOrWhiteSpace(user.Address);
+        }
+        private static async Task<User?> GetCurrentUser(IValidationContext ctx, CoreDbContext dbContext)
+        {
+            var uid = ctx.AppContext<CoreContext>().UserId;
+            return await dbContext.Users
+                .Where(u => u.Id == uid).FirstOrDefaultAsync();
         }
     }
     public class CreateOrderQH : ICommandHandler<CreateOrder>
@@ -54,27 +72,25 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
         {
-            var result = await dbContext.Orders.AddAsync(
-                new Order(command.NewOrder.Address)
-                {
-                    UserId = context.UserId,
-                    Price = command.NewOrder.Price,
-                    OrderedDate = DateTime.Now,
-                    OrderState = OrderState.Pending,
-                });
-            if (result.Entity != null)
+            var address = command.Address ?? dbContext.Users.Where(u => u.Id == context.UserId).First().Address;
+            var newOrder = new Order(address)
             {
-                foreach (var ordProd in command.NewOrder.Products)
+                UserId = context.UserId,
+                Price = context.GetShoppingCartPrice(dbContext),
+                OrderedDate = DateTime.Now,
+                OrderState = OrderState.Pending,
+            };
+            var shp = await dbContext.ShoppingCarts.Where(s => s.UserId == context.UserId).FirstOrDefaultAsync();
+            foreach (var prod in shp!.ShoppingCartProducts)
+            {
+                newOrder.OrdersProducts.Add(new OrderProduct()
                 {
-                    await dbContext.OrderProduct.AddAsync((
-                        new OrderProduct
-                        {
-                            ProductId = Id<Product>.From(ordProd.Id),
-                            Amount = ordProd.Amount,
-                            OrderId = result.Entity.Id
-                        }));
-                }
+                    Amount = prod.Amount,
+                    ProductId = prod.ProductId,
+                    OrderId = newOrder.Id
+                });
             }
+            var result = await dbContext.Orders.AddAsync(newOrder);
             await dbContext.SaveChangesAsync();
         }
     }
