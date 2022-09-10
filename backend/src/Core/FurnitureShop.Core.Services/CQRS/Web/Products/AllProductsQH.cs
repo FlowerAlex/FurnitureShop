@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FurnitureShop.Core.Contracts.Shared;
+using FurnitureShop.Core.Contracts.Shared.Products;
 using FurnitureShop.Core.Contracts.Web.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;

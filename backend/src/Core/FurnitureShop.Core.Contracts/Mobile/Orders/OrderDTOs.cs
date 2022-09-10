@@ -29,7 +29,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     {
         public List<ProductInOrderCreateDTO> Products { get; set; }
 
-
     }
     public class ProductInOrderDTO : ProductDTO
     {
