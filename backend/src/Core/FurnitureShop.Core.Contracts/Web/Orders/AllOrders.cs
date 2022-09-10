@@ -21,11 +21,7 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     public enum OrdersFilterFieldDTO
     {
         OrderState = 0,
-        Country = 1,
-        State = 2,
-        City = 3,
-        Street = 4,
-        PostalCode = 5,
-        UserId = 6,
+        Address = 1,
+        UserId = 2,
     }
 }

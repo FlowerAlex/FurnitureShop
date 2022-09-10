@@ -30,8 +30,8 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                     Id = p.Id,
                     Price = p.Price,
                     UserId = p.UserId,
-                    Adress = p.Street + "," + p.PostalCode + p.City + p.Country,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
+                    Adress = p.Address,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
                 })
@@ -78,23 +78,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             {
                 switch (filter.Key)
                 {
-                    case OrdersFilterFieldDTO.Country:
-                        queryable = queryable.Where(c => c.Country.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                        break;
-                    case OrdersFilterFieldDTO.State:
-                        queryable = queryable.Where(c => c.State.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                        break;
-                    case OrdersFilterFieldDTO.City:
-                        queryable = queryable.Where(c => c.City.ToLower().Contains(filter.Value.ToLowerInvariant()));
-                        break;
-                    case OrdersFilterFieldDTO.Street:
-                        queryable = queryable.Where(c => c.Street.ToLower().Contains(filter.Value.ToLowerInvariant()));
+                    case OrdersFilterFieldDTO.Address:
+                        queryable = queryable.Where(c => c.Address.ToLower().Contains(filter.Value.ToLowerInvariant()));
                         break;
                     case OrdersFilterFieldDTO.OrderState:
                         queryable = queryable.Where(c => c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant());
-                        break;
-                    case OrdersFilterFieldDTO.PostalCode:
-                        queryable = queryable.Where(c => c.PostalCode == filter.Value);
                         break;
                     case OrdersFilterFieldDTO.UserId:
                         queryable = queryable.Where(c => c.UserId.ToString() == filter.Value);

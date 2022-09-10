@@ -15,8 +15,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 {
     public class ComplaintTests : IDisposable
     {
-        private readonly Order TestOrder = new Order("test_street", "test_city",
-            "test_state", "test_postal_code", "test_country")
+        private readonly Order TestOrder = new Order("test_address")
         {
             UserId = Id<User>.From(TestUserId),
         };

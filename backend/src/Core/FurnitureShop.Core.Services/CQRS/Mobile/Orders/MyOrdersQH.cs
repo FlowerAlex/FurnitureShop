@@ -32,12 +32,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
                     Price = p.Price,
                     UserId = p.UserId,
-                    State = p.State,
-                    Country = p.Country,
-                    Street = p.Street,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
+                    Address = p.Address,
+                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
                     OrderedDate = p.OrderedDate,
                     DeliveredDate = p.DeliveredDate,
                     Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
