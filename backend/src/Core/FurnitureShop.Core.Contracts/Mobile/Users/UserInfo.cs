@@ -10,8 +10,5 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
         {
             public const int UserNotFound = 1;
         }
-
     }
-
-
 }

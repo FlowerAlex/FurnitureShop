@@ -11,11 +11,13 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
             public const int IncorrectStatus = 1;
         }
     }
+
     public enum MyOrdersSortFieldDTO
     {
         OrderedDate = 0,
         DeliveredDate = 1,
     }
+    
     public enum MyOrdersFilterFieldDTO
     {
         OrderState = 0,

@@ -9,5 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
         public string Username { get; set; }
         public string EmailAddress { get; set; }
         public string Address { get; set; }
+        public bool isBanned { get; set; }
+        public int Funds { get; set; }
     }
 }

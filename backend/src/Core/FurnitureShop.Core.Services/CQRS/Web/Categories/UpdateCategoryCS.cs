@@ -20,6 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
                     .WithMessage("Category name should not be empty");
         }
     }
+    
     public class UpdateCategoryCH : ICommandHandler<UpdateCategory>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateCategoryCH>();

@@ -87,14 +87,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateProductCH(dbContext);
             var command = new CreateProduct
             {
-                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.ProducDetailsDTOBase
+                NewProduct = new FurnitureShop.Core.Contracts.Web.Products.CreateProdcutDTO
                 {
                     Description = NewProdctDescription,
                     ModelId = NewProductModelUrl,
                     Name = NewProductName,
                     Price = NewProductPrice,
                     CategoryId = dbContext.Categories.First().Id,
-                    PhotosIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
+                    PhotoIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
                 }
             };
 

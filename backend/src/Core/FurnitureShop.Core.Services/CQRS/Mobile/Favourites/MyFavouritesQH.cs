@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts;
 using FurnitureShop.Core.Contracts.Mobile.Favourites;
 using FurnitureShop.Core.Contracts.Mobile.Products;
 using FurnitureShop.Core.Contracts.Shared;
+using FurnitureShop.Core.Contracts.Shared.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +51,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
-
             return result;
         }
 
@@ -66,19 +65,18 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             var shoppingCartId = shoppingCart.Id;
 
             return await dbContext.ShoppingCartProduct
-                .Where(shp => shp.ShoppingCartId == shoppingCartId.Value && shp.ProductId != null)
-                .Select(shp => shp.ProductId!.Value).ToListAsync();
+                .Where(shp => shp.ShoppingCartId == shoppingCartId.Value)
+                .Select(shp => shp.ProductId.Value).ToListAsync();
         }
 
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
         {
             return await dbContext.Favourites
-                .Where(f => f.UserId == context.UserId.Value && f.ProductId != null)
+                .Where(f => f.UserId == context.UserId.Value)
                 .Select(f => f.ProductId!.Value).ToListAsync();
         }
-
-
     }
+
     internal static class ProductQHExtensions
     {
         public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, MyFavourites query)
@@ -102,7 +100,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
                 ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
-                _ => queryable
+                _ => queryable,
             };
         }
     }

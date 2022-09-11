@@ -44,9 +44,7 @@ namespace FurnitureShop.Api
         {
             public static string[] AllowedOrigins(IConfiguration cfg) =>
                 ExternalApps(cfg)
-                    .Concat(new String[]{
-                        "http://localhost:51265",
-                    })
+                    .Concat(new string[] { "http://localhost:51265", })
                     .ToArray();
 
             public static string[] ExternalApps(IConfiguration cfg) =>

@@ -5,8 +5,10 @@ using FurnitureShop.Core.Contracts.Shared.Orders;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    public class OrderDTOBase
+    public class OrderDTO 
     {
+        public Guid Id { get; set; }
+        public List<ProductInOrderDTO> Products { get; set; }
         public Guid? UserId { get; set; }
         public double Price { get; set; }
         public string Address { get; set; }
@@ -15,13 +17,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         public DateTime? DeliveredDate { get; set; }
     }
 
-    public class OrderDTO : OrderDTOBase
+    public class CreateOrderDTO
     {
-        public Guid Id { get; set; }
-        public List<ProductInOrderDTO> Products { get; set; }
-    }
-    public class CreateOrderDTO : OrderDTOBase
-    {
+        public string? Address { get; set; }
         public List<ProductInOrderCreateDTO> Products { get; set; }
 
     }
@@ -29,6 +27,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     {
         public int Amount { get; set; }
     }
+    
     public class ProductInOrderCreateDTO
     {   
         public Guid Id { get; set; }

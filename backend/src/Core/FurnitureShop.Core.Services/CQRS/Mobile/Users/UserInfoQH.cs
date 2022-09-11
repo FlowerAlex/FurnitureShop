@@ -49,6 +49,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
                             EmailAddress = user.EmailAddress,
                             Username = user.Username,
                             Address = user.Address,
+                            Funds = user.Funds,
                         }
                 )
                 .FirstAsync();

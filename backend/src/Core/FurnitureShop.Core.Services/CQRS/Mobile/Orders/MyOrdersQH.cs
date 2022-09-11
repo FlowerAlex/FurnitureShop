@@ -49,14 +49,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                                 Price = prod.Price,
                                 PreviewPhotoId = prod.PreviewPhotoId,
                                 CategoryId = prod.CategoryId,
-                            }
-                        ).ToList(),
-
+                            }).ToList(),
                 })
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
         }
     }
+
     internal static class MyOrderQHExtensions
     {
         public static IQueryable<Order> FilterBy(this IQueryable<Order> queryable, MyOrders query)
@@ -86,7 +85,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             {
                 MyOrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
                 MyOrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
-                _ => queryable
+                _ => queryable,
             };
         }
     }

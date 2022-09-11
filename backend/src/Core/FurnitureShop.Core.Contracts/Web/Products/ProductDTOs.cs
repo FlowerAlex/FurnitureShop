@@ -1,35 +1,23 @@
 using System;
 using System.Collections.Generic;
+using FurnitureShop.Core.Contracts.Shared.Products;
 
 namespace FurnitureShop.Core.Contracts.Web.Products
 {
-    public class ProductDTOBase
+    public class ProductDetailsDTO : ProductDTOBase
     {
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public double? AverageRating { get; set; }
-        public string? PreviewPhotoId { get; set; }
-        public Guid? CategoryId { get; set; }
-    }
-    public class ProducDetailsDTOBase : ProductDTOBase
-    {
-        public string Description { get; set; }
+        public Guid Id { get; set; }
         public string? ModelId { get; set; }
         public List<Guid> PhotosIds { get; set; }
     }
-
-    public class ProductDetailsDTO : ProducDetailsDTOBase
+    public class CreateProdcutDTO : ProductDTOBase
     {
-        public Guid Id { get; set; }
+        public string? ModelId { get; set; }
+        public List<Guid> PhotoIds { get; set; }
     }
+
     public class ProductDTO : ProductDTOBase
     {
         public Guid Id { get; set; }
-    }
-    public enum ProductsSortFieldDTO
-    {
-        Name = 0,
-        Rating = 1,
-        Price = 2,
     }
 }
