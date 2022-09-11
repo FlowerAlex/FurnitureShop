@@ -66,7 +66,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
             return await dbContext.ShoppingCartProduct
                 .Where(shp => shp.ShoppingCartId == shoppingCartId.Value)
-                .Select(shp => shp.ProductId!.Value).ToListAsync();
+                .Select(shp => shp.ProductId.Value).ToListAsync();
         }
 
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)

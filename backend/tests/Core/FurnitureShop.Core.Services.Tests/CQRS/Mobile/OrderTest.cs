@@ -105,7 +105,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new CreateOrderQH(dbContext);
             var command = new CreateOrder
             {
-                Address = "some address",
+                NewOrder = new CreateOrderDTO
+                {
+                    Address = "some address",
+                    Products = new List<ProductInOrderCreateDTO>{
+                        new ProductInOrderCreateDTO{
+                            Id = TestProduct.Id,
+                            Amount = TestShpProductAmount,
+                        }
+                    }
+                }
             };
 
             var result = handler.ExecuteAsync(coreContext, command);
@@ -115,7 +124,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.NotNull(Order);
             Assert.Equal("some address", Order.Address);
             Assert.Equal(OrderState.Pending, Order.OrderState);
-             Assert.Equal(1, Order.OrdersProducts.Count);
+            Assert.Equal(1, Order.OrdersProducts.Count);
         //     Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId || TestProduct.Id == Order.OrdersProducts[1].ProductId);
         //     Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount, $"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
         //     Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount, $"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");

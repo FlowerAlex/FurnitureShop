@@ -36,7 +36,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
                     ModelId = p.ModelId,
                     InFavourites = productsInFavourites.Contains(p.Id),
                     InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    PhotosIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),
+                    PhotoIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),
                     Id = p.Id,
                 })
                 .FirstOrDefaultAsync();

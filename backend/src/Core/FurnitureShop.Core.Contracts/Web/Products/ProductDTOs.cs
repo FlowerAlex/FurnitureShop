@@ -13,7 +13,7 @@ namespace FurnitureShop.Core.Contracts.Web.Products
     public class CreateProdcutDTO : ProductDTOBase
     {
         public string? ModelId { get; set; }
-        public List<Guid> PhotosIds { get; set; }
+        public List<Guid> PhotoIds { get; set; }
     }
 
     public class ProductDTO : ProductDTOBase

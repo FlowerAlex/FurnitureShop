@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,22 +25,19 @@ namespace FurnitureShop.Core.Services.Services
                 .Where(f => f.UserId == coreContext.UserId)
                 .Select(f => f.ProductId.Value).ToListAsync();
         }
-        public static double GetShoppingCartPrice(this CoreContext coreContext, CoreDbContext dbContext)
+        public static double GetOrderPrice(this CreateOrderDTO dto, CoreDbContext dbContext)
         {
-            var shpId = dbContext.ShoppingCarts.Where(s => s.UserId == coreContext.UserId).FirstOrDefault();
-            if (shpId == null)
+            double sum = 0.0;
+            foreach(var prod in dto.Products)
             {
-                return 0.0;
-            }
-            return dbContext.ShoppingCartProduct.Where(p => p.ShoppingCartId == shpId.Id).ToList().Join(
-                dbContext.Products.ToList(),
-                s => s.ProductId,
-                p => p.Id,
-                (s,p) => new {
-                    amount = s.Amount,
-                    price = p.Price,
+                var prodInDb = dbContext.Products.Where(p => p.Id == prod.Id).FirstOrDefault();
+                if(prodInDb == null)
+                {
+                    continue;
                 }
-            ).Sum(p => p.amount * p.price);
+                sum += prodInDb.Price;
+            }
+            return sum;
         }
     }
 }

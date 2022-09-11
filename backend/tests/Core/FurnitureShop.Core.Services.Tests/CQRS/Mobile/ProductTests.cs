@@ -94,7 +94,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Name = NewProductName,
                     Price = NewProductPrice,
                     CategoryId = dbContext.Categories.First().Id,
-                    PhotosIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
+                    PhotoIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
                 }
             };
 

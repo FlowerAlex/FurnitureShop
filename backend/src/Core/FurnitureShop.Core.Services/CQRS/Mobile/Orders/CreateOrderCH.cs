@@ -17,15 +17,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            RuleFor(p => p.Address, IsShoppingCartEmpty)
+            RuleFor(p => p.NewOrder.Address, IsShoppingCartEmpty)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
-                    .WithMessage("Shopping cart is empty");
-            RuleFor(p => p.Address)
+                    .WithMessage("No products selected for order");
+            RuleFor(p => p.NewOrder)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                    .WithMessage("User and Order have no addres set");
-            RuleForAsync(p => p.Address, DoesUserHaveEnoughMoney)
+                    .WithMessage("User and order have no addres set");
+            RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
                .Equal(false)
                    .WithMessage("Not enough funds to pay for the order.")
                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
@@ -35,7 +35,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             var dbContext = ctx.GetService<CoreDbContext>();
             return ctx.AppContext<CoreContext>().GetProductsInShoppingCart(dbContext).GetAwaiter().GetResult().Any();
         }
-        private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, string address)
+        private static async Task<bool> DoesUserHaveEnoughMoney(IValidationContext ctx, CreateOrderDTO dto)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
             var user = await GetCurrentUser(ctx, dbContext);
@@ -43,7 +43,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             {
                 return false;
             }
-            return user.Funds >= (int)ctx.AppContext<CoreContext>().GetShoppingCartPrice(dbContext);
+            return user.Funds >= (int)dto.GetOrderPrice(dbContext);
         }
         private static async Task<bool> IsAddressSet(IValidationContext ctx, string address)
         {
@@ -72,28 +72,28 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
         public async Task ExecuteAsync(CoreContext context, CreateOrder command)
         {
-            var address = command.Address ?? dbContext.Users.Where(u => u.Id == context.UserId).First().Address;
+            var address = command.NewOrder.Address ?? dbContext.Users.Where(u => u.Id == context.UserId).First().Address;
             var newOrder = new Order(address)
             {
                 UserId = context.UserId,
-                Price = context.GetShoppingCartPrice(dbContext),
+                Price = command.NewOrder.GetOrderPrice(dbContext),
                 OrderedDate = DateTime.Now,
                 OrderState = OrderState.Pending,
             };
             var shp = await dbContext.ShoppingCarts.Where(s => s.UserId == context.UserId).FirstOrDefaultAsync();
-            foreach (var prod in shp!.ShoppingCartProducts)
+            foreach (var prod in command.NewOrder.Products)
             {
                 newOrder.OrdersProducts.Add(new OrderProduct()
                 {
                     Amount = prod.Amount,
-                    ProductId = prod.ProductId,
+                    ProductId = Id<Product>.From(prod.Id),
                     OrderId = newOrder.Id
                 });
             }
             var result = await dbContext.Orders.AddAsync(newOrder);
-            if(result != null)
+            if (result != null)
             {
-                dbContext.ShoppingCarts.Remove(shp);
+                dbContext.ShoppingCarts.Remove(shp!);
             }
             await dbContext.SaveChangesAsync();
         }

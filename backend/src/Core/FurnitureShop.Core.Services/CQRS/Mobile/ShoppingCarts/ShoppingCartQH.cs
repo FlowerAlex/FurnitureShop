@@ -37,6 +37,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                     (shp, prod) => new ShoppingCartProductDTO
                     {
                         Amount = shp.Amount,
+                        Product = new ProductDTO
+                        {
                         Id = prod.Id,
                         Name = prod.Name,
                         Price = prod.Price,
@@ -44,9 +46,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                         CategoryId = prod.CategoryId,
                         InShoppingCart = true,
                         InFavourites = productsInFavourites.Contains(prod.Id),
+                        },
                     }
                 ).ToList();
-            ret.Price = ret.ShoppingCartProducts.Sum(shp => shp.Price * shp.Amount);
+            ret.Price = ret.ShoppingCartProducts.Sum(shp => shp.Product.Price * shp.Amount);
             return ret;
         }
     }

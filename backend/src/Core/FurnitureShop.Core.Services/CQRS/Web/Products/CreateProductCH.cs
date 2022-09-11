@@ -48,7 +48,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
                 CategoryId = command.NewProduct.CategoryId != null ? Id<Category>.From(command.NewProduct.CategoryId) : null,
                 PreviewPhotoId = command.NewProduct.PreviewPhotoId,
             };
-            product.Photos = command.NewProduct.PhotosIds.Select(photo => new Photo(Id<Photo>.From(photo), Id<Product>.From(product.Id))).ToList();
+            product.Photos = command.NewProduct.PhotoIds.Select(photo => new Photo(Id<Photo>.From(photo), Id<Product>.From(product.Id))).ToList();
             var result = await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
         }

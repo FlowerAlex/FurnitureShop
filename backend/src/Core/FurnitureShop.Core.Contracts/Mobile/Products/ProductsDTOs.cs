@@ -13,6 +13,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
     public class ProductDetailsDTO : ProductDTO
     {
         public string? ModelId { get; set; }
-        public List<Guid> PhotosIds { get; set; }
+        public List<Guid> PhotoIds { get; set; }
     }
 }
