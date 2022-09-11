@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:logging/logging.dart';
 
 part 'products_screen_cubit.freezed.dart';
 
@@ -16,6 +17,8 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         super(const ProductsScreenReadyState());
 
   final CQRS _cqrs;
+
+  final _logger = Logger('ProductsScreenCubit');
 
   Future<void> fetch({
     int page = 0,
@@ -66,10 +69,11 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
           activeCategory: state.activeCategory,
         ),
       );
-    } catch (e, _) {
+    } catch (err, st) {
+      _logger.severe('Couldn\'t load the products', err, st);
       emit(
         ProductsScreenErrorState(
-          errorMessage: e.toString(),
+          errorMessage: err.toString(),
         ),
       );
     }

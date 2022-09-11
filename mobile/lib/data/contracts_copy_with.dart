@@ -11,7 +11,7 @@ extension ProductDetailsDTOEx on ProductDetailsDTO {
     bool? inShoppingCart,
     String? description,
     String? modelId,
-    List<String>? photosIds,
+    List<String>? photoIds,
     String? id,
   }) =>
       ProductDetailsDTO(
@@ -24,7 +24,54 @@ extension ProductDetailsDTOEx on ProductDetailsDTO {
         inShoppingCart: inShoppingCart ?? this.inShoppingCart,
         description: description ?? this.description,
         modelId: modelId ?? this.modelId,
-        photosIds: photosIds ?? this.photosIds,
+        photoIds: photoIds ?? this.photoIds,
         id: id ?? this.id,
+      );
+}
+
+extension ShoppingCartDTOEx on ShoppingCartDTO {
+  ShoppingCartDTO copyWith({
+    double? price,
+    List<ShoppingCartProductDTO>? shoppingCartProducts,
+  }) =>
+      ShoppingCartDTO(
+        price: price ?? this.price,
+        shoppingCartProducts: shoppingCartProducts ?? this.shoppingCartProducts,
+      );
+}
+
+extension ProductDTOEx on ProductDTO {
+  ProductDTO copyWith({
+    String? name,
+    double? price,
+    String? description,
+    double? averageRating,
+    String? previewPhotoId,
+    String? categoryId,
+    bool? inFavourites,
+    bool? inShoppingCart,
+    String? id,
+  }) =>
+      ProductDTO(
+        name: name ?? this.name,
+        price: price ?? this.price,
+        description: description ?? this.description,
+        averageRating: averageRating ?? this.averageRating,
+        previewPhotoId: previewPhotoId ?? this.previewPhotoId,
+        categoryId: categoryId ?? this.categoryId,
+        inFavourites: inFavourites ?? this.inFavourites,
+        inShoppingCart: inShoppingCart ?? this.inShoppingCart,
+        id: id ?? this.id,
+      );
+}
+
+extension ShoppingCartProductDTOEx on ShoppingCartProductDTO {
+  ShoppingCartProductDTO copyWith({
+    int? amount,
+    ProductDTO? product,
+  }) =>
+      ShoppingCartProductDTO(
+        amount: amount ?? this.amount,
+        product: product ?? this.product,
       );
 }

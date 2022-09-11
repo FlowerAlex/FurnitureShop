@@ -43,7 +43,7 @@ void main() {
               .thenAnswer((invocation) => () async {}());
           return buildCubit();
         },
-        act: (cubit) => cubit.registerUser('', ''),
+        act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(cubit.state, const SignUpScreenReadyState()),
       );
 
@@ -56,7 +56,7 @@ void main() {
               .thenAnswer((invocation) => () async {}());
           return buildCubit();
         },
-        act: (cubit) => cubit.registerUser('', ''),
+        act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
             cubit.state, const SignUpScreenReadyState(networkError: true)),
       );
@@ -70,7 +70,7 @@ void main() {
               .thenAnswer((invocation) => () async {}());
           return buildCubit();
         },
-        act: (cubit) => cubit.registerUser('', ''),
+        act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
             cubit.state, const SignUpScreenReadyState(unknownError: true)),
       );

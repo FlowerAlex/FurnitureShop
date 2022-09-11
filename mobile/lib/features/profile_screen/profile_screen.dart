@@ -21,6 +21,8 @@ class ProfileScreen extends HookWidget {
     final nickNameEditingController = useTextEditingController();
     final nameEditingController = useTextEditingController();
     final surnameEditingController = useTextEditingController();
+    final addressEditingController = useTextEditingController();
+
     final fieldEditingController = useTextEditingController();
 
     void _editPhoto() {}
@@ -118,6 +120,37 @@ class ProfileScreen extends HookWidget {
       );
     }
 
+    void _editAddress() {
+      fieldEditingController.text = addressEditingController.text;
+
+      showUpdateProfileDialog<void>(
+        context: context,
+        title: 'Address',
+        child: Column(
+          children: [
+            AppTextField(
+              controller: fieldEditingController,
+            ),
+            const SizedBox(height: 20),
+            AppTextButton(
+              onPressed: () {
+                context.read<ProfileScreenCubit>().updateProfile(
+                      address: fieldEditingController.text,
+                    );
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+              child: Text(
+                'Confirm',
+                style: AppTextStyles.med14.copyWith(
+                  color: AppColors.primaryText,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     void _logOut() {
       context.read<AuthCubit>().logOut();
     }
@@ -148,6 +181,7 @@ class ProfileScreen extends HookWidget {
               nickNameEditingController.text = state.userInfo.username;
               nameEditingController.text = state.userInfo.firstname;
               surnameEditingController.text = state.userInfo.surname;
+              addressEditingController.text = state.userInfo.address;
 
               return SafeArea(
                 child: Column(
@@ -223,6 +257,19 @@ class ProfileScreen extends HookWidget {
                                 readOnly: true,
                               ),
                               const SizedBox(height: 20),
+                              AppTextField(
+                                controller: addressEditingController,
+                                label: 'Address',
+                                suffixIcon: AssetButton(
+                                  onPressed: _editAddress,
+                                  icon: AssetIcon(
+                                    asset: Assets.icons.edit,
+                                    color: AppColors.primaryText,
+                                  ),
+                                ),
+                                readOnly: true,
+                              ),
+                              const SizedBox(height: 20),
                               AppTextButton(
                                 onPressed: _logOut,
                                 withBorderSide: false,
@@ -247,7 +294,7 @@ class ProfileScreen extends HookWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Something went wrong'),
+                  Text('Error:${state.error}'),
                   AppTextButton(
                     onPressed: _logOut,
                     withBorderSide: false,

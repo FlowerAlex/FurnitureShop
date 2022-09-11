@@ -66,7 +66,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            for (final photoId in productDetails.photosIds)
+                            for (final photoId in productDetails.photoIds)
                               CachedNetworkImage(
                                 imageUrl:
                                     'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',

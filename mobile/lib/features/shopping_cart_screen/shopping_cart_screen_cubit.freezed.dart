@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'shopping_cart_screen_cubit.dart';
@@ -17,18 +18,18 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ShoppingCartScreenStateTearOff {
   const _$ShoppingCartScreenStateTearOff();
 
-  ShoppingCartLoadingState loading() {
-    return const ShoppingCartLoadingState();
+  ShoppingCartScreenStateLoading loading() {
+    return const ShoppingCartScreenStateLoading();
   }
 
-  ShoppingCartReadyState ready(
-      {required ShoppingCartDTO shoppingCart,
+  ShoppingCartScreenStateReady ready(
+      {required List<SelectableShoppingCartProduct> shoppingCartProducts,
       required CategoryDTO activeCategory,
       List<CategoryDTO> categories = const <CategoryDTO>[],
       int currentPage = 0,
       int totalCount = 0}) {
-    return ShoppingCartReadyState(
-      shoppingCart: shoppingCart,
+    return ShoppingCartScreenStateReady(
+      shoppingCartProducts: shoppingCartProducts,
       activeCategory: activeCategory,
       categories: categories,
       currentPage: currentPage,
@@ -36,8 +37,8 @@ class _$ShoppingCartScreenStateTearOff {
     );
   }
 
-  ShoppingCartErrorState error({required String error}) {
-    return ShoppingCartErrorState(
+  ShoppingCartScreenStateError error({required String error}) {
+    return ShoppingCartScreenStateError(
       error: error,
     );
   }
@@ -52,7 +53,7 @@ mixin _$ShoppingCartScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            ShoppingCartDTO shoppingCart,
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -64,8 +65,12 @@ mixin _$ShoppingCartScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
@@ -73,8 +78,12 @@ mixin _$ShoppingCartScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -82,23 +91,23 @@ mixin _$ShoppingCartScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShoppingCartLoadingState value) loading,
-    required TResult Function(ShoppingCartReadyState value) ready,
-    required TResult Function(ShoppingCartErrorState value) error,
+    required TResult Function(ShoppingCartScreenStateLoading value) loading,
+    required TResult Function(ShoppingCartScreenStateReady value) ready,
+    required TResult Function(ShoppingCartScreenStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -122,29 +131,32 @@ class _$ShoppingCartScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ShoppingCartLoadingStateCopyWith<$Res> {
-  factory $ShoppingCartLoadingStateCopyWith(ShoppingCartLoadingState value,
-          $Res Function(ShoppingCartLoadingState) then) =
-      _$ShoppingCartLoadingStateCopyWithImpl<$Res>;
+abstract class $ShoppingCartScreenStateLoadingCopyWith<$Res> {
+  factory $ShoppingCartScreenStateLoadingCopyWith(
+          ShoppingCartScreenStateLoading value,
+          $Res Function(ShoppingCartScreenStateLoading) then) =
+      _$ShoppingCartScreenStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ShoppingCartLoadingStateCopyWithImpl<$Res>
+class _$ShoppingCartScreenStateLoadingCopyWithImpl<$Res>
     extends _$ShoppingCartScreenStateCopyWithImpl<$Res>
-    implements $ShoppingCartLoadingStateCopyWith<$Res> {
-  _$ShoppingCartLoadingStateCopyWithImpl(ShoppingCartLoadingState _value,
-      $Res Function(ShoppingCartLoadingState) _then)
-      : super(_value, (v) => _then(v as ShoppingCartLoadingState));
+    implements $ShoppingCartScreenStateLoadingCopyWith<$Res> {
+  _$ShoppingCartScreenStateLoadingCopyWithImpl(
+      ShoppingCartScreenStateLoading _value,
+      $Res Function(ShoppingCartScreenStateLoading) _then)
+      : super(_value, (v) => _then(v as ShoppingCartScreenStateLoading));
 
   @override
-  ShoppingCartLoadingState get _value =>
-      super._value as ShoppingCartLoadingState;
+  ShoppingCartScreenStateLoading get _value =>
+      super._value as ShoppingCartScreenStateLoading;
 }
 
 /// @nodoc
 
-class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
-  const _$ShoppingCartLoadingState();
+class _$ShoppingCartScreenStateLoading
+    implements ShoppingCartScreenStateLoading {
+  const _$ShoppingCartScreenStateLoading();
 
   @override
   String toString() {
@@ -154,7 +166,8 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ShoppingCartLoadingState);
+        (other.runtimeType == runtimeType &&
+            other is ShoppingCartScreenStateLoading);
   }
 
   @override
@@ -165,7 +178,7 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            ShoppingCartDTO shoppingCart,
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -180,8 +193,12 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -192,8 +209,12 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -207,9 +228,9 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShoppingCartLoadingState value) loading,
-    required TResult Function(ShoppingCartReadyState value) ready,
-    required TResult Function(ShoppingCartErrorState value) error,
+    required TResult Function(ShoppingCartScreenStateLoading value) loading,
+    required TResult Function(ShoppingCartScreenStateReady value) ready,
+    required TResult Function(ShoppingCartScreenStateError value) error,
   }) {
     return loading(this);
   }
@@ -217,9 +238,9 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -227,9 +248,9 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -239,17 +260,20 @@ class _$ShoppingCartLoadingState implements ShoppingCartLoadingState {
   }
 }
 
-abstract class ShoppingCartLoadingState implements ShoppingCartScreenState {
-  const factory ShoppingCartLoadingState() = _$ShoppingCartLoadingState;
+abstract class ShoppingCartScreenStateLoading
+    implements ShoppingCartScreenState {
+  const factory ShoppingCartScreenStateLoading() =
+      _$ShoppingCartScreenStateLoading;
 }
 
 /// @nodoc
-abstract class $ShoppingCartReadyStateCopyWith<$Res> {
-  factory $ShoppingCartReadyStateCopyWith(ShoppingCartReadyState value,
-          $Res Function(ShoppingCartReadyState) then) =
-      _$ShoppingCartReadyStateCopyWithImpl<$Res>;
+abstract class $ShoppingCartScreenStateReadyCopyWith<$Res> {
+  factory $ShoppingCartScreenStateReadyCopyWith(
+          ShoppingCartScreenStateReady value,
+          $Res Function(ShoppingCartScreenStateReady) then) =
+      _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
-      {ShoppingCartDTO shoppingCart,
+      {List<SelectableShoppingCartProduct> shoppingCartProducts,
       CategoryDTO activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
@@ -257,29 +281,31 @@ abstract class $ShoppingCartReadyStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ShoppingCartReadyStateCopyWithImpl<$Res>
+class _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>
     extends _$ShoppingCartScreenStateCopyWithImpl<$Res>
-    implements $ShoppingCartReadyStateCopyWith<$Res> {
-  _$ShoppingCartReadyStateCopyWithImpl(ShoppingCartReadyState _value,
-      $Res Function(ShoppingCartReadyState) _then)
-      : super(_value, (v) => _then(v as ShoppingCartReadyState));
+    implements $ShoppingCartScreenStateReadyCopyWith<$Res> {
+  _$ShoppingCartScreenStateReadyCopyWithImpl(
+      ShoppingCartScreenStateReady _value,
+      $Res Function(ShoppingCartScreenStateReady) _then)
+      : super(_value, (v) => _then(v as ShoppingCartScreenStateReady));
 
   @override
-  ShoppingCartReadyState get _value => super._value as ShoppingCartReadyState;
+  ShoppingCartScreenStateReady get _value =>
+      super._value as ShoppingCartScreenStateReady;
 
   @override
   $Res call({
-    Object? shoppingCart = freezed,
+    Object? shoppingCartProducts = freezed,
     Object? activeCategory = freezed,
     Object? categories = freezed,
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
-    return _then(ShoppingCartReadyState(
-      shoppingCart: shoppingCart == freezed
-          ? _value.shoppingCart
-          : shoppingCart // ignore: cast_nullable_to_non_nullable
-              as ShoppingCartDTO,
+    return _then(ShoppingCartScreenStateReady(
+      shoppingCartProducts: shoppingCartProducts == freezed
+          ? _value.shoppingCartProducts
+          : shoppingCartProducts // ignore: cast_nullable_to_non_nullable
+              as List<SelectableShoppingCartProduct>,
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
@@ -302,16 +328,16 @@ class _$ShoppingCartReadyStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShoppingCartReadyState implements ShoppingCartReadyState {
-  const _$ShoppingCartReadyState(
-      {required this.shoppingCart,
+class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
+  const _$ShoppingCartScreenStateReady(
+      {required this.shoppingCartProducts,
       required this.activeCategory,
       this.categories = const <CategoryDTO>[],
       this.currentPage = 0,
       this.totalCount = 0});
 
   @override
-  final ShoppingCartDTO shoppingCart;
+  final List<SelectableShoppingCartProduct> shoppingCartProducts;
   @override
   final CategoryDTO activeCategory;
   @JsonKey()
@@ -326,16 +352,16 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
 
   @override
   String toString() {
-    return 'ShoppingCartScreenState.ready(shoppingCart: $shoppingCart, activeCategory: $activeCategory, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
+    return 'ShoppingCartScreenState.ready(shoppingCartProducts: $shoppingCartProducts, activeCategory: $activeCategory, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ShoppingCartReadyState &&
+            other is ShoppingCartScreenStateReady &&
             const DeepCollectionEquality()
-                .equals(other.shoppingCart, shoppingCart) &&
+                .equals(other.shoppingCartProducts, shoppingCartProducts) &&
             const DeepCollectionEquality()
                 .equals(other.activeCategory, activeCategory) &&
             const DeepCollectionEquality()
@@ -349,7 +375,7 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(shoppingCart),
+      const DeepCollectionEquality().hash(shoppingCartProducts),
       const DeepCollectionEquality().hash(activeCategory),
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(currentPage),
@@ -357,16 +383,16 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
 
   @JsonKey(ignore: true)
   @override
-  $ShoppingCartReadyStateCopyWith<ShoppingCartReadyState> get copyWith =>
-      _$ShoppingCartReadyStateCopyWithImpl<ShoppingCartReadyState>(
-          this, _$identity);
+  $ShoppingCartScreenStateReadyCopyWith<ShoppingCartScreenStateReady>
+      get copyWith => _$ShoppingCartScreenStateReadyCopyWithImpl<
+          ShoppingCartScreenStateReady>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            ShoppingCartDTO shoppingCart,
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -374,36 +400,44 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
         ready,
     required TResult Function(String error) error,
   }) {
-    return ready(
-        shoppingCart, activeCategory, categories, currentPage, totalCount);
+    return ready(shoppingCartProducts, activeCategory, categories, currentPage,
+        totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(
-        shoppingCart, activeCategory, categories, currentPage, totalCount);
+    return ready?.call(shoppingCartProducts, activeCategory, categories,
+        currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(
-          shoppingCart, activeCategory, categories, currentPage, totalCount);
+      return ready(shoppingCartProducts, activeCategory, categories,
+          currentPage, totalCount);
     }
     return orElse();
   }
@@ -411,9 +445,9 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShoppingCartLoadingState value) loading,
-    required TResult Function(ShoppingCartReadyState value) ready,
-    required TResult Function(ShoppingCartErrorState value) error,
+    required TResult Function(ShoppingCartScreenStateLoading value) loading,
+    required TResult Function(ShoppingCartScreenStateReady value) ready,
+    required TResult Function(ShoppingCartScreenStateError value) error,
   }) {
     return ready(this);
   }
@@ -421,9 +455,9 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
   }) {
     return ready?.call(this);
   }
@@ -431,9 +465,9 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
@@ -443,48 +477,51 @@ class _$ShoppingCartReadyState implements ShoppingCartReadyState {
   }
 }
 
-abstract class ShoppingCartReadyState implements ShoppingCartScreenState {
-  const factory ShoppingCartReadyState(
-      {required ShoppingCartDTO shoppingCart,
+abstract class ShoppingCartScreenStateReady implements ShoppingCartScreenState {
+  const factory ShoppingCartScreenStateReady(
+      {required List<SelectableShoppingCartProduct> shoppingCartProducts,
       required CategoryDTO activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
-      int totalCount}) = _$ShoppingCartReadyState;
+      int totalCount}) = _$ShoppingCartScreenStateReady;
 
-  ShoppingCartDTO get shoppingCart;
+  List<SelectableShoppingCartProduct> get shoppingCartProducts;
   CategoryDTO get activeCategory;
   List<CategoryDTO> get categories;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
-  $ShoppingCartReadyStateCopyWith<ShoppingCartReadyState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ShoppingCartScreenStateReadyCopyWith<ShoppingCartScreenStateReady>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ShoppingCartErrorStateCopyWith<$Res> {
-  factory $ShoppingCartErrorStateCopyWith(ShoppingCartErrorState value,
-          $Res Function(ShoppingCartErrorState) then) =
-      _$ShoppingCartErrorStateCopyWithImpl<$Res>;
+abstract class $ShoppingCartScreenStateErrorCopyWith<$Res> {
+  factory $ShoppingCartScreenStateErrorCopyWith(
+          ShoppingCartScreenStateError value,
+          $Res Function(ShoppingCartScreenStateError) then) =
+      _$ShoppingCartScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$ShoppingCartErrorStateCopyWithImpl<$Res>
+class _$ShoppingCartScreenStateErrorCopyWithImpl<$Res>
     extends _$ShoppingCartScreenStateCopyWithImpl<$Res>
-    implements $ShoppingCartErrorStateCopyWith<$Res> {
-  _$ShoppingCartErrorStateCopyWithImpl(ShoppingCartErrorState _value,
-      $Res Function(ShoppingCartErrorState) _then)
-      : super(_value, (v) => _then(v as ShoppingCartErrorState));
+    implements $ShoppingCartScreenStateErrorCopyWith<$Res> {
+  _$ShoppingCartScreenStateErrorCopyWithImpl(
+      ShoppingCartScreenStateError _value,
+      $Res Function(ShoppingCartScreenStateError) _then)
+      : super(_value, (v) => _then(v as ShoppingCartScreenStateError));
 
   @override
-  ShoppingCartErrorState get _value => super._value as ShoppingCartErrorState;
+  ShoppingCartScreenStateError get _value =>
+      super._value as ShoppingCartScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(ShoppingCartErrorState(
+    return _then(ShoppingCartScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -495,8 +532,8 @@ class _$ShoppingCartErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShoppingCartErrorState implements ShoppingCartErrorState {
-  const _$ShoppingCartErrorState({required this.error});
+class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
+  const _$ShoppingCartScreenStateError({required this.error});
 
   @override
   final String error;
@@ -510,7 +547,7 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ShoppingCartErrorState &&
+            other is ShoppingCartScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -520,16 +557,16 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
 
   @JsonKey(ignore: true)
   @override
-  $ShoppingCartErrorStateCopyWith<ShoppingCartErrorState> get copyWith =>
-      _$ShoppingCartErrorStateCopyWithImpl<ShoppingCartErrorState>(
-          this, _$identity);
+  $ShoppingCartScreenStateErrorCopyWith<ShoppingCartScreenStateError>
+      get copyWith => _$ShoppingCartScreenStateErrorCopyWithImpl<
+          ShoppingCartScreenStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            ShoppingCartDTO shoppingCart,
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
@@ -544,8 +581,12 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -556,8 +597,12 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ShoppingCartDTO shoppingCart, CategoryDTO activeCategory,
-            List<CategoryDTO> categories, int currentPage, int totalCount)?
+    TResult Function(
+            List<SelectableShoppingCartProduct> shoppingCartProducts,
+            CategoryDTO activeCategory,
+            List<CategoryDTO> categories,
+            int currentPage,
+            int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -571,9 +616,9 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShoppingCartLoadingState value) loading,
-    required TResult Function(ShoppingCartReadyState value) ready,
-    required TResult Function(ShoppingCartErrorState value) error,
+    required TResult Function(ShoppingCartScreenStateLoading value) loading,
+    required TResult Function(ShoppingCartScreenStateReady value) ready,
+    required TResult Function(ShoppingCartScreenStateError value) error,
   }) {
     return error(this);
   }
@@ -581,9 +626,9 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -591,9 +636,9 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShoppingCartLoadingState value)? loading,
-    TResult Function(ShoppingCartReadyState value)? ready,
-    TResult Function(ShoppingCartErrorState value)? error,
+    TResult Function(ShoppingCartScreenStateLoading value)? loading,
+    TResult Function(ShoppingCartScreenStateReady value)? ready,
+    TResult Function(ShoppingCartScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -603,12 +648,172 @@ class _$ShoppingCartErrorState implements ShoppingCartErrorState {
   }
 }
 
-abstract class ShoppingCartErrorState implements ShoppingCartScreenState {
-  const factory ShoppingCartErrorState({required String error}) =
-      _$ShoppingCartErrorState;
+abstract class ShoppingCartScreenStateError implements ShoppingCartScreenState {
+  const factory ShoppingCartScreenStateError({required String error}) =
+      _$ShoppingCartScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $ShoppingCartErrorStateCopyWith<ShoppingCartErrorState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ShoppingCartScreenStateErrorCopyWith<ShoppingCartScreenStateError>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$SelectableShoppingCartProductTearOff {
+  const _$SelectableShoppingCartProductTearOff();
+
+  _SelectableShoppingCartProduct call(
+      {required ShoppingCartProductDTO product, bool selected = false}) {
+    return _SelectableShoppingCartProduct(
+      product: product,
+      selected: selected,
+    );
+  }
+}
+
+/// @nodoc
+const $SelectableShoppingCartProduct = _$SelectableShoppingCartProductTearOff();
+
+/// @nodoc
+mixin _$SelectableShoppingCartProduct {
+  ShoppingCartProductDTO get product => throw _privateConstructorUsedError;
+  bool get selected => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SelectableShoppingCartProductCopyWith<SelectableShoppingCartProduct>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SelectableShoppingCartProductCopyWith<$Res> {
+  factory $SelectableShoppingCartProductCopyWith(
+          SelectableShoppingCartProduct value,
+          $Res Function(SelectableShoppingCartProduct) then) =
+      _$SelectableShoppingCartProductCopyWithImpl<$Res>;
+  $Res call({ShoppingCartProductDTO product, bool selected});
+}
+
+/// @nodoc
+class _$SelectableShoppingCartProductCopyWithImpl<$Res>
+    implements $SelectableShoppingCartProductCopyWith<$Res> {
+  _$SelectableShoppingCartProductCopyWithImpl(this._value, this._then);
+
+  final SelectableShoppingCartProduct _value;
+  // ignore: unused_field
+  final $Res Function(SelectableShoppingCartProduct) _then;
+
+  @override
+  $Res call({
+    Object? product = freezed,
+    Object? selected = freezed,
+  }) {
+    return _then(_value.copyWith(
+      product: product == freezed
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ShoppingCartProductDTO,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$SelectableShoppingCartProductCopyWith<$Res>
+    implements $SelectableShoppingCartProductCopyWith<$Res> {
+  factory _$SelectableShoppingCartProductCopyWith(
+          _SelectableShoppingCartProduct value,
+          $Res Function(_SelectableShoppingCartProduct) then) =
+      __$SelectableShoppingCartProductCopyWithImpl<$Res>;
+  @override
+  $Res call({ShoppingCartProductDTO product, bool selected});
+}
+
+/// @nodoc
+class __$SelectableShoppingCartProductCopyWithImpl<$Res>
+    extends _$SelectableShoppingCartProductCopyWithImpl<$Res>
+    implements _$SelectableShoppingCartProductCopyWith<$Res> {
+  __$SelectableShoppingCartProductCopyWithImpl(
+      _SelectableShoppingCartProduct _value,
+      $Res Function(_SelectableShoppingCartProduct) _then)
+      : super(_value, (v) => _then(v as _SelectableShoppingCartProduct));
+
+  @override
+  _SelectableShoppingCartProduct get _value =>
+      super._value as _SelectableShoppingCartProduct;
+
+  @override
+  $Res call({
+    Object? product = freezed,
+    Object? selected = freezed,
+  }) {
+    return _then(_SelectableShoppingCartProduct(
+      product: product == freezed
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ShoppingCartProductDTO,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectableShoppingCartProduct
+    implements _SelectableShoppingCartProduct {
+  const _$_SelectableShoppingCartProduct(
+      {required this.product, this.selected = false});
+
+  @override
+  final ShoppingCartProductDTO product;
+  @JsonKey()
+  @override
+  final bool selected;
+
+  @override
+  String toString() {
+    return 'SelectableShoppingCartProduct(product: $product, selected: $selected)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _SelectableShoppingCartProduct &&
+            const DeepCollectionEquality().equals(other.product, product) &&
+            const DeepCollectionEquality().equals(other.selected, selected));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(product),
+      const DeepCollectionEquality().hash(selected));
+
+  @JsonKey(ignore: true)
+  @override
+  _$SelectableShoppingCartProductCopyWith<_SelectableShoppingCartProduct>
+      get copyWith => __$SelectableShoppingCartProductCopyWithImpl<
+          _SelectableShoppingCartProduct>(this, _$identity);
+}
+
+abstract class _SelectableShoppingCartProduct
+    implements SelectableShoppingCartProduct {
+  const factory _SelectableShoppingCartProduct(
+      {required ShoppingCartProductDTO product,
+      bool selected}) = _$_SelectableShoppingCartProduct;
+
+  @override
+  ShoppingCartProductDTO get product;
+  @override
+  bool get selected;
+  @override
+  @JsonKey(ignore: true)
+  _$SelectableShoppingCartProductCopyWith<_SelectableShoppingCartProduct>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:logging/logging.dart';
 
 part 'profile_screen_cubit.freezed.dart';
 
@@ -12,6 +13,8 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
         super(const ProfileScreenInitialState());
 
   final CQRS _cqrs;
+
+  final _logger = Logger('ProfileScreenCubit');
 
   Future<void> fetch() async {
     state.maybeMap(
@@ -27,8 +30,9 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
     try {
       final res = await _cqrs.get(UserInfo());
       emit(ProfileScreenSuccessState(userInfo: res));
-    } catch (e) {
-      emit(const ProfileScreenErrorState());
+    } catch (err, st) {
+      _logger.severe('Cant get user info', err, st);
+      emit(ProfileScreenErrorState(error: err.toString()));
     }
   }
 
@@ -36,6 +40,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
     String? username,
     String? name,
     String? surname,
+    String? address,
   }) async {
     state.maybeMap(
       success: (state) =>
@@ -48,14 +53,16 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
           firstname: name,
           surname: surname,
           username: username,
+          address: address,
         ),
       );
 
       if (res.success) {
         await _fetch();
       }
-    } catch (e) {
-      emit(const ProfileScreenErrorState());
+    } catch (err, st) {
+      _logger.severe('can\'t update profile', err, st);
+      emit(ProfileScreenErrorState(error: err.toString()));
     }
   }
 }
@@ -69,5 +76,7 @@ class ProfileScreenState with _$ProfileScreenState {
   const factory ProfileScreenState.success({
     required UserInfoDTO userInfo,
   }) = ProfileScreenSuccessState;
-  const factory ProfileScreenState.error() = ProfileScreenErrorState;
+  const factory ProfileScreenState.error({
+    required String error,
+  }) = ProfileScreenErrorState;
 }

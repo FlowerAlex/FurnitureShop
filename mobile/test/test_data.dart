@@ -5,6 +5,7 @@ final userInfoTest = UserInfoDTO(
   firstname: '',
   surname: '',
   username: '',
+  address: '',
 );
 final category1Test = CategoryDTO(id: 'id', name: 'name');
 
