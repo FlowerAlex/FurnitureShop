@@ -21,7 +21,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.NoProducts)
                     .WithMessage("No products selected for order");
-            RuleFor(p => p.NewOrder)
+            RuleFor(p => p.NewOrder.Address, IsAddressSet)
                 .NotEmpty()
                     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                     .WithMessage("User and order have no addres set");
@@ -30,7 +30,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                    .WithMessage("Not enough funds to pay for the order.")
                    .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
-        private static bool IsShoppingCartEmpty(IValidationContext ctx, string address)
+        private static bool IsShoppingCartEmpty(IValidationContext ctx, string? address)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
             return ctx.AppContext<CoreContext>().GetProductsInShoppingCart(dbContext).GetAwaiter().GetResult().Any();
@@ -45,7 +45,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             }
             return user.Funds >= (int)dto.GetOrderPrice(dbContext);
         }
-        private static async Task<bool> IsAddressSet(IValidationContext ctx, string address)
+        private static async Task<bool> IsAddressSet(IValidationContext ctx, string? address)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
             var user = await GetCurrentUser(ctx, dbContext);

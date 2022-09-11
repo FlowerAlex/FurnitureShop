@@ -19,7 +19,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
 
     public class CreateOrderDTO
     {
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public List<ProductInOrderCreateDTO> Products { get; set; }
 
     }
