@@ -25,14 +25,12 @@ class _$ShoppingCartScreenStateTearOff {
   ShoppingCartScreenStateReady ready(
       {required List<SelectableShoppingCartProduct> shoppingCartProducts,
       required CategoryDTO activeCategory,
-      List<bool> selectedProdcuts = const <bool>[],
       List<CategoryDTO> categories = const <CategoryDTO>[],
       int currentPage = 0,
       int totalCount = 0}) {
     return ShoppingCartScreenStateReady(
       shoppingCartProducts: shoppingCartProducts,
       activeCategory: activeCategory,
-      selectedProdcuts: selectedProdcuts,
       categories: categories,
       currentPage: currentPage,
       totalCount: totalCount,
@@ -57,7 +55,6 @@ mixin _$ShoppingCartScreenState {
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -71,7 +68,6 @@ mixin _$ShoppingCartScreenState {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -85,7 +81,6 @@ mixin _$ShoppingCartScreenState {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -185,7 +180,6 @@ class _$ShoppingCartScreenStateLoading
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -202,7 +196,6 @@ class _$ShoppingCartScreenStateLoading
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -219,7 +212,6 @@ class _$ShoppingCartScreenStateLoading
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -283,7 +275,6 @@ abstract class $ShoppingCartScreenStateReadyCopyWith<$Res> {
   $Res call(
       {List<SelectableShoppingCartProduct> shoppingCartProducts,
       CategoryDTO activeCategory,
-      List<bool> selectedProdcuts,
       List<CategoryDTO> categories,
       int currentPage,
       int totalCount});
@@ -306,7 +297,6 @@ class _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>
   $Res call({
     Object? shoppingCartProducts = freezed,
     Object? activeCategory = freezed,
-    Object? selectedProdcuts = freezed,
     Object? categories = freezed,
     Object? currentPage = freezed,
     Object? totalCount = freezed,
@@ -320,10 +310,6 @@ class _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
               as CategoryDTO,
-      selectedProdcuts: selectedProdcuts == freezed
-          ? _value.selectedProdcuts
-          : selectedProdcuts // ignore: cast_nullable_to_non_nullable
-              as List<bool>,
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -346,7 +332,6 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
   const _$ShoppingCartScreenStateReady(
       {required this.shoppingCartProducts,
       required this.activeCategory,
-      this.selectedProdcuts = const <bool>[],
       this.categories = const <CategoryDTO>[],
       this.currentPage = 0,
       this.totalCount = 0});
@@ -355,9 +340,6 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
   final List<SelectableShoppingCartProduct> shoppingCartProducts;
   @override
   final CategoryDTO activeCategory;
-  @JsonKey()
-  @override
-  final List<bool> selectedProdcuts;
   @JsonKey()
   @override
   final List<CategoryDTO> categories;
@@ -370,7 +352,7 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
 
   @override
   String toString() {
-    return 'ShoppingCartScreenState.ready(shoppingCartProducts: $shoppingCartProducts, activeCategory: $activeCategory, selectedProdcuts: $selectedProdcuts, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
+    return 'ShoppingCartScreenState.ready(shoppingCartProducts: $shoppingCartProducts, activeCategory: $activeCategory, categories: $categories, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
@@ -382,8 +364,6 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
                 .equals(other.shoppingCartProducts, shoppingCartProducts) &&
             const DeepCollectionEquality()
                 .equals(other.activeCategory, activeCategory) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedProdcuts, selectedProdcuts) &&
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
             const DeepCollectionEquality()
@@ -397,7 +377,6 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
       runtimeType,
       const DeepCollectionEquality().hash(shoppingCartProducts),
       const DeepCollectionEquality().hash(activeCategory),
-      const DeepCollectionEquality().hash(selectedProdcuts),
       const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount));
@@ -415,15 +394,14 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
-    return ready(shoppingCartProducts, activeCategory, selectedProdcuts,
-        categories, currentPage, totalCount);
+    return ready(shoppingCartProducts, activeCategory, categories, currentPage,
+        totalCount);
   }
 
   @override
@@ -433,15 +411,14 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(shoppingCartProducts, activeCategory, selectedProdcuts,
-        categories, currentPage, totalCount);
+    return ready?.call(shoppingCartProducts, activeCategory, categories,
+        currentPage, totalCount);
   }
 
   @override
@@ -451,7 +428,6 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -460,8 +436,8 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(shoppingCartProducts, activeCategory, selectedProdcuts,
-          categories, currentPage, totalCount);
+      return ready(shoppingCartProducts, activeCategory, categories,
+          currentPage, totalCount);
     }
     return orElse();
   }
@@ -505,14 +481,12 @@ abstract class ShoppingCartScreenStateReady implements ShoppingCartScreenState {
   const factory ShoppingCartScreenStateReady(
       {required List<SelectableShoppingCartProduct> shoppingCartProducts,
       required CategoryDTO activeCategory,
-      List<bool> selectedProdcuts,
       List<CategoryDTO> categories,
       int currentPage,
       int totalCount}) = _$ShoppingCartScreenStateReady;
 
   List<SelectableShoppingCartProduct> get shoppingCartProducts;
   CategoryDTO get activeCategory;
-  List<bool> get selectedProdcuts;
   List<CategoryDTO> get categories;
   int get currentPage;
   int get totalCount;
@@ -594,7 +568,6 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -611,7 +584,6 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -628,7 +600,6 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
             CategoryDTO activeCategory,
-            List<bool> selectedProdcuts,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -692,12 +663,9 @@ class _$SelectableShoppingCartProductTearOff {
   const _$SelectableShoppingCartProductTearOff();
 
   _SelectableShoppingCartProduct call(
-      {required ShoppingCartProductDTO product,
-      required int count,
-      required bool selected}) {
+      {required ShoppingCartProductDTO product, bool selected = false}) {
     return _SelectableShoppingCartProduct(
       product: product,
-      count: count,
       selected: selected,
     );
   }
@@ -709,7 +677,6 @@ const $SelectableShoppingCartProduct = _$SelectableShoppingCartProductTearOff();
 /// @nodoc
 mixin _$SelectableShoppingCartProduct {
   ShoppingCartProductDTO get product => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
   bool get selected => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -723,7 +690,7 @@ abstract class $SelectableShoppingCartProductCopyWith<$Res> {
           SelectableShoppingCartProduct value,
           $Res Function(SelectableShoppingCartProduct) then) =
       _$SelectableShoppingCartProductCopyWithImpl<$Res>;
-  $Res call({ShoppingCartProductDTO product, int count, bool selected});
+  $Res call({ShoppingCartProductDTO product, bool selected});
 }
 
 /// @nodoc
@@ -738,7 +705,6 @@ class _$SelectableShoppingCartProductCopyWithImpl<$Res>
   @override
   $Res call({
     Object? product = freezed,
-    Object? count = freezed,
     Object? selected = freezed,
   }) {
     return _then(_value.copyWith(
@@ -746,10 +712,6 @@ class _$SelectableShoppingCartProductCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ShoppingCartProductDTO,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
       selected: selected == freezed
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -766,7 +728,7 @@ abstract class _$SelectableShoppingCartProductCopyWith<$Res>
           $Res Function(_SelectableShoppingCartProduct) then) =
       __$SelectableShoppingCartProductCopyWithImpl<$Res>;
   @override
-  $Res call({ShoppingCartProductDTO product, int count, bool selected});
+  $Res call({ShoppingCartProductDTO product, bool selected});
 }
 
 /// @nodoc
@@ -785,7 +747,6 @@ class __$SelectableShoppingCartProductCopyWithImpl<$Res>
   @override
   $Res call({
     Object? product = freezed,
-    Object? count = freezed,
     Object? selected = freezed,
   }) {
     return _then(_SelectableShoppingCartProduct(
@@ -793,10 +754,6 @@ class __$SelectableShoppingCartProductCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ShoppingCartProductDTO,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
       selected: selected == freezed
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -810,18 +767,17 @@ class __$SelectableShoppingCartProductCopyWithImpl<$Res>
 class _$_SelectableShoppingCartProduct
     implements _SelectableShoppingCartProduct {
   const _$_SelectableShoppingCartProduct(
-      {required this.product, required this.count, required this.selected});
+      {required this.product, this.selected = false});
 
   @override
   final ShoppingCartProductDTO product;
-  @override
-  final int count;
+  @JsonKey()
   @override
   final bool selected;
 
   @override
   String toString() {
-    return 'SelectableShoppingCartProduct(product: $product, count: $count, selected: $selected)';
+    return 'SelectableShoppingCartProduct(product: $product, selected: $selected)';
   }
 
   @override
@@ -830,7 +786,6 @@ class _$_SelectableShoppingCartProduct
         (other.runtimeType == runtimeType &&
             other is _SelectableShoppingCartProduct &&
             const DeepCollectionEquality().equals(other.product, product) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
             const DeepCollectionEquality().equals(other.selected, selected));
   }
 
@@ -838,7 +793,6 @@ class _$_SelectableShoppingCartProduct
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(product),
-      const DeepCollectionEquality().hash(count),
       const DeepCollectionEquality().hash(selected));
 
   @JsonKey(ignore: true)
@@ -852,13 +806,10 @@ abstract class _SelectableShoppingCartProduct
     implements SelectableShoppingCartProduct {
   const factory _SelectableShoppingCartProduct(
       {required ShoppingCartProductDTO product,
-      required int count,
-      required bool selected}) = _$_SelectableShoppingCartProduct;
+      bool selected}) = _$_SelectableShoppingCartProduct;
 
   @override
   ShoppingCartProductDTO get product;
-  @override
-  int get count;
   @override
   bool get selected;
   @override

@@ -87,8 +87,12 @@ class _ShoppingCartReadyBody extends HookWidget {
 
           return ProductTile(
             selectable: true,
-            selected: false, // TODO:
-            onSelectedChanged: (selected) {}, // TODO:
+            selected: shoppingCartProduct.selected,
+            countOfProducts: shoppingCartProduct.product.amount,
+            onCountOfProductsChanged: (value) => cubit.changeCountOfProducts(
+                productId: product.product.id, count: value),
+            onSelectedChanged: (selected) => cubit.selectProduct(
+                productId: product.product.id, selected: selected),
             product: product.product,
             children: [
               InkWell(

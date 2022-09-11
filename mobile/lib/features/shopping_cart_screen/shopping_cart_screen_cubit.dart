@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/data/contracts_copy_with.dart';
+import 'package:logging/logging.dart';
 
 part 'shopping_cart_screen_cubit.freezed.dart';
 
@@ -17,6 +19,8 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
 
   final CQRS _cqrs;
 
+  final _logger = Logger('ShoppingCartScreenCubit');
+
   Future<void> fetch({int page = 0}) async {
     try {
       final categories = await _cqrs.get(AllCategories());
@@ -26,13 +30,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
         emit(
           ShoppingCartScreenState.ready(
             shoppingCartProducts: result.shoppingCartProducts
-                .map(
-                  (e) => SelectableShoppingCartProduct(
-                    product: e,
-                    count: 1,
-                    selected: false,
-                  ),
-                )
+                .map((e) => SelectableShoppingCartProduct(product: e))
                 .toList(),
             categories: categories,
             activeCategory: allCategories,
@@ -74,16 +72,18 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
     }
 
     emit(
-      state.copyWith(shoppingCartProducts: [
-        for (final shoppingCartProduct in state.shoppingCartProducts)
-          productId == shoppingCartProduct.product.product.id
-              ? shoppingCartProduct.copyWith(selected: selected)
-              : shoppingCartProduct
-      ]),
+      state.copyWith(
+        shoppingCartProducts: [
+          for (final shoppingCartProduct in state.shoppingCartProducts)
+            productId == shoppingCartProduct.product.product.id
+                ? shoppingCartProduct.copyWith(selected: selected)
+                : shoppingCartProduct
+        ],
+      ),
     );
   }
 
-  Future<void> changeCountOfProduct({
+  Future<void> changeCountOfProducts({
     required String productId,
     required int count,
   }) async {
@@ -96,10 +96,47 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
       state.copyWith(shoppingCartProducts: [
         for (final shoppingCartProduct in state.shoppingCartProducts)
           productId == shoppingCartProduct.product.product.id
-              ? shoppingCartProduct.copyWith(count: count)
+              ? shoppingCartProduct.copyWith(
+                  product: shoppingCartProduct.product.copyWith(
+                  amount: count,
+                ))
               : shoppingCartProduct
       ]),
     );
+  }
+
+  Future<void> buySelectedProducts() async {
+    final state = this.state;
+    if (state is! ShoppingCartScreenStateReady) {
+      return;
+    }
+
+    try {
+      final selectedProducts =
+          state.shoppingCartProducts.where((element) => element.selected);
+
+      await _cqrs.run(CreateOrder(
+        newOrder: CreateOrderDTO(
+          products: selectedProducts
+              .map((e) => ProductInOrderCreateDTO(
+                    id: e.product.product.id,
+                    amount: e.product.amount,
+                  ))
+              .toList(),
+        ),
+      ));
+
+      emit(
+        state.copyWith(
+          shoppingCartProducts: state.shoppingCartProducts
+              .where((element) => !element.selected)
+              .toList(),
+        ),
+      );
+    } catch (err, st) {
+      _logger.severe('Can\'t by products', err, st);
+      emit(ShoppingCartScreenStateError(error: err.toString()));
+    }
   }
 }
 
@@ -110,7 +147,6 @@ class ShoppingCartScreenState with _$ShoppingCartScreenState {
   const factory ShoppingCartScreenState.ready({
     required List<SelectableShoppingCartProduct> shoppingCartProducts,
     required CategoryDTO activeCategory,
-    @Default(<bool>[]) List<bool> selectedProdcuts,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
@@ -124,7 +160,6 @@ class ShoppingCartScreenState with _$ShoppingCartScreenState {
 class SelectableShoppingCartProduct with _$SelectableShoppingCartProduct {
   const factory SelectableShoppingCartProduct({
     required ShoppingCartProductDTO product,
-    required int count,
-    required bool selected,
+    @Default(false) bool selected,
   }) = _SelectableShoppingCartProduct;
 }

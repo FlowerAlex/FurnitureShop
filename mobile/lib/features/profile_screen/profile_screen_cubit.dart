@@ -40,6 +40,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
     String? username,
     String? name,
     String? surname,
+    String? address,
   }) async {
     state.maybeMap(
       success: (state) =>
@@ -52,6 +53,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
           firstname: name,
           surname: surname,
           username: username,
+          address: address,
         ),
       );
 

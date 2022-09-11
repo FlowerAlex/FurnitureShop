@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:login_client/login_client.dart';
 
 part 'sign_up_screen_cubit.freezed.dart';
@@ -35,6 +35,8 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
             surname: '',
             username: email,
             address: address,
+            funds: 0, // TODO: remove when backend will be fixed
+            isBanned: false, // TODO: remove when backend will be fixed
           ),
           password: password,
         ),

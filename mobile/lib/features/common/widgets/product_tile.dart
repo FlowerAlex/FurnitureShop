@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:counter_button/counter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:furniture_shop/data/contracts.dart';
@@ -13,6 +14,8 @@ class ProductTile extends StatelessWidget {
     this.selected,
     this.onSelectedChanged,
     this.children = const [],
+    this.countOfProducts = 1,
+    this.onCountOfProductsChanged,
   })  : assert(!selectable ||
             (selectable && selected != null && onSelectedChanged != null)),
         super(key: key);
@@ -24,10 +27,14 @@ class ProductTile extends StatelessWidget {
   final bool? selected;
   final void Function(bool selected)? onSelectedChanged;
 
+  final int countOfProducts;
+  final ValueChanged<int>? onCountOfProductsChanged;
+
   @override
   Widget build(BuildContext context) {
     final selected = this.selected;
     final onSelectedChanged = this.onSelectedChanged;
+    final onCountOfProductsChanged = this.onCountOfProductsChanged;
 
     void productTilePressed() {
       Navigator.of(context)
@@ -90,6 +97,16 @@ class ProductTile extends StatelessWidget {
               ],
             ),
             // Text(product.productInfo.description),
+            if (onCountOfProductsChanged != null)
+              Container(
+                padding: const EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                child: CounterButton(
+                  count: countOfProducts,
+                  onChange: onCountOfProductsChanged,
+                  loading: false,
+                ),
+              ),
             const UserComment(),
             const SizedBox(height: 20),
           ],
