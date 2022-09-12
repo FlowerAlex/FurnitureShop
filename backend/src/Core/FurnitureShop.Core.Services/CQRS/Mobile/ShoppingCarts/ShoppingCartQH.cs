@@ -54,6 +54,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                                 Price = prod.Price,
                                 PreviewPhotoId = prod.PreviewPhotoId,
                                 CategoryId = prod.CategoryId,
+                                Description = prod.Description,
                                 InShoppingCart = true,
                                 InFavourites = productsInFavourites.Contains(prod.Id),
                             },

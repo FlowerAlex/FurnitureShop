@@ -8,6 +8,7 @@ using FurnitureShop.Core.Contracts.Shared;
 using FurnitureShop.Core.Contracts.Shared.Products;
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
+using FurnitureShop.Core.Services.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
@@ -26,8 +27,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             MyFavourites query
         )
         {
-            var productsInShoppingCart = await GetProductsInShoppingCart(context);
-            var productsInFavourites = await GetProductsInFavourites(context);
+            var productsInShoppingCart = await context.GetProductsInShoppingCart(dbContext);
+            var productsInFavourites = await context.GetProductsInFavourties(dbContext);
 
             var filteredProducts = dbContext.Products
                 .FilterBy(query)
@@ -50,6 +51,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                             AverageRating =
                                 p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
                             CategoryId = p.CategoryId,
+                            Description = p.Description,
                             InFavourites = true,
                             InShoppingCart = productsInShoppingCart.Contains(p.Id),
                             Id = p.Id,
@@ -58,32 +60,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
             return result;
-        }
-
-        private async Task<List<Guid>> GetProductsInShoppingCart(CoreContext context)
-        {
-            var shoppingCart = dbContext.ShoppingCarts
-                .Where(sh => sh.UserId == context.UserId)
-                .FirstOrDefault();
-            if (shoppingCart == null)
-            {
-                return new List<Guid>();
-            }
-
-            var shoppingCartId = shoppingCart.Id;
-
-            return await dbContext.ShoppingCartProduct
-                .Where(shp => shp.ShoppingCartId == shoppingCartId.Value)
-                .Select(shp => shp.ProductId.Value)
-                .ToListAsync();
-        }
-
-        private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
-        {
-            return await dbContext.Favourites
-                .Where(f => f.UserId == context.UserId.Value)
-                .Select(f => f.ProductId!.Value)
-                .ToListAsync();
         }
     }
 
