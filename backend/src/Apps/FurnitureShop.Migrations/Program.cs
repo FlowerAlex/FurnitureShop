@@ -28,28 +28,31 @@ namespace FurnitureShop.Migrations
 
     internal class CoreDbContextFactory : BaseFactory<CoreDbContext, CoreDbContextFactory> { }
 
-    public class PersistedGrantDbContextFactory : IDesignTimeDbContextFactory<PersistedGrantDbContext>
+    public class PersistedGrantDbContextFactory
+        : IDesignTimeDbContextFactory<PersistedGrantDbContext>
     {
-        protected virtual string AssemblyName => typeof(PersistedGrantDbContextFactory).Assembly.GetName().Name!;
+        protected virtual string AssemblyName =>
+            typeof(PersistedGrantDbContextFactory).Assembly.GetName().Name!;
 
         public PersistedGrantDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<PersistedGrantDbContext>()
-                .UseLoggerFactory(new ServiceCollection()
-                    .AddLogging(cfg => cfg.AddConsole())
-                    .BuildServiceProvider()
-                    .GetRequiredService<ILoggerFactory>())
+                .UseLoggerFactory(
+                    new ServiceCollection()
+                        .AddLogging(cfg => cfg.AddConsole())
+                        .BuildServiceProvider()
+                        .GetRequiredService<ILoggerFactory>()
+                )
                 .UseSqlServer(
                     MigrationsConfig.GetConnectionString()
                         ?? throw new InvalidOperationException("Connection string missing"),
-                    cfg => cfg.MigrationsAssembly(AssemblyName));
+                    cfg => cfg.MigrationsAssembly(AssemblyName)
+                );
 
             return new PersistedGrantDbContext(
                 builder.Options,
-                new OperationalStoreOptions
-                {
-                    DefaultSchema = "auth",
-                });
+                new OperationalStoreOptions { DefaultSchema = "auth", }
+            );
         }
     }
 }

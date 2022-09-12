@@ -19,15 +19,18 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         {
             return await dbContext.Reviews
                 .Where(p => p.Id == query.Id)
-                .Select(p => new ReviewDTO
-                {
-                    Text = p.Text == null ? "" : p.Text,
-                    Rating = p.Rating,
-                    UserId = p.UserId,
-                    ProductId = p.ProductId,
-                    CreatedDate = p.CreatedDate,
-                    Id = p.Id,
-                })
+                .Select(
+                    p =>
+                        new ReviewDTO
+                        {
+                            Text = p.Text == null ? "" : p.Text,
+                            Rating = p.Rating,
+                            UserId = p.UserId,
+                            ProductId = p.ProductId,
+                            CreatedDate = p.CreatedDate,
+                            Id = p.Id,
+                        }
+                )
                 .FirstOrDefaultAsync();
         }
     }

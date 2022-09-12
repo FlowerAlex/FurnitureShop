@@ -6,6 +6,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     {
         public Guid Id { get; set; }
     }
+
     public class ReviewDTOBase
     {
         public Guid UserId { get; set; }

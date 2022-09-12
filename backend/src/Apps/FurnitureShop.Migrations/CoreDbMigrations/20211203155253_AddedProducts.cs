@@ -10,14 +10,15 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
             migrationBuilder.CreateTable(
                 name: "Products",
                 schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModelUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        ModelUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
@@ -27,21 +28,22 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         principalSchema: "dbo",
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        onDelete: ReferentialAction.Restrict
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 schema: "dbo",
                 table: "Products",
-                column: "CategoryId");
+                column: "CategoryId"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Products",
-                schema: "dbo");
+            migrationBuilder.DropTable(name: "Products", schema: "dbo");
         }
     }
 }

@@ -39,11 +39,14 @@ namespace FurnitureShop.Core.Services
                 new Claim(Auth.KnownClaims.Role, role),
             };
 
-            var user = new ClaimsPrincipal(new ClaimsIdentity(
-                claims: claims,
-                authenticationType: "internal",
-                nameType: Auth.KnownClaims.UserId,
-                roleType: Auth.KnownClaims.Role));
+            var user = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    claims: claims,
+                    authenticationType: "internal",
+                    nameType: Auth.KnownClaims.UserId,
+                    roleType: Auth.KnownClaims.Role
+                )
+            );
 
             return new CoreContext(user, default);
         }

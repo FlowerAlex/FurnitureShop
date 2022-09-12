@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using LeanCode.DomainModels.Model;
 using LeanCode.Time;
+
 namespace FurnitureShop.Core.Domain
 {
     public class Review : IAggregateRoot<Id<Review>>

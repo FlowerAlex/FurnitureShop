@@ -16,20 +16,27 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ComplaintDTO>> ExecuteAsync(CoreContext context, MyComplaints query)
+        public async Task<PaginatedResult<ComplaintDTO>> ExecuteAsync(
+            CoreContext context,
+            MyComplaints query
+        )
         {
-            return await dbContext.Complaints.Where(c => c.UserId == context.UserId)
-            .Select(p => new ComplaintDTO
-            {
-                UserId = p.UserId,
-                OrderId = p.OrderId,
-                Text = p.Text,
-                Response = p.Response,
-                CreatedDate = p.CreatedDate,
-                Resolved = p.Resolved,
-                Id = p.Id,
-            })
-            .ToPaginatedResultAsync(query);
+            return await dbContext.Complaints
+                .Where(c => c.UserId == context.UserId)
+                .Select(
+                    p =>
+                        new ComplaintDTO
+                        {
+                            UserId = p.UserId,
+                            OrderId = p.OrderId,
+                            Text = p.Text,
+                            Response = p.Response,
+                            CreatedDate = p.CreatedDate,
+                            Resolved = p.Resolved,
+                            Id = p.Id,
+                        }
+                )
+                .ToPaginatedResultAsync(query);
         }
     }
 }

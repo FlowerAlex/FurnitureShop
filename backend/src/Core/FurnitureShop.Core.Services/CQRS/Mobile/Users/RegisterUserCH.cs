@@ -33,7 +33,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
                 command.UserInfo.Surname,
                 command.UserInfo.Username,
                 command.UserInfo.EmailAddress,
-                command.UserInfo.Address);
+                command.UserInfo.Address
+            );
 
             var authUser = new AuthUser
             {
@@ -64,10 +65,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
             }
 
             await dbContext.SaveChangesAsync();
-            dbContext.ShoppingCarts.Add(new Domain.ShoppingCart
-            {
-                UserId = user.Id,
-            });
+            dbContext.ShoppingCarts.Add(new Domain.ShoppingCart { UserId = user.Id, });
         }
     }
 }

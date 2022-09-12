@@ -9,6 +9,7 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     {
         public Guid Id { get; set; }
         public OrderStateDTO OrderState { get; set; }
+
         public static class ErrorCodes
         {
             public const int IncorrectState = 1;

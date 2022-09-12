@@ -11,6 +11,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<AddToFavourites>();
         private readonly CoreDbContext dbContext;
+
         public AddToFavouritesCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -18,7 +19,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
         public async Task ExecuteAsync(CoreContext context, AddToFavourites command)
         {
-            var favourites = dbContext.Favourites.Where(f => f.UserId == context.UserId && f.ProductId == command.ProductId);
+            var favourites = dbContext.Favourites.Where(
+                f => f.UserId == context.UserId && f.ProductId == command.ProductId
+            );
             if (favourites != null && favourites.Any())
             {
                 return;

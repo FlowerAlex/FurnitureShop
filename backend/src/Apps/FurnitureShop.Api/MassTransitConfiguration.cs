@@ -15,7 +15,10 @@ namespace FurnitureShop.Api
     {
         private const string QueueName = "furnitureshop-api-events";
 
-        public static Action<IContainerBuilderBusConfigurator> ConfigureBus(IConfiguration configuration, IWebHostEnvironment hostEnv)
+        public static Action<IContainerBuilderBusConfigurator> ConfigureBus(
+            IConfiguration configuration,
+            IWebHostEnvironment hostEnv
+        )
         {
             if (hostEnv.IsDevelopment())
             {
@@ -23,52 +26,76 @@ namespace FurnitureShop.Api
             }
             else
             {
-                var connString = Config.ConnectionString.AzureServiceBusConnectionstring(configuration);
+                var connString = Config.ConnectionString.AzureServiceBusConnectionstring(
+                    configuration
+                );
                 return cfg => ServiceBus(cfg, connString);
             }
         }
 
         private static void InMemory(IContainerBuilderBusConfigurator cfg)
         {
-            cfg.UsingInMemory((ctx, cfg) =>
-            {
-                ConfigureBusCommon(ctx, cfg);
-            });
+            cfg.UsingInMemory(
+                (ctx, cfg) =>
+                {
+                    ConfigureBusCommon(ctx, cfg);
+                }
+            );
         }
 
-        private static void ServiceBus(IContainerBuilderBusConfigurator busCfg, string asbConnString)
+        private static void ServiceBus(
+            IContainerBuilderBusConfigurator busCfg,
+            string asbConnString
+        )
         {
             busCfg.AddServiceBusMessageScheduler();
 
-            busCfg.UsingAzureServiceBus((ctx, cfg) =>
-            {
-                cfg.Host(asbConnString, host =>
+            busCfg.UsingAzureServiceBus(
+                (ctx, cfg) =>
                 {
-                    host.RetryLimit = 5;
-                    host.RetryMinBackoff = TimeSpan.FromSeconds(3);
-                });
+                    cfg.Host(
+                        asbConnString,
+                        host =>
+                        {
+                            host.RetryLimit = 5;
+                            host.RetryMinBackoff = TimeSpan.FromSeconds(3);
+                        }
+                    );
 
-                cfg.UseServiceBusMessageScheduler();
-                ConfigureBusCommon(ctx, cfg);
-            });
+                    cfg.UseServiceBusMessageScheduler();
+                    ConfigureBusCommon(ctx, cfg);
+                }
+            );
         }
 
-        private static void ConfigureBusCommon(IBusRegistrationContext ctx, IBusFactoryConfigurator cfg)
+        private static void ConfigureBusCommon(
+            IBusRegistrationContext ctx,
+            IBusFactoryConfigurator cfg
+        )
         {
             cfg.ConfigureJsonSerializer(KnownConverters.AddAll);
             cfg.ConfigureJsonDeserializer(KnownConverters.AddAll);
 
-            cfg.ReceiveEndpoint(QueueName, rcv =>
-            {
-                rcv.UseLogsCorrelation();
-                rcv.UseRetry(retryConfig =>
-                    retryConfig.Incremental(5, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5)));
-                rcv.UseConsumedMessagesFiltering(ctx);
-                rcv.StoreAndPublishDomainEvents(ctx);
+            cfg.ReceiveEndpoint(
+                QueueName,
+                rcv =>
+                {
+                    rcv.UseLogsCorrelation();
+                    rcv.UseRetry(
+                        retryConfig =>
+                            retryConfig.Incremental(
+                                5,
+                                TimeSpan.FromSeconds(1),
+                                TimeSpan.FromSeconds(5)
+                            )
+                    );
+                    rcv.UseConsumedMessagesFiltering(ctx);
+                    rcv.StoreAndPublishDomainEvents(ctx);
 
-                rcv.ConfigureConsumers(ctx);
-                rcv.ConnectReceiveEndpointObservers(ctx);
-            });
+                    rcv.ConfigureConsumers(ctx);
+                    rcv.ConnectReceiveEndpointObservers(ctx);
+                }
+            );
 
             cfg.ConnectBusObservers(ctx);
         }

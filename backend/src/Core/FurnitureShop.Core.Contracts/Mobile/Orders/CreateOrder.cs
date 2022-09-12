@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     public class CreateOrder : IRemoteCommand
     {
         public CreateOrderDTO NewOrder { get; set; }
+
         public static class ErrorCodes
         {
             public const int NoProducts = 1;

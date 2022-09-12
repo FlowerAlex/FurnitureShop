@@ -13,6 +13,7 @@ namespace FurnitureShop.Core.Domain
         public int Amount { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public OrderProduct()
         {
             Id = Id<OrderProduct>.New();

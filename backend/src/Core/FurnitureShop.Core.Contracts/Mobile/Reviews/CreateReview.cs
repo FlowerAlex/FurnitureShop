@@ -7,6 +7,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     public class CreateReview : IRemoteCommand
     {
         public ReviewDTOBase NewReview { get; set; }
+
         public static class ErrorCodes
         {
             public const int EmptyReviewText = 1;

@@ -16,10 +16,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
         {
             RuleFor(a => a.FundsToAdd)
                 .GreaterThan(0)
-                    .WithMessage("Funds to add should be a number greater than 0")
-                    .WithCode(AddFunds.ErrorCodes.IncorrectAmount);
+                .WithMessage("Funds to add should be a number greater than 0")
+                .WithCode(AddFunds.ErrorCodes.IncorrectAmount);
         }
     }
+
     public class AddFundsCH : ICommandHandler<AddFunds>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<AddFundsCH>();

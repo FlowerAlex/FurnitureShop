@@ -9,6 +9,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<RemoveFromFavourites>();
         private readonly CoreDbContext dbContext;
+
         public RemoveFromFavouritesCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -16,7 +17,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
         public async Task ExecuteAsync(CoreContext context, RemoveFromFavourites command)
         {
-            var toDelete = dbContext.Favourites.Where(f => f.UserId == context.UserId && f.ProductId == command.ProductId).FirstOrDefault();
+            var toDelete = dbContext.Favourites
+                .Where(f => f.UserId == context.UserId && f.ProductId == command.ProductId)
+                .FirstOrDefault();
             if (toDelete == null)
             {
                 return;

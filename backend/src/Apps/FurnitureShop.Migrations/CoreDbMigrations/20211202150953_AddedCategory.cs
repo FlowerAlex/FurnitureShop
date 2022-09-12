@@ -10,22 +10,22 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
             migrationBuilder.CreateTable(
                 name: "Categories",
                 schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Categories",
-                schema: "dbo");
+            migrationBuilder.DropTable(name: "Categories", schema: "dbo");
         }
     }
 }

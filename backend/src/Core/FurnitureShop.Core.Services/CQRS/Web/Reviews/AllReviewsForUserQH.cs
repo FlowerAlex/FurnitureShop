@@ -16,20 +16,26 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Reviews
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ReviewDTO>> ExecuteAsync(CoreContext context, AllReviewsForUser query)
+        public async Task<PaginatedResult<ReviewDTO>> ExecuteAsync(
+            CoreContext context,
+            AllReviewsForUser query
+        )
         {
             return await dbContext.Reviews
-            .Where(p => p.UserId == query.UserId)
-            .Select(p => new ReviewDTO
-            {
-                UserId = p.UserId,
-                ProductId = p.ProductId,
-                Text = string.IsNullOrWhiteSpace(p.Text) ? string.Empty : p.Text,
-                Rating = p.Rating,
-                CreatedDate = p.CreatedDate,
-                Id = p.Id,
-            })
-            .ToPaginatedResultAsync(query);
+                .Where(p => p.UserId == query.UserId)
+                .Select(
+                    p =>
+                        new ReviewDTO
+                        {
+                            UserId = p.UserId,
+                            ProductId = p.ProductId,
+                            Text = string.IsNullOrWhiteSpace(p.Text) ? string.Empty : p.Text,
+                            Rating = p.Rating,
+                            CreatedDate = p.CreatedDate,
+                            Id = p.Id,
+                        }
+                )
+                .ToPaginatedResultAsync(query);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace FurnitureShop.Core.Contracts.Web.Categories
     public class CreateCategory : IRemoteCommand
     {
         public string CategoryName { get; set; }
+
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

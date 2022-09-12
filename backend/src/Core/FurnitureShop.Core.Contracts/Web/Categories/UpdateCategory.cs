@@ -9,6 +9,7 @@ namespace FurnitureShop.Core.Contracts.Web.Categories
     {
         public Guid Id { get; set; }
         public string NewName { get; set; }
+
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

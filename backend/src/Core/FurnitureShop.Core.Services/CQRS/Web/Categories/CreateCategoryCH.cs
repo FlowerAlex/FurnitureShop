@@ -13,14 +13,15 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
         {
             RuleFor(p => p.CategoryName)
                 .NotEmpty()
-                    .WithCode(CreateCategory.ErrorCodes.IncorrectName)
-                    .WithMessage("Category name should not be empty");
+                .WithCode(CreateCategory.ErrorCodes.IncorrectName)
+                .WithMessage("Category name should not be empty");
         }
     }
-    
+
     public class CreateCategoryCH : ICommandHandler<CreateCategory>
     {
         private readonly CoreDbContext dbContext;
+
         public CreateCategoryCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -28,8 +29,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
 
         public async Task ExecuteAsync(CoreContext context, CreateCategory command)
         {
-            var result = await dbContext.Categories.AddAsync(
-                new Category(command.CategoryName));
+            var result = await dbContext.Categories.AddAsync(new Category(command.CategoryName));
             await dbContext.SaveChangesAsync();
         }
     }

@@ -20,22 +20,29 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, AllOrders query)
+        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(
+            CoreContext context,
+            AllOrders query
+        )
         {
             var products = await dbContext.Products.ToListAsync();
             var orders = await dbContext.Orders
                 .FilterBy(query)
-                .Select(p => new OrderDTO
-                {
-                    Id = p.Id,
-                    Price = p.Price,
-                    UserId = p.UserId,
-                    Adress = p.Address,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
-                    OrderedDate = p.OrderedDate,
-                    DeliveredDate = p.DeliveredDate,
-                })
-                .SortBy(query).ToPaginatedResultAsync(query);
+                .Select(
+                    p =>
+                        new OrderDTO
+                        {
+                            Id = p.Id,
+                            Price = p.Price,
+                            UserId = p.UserId,
+                            Adress = p.Address,
+                            OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
+                            OrderedDate = p.OrderedDate,
+                            DeliveredDate = p.DeliveredDate,
+                        }
+                )
+                .SortBy(query)
+                .ToPaginatedResultAsync(query);
 
             foreach (var ord in orders.Items)
             {
@@ -45,26 +52,34 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             return orders;
         }
 
-        private async Task<List<ProductInOrderDTO>> GetProductsInOrder(OrderDTO order, List<Product> products)
+        private async Task<List<ProductInOrderDTO>> GetProductsInOrder(
+            OrderDTO order,
+            List<Product> products
+        )
         {
-            var orderProducts = await dbContext.OrderProduct.Where(o => o.OrderId == order.Id).ToListAsync();
+            var orderProducts = await dbContext.OrderProduct
+                .Where(o => o.OrderId == order.Id)
+                .ToListAsync();
 
             if (orderProducts != null && products != null)
             {
                 return orderProducts
-                .Join(
-                    products,
-                    ord => ord.ProductId,
-                    prod => prod.Id,
-                    (ord, prod) => new ProductInOrderDTO()
-                    {
-                        Amount = ord.Amount,
-                        Id = prod.Id,
-                        Name = prod.Name,
-                        Price = prod.Price,
-                        PreviewPhotoId = prod.PreviewPhotoId,
-                        CategoryId = prod.CategoryId,
-                    }).ToList();
+                    .Join(
+                        products,
+                        ord => ord.ProductId,
+                        prod => prod.Id,
+                        (ord, prod) =>
+                            new ProductInOrderDTO()
+                            {
+                                Amount = ord.Amount,
+                                Id = prod.Id,
+                                Name = prod.Name,
+                                Price = prod.Price,
+                                PreviewPhotoId = prod.PreviewPhotoId,
+                                CategoryId = prod.CategoryId,
+                            }
+                    )
+                    .ToList();
             }
             return new List<ProductInOrderDTO>();
         }
@@ -79,10 +94,15 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                 switch (filter.Key)
                 {
                     case OrdersFilterFieldDTO.Address:
-                        queryable = queryable.Where(c => c.Address.ToLower().Contains(filter.Value.ToLowerInvariant()));
+                        queryable = queryable.Where(
+                            c => c.Address.ToLower().Contains(filter.Value.ToLowerInvariant())
+                        );
                         break;
                     case OrdersFilterFieldDTO.OrderState:
-                        queryable = queryable.Where(c => c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant());
+                        queryable = queryable.Where(
+                            c =>
+                                c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant()
+                        );
                         break;
                     case OrdersFilterFieldDTO.UserId:
                         queryable = queryable.Where(c => c.UserId.ToString() == filter.Value);
@@ -94,7 +114,10 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             return queryable;
         }
 
-        public static IQueryable<OrderDTO> SortBy(this IQueryable<OrderDTO> queryable, AllOrders query)
+        public static IQueryable<OrderDTO> SortBy(
+            this IQueryable<OrderDTO> queryable,
+            AllOrders query
+        )
         {
             if (!query.SortBy.HasValue)
             {
@@ -103,8 +126,14 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
 
             return query.SortBy switch
             {
-                OrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
-                OrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
+                OrdersSortFieldDTO.OrderedDate
+                    => queryable
+                        .OrderBy(s => s.OrderedDate, query.SortByDescending)
+                        .ThenBy(s => s.Id),
+                OrdersSortFieldDTO.DeliveredDate
+                    => queryable
+                        .OrderBy(s => s.DeliveredDate, query.SortByDescending)
+                        .ThenBy(s => s.Id),
                 _ => queryable,
             };
         }

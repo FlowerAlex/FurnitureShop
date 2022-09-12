@@ -8,10 +8,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile.Users
     public class RegisterUserCHTests : IDisposable
     {
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -21,8 +23,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile.Users
         public RegisterUserCHTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
 

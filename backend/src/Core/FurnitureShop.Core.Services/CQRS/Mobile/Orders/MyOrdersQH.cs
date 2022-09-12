@@ -21,36 +21,46 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(CoreContext context, MyOrders query)
+        public async Task<PaginatedResult<OrderDTO>> ExecuteAsync(
+            CoreContext context,
+            MyOrders query
+        )
         {
-            return await dbContext.Orders.Include(o => o.OrdersProducts)
+            return await dbContext.Orders
+                .Include(o => o.OrdersProducts)
                 .Where(o => o.UserId == context.UserId)
                 .FilterBy(query)
-                .Select(p => new OrderDTO
-                {
-                    Id = p.Id,
-
-                    Price = p.Price,
-                    UserId = p.UserId,
-                    Address = p.Address,
-                    OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()) ,
-                    OrderedDate = p.OrderedDate,
-                    DeliveredDate = p.DeliveredDate,
-                    Products = dbContext.OrderProduct.Where(o => o.OrderId == p.Id)
-                        .Join(
-                            dbContext.Products,
-                            ord => ord.ProductId,
-                            prod => prod.Id,
-                            (ord, prod) => new ProductInOrderDTO
-                            {
-                                Amount = ord.Amount,
-                                Id = prod.Id,
-                                Name = prod.Name,
-                                Price = prod.Price,
-                                PreviewPhotoId = prod.PreviewPhotoId,
-                                CategoryId = prod.CategoryId,
-                            }).ToList(),
-                })
+                .Select(
+                    p =>
+                        new OrderDTO
+                        {
+                            Id = p.Id,
+                            Price = p.Price,
+                            UserId = p.UserId,
+                            Address = p.Address,
+                            OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
+                            OrderedDate = p.OrderedDate,
+                            DeliveredDate = p.DeliveredDate,
+                            Products = dbContext.OrderProduct
+                                .Where(o => o.OrderId == p.Id)
+                                .Join(
+                                    dbContext.Products,
+                                    ord => ord.ProductId,
+                                    prod => prod.Id,
+                                    (ord, prod) =>
+                                        new ProductInOrderDTO
+                                        {
+                                            Amount = ord.Amount,
+                                            Id = prod.Id,
+                                            Name = prod.Name,
+                                            Price = prod.Price,
+                                            PreviewPhotoId = prod.PreviewPhotoId,
+                                            CategoryId = prod.CategoryId,
+                                        }
+                                )
+                                .ToList(),
+                        }
+                )
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
         }
@@ -65,7 +75,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 switch (filter.Key)
                 {
                     case MyOrdersFilterFieldDTO.OrderState:
-                        queryable = queryable.Where(c => c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant());
+                        queryable = queryable.Where(
+                            c =>
+                                c.OrderState.ToString().ToLower() == filter.Value.ToLowerInvariant()
+                        );
                         break;
                     default:
                         break;
@@ -74,7 +87,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             return queryable;
         }
 
-        public static IQueryable<OrderDTO> SortBy(this IQueryable<OrderDTO> queryable, MyOrders query)
+        public static IQueryable<OrderDTO> SortBy(
+            this IQueryable<OrderDTO> queryable,
+            MyOrders query
+        )
         {
             if (!query.SortBy.HasValue)
             {
@@ -83,8 +99,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
 
             return query.SortBy switch
             {
-                MyOrdersSortFieldDTO.OrderedDate => queryable.OrderBy(s => s.OrderedDate, query.SortByDescending).ThenBy(s => s.Id),
-                MyOrdersSortFieldDTO.DeliveredDate => queryable.OrderBy(s => s.DeliveredDate, query.SortByDescending).ThenBy(s => s.Id),
+                MyOrdersSortFieldDTO.OrderedDate
+                    => queryable
+                        .OrderBy(s => s.OrderedDate, query.SortByDescending)
+                        .ThenBy(s => s.Id),
+                MyOrdersSortFieldDTO.DeliveredDate
+                    => queryable
+                        .OrderBy(s => s.DeliveredDate, query.SortByDescending)
+                        .ThenBy(s => s.Id),
                 _ => queryable,
             };
         }

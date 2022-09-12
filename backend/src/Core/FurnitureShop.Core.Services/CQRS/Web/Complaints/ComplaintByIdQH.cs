@@ -22,15 +22,18 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
         {
             return await dbContext.Complaints
                 .Where(p => p.Id == query.Id)
-                .Select(p => new ComplaintDTO
-                {
-                    Text = p.Text,
-                    Response = p.Response,
-                    UserId = p.UserId,
-                    OrderId = p.OrderId,
-                    Resolved = p.Resolved,
-                    Id = p.Id,
-                })
+                .Select(
+                    p =>
+                        new ComplaintDTO
+                        {
+                            Text = p.Text,
+                            Response = p.Response,
+                            UserId = p.UserId,
+                            OrderId = p.OrderId,
+                            Resolved = p.Resolved,
+                            Id = p.Id,
+                        }
+                )
                 .FirstOrDefaultAsync();
         }
     }

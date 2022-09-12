@@ -28,16 +28,20 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
             context.Products.Add(TestProduct);
             context.SaveChanges();
-            TestReview.ProductId = context.Products.
-                Where(c => c.Name == TestProduct.Name).FirstOrDefault().Id;
+            TestReview.ProductId = context.Products
+                .Where(c => c.Name == TestProduct.Name)
+                .FirstOrDefault()
+                .Id;
             context.Reviews.Add(TestReview);
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -47,8 +51,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         public ReviewTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
 
@@ -71,6 +75,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(TestReview.CreatedDate, Review.CreatedDate);
             Assert.Equal(TestReview.Id, Review.Id);
         }
+
         [Fact]
         public void CreateReviewTest()
         {
@@ -97,6 +102,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewReviewText, Review.Text);
             Assert.Equal(NewReviewProductId, Review.ProductId.Value);
         }
+
         [Fact]
         public void DeleteReviewTest()
         {
@@ -111,6 +117,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var Review = dbContext.Reviews.Find(TestReview.Id);
             Assert.Null(Review);
         }
+
         [Fact]
         public void UpdateReviewTest()
         {

@@ -19,7 +19,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             ModelId = "https://some.url.com",
         };
-        private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 200);
+        private readonly Product TestProduct2 = new Product(
+            "test_Product2",
+            "Product_for_test2",
+            200
+        );
         private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
         private readonly Domain.ShoppingCart TestShoppingCart = new Domain.ShoppingCart();
         private readonly ShoppingCartProduct TestShoppingCartProduct = new ShoppingCartProduct();
@@ -30,6 +34,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private decimal NewProductPrice = 111;
         private readonly string TestUserRole = Auth.Roles.User;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -44,7 +49,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             TestShoppingCartProduct.ShoppingCartId = TestShoppingCart.Id;
             TestShoppingCartProduct.Amount = TestProductAmount;
 
-            TestShoppingCart.ShoppingCartProducts = new List<ShoppingCartProduct> { TestShoppingCartProduct };
+            TestShoppingCart.ShoppingCartProducts = new List<ShoppingCartProduct>
+            {
+                TestShoppingCartProduct
+            };
             TestShoppingCart.UserId = Id<User>.From(TestUserId);
 
             context.ShoppingCartProduct.Add(TestShoppingCartProduct);
@@ -52,6 +60,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.ShoppingCarts.Add(TestShoppingCart);
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -61,10 +70,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         public ShoppingCartTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
+
         [Fact]
         public void GetShoppingCartQHTest()
         {
@@ -76,11 +86,18 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var ShoppingCart = result.Result;
             Assert.NotNull(ShoppingCart);
-            Assert.Equal(TestShoppingCart.ShoppingCartProducts.Count, ShoppingCart.ShoppingCartProducts.Count());
+            Assert.Equal(
+                TestShoppingCart.ShoppingCartProducts.Count,
+                ShoppingCart.ShoppingCartProducts.Count()
+            );
             Assert.Equal(TestProduct.Price * TestProductAmount, ShoppingCart.Price);
-            Assert.Equal(TestShoppingCartProduct.ProductId.Value, ShoppingCart.ShoppingCartProducts.First().Product.Id);
+            Assert.Equal(
+                TestShoppingCartProduct.ProductId.Value,
+                ShoppingCart.ShoppingCartProducts.First().Product.Id
+            );
             Assert.Equal(TestProductAmount, ShoppingCart.ShoppingCartProducts.First().Amount);
         }
+
         [Fact]
         public void AddProductToShoppingCartTest()
         {
@@ -98,27 +115,29 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.True(result.IsCompletedSuccessfully);
             var Shpc = dbContext.ShoppingCarts.Where(p => p.Id == TestShoppingCart.Id).First();
             Assert.Equal(2, Shpc.ShoppingCartProducts.Count);
-            var addedProduct = Shpc.ShoppingCartProducts.Where(p => p.ProductId == TestProduct2.Id).First();
+            var addedProduct = Shpc.ShoppingCartProducts
+                .Where(p => p.ProductId == TestProduct2.Id)
+                .First();
             Assert.Equal(TestProduct2.Id, addedProduct.ProductId);
             Assert.Equal(productAmount, addedProduct.Amount);
             Assert.Equal(Shpc.Id, addedProduct.ShoppingCartId);
         }
+
         [Fact]
         public void RemoveProductFromShoppintCartTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new RemoveProductFromShoppingCartCH(dbContext);
-            var command = new RemoveProductFromShoppingCart
-            {
-                ProductId = TestProduct.Id,
-            };
+            var command = new RemoveProductFromShoppingCart { ProductId = TestProduct.Id, };
 
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
 
-            var ShoppingCartProduct = dbContext.ShoppingCartProduct.Find(TestShoppingCartProduct.Id);
+            var ShoppingCartProduct = dbContext.ShoppingCartProduct.Find(
+                TestShoppingCartProduct.Id
+            );
 
             Assert.Null(ShoppingCartProduct);
         }

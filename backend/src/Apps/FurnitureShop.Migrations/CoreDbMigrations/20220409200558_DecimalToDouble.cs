@@ -13,7 +13,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 type: "float",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "decimal(18,2)");
+                oldType: "decimal(18,2)"
+            );
 
             migrationBuilder.AlterColumn<double>(
                 name: "Price",
@@ -22,7 +23,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 type: "float",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "decimal(18,2)");
+                oldType: "decimal(18,2)"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -34,7 +36,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(double),
-                oldType: "float");
+                oldType: "float"
+            );
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
@@ -43,7 +46,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(double),
-                oldType: "float");
+                oldType: "float"
+            );
         }
     }
 }

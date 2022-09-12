@@ -19,10 +19,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         {
             RuleFor(p => p.NewAmount)
                 .NotEmpty()
-                    .WithCode(AddProductsToShoppingCart.ErrorCodes.IncorrectAmount)
-                    .WithMessage("Incorrect amount of products to add");
+                .WithCode(AddProductsToShoppingCart.ErrorCodes.IncorrectAmount)
+                .WithMessage("Incorrect amount of products to add");
         }
     }
+
     public class ChangeProductAmountCH : ICommandHandler<ChangeProductAmount>
     {
         private readonly CoreDbContext dbContext;
@@ -34,16 +35,21 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 
         public async Task ExecuteAsync(CoreContext context, ChangeProductAmount cmd)
         {
-            var shoppingCart = await dbContext.ShoppingCarts.Where(s => s.UserId == context.UserId).FirstOrDefaultAsync();
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Where(s => s.UserId == context.UserId)
+                .FirstOrDefaultAsync();
             if (shoppingCart == null)
             {
                 return;
             }
 
-            var shp = await dbContext.ShoppingCartProduct.Where(
-                s => s.ShoppingCartId == shoppingCart.Id && s.ProductId == cmd.ProductId)
+            var shp = await dbContext.ShoppingCartProduct
+                .Where(s => s.ShoppingCartId == shoppingCart.Id && s.ProductId == cmd.ProductId)
                 .FirstOrDefaultAsync();
-            if (shp == null) { return; }
+            if (shp == null)
+            {
+                return;
+            }
             shp.Amount = cmd.NewAmount;
             await dbContext.SaveChangesAsync();
         }

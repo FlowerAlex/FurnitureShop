@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
     public class UpdateComplaint : IRemoteCommand
     {
         public ComplaintDTO UpdatedComplaint { get; set; }
+
         public static class ErrorCodes
         {
             public const int EmptyComplaintText = 1;

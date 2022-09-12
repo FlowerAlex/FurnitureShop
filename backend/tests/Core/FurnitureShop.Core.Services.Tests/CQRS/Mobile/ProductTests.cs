@@ -20,7 +20,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             ModelId = "https://some.url.com",
         };
-        private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
+        private readonly Product TestProduct2 = new Product(
+            "test_Product2",
+            "Product_for_test2",
+            120
+        )
         {
             ModelId = "https://some.url2.com",
         };
@@ -33,6 +37,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -44,9 +49,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.Products.Add(TestProduct2);
             context.SaveChanges();
 
-            context.Favourites.Add(new UserProduct() { UserId = Id<User>.From(TestUserId), ProductId = TestProduct2.Id });
+            context.Favourites.Add(
+                new UserProduct()
+                {
+                    UserId = Id<User>.From(TestUserId),
+                    ProductId = TestProduct2.Id
+                }
+            );
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -56,8 +68,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         public ProductTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
 
@@ -66,8 +78,13 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new FurnitureShop.Core.Services.CQRS.Mobile.Products.ProductByIdQH(dbContext);
-            var command = new FurnitureShop.Core.Contracts.Mobile.Products.ProductById { Id = TestProduct.Id };
+            var handler = new FurnitureShop.Core.Services.CQRS.Mobile.Products.ProductByIdQH(
+                dbContext
+            );
+            var command = new FurnitureShop.Core.Contracts.Mobile.Products.ProductById
+            {
+                Id = TestProduct.Id
+            };
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
             var Product = result.Result;
@@ -79,6 +96,27 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(TestProduct.CategoryId, Product.CategoryId);
             Assert.Equal(TestProduct.Id, Product.Id);
         }
+
+        [Fact]
+        public void AllProductsQHTest()
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new FurnitureShop.Core.Services.CQRS.Mobile.Products.AllProductsQH(
+                dbContext
+            );
+            var command = new FurnitureShop.Core.Contracts.Mobile.Products.AllProducts();
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            var Product = result.Result.Items.Where(p => p.Name == TestProduct.Name).First();
+            Assert.NotNull(Product);
+            Assert.Equal(TestProduct.Name, Product.Name);
+            Assert.Equal(TestProduct.Description, Product.Description);
+            Assert.Equal(TestProduct.Price, Product.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.CategoryId);
+            Assert.Equal(TestProduct.Id, Product.Id);
+        }
+
         [Fact]
         public void CreateProductTest()
         {
@@ -94,7 +132,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Name = NewProductName,
                     Price = NewProductPrice,
                     CategoryId = dbContext.Categories.First().Id,
-                    PhotoIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
+                    PhotoIds = new System.Collections.Generic.List<Guid>() { Guid.NewGuid() },
                 }
             };
 
@@ -107,8 +145,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewProdctDescription, Product.Description);
             Assert.Equal(NewProductModelUrl, Product.ModelId);
             Assert.Equal(NewProductPrice, Product.Price);
-            Assert.Equal(1,Product.Photos.Count);
+            Assert.Equal(1, Product.Photos.Count);
         }
+
         [Fact]
         public void DeleteProductTest()
         {
@@ -123,6 +162,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var Product = dbContext.Products.Find(TestProduct.Id);
             Assert.Null(Product);
         }
+
         [Fact]
         public void UpdateProductTest()
         {
@@ -152,36 +192,36 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewProductPrice, Product.Price);
             Assert.Null(Product.CategoryId);
         }
+
         [Fact]
         public void AddToFavouritesTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new AddToFavouritesCH(dbContext);
-            var command = new AddToFavourites
-            {
-                ProductId = TestProduct.Id,
-            };
+            var command = new AddToFavourites { ProductId = TestProduct.Id, };
 
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
-            var favourite = dbContext.Favourites.Where(f => f.UserId == TestUserId && f.ProductId == TestProduct.Id).First();
+            var favourite = dbContext.Favourites
+                .Where(f => f.UserId == TestUserId && f.ProductId == TestProduct.Id)
+                .First();
             Assert.Equal(TestProduct.Id, favourite.ProductId);
         }
+
         [Fact]
         public void RemoveFromFavouritesTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new RemoveFromFavouritesCH(dbContext);
-            var command = new RemoveFromFavourites
-            {
-                ProductId = TestProduct2.Id,
-            };
+            var command = new RemoveFromFavourites { ProductId = TestProduct2.Id, };
 
             var result = handler.ExecuteAsync(coreContext, command);
             Assert.True(result.IsCompletedSuccessfully);
-            bool isFavourtie = dbContext.Favourites.Where(f => f.UserId == TestUserId && f.ProductId == TestProduct2.Id).Any();
+            bool isFavourtie = dbContext.Favourites
+                .Where(f => f.UserId == TestUserId && f.ProductId == TestProduct2.Id)
+                .Any();
             Assert.False(isFavourtie);
         }
     }

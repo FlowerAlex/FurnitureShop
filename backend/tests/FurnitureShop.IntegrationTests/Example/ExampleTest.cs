@@ -9,10 +9,9 @@ namespace FurnitureShop.IntegrationTests.Example
         [Fact]
         public async Task Example_test()
         {
-            var result = await App.Command.RunAsync(new CreateCategory
-            {
-                CategoryName = "Sypialnia",
-            });
+            var result = await App.Command.RunAsync(
+                new CreateCategory { CategoryName = "Sypialnia", }
+            );
             Assert.True(result.WasSuccessful);
         }
     }

@@ -12,6 +12,7 @@ namespace FurnitureShop.Core.Contracts.Shared.Products
         public string? PreviewPhotoId { get; set; }
         public Guid? CategoryId { get; set; }
     }
+
     public enum ProductsSortFieldDTO
     {
         Name = 0,

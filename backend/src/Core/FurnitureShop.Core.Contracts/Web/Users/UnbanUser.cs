@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Web.Users
     public class UnbanUser : IRemoteCommand
     {
         public Guid UserId { get; set; }
+
         public static class ErrorCodes
         {
             public const int UserNotFound = 1;

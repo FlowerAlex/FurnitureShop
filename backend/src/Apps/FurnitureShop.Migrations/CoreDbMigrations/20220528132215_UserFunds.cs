@@ -12,15 +12,13 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Users",
                 type: "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Funds",
-                schema: "dbo",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "Funds", schema: "dbo", table: "Users");
         }
     }
 }

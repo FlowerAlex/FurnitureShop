@@ -9,7 +9,9 @@ namespace FurnitureShop.Api.Helpers
         static VersionHelper()
         {
             var self = Assembly.GetExecutingAssembly();
-            var version = self.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "0.0.0";
+            var version =
+                self.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+                ?? "0.0.0";
             var name = self.GetName().Name;
             Version = $"{name} {version}";
         }

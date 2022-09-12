@@ -29,7 +29,8 @@ namespace FurnitureShop.Api.Auth
         {
             var connectionString = Config.SqlServer.ConnectionString(config);
 
-            var isConfig = services.AddIdentityServer()
+            var isConfig = services
+                .AddIdentityServer()
                 .AddInMemoryApiResources(ClientsConfiguration.GetApiResources())
                 .AddInMemoryIdentityResources(ClientsConfiguration.GetIdentityResources())
                 .AddInMemoryClients(ClientsConfiguration.GetClients())
@@ -37,10 +38,11 @@ namespace FurnitureShop.Api.Auth
                 .AddOperationalStore(options =>
                 {
                     options.DefaultSchema = "auth";
-                    options.ConfigureDbContext = b => b
-                        .UseSqlServer(
+                    options.ConfigureDbContext = b =>
+                        b.UseSqlServer(
                             connectionString,
-                            sql => sql.MigrationsAssembly("FurnitureShop.Migrations"));
+                            sql => sql.MigrationsAssembly("FurnitureShop.Migrations")
+                        );
                 })
                 .AddAspNetIdentity<AuthUser>();
 
@@ -51,8 +53,8 @@ namespace FurnitureShop.Api.Auth
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-            services.AddAuthentication(
-                options =>
+            services
+                .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,7 +65,8 @@ namespace FurnitureShop.Api.Auth
                     cfg.TokenValidationParameters.ValidateAudience = true;
                     cfg.TokenValidationParameters.ValidateIssuer = true;
                     cfg.TokenValidationParameters.ValidAudience = AuthConsts.Scopes.InternalApi;
-                    cfg.TokenValidationParameters.ValidIssuer = Config.Services.Auth.ExternalAddress(config);
+                    cfg.TokenValidationParameters.ValidIssuer =
+                        Config.Services.Auth.ExternalAddress(config);
                     cfg.RequireHttpsMetadata = false;
 
                     cfg.TokenValidationParameters.RoleClaimType = AuthConsts.KnownClaims.Role;
@@ -73,16 +76,16 @@ namespace FurnitureShop.Api.Auth
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(ctx =>
-            {
-                var corsConfig = Config.Services.AllowedOrigins(config);
-
-                var logger = ctx.Resolve<ILogger<DefaultCorsPolicyService>>();
-                return new DefaultCorsPolicyService(logger)
+            builder
+                .Register(ctx =>
                 {
-                    AllowedOrigins = corsConfig,
-                };
-            }).As<ICorsPolicyService>().SingleInstance();
+                    var corsConfig = Config.Services.AllowedOrigins(config);
+
+                    var logger = ctx.Resolve<ILogger<DefaultCorsPolicyService>>();
+                    return new DefaultCorsPolicyService(logger) { AllowedOrigins = corsConfig, };
+                })
+                .As<ICorsPolicyService>()
+                .SingleInstance();
         }
     }
 }

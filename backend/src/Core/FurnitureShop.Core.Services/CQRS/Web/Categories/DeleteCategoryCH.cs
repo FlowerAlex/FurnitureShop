@@ -12,6 +12,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<DeleteCategoryCH>();
         private readonly CoreDbContext dbContext;
+
         public DeleteCategoryCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -19,7 +20,9 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
 
         public async Task ExecuteAsync(CoreContext context, DeleteCategory command)
         {
-            var category = await dbContext.Categories.Where(c => c.Id == command.Id).FirstOrDefaultAsync();
+            var category = await dbContext.Categories
+                .Where(c => c.Id == command.Id)
+                .FirstOrDefaultAsync();
             if (category == null)
             {
                 return;

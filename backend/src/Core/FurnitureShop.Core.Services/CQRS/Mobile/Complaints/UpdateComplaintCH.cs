@@ -14,10 +14,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
         {
             RuleFor(p => p.UpdatedComplaint.Text)
                 .NotEmpty()
-                    .WithCode(UpdateComplaint.ErrorCodes.EmptyComplaintText)
-                    .WithMessage("Complaint text should not be empty");
+                .WithCode(UpdateComplaint.ErrorCodes.EmptyComplaintText)
+                .WithMessage("Complaint text should not be empty");
         }
     }
+
     public class UpdateComplaintCH : ICommandHandler<UpdateComplaint>
     {
         private readonly CoreDbContext dbContext;
@@ -29,7 +30,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 
         public async Task ExecuteAsync(CoreContext context, UpdateComplaint command)
         {
-            var toUpdate = await dbContext.Complaints.Where(p => p.Id == command.UpdatedComplaint.Id).FirstOrDefaultAsync();
+            var toUpdate = await dbContext.Complaints
+                .Where(p => p.Id == command.UpdatedComplaint.Id)
+                .FirstOrDefaultAsync();
             if (toUpdate == null)
             {
                 return;

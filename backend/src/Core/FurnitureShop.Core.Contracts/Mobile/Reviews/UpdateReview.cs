@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     public class UpdateReview : IRemoteCommand
     {
         public ReviewDTO UpdatedReview { get; set; }
+
         public static class ErrorCodes
         {
             public const int EmptyReviewText = 1;

@@ -15,14 +15,15 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
         {
             RuleFor(p => p.OrderState)
                 .NotEmpty()
-                    .WithCode(SetOrderState.ErrorCodes.IncorrectState)
-                    .WithMessage("OrderState should not be empty");
+                .WithCode(SetOrderState.ErrorCodes.IncorrectState)
+                .WithMessage("OrderState should not be empty");
         }
     }
 
     public class SetOrderStateCH : ICommandHandler<SetOrderState>
     {
         private readonly CoreDbContext dbContext;
+
         public SetOrderStateCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -35,8 +36,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
             {
                 return;
             }
-            
-            order.OrderState = Enum.Parse<FurnitureShop.Core.Domain.OrderState>(command.OrderState.ToString(), ignoreCase: true);
+
+            order.OrderState = Enum.Parse<FurnitureShop.Core.Domain.OrderState>(
+                command.OrderState.ToString(),
+                ignoreCase: true
+            );
             await dbContext.SaveChangesAsync();
         }
     }

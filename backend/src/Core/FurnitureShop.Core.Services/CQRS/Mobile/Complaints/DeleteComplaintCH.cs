@@ -20,7 +20,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
 
         public async Task ExecuteAsync(CoreContext context, DeleteComplaint command)
         {
-            var toDelete = await dbContext.Complaints.Where(p => p.Id == command.Id).FirstOrDefaultAsync();
+            var toDelete = await dbContext.Complaints
+                .Where(p => p.Id == command.Id)
+                .FirstOrDefaultAsync();
             if (toDelete == null)
             {
                 return;

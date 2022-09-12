@@ -21,7 +21,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             this.dbContext = dbContext;
         }
 
-        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(CoreContext context, MyFavourites query)
+        public async Task<PaginatedResult<ProductDTO>> ExecuteAsync(
+            CoreContext context,
+            MyFavourites query
+        )
         {
             var productsInShoppingCart = await GetProductsInShoppingCart(context);
             var productsInFavourites = await GetProductsInFavourites(context);
@@ -36,19 +39,22 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             }
 
             var result = await filteredProducts
-                            .Include(p => p.Reviews)
-                .Select(p => new ProductDTO
-                {
-                    Name = p.Name,
-                    Price = p.Price,
-                    PreviewPhotoId = p.ModelId,
-                    AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                    CategoryId = p.CategoryId,
-                    InFavourites = true,
-                    InShoppingCart = productsInShoppingCart.Contains(p.Id),
-
-                    Id = p.Id,
-                })
+                .Include(p => p.Reviews)
+                .Select(
+                    p =>
+                        new ProductDTO
+                        {
+                            Name = p.Name,
+                            Price = p.Price,
+                            PreviewPhotoId = p.ModelId,
+                            AverageRating =
+                                p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
+                            CategoryId = p.CategoryId,
+                            InFavourites = true,
+                            InShoppingCart = productsInShoppingCart.Contains(p.Id),
+                            Id = p.Id,
+                        }
+                )
                 .SortBy(query)
                 .ToPaginatedResultAsync(query);
             return result;
@@ -56,7 +62,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
         private async Task<List<Guid>> GetProductsInShoppingCart(CoreContext context)
         {
-            var shoppingCart = dbContext.ShoppingCarts.Where(sh => sh.UserId == context.UserId).FirstOrDefault();
+            var shoppingCart = dbContext.ShoppingCarts
+                .Where(sh => sh.UserId == context.UserId)
+                .FirstOrDefault();
             if (shoppingCart == null)
             {
                 return new List<Guid>();
@@ -66,20 +74,25 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
             return await dbContext.ShoppingCartProduct
                 .Where(shp => shp.ShoppingCartId == shoppingCartId.Value)
-                .Select(shp => shp.ProductId.Value).ToListAsync();
+                .Select(shp => shp.ProductId.Value)
+                .ToListAsync();
         }
 
         private async Task<List<Guid>> GetProductsInFavourites(CoreContext context)
         {
             return await dbContext.Favourites
                 .Where(f => f.UserId == context.UserId.Value)
-                .Select(f => f.ProductId!.Value).ToListAsync();
+                .Select(f => f.ProductId!.Value)
+                .ToListAsync();
         }
     }
 
     internal static class ProductQHExtensions
     {
-        public static IQueryable<Product> FilterBy(this IQueryable<Product> queryable, MyFavourites query)
+        public static IQueryable<Product> FilterBy(
+            this IQueryable<Product> queryable,
+            MyFavourites query
+        )
         {
             return query.FilterBy switch
             {
@@ -88,7 +101,10 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
             };
         }
 
-        public static IQueryable<ProductDTO> SortBy(this IQueryable<ProductDTO> queryable, MyFavourites query)
+        public static IQueryable<ProductDTO> SortBy(
+            this IQueryable<ProductDTO> queryable,
+            MyFavourites query
+        )
         {
             if (!query.SortBy.HasValue)
             {
@@ -97,9 +113,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Favourites
 
             return query.SortBy switch
             {
-                ProductsSortFieldDTO.Name => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
-                ProductsSortFieldDTO.Rating => queryable.OrderBy(s => s.AverageRating, query.SortByDescending).ThenBy(s => s.Id),
-                ProductsSortFieldDTO.Price => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Name
+                    => queryable.OrderBy(s => s.Name, query.SortByDescending).ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Rating
+                    => queryable
+                        .OrderBy(s => s.AverageRating, query.SortByDescending)
+                        .ThenBy(s => s.Id),
+                ProductsSortFieldDTO.Price
+                    => queryable.OrderBy(s => s.Price, query.SortByDescending).ThenBy(s => s.Id),
                 _ => queryable,
             };
         }

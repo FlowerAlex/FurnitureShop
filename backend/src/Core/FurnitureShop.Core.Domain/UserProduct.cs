@@ -12,6 +12,7 @@ namespace FurnitureShop.Core.Domain
         public Id<Product> ProductId { get; set; }
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
+
         public UserProduct()
         {
             Id = Id<UserProduct>.New();

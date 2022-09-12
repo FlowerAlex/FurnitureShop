@@ -5,7 +5,7 @@ using FurnitureShop.Core.Contracts.Shared.Orders;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
-    public class OrderDTO 
+    public class OrderDTO
     {
         public Guid Id { get; set; }
         public List<ProductInOrderDTO> Products { get; set; }
@@ -21,15 +21,15 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
     {
         public string? Address { get; set; }
         public List<ProductInOrderCreateDTO> Products { get; set; }
-
     }
+
     public class ProductInOrderDTO : ProductDTO
     {
         public int Amount { get; set; }
     }
-    
+
     public class ProductInOrderCreateDTO
-    {   
+    {
         public Guid Id { get; set; }
         public int Amount { get; set; }
     }
