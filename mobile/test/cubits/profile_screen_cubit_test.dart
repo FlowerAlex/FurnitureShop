@@ -131,7 +131,7 @@ void main() {
           await cubit.updateProfile();
         },
         expect: () => [
-          const ProfileScreenLoadingState(userInfo: null),
+          const ProfileScreenLoadingState(),
           ProfileScreenSuccessState(userInfo: userInfoTest),
           ProfileScreenLoadingState(userInfo: userInfoTest),
           ProfileScreenSuccessState(userInfo: userInfoTest),

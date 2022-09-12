@@ -24,7 +24,7 @@ class _$ShoppingCartScreenStateTearOff {
 
   ShoppingCartScreenStateReady ready(
       {required List<SelectableShoppingCartProduct> shoppingCartProducts,
-      required CategoryDTO activeCategory,
+      CategoryDTO? activeCategory,
       List<CategoryDTO> categories = const <CategoryDTO>[],
       int currentPage = 0,
       int totalCount = 0}) {
@@ -54,7 +54,7 @@ mixin _$ShoppingCartScreenState {
     required TResult Function() loading,
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -67,7 +67,7 @@ mixin _$ShoppingCartScreenState {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -80,7 +80,7 @@ mixin _$ShoppingCartScreenState {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -179,7 +179,7 @@ class _$ShoppingCartScreenStateLoading
     required TResult Function() loading,
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -195,7 +195,7 @@ class _$ShoppingCartScreenStateLoading
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -211,7 +211,7 @@ class _$ShoppingCartScreenStateLoading
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -274,7 +274,7 @@ abstract class $ShoppingCartScreenStateReadyCopyWith<$Res> {
       _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
       {List<SelectableShoppingCartProduct> shoppingCartProducts,
-      CategoryDTO activeCategory,
+      CategoryDTO? activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
       int totalCount});
@@ -309,7 +309,7 @@ class _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>
       activeCategory: activeCategory == freezed
           ? _value.activeCategory
           : activeCategory // ignore: cast_nullable_to_non_nullable
-              as CategoryDTO,
+              as CategoryDTO?,
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -331,7 +331,7 @@ class _$ShoppingCartScreenStateReadyCopyWithImpl<$Res>
 class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
   const _$ShoppingCartScreenStateReady(
       {required this.shoppingCartProducts,
-      required this.activeCategory,
+      this.activeCategory,
       this.categories = const <CategoryDTO>[],
       this.currentPage = 0,
       this.totalCount = 0});
@@ -339,7 +339,7 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
   @override
   final List<SelectableShoppingCartProduct> shoppingCartProducts;
   @override
-  final CategoryDTO activeCategory;
+  final CategoryDTO? activeCategory;
   @JsonKey()
   @override
   final List<CategoryDTO> categories;
@@ -393,7 +393,7 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     required TResult Function() loading,
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -410,7 +410,7 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -427,7 +427,7 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -480,13 +480,13 @@ class _$ShoppingCartScreenStateReady implements ShoppingCartScreenStateReady {
 abstract class ShoppingCartScreenStateReady implements ShoppingCartScreenState {
   const factory ShoppingCartScreenStateReady(
       {required List<SelectableShoppingCartProduct> shoppingCartProducts,
-      required CategoryDTO activeCategory,
+      CategoryDTO? activeCategory,
       List<CategoryDTO> categories,
       int currentPage,
       int totalCount}) = _$ShoppingCartScreenStateReady;
 
   List<SelectableShoppingCartProduct> get shoppingCartProducts;
-  CategoryDTO get activeCategory;
+  CategoryDTO? get activeCategory;
   List<CategoryDTO> get categories;
   int get currentPage;
   int get totalCount;
@@ -567,7 +567,7 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     required TResult Function() loading,
     required TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)
@@ -583,7 +583,7 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?
@@ -599,7 +599,7 @@ class _$ShoppingCartScreenStateError implements ShoppingCartScreenStateError {
     TResult Function()? loading,
     TResult Function(
             List<SelectableShoppingCartProduct> shoppingCartProducts,
-            CategoryDTO activeCategory,
+            CategoryDTO? activeCategory,
             List<CategoryDTO> categories,
             int currentPage,
             int totalCount)?

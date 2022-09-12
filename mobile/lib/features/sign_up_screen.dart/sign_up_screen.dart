@@ -24,8 +24,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  var obscurePassword = true;
-  var obscureRepeatPassword = true;
+  bool obscurePassword = true;
+  bool obscureRepeatPassword = true;
   final _loginTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
   final _repeatPasswordTextEditingController = TextEditingController();
@@ -33,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _onSignUpPressed() {
+    void onSignUpPressed() {
       if (_formKey.currentState?.validate() ?? false) {
         context.read<SignUpScreenCubit>().registerUser(
               _loginTextEditingController.text,
@@ -82,8 +82,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth,
-                  minHeight: constraints.maxHeight),
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight,
+              ),
               child: IntrinsicHeight(
                 child: SafeArea(
                   child: BlocBuilder<SignUpScreenCubit, SignUpScreenState>(
@@ -102,7 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 56, vertical: 20),
+                                horizontal: 56,
+                                vertical: 20,
+                              ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -117,7 +120,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     autofillHints: const [AutofillHints.email],
                                     validator: Validators.compose([
                                       Validators.required(
-                                          'Field must be filled'),
+                                        'Field must be filled',
+                                      ),
                                       Validators.email('Bad email format'),
                                     ]),
                                     label: 'Email',
@@ -134,9 +138,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ],
                                     validator: Validators.compose([
                                       Validators.required(
-                                          'Field must be filled'),
+                                        'Field must be filled',
+                                      ),
                                       Validators.minLength(
-                                          8, 'Password too short'),
+                                        8,
+                                        'Password too short',
+                                      ),
                                     ]),
                                     suffixIcon: AssetButton(
                                       icon: AssetIcon(
@@ -162,7 +169,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     validator: Validators.compose(
                                       [
                                         Validators.required(
-                                            'Field must be filled'),
+                                          'Field must be filled',
+                                        ),
                                         theSamePasswords(),
                                       ],
                                     ),
@@ -184,13 +192,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     validator: Validators.compose(
                                       [
                                         Validators.required(
-                                            'Field must be filled'),
+                                          'Field must be filled',
+                                        ),
                                       ],
                                     ),
                                   ),
                                   const SizedBox(height: 20),
                                   AppTextButton(
-                                    onPressed: _onSignUpPressed,
+                                    onPressed: onSignUpPressed,
                                     child: Text(
                                       'Sign up',
                                       style: AppTextStyles.reg12.copyWith(

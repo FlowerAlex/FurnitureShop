@@ -21,13 +21,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  var obscurePassword = true;
+  bool obscurePassword = true;
   final _loginTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    void _onLogInPressed() {
+    void onLogInPressed() {
       if (_formKey.currentState?.validate() ?? false) {
         context.read<LogInScreenCubit>().logIn(
               _loginTextEditingController.text,
@@ -102,7 +102,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: Validators.compose([
                                     Validators.required('Field must be filled'),
                                     Validators.minLength(
-                                        8, 'Password too short'),
+                                      8,
+                                      'Password too short',
+                                    ),
                                   ]),
                                   label: 'Password',
                                   suffixIcon: AssetButton(
@@ -128,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 const SizedBox(height: 36),
                                 AppTextButton(
-                                  onPressed: _onLogInPressed,
+                                  onPressed: onLogInPressed,
                                   child: Text(
                                     'Log in',
                                     style: AppTextStyles.reg12.copyWith(
@@ -153,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const Align(
-                          child: Text('Don\'t have account?'),
+                          child: Text("Don't have account?"),
                         ),
                         const SizedBox(height: 20),
                         AppTextButton(

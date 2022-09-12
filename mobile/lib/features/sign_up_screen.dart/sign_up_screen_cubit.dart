@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
@@ -36,7 +36,6 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
             username: email,
             address: address,
             funds: 0, // TODO: remove when backend will be fixed
-            isBanned: false, // TODO: remove when backend will be fixed
           ),
           password: password,
         ),
@@ -47,8 +46,11 @@ class SignUpScreenCubit extends Cubit<SignUpScreenState> {
           const SignUpScreenReadyState(),
         );
       } else {
-        emit(const SignUpScreenReadyState(
-            unknownError: true)); // check different errorCodes
+        emit(
+          const SignUpScreenReadyState(
+            unknownError: true,
+          ),
+        ); // check different errorCodes
       }
     } on AuthorizationException {
       emit(const SignUpScreenReadyState(invalidCredentials: true));

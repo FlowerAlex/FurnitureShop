@@ -567,7 +567,6 @@ UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
       username: json['Username'] as String,
       emailAddress: json['EmailAddress'] as String,
       address: json['Address'] as String,
-      isBanned: json['isBanned'] as bool,
       funds: json['Funds'] as int,
     );
 
@@ -578,7 +577,6 @@ Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
       'Username': instance.username,
       'EmailAddress': instance.emailAddress,
       'Address': instance.address,
-      'isBanned': instance.isBanned,
       'Funds': instance.funds,
     };
 

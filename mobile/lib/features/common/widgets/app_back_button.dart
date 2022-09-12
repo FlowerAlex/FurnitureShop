@@ -20,7 +20,7 @@ class AppBackButton extends StatelessWidget {
               blurRadius: 1,
               offset: const Offset(0, 3),
             )
-          ]),
+          ],),
       child: InkWell(
         onTap: Navigator.of(context).pop,
         borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/data/contracts_copy_with.dart';
@@ -23,8 +23,11 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
       if (productDetails != null) {
         emit(ProductDetailsScreenState.ready(productDetails: productDetails));
       } else {
-        emit(const ProductDetailsScreenState.error(
-            errorMessage: 'Product was not found'));
+        emit(
+          const ProductDetailsScreenState.error(
+            errorMessage: 'Product was not found',
+          ),
+        );
       }
     } catch (err, st) {
       _logger.warning('Could not load product details', err, st);
@@ -40,16 +43,22 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
 
     if (!state.productDetails.inFavourites) {
       await _cqrs.run(AddToFavourites(productId: state.productDetails.id));
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           productDetails: state.productDetails.copyWith(
-        inFavourites: true,
-      )));
+            inFavourites: true,
+          ),
+        ),
+      );
     } else {
       await _cqrs.run(RemoveFromFavourites(productId: state.productDetails.id));
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           productDetails: state.productDetails.copyWith(
-        inFavourites: false,
-      )));
+            inFavourites: false,
+          ),
+        ),
+      );
     }
   }
 
@@ -67,18 +76,25 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
         ),
       );
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           productDetails: state.productDetails.copyWith(
-        inShoppingCart: true,
-      )));
+            inShoppingCart: true,
+          ),
+        ),
+      );
     } else {
       await _cqrs.run(
-          RemoveProductFromShoppingCart(productId: state.productDetails.id));
+        RemoveProductFromShoppingCart(productId: state.productDetails.id),
+      );
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           productDetails: state.productDetails.copyWith(
-        inShoppingCart: false,
-      )));
+            inShoppingCart: false,
+          ),
+        ),
+      );
     }
   }
 }

@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/data/contracts_copy_with.dart';
@@ -44,7 +44,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
     }
   }
 
-  void changeActiveCategory(CategoryDTO activeCategory) {
+  void changeActiveCategory(CategoryDTO? activeCategory) {
     final state = this.state;
     if (state is! ShoppingCartScreenStateReady) {
       return;
@@ -93,15 +93,18 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
     }
 
     emit(
-      state.copyWith(shoppingCartProducts: [
-        for (final shoppingCartProduct in state.shoppingCartProducts)
-          productId == shoppingCartProduct.product.product.id
-              ? shoppingCartProduct.copyWith(
-                  product: shoppingCartProduct.product.copyWith(
-                  amount: count,
-                ))
-              : shoppingCartProduct
-      ]),
+      state.copyWith(
+        shoppingCartProducts: [
+          for (final shoppingCartProduct in state.shoppingCartProducts)
+            productId == shoppingCartProduct.product.product.id
+                ? shoppingCartProduct.copyWith(
+                    product: shoppingCartProduct.product.copyWith(
+                      amount: count,
+                    ),
+                  )
+                : shoppingCartProduct
+        ],
+      ),
     );
   }
 
@@ -115,16 +118,20 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
       final selectedProducts =
           state.shoppingCartProducts.where((element) => element.selected);
 
-      await _cqrs.run(CreateOrder(
-        newOrder: CreateOrderDTO(
-          products: selectedProducts
-              .map((e) => ProductInOrderCreateDTO(
+      await _cqrs.run(
+        CreateOrder(
+          newOrder: CreateOrderDTO(
+            products: selectedProducts
+                .map(
+                  (e) => ProductInOrderCreateDTO(
                     id: e.product.product.id,
                     amount: e.product.amount,
-                  ))
-              .toList(),
+                  ),
+                )
+                .toList(),
+          ),
         ),
-      ));
+      );
 
       emit(
         state.copyWith(
@@ -134,7 +141,7 @@ class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
         ),
       );
     } catch (err, st) {
-      _logger.severe('Can\'t by products', err, st);
+      _logger.severe("Can't by products", err, st);
       emit(ShoppingCartScreenStateError(error: err.toString()));
     }
   }
@@ -146,7 +153,7 @@ class ShoppingCartScreenState with _$ShoppingCartScreenState {
       ShoppingCartScreenStateLoading;
   const factory ShoppingCartScreenState.ready({
     required List<SelectableShoppingCartProduct> shoppingCartProducts,
-    required CategoryDTO activeCategory,
+    CategoryDTO? activeCategory,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     @Default(0) int currentPage,
     @Default(0) int totalCount,

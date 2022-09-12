@@ -1,16 +1,16 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_show_dialog.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
-import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 
 Future<T?> showFilterDialog<T>(
   BuildContext context, {
   required String? activeCategoryId,
-  required ValueChanged<CategoryDTO> onChangeCategoryPressed,
+  required ValueChanged<CategoryDTO?> onChangeCategoryPressed,
   required List<CategoryDTO> categories,
 }) =>
     showAppDialog<T>(
@@ -19,7 +19,8 @@ Future<T?> showFilterDialog<T>(
       bottomWidgetBuilder: (context) {
         return _BottomFilterDialogBody(
           categories: categories,
-          onChangeCategoryPressed: onChangeCategoryPressed,
+          initialActiveCategoryId: activeCategoryId,
+          onChangeCategory: onChangeCategoryPressed,
         );
       },
     );
@@ -28,22 +29,26 @@ class _BottomFilterDialogBody extends HookWidget {
   const _BottomFilterDialogBody({
     Key? key,
     required this.categories,
-    required this.onChangeCategoryPressed,
+    required this.initialActiveCategoryId,
+    required this.onChangeCategory,
   }) : super(key: key);
 
   final List<CategoryDTO> categories;
-  final ValueChanged<CategoryDTO> onChangeCategoryPressed;
+  final String? initialActiveCategoryId;
+  final ValueChanged<CategoryDTO?> onChangeCategory;
 
   @override
   Widget build(BuildContext context) {
-    final updatedCategories = [allCategories, ...categories];
-    final activeCategoryId = useState(allCategories.id);
+    final activeCategoryId = useState(initialActiveCategoryId);
 
     useEffect(() {
-      onChangeCategoryPressed(updatedCategories
-          .firstWhere((category) => category.id == activeCategoryId.value));
+      final category = categories.firstWhereOrNull(
+          (category) => category.id == activeCategoryId.value,);
+
+      onChangeCategory(category);
+
       return null;
-    }, [activeCategoryId.value]);
+    }, [activeCategoryId.value],);
 
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -62,11 +67,16 @@ class _BottomFilterDialogBody extends HookWidget {
               const SizedBox(height: 8),
               Column(
                 children: [
-                  for (final category in updatedCategories) ...[
+                  for (final category in categories) ...[
                     FilterCategoryTile(
                         active: activeCategoryId.value == category.id,
                         categoryName: category.name,
-                        onPressed: () => activeCategoryId.value = category.id),
+                        onPressed: () {
+                          activeCategoryId.value =
+                              activeCategoryId.value == category.id
+                                  ? null
+                                  : category.id;
+                        },),
                     const SizedBox(height: 8),
                   ],
                 ],

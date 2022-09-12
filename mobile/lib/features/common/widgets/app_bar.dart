@@ -17,12 +17,14 @@ class CustomAppBar extends StatelessWidget {
     this.withFilter = false,
     this.onChangeCategoryPressed,
     this.onSearchChanged,
-  })  : assert((categories != null &&
-                onChangeCategoryPressed != null &&
-                withFilter == true) ||
-            categories == null &&
-                onChangeCategoryPressed == null &&
-                withFilter == false),
+  })  : assert(
+          (categories != null &&
+                  onChangeCategoryPressed != null &&
+                  withFilter == true) ||
+              categories == null &&
+                  onChangeCategoryPressed == null &&
+                  withFilter == false,
+        ),
         super(key: key);
 
   final String title;
@@ -30,12 +32,12 @@ class CustomAppBar extends StatelessWidget {
 
   final String? activeCategoryId;
   final List<CategoryDTO>? categories;
-  final ValueChanged<CategoryDTO>? onChangeCategoryPressed;
+  final ValueChanged<CategoryDTO?>? onChangeCategoryPressed;
   final ValueChanged<String>? onSearchChanged;
 
   @override
   Widget build(BuildContext context) {
-    void _filterButtonPressed() {
+    void filterButtonPressed() {
       showFilterDialog<void>(
         context,
         categories: categories!,
@@ -47,10 +49,12 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
-          color: AppColors.grey0,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16))),
+        color: AppColors.grey0,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(16),
+          bottomRight: Radius.circular(16),
+        ),
+      ),
       child: Column(
         children: [
           Padding(
@@ -78,7 +82,7 @@ class CustomAppBar extends StatelessWidget {
                   if (withFilter) ...[
                     const SizedBox(width: 12),
                     AppTextButton(
-                      onPressed: _filterButtonPressed,
+                      onPressed: filterButtonPressed,
                       background: AppColors.white,
                       withBorderSide: true,
                       child: Text(

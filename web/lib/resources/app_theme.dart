@@ -71,10 +71,10 @@ abstract class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+        foregroundColor: AppColors.primaryText,
         elevation: 0,
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
         textStyle: textTheme.bodyLarge,
-        primary: AppColors.primaryText,
       )),
     );
   }

@@ -64,7 +64,7 @@ class AppTextField extends StatelessWidget {
             keyboardType: keyboardType,
             decoration: InputDecoration(
               prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8),
                 child: prefix,
               ),
               contentPadding: EdgeInsets.zero,

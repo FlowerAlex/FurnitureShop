@@ -35,7 +35,7 @@ class FavoritesScreen extends HookWidget {
                     hasMore:
                         state.totalCount > (state.currentPage + 1) * pageSize,
                     items: state.products,
-                    fetchPage: (int page) => cubit.fetch(page: page),
+                    fetchPage: (page) => cubit.fetch(page: page),
                     getNextPageKey: (_) => state.currentPage + 1,
                   ),
                   builderDelegate: PagedChildBuilderDelegate<ProductDTO>(

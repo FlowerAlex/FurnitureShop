@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
@@ -20,10 +20,10 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
     state.maybeMap(
       success: (state) =>
           emit(ProfileScreenLoadingState(userInfo: state.userInfo)),
-      orElse: () => emit(const ProfileScreenLoadingState(userInfo: null)),
+      orElse: () => emit(const ProfileScreenLoadingState()),
     );
 
-    _fetch();
+    await _fetch();
   }
 
   Future<void> _fetch() async {
@@ -45,7 +45,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
     state.maybeMap(
       success: (state) =>
           emit(ProfileScreenLoadingState(userInfo: state.userInfo)),
-      orElse: () => emit(const ProfileScreenLoadingState(userInfo: null)),
+      orElse: () => emit(const ProfileScreenLoadingState()),
     );
     try {
       final res = await _cqrs.run(
@@ -61,7 +61,7 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
         await _fetch();
       }
     } catch (err, st) {
-      _logger.severe('can\'t update profile', err, st);
+      _logger.severe("can't update profile", err, st);
       emit(ProfileScreenErrorState(error: err.toString()));
     }
   }

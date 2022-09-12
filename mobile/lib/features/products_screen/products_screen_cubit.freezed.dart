@@ -20,7 +20,7 @@ class _$ProductsScreenStateTearOff {
 
   ProductsScreenReadyState ready(
       {List<CategoryDTO> categories = const <CategoryDTO>[],
-      List<ProductDTO> products = const <ProductDTO>[],
+      Map<String, ProductDTO> products = const <String, ProductDTO>{},
       int currentPage = 0,
       int totalCount = 0,
       CategoryDTO? activeCategory,
@@ -53,7 +53,7 @@ mixin _$ProductsScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -67,7 +67,7 @@ mixin _$ProductsScreenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -81,7 +81,7 @@ mixin _$ProductsScreenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -137,7 +137,7 @@ abstract class $ProductsScreenReadyStateCopyWith<$Res> {
       _$ProductsScreenReadyStateCopyWithImpl<$Res>;
   $Res call(
       {List<CategoryDTO> categories,
-      List<ProductDTO> products,
+      Map<String, ProductDTO> products,
       int currentPage,
       int totalCount,
       CategoryDTO? activeCategory,
@@ -175,7 +175,7 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductDTO>,
+              as Map<String, ProductDTO>,
       currentPage: currentPage == freezed
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -205,7 +205,7 @@ class _$ProductsScreenReadyStateCopyWithImpl<$Res>
 class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   const _$ProductsScreenReadyState(
       {this.categories = const <CategoryDTO>[],
-      this.products = const <ProductDTO>[],
+      this.products = const <String, ProductDTO>{},
       this.currentPage = 0,
       this.totalCount = 0,
       this.activeCategory,
@@ -217,7 +217,7 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   final List<CategoryDTO> categories;
   @JsonKey()
   @override
-  final List<ProductDTO> products;
+  final Map<String, ProductDTO> products;
   @JsonKey()
   @override
   final int currentPage;
@@ -278,7 +278,7 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -296,7 +296,7 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -314,7 +314,7 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -366,7 +366,7 @@ class _$ProductsScreenReadyState implements ProductsScreenReadyState {
 abstract class ProductsScreenReadyState implements ProductsScreenState {
   const factory ProductsScreenReadyState(
       {List<CategoryDTO> categories,
-      List<ProductDTO> products,
+      Map<String, ProductDTO> products,
       int currentPage,
       int totalCount,
       CategoryDTO? activeCategory,
@@ -374,7 +374,7 @@ abstract class ProductsScreenReadyState implements ProductsScreenState {
       String search}) = _$ProductsScreenReadyState;
 
   List<CategoryDTO> get categories;
-  List<ProductDTO> get products;
+  Map<String, ProductDTO> get products;
   int get currentPage;
   int get totalCount;
   CategoryDTO? get activeCategory;
@@ -455,7 +455,7 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -472,7 +472,7 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
@@ -489,7 +489,7 @@ class _$ProductsScreenErrorState implements ProductsScreenErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<CategoryDTO> categories,
-            List<ProductDTO> products,
+            Map<String, ProductDTO> products,
             int currentPage,
             int totalCount,
             CategoryDTO? activeCategory,
