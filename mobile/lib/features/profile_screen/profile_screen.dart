@@ -25,9 +25,9 @@ class ProfileScreen extends HookWidget {
 
     final fieldEditingController = useTextEditingController();
 
-    void _editPhoto() {}
+    void editPhoto() {}
 
-    void _editNickname() {
+    void editNickname() {
       fieldEditingController.text = nickNameEditingController.text;
       showUpdateProfileDialog<void>(
         context: context,
@@ -58,7 +58,7 @@ class ProfileScreen extends HookWidget {
       );
     }
 
-    void _editName() {
+    void editName() {
       fieldEditingController.text = nameEditingController.text;
 
       showUpdateProfileDialog<void>(
@@ -89,7 +89,7 @@ class ProfileScreen extends HookWidget {
       );
     }
 
-    void _editSurname() {
+    void editSurname() {
       fieldEditingController.text = surnameEditingController.text;
 
       showUpdateProfileDialog<void>(
@@ -120,7 +120,7 @@ class ProfileScreen extends HookWidget {
       );
     }
 
-    void _editAddress() {
+    void editAddress() {
       fieldEditingController.text = addressEditingController.text;
 
       showUpdateProfileDialog<void>(
@@ -151,7 +151,7 @@ class ProfileScreen extends HookWidget {
       );
     }
 
-    void _logOut() {
+    void logOut() {
       context.read<AuthCubit>().logOut();
     }
 
@@ -161,8 +161,7 @@ class ProfileScreen extends HookWidget {
           return state.map(
             initial: (state) => Center(
               child: AppTextButton(
-                onPressed: _logOut,
-                withBorderSide: false,
+                onPressed: logOut,
                 background: Colors.transparent,
                 child: Text(
                   'Log out',
@@ -195,13 +194,12 @@ class ProfileScreen extends HookWidget {
                         child: SingleChildScrollView(
                           physics: const ScrollPhysics(),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Material(
                                 color: AppColors.grey0,
                                 borderRadius: BorderRadius.circular(48),
                                 child: InkWell(
-                                  onTap: _editPhoto,
+                                  onTap: editPhoto,
                                   customBorder: const CircleBorder(),
                                   child: CircleAvatar(
                                     backgroundColor: Colors.transparent,
@@ -222,7 +220,7 @@ class ProfileScreen extends HookWidget {
                                 controller: nickNameEditingController,
                                 label: 'Nickname',
                                 suffixIcon: AssetButton(
-                                  onPressed: _editNickname,
+                                  onPressed: editNickname,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
                                     color: AppColors.primaryText,
@@ -235,7 +233,7 @@ class ProfileScreen extends HookWidget {
                                 controller: nameEditingController,
                                 label: 'Name',
                                 suffixIcon: AssetButton(
-                                  onPressed: _editName,
+                                  onPressed: editName,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
                                     color: AppColors.primaryText,
@@ -248,7 +246,7 @@ class ProfileScreen extends HookWidget {
                                 controller: surnameEditingController,
                                 label: 'Surname',
                                 suffixIcon: AssetButton(
-                                  onPressed: _editSurname,
+                                  onPressed: editSurname,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
                                     color: AppColors.primaryText,
@@ -261,7 +259,7 @@ class ProfileScreen extends HookWidget {
                                 controller: addressEditingController,
                                 label: 'Address',
                                 suffixIcon: AssetButton(
-                                  onPressed: _editAddress,
+                                  onPressed: editAddress,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
                                     color: AppColors.primaryText,
@@ -271,8 +269,7 @@ class ProfileScreen extends HookWidget {
                               ),
                               const SizedBox(height: 20),
                               AppTextButton(
-                                onPressed: _logOut,
-                                withBorderSide: false,
+                                onPressed: logOut,
                                 background: Colors.transparent,
                                 child: Text(
                                   'Log out',
@@ -296,8 +293,7 @@ class ProfileScreen extends HookWidget {
                 children: [
                   Text('Error:${state.error}'),
                   AppTextButton(
-                    onPressed: _logOut,
-                    withBorderSide: false,
+                    onPressed: logOut,
                     background: Colors.transparent,
                     child: Text(
                       'Log out',

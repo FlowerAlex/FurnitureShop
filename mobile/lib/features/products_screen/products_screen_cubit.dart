@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
@@ -7,8 +7,6 @@ import 'package:logging/logging.dart';
 part 'products_screen_cubit.freezed.dart';
 
 const pageSize = 10;
-
-final allCategories = CategoryDTO(id: 'all_categories_id', name: 'all');
 
 class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   ProductsScreenCubit({
@@ -20,57 +18,78 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
   final _logger = Logger('ProductsScreenCubit');
 
-  Future<void> fetch({
-    int page = 0,
-    bool clearOldData = false,
+  Future<void> init({
+    String? search,
+    CategoryDTO? activeCategory,
   }) async {
-    var state = this.state;
-
-    if (state is! ProductsScreenReadyState) {
-      emit(const ProductsScreenReadyState(isLoading: true));
-    } else {
-      state = state.copyWith(
-        isLoading: true,
-        products: !clearOldData ? state.products : [],
-        currentPage: !clearOldData ? state.currentPage : 0,
-        totalCount: !clearOldData ? state.totalCount : 0,
-      );
-
-      emit(state);
-    }
-
-    if (state is! ProductsScreenReadyState) {
-      return;
-    }
-
     try {
       final categories = await _cqrs.get(AllCategories());
+
       final products = await _cqrs.get(
         AllProducts(
-          pageNumber: page,
+          pageNumber: 0,
           pageSize: pageSize,
           sortByDescending: false,
           sortBy: ProductsSortFieldDTO.name,
-          categoryId: state.activeCategory?.id == allCategories.id
-              ? null
-              : state.activeCategory?.id,
-          filterBy: state.search,
+          categoryId: activeCategory?.id,
+          filterBy: search,
         ),
       );
 
       emit(
         ProductsScreenReadyState(
           categories: categories,
+          currentPage: 0,
+          totalCount: products.totalCount,
+          products: {for (final item in products.items) item.id: item},
+          activeCategory: activeCategory,
+          search: search ?? '',
+        ),
+      );
+    } catch (err, st) {
+      _logger.severe("Couldn't load the products or categories", err, st);
+      emit(
+        ProductsScreenErrorState(
+          errorMessage: err.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> fetch({
+    int page = 0,
+  }) async {
+    final state = this.state;
+    if (state is! ProductsScreenReadyState) {
+      return;
+    }
+
+    try {
+      final products = await _cqrs.get(
+        AllProducts(
+          pageNumber: page,
+          pageSize: pageSize,
+          sortByDescending: false,
+          sortBy: ProductsSortFieldDTO.name,
+          categoryId: state.activeCategory?.id,
+          filterBy: state.search,
+        ),
+      );
+
+      emit(
+        state.copyWith(
+          categories: state.categories,
           currentPage: page,
           totalCount: products.totalCount,
-          products: page != 0
-              ? [...state.products, ...products.items]
-              : products.items,
+          products: {
+            ...state.products,
+            for (final item in products.items) item.id: item
+          },
           activeCategory: state.activeCategory,
         ),
       );
     } catch (err, st) {
-      _logger.severe('Couldn\'t load the products', err, st);
+      _logger.severe("Couldn't load the products or categories", err, st);
       emit(
         ProductsScreenErrorState(
           errorMessage: err.toString(),
@@ -87,23 +106,23 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
 
-    emit(state.copyWith(
-      search: search ?? state.search,
-    ));
+    emit(
+      state.copyWith(
+        search: search ?? state.search,
+      ),
+    );
 
-    await fetch(clearOldData: true);
+    await init(search: search);
   }
 
-  Future<void> changeActiveCategory(CategoryDTO activeCategory) async {
+  Future<void> changeActiveCategory(CategoryDTO? activeCategory) async {
     final state = this.state;
 
     if (state is! ProductsScreenReadyState) {
       return;
     }
 
-    emit(state.copyWith(activeCategory: activeCategory));
-
-    await fetch(clearOldData: true);
+    await init(activeCategory: activeCategory);
   }
 
   Future<void> likeProduct(String productId) async {
@@ -114,8 +133,8 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       }
 
       try {
-        final product =
-            state.products.firstWhere((element) => element.id == productId);
+        final product = state.products.values
+            .firstWhere((element) => element.id == productId);
 
         if (product.inFavourites) {
           await _cqrs.run(RemoveFromFavourites(productId: productId));
@@ -139,18 +158,22 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
     try {
-      final product =
-          state.products.firstWhere((element) => element.id == productId);
+      final product = state.products.values
+          .firstWhere((element) => element.id == productId);
 
       if (product.inShoppingCart) {
-        await _cqrs.run(RemoveProductFromShoppingCart(
-          productId: productId,
-        ));
+        await _cqrs.run(
+          RemoveProductFromShoppingCart(
+            productId: productId,
+          ),
+        );
       } else {
-        await _cqrs.run(AddProductsToShoppingCart(
-          productId: productId,
-          amount: 1,
-        ));
+        await _cqrs.run(
+          AddProductsToShoppingCart(
+            productId: productId,
+            amount: 1,
+          ),
+        );
       }
 
       await fetch(page: state.currentPage);
@@ -164,7 +187,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 class ProductsScreenState with _$ProductsScreenState {
   const factory ProductsScreenState.ready({
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
-    @Default(<ProductDTO>[]) List<ProductDTO> products,
+    @Default(<String, ProductDTO>{}) Map<String, ProductDTO> products,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
     CategoryDTO? activeCategory,

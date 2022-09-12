@@ -50,7 +50,7 @@ void main() {
         },
         act: (cubit) => cubit.logIn('', ''),
         verify: (cubit) => expect(
-            cubit.state, const LogInScreenReadyState(networkError: true)),
+            cubit.state, const LogInScreenReadyState(networkError: true),),
       );
 
       blocTest<LogInScreenCubit, LogInScreenState>(
@@ -62,7 +62,7 @@ void main() {
         },
         act: (cubit) => cubit.logIn('', ''),
         verify: (cubit) => expect(
-            cubit.state, const LogInScreenReadyState(invalidCredentials: true)),
+            cubit.state, const LogInScreenReadyState(invalidCredentials: true),),
       );
 
       blocTest<LogInScreenCubit, LogInScreenState>(
@@ -73,7 +73,7 @@ void main() {
         },
         act: (cubit) => cubit.logIn('', ''),
         verify: (cubit) => expect(
-            cubit.state, const LogInScreenReadyState(unknownError: true)),
+            cubit.state, const LogInScreenReadyState(unknownError: true),),
       );
     },
   );

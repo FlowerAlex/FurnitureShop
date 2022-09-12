@@ -21,7 +21,7 @@ void main() {
           sortByDescending: false,
           pageSize: 10,
           pageNumber: 0,
-        ));
+        ),);
       });
 
       setUp(() {
@@ -36,7 +36,7 @@ void main() {
         'emit initial ProductsScreenState on the start',
         build: buildCubit,
         verify: (cubit) => expect(
-            cubit.state, const ProductsScreenReadyState(activeCategory: null)),
+            cubit.state, const ProductsScreenReadyState(),),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
@@ -44,30 +44,29 @@ void main() {
         build: buildCubit,
         act: (cubit) => cubit.changeActiveCategory(category1Test),
         verify: (cubit) => expect(cubit.state,
-            ProductsScreenReadyState(activeCategory: category1Test)),
+            ProductsScreenReadyState(activeCategory: category1Test),),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch successfully',
         build: () {
           when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
               .thenAnswer((_) async => []);
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<AllProducts>())))
+                  any(that: isA<AllProducts>()),),)
               .thenAnswer(
-                  (_) async => PaginatedResult(items: [], totalCount: 0));
+                  (_) async => PaginatedResult(items: [], totalCount: 0),);
           return buildCubit();
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
-          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
-          ProductsScreenReadyState(
-              products: [],
-              activeCategory: allCategories,
+          const ProductsScreenReadyState(isLoading: true),
+          const ProductsScreenReadyState(
+              products: {},
               totalCount: 0,
               currentPage: 0,
-              categories: []),
+              categories: [],),
         ],
       );
 
@@ -75,17 +74,17 @@ void main() {
         'run fetch unsuccessfully',
         build: () {
           when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
               .thenThrow(Exception(''));
 
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-              any(that: isA<AllProducts>()))).thenThrow(Exception(''));
+              any(that: isA<AllProducts>()),),).thenThrow(Exception(''));
 
           return buildCubit();
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
-          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
+          const ProductsScreenReadyState(isLoading: true),
           const ProductsScreenErrorState(errorMessage: 'Exception: '),
         ],
       );
@@ -94,13 +93,13 @@ void main() {
         'run fetch for 2 pages successfully',
         build: () {
           when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())))
+                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
               .thenAnswer((_) async => []);
 
           when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<AllProducts>())))
+                  any(that: isA<AllProducts>()),),)
               .thenAnswer((_) async =>
-                  PaginatedResult(items: [productDTO1Test], totalCount: 2));
+                  PaginatedResult(items: [productDTO1Test], totalCount: 2),);
 
           return buildCubit();
         },
@@ -109,25 +108,20 @@ void main() {
           await cubit.fetch(page: 1);
         },
         expect: () => [
-          const ProductsScreenReadyState(activeCategory: null, isLoading: true),
+          const ProductsScreenReadyState(isLoading: true),
           ProductsScreenReadyState(
-            products: [productDTO1Test],
-            activeCategory: allCategories,
+            products: {productDTO1Test.id: productDTO1Test},
             totalCount: 2,
             currentPage: 0,
             categories: [],
           ),
           ProductsScreenReadyState(
             isLoading: true,
-            activeCategory: allCategories,
-            products: [
-              productDTO1Test,
-            ],
+            products: {productDTO1Test.id: productDTO1Test},
             totalCount: 2,
           ),
           ProductsScreenReadyState(
-            products: [productDTO1Test, productDTO1Test],
-            activeCategory: allCategories,
+            products: {productDTO1Test.id: productDTO1Test},
             totalCount: 2,
             currentPage: 1,
             categories: [],

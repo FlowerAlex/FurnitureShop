@@ -17,7 +17,7 @@ class ProductTile extends StatelessWidget {
     this.countOfProducts = 1,
     this.onCountOfProductsChanged,
   })  : assert(!selectable ||
-            (selectable && selected != null && onSelectedChanged != null)),
+            (selectable && selected != null && onSelectedChanged != null),),
         super(key: key);
 
   final ProductDTO product;
@@ -56,7 +56,7 @@ class ProductTile extends StatelessWidget {
                 if (selectable && selected != null && onSelectedChanged != null)
                   Checkbox(
                       value: selected,
-                      onChanged: (value) => onSelectedChanged(value ?? false)),
+                      onChanged: (value) => onSelectedChanged(value ?? false),),
                 SizedBox(
                   width: 100,
                   height: 100,
@@ -74,12 +74,12 @@ class ProductTile extends StatelessWidget {
                   children: [
                     Text(product.name),
                     AvaregeScore(
-                        rating: product.averageRating ?? 0), // get from product
+                        rating: product.averageRating ?? 0,), // get from product
                   ],
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -88,7 +88,7 @@ class ProductTile extends StatelessWidget {
                           children: children,
                         ),
                         Text(
-                          product.price.toString() + '\$',
+                          '${product.price}\$',
                         ),
                       ],
                     ),

@@ -1061,7 +1061,6 @@ class UserInfoDTO with EquatableMixin {
     required this.username,
     required this.emailAddress,
     required this.address,
-    required this.isBanned,
     required this.funds,
   });
 
@@ -1078,13 +1077,9 @@ class UserInfoDTO with EquatableMixin {
 
   final String address;
 
-  @JsonKey(name: 'isBanned')
-  final bool isBanned;
-
   final int funds;
 
-  get props =>
-      [firstname, surname, username, emailAddress, address, isBanned, funds];
+  get props => [firstname, surname, username, emailAddress, address, funds];
 
   Map<String, dynamic> toJson() => _$UserInfoDTOToJson(this);
 }

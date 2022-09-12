@@ -14,7 +14,8 @@ class ShoppingCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ShoppingCartScreenCubit>().state;
+    final cubit = context.watch<ShoppingCartScreenCubit>();
+    final state = cubit.state;
 
     return Scaffold(
       body: SafeArea(
@@ -26,10 +27,9 @@ class ShoppingCartScreen extends StatelessWidget {
             categories:
                 state is ShoppingCartScreenStateReady ? state.categories : [],
             activeCategoryId: state is ShoppingCartScreenStateReady
-                ? state.activeCategory.id
+                ? state.activeCategory?.id
                 : null,
-            onChangeCategoryPressed:
-                context.read<ShoppingCartScreenCubit>().changeActiveCategory,
+            onChangeCategoryPressed: cubit.changeActiveCategory,
           ),
           Expanded(
             child:
@@ -43,14 +43,14 @@ class ShoppingCartScreen extends StatelessWidget {
                   error: (state) => Center(
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(state.error)),
+                        child: Text(state.error),),
                   ),
                 );
               },
             ),
           ),
         ],
-      )),
+      ),),
     );
   }
 }
@@ -72,7 +72,7 @@ class _ShoppingCartReadyBody extends HookWidget {
       firstPageKey: 0,
       hasMore: state.totalCount > state.currentPage * pageSize,
       items: state.shoppingCartProducts.map((e) => e.product).toList(),
-      fetchPage: (int page) => cubit.fetch(page: page),
+      fetchPage: (page) => cubit.fetch(page: page),
       getNextPageKey: (_) => state.currentPage + 1,
     );
 
@@ -90,9 +90,9 @@ class _ShoppingCartReadyBody extends HookWidget {
             selected: shoppingCartProduct.selected,
             countOfProducts: shoppingCartProduct.product.amount,
             onCountOfProductsChanged: (value) => cubit.changeCountOfProducts(
-                productId: product.product.id, count: value),
+                productId: product.product.id, count: value,),
             onSelectedChanged: (selected) => cubit.selectProduct(
-                productId: product.product.id, selected: selected),
+                productId: product.product.id, selected: selected,),
             product: product.product,
             children: [
               InkWell(

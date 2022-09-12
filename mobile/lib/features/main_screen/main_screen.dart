@@ -49,7 +49,7 @@ class MainScreen extends HookWidget {
   void _mainScreenCubitListener(BuildContext context, Screen state) {
     switch (state) {
       case Screen.products:
-        context.read<ProductsScreenCubit>().fetch();
+        context.read<ProductsScreenCubit>().init();
         break;
       case Screen.profile:
         context.read<ProfileScreenCubit>().fetch();
@@ -67,7 +67,7 @@ class MainScreen extends HookWidget {
 
   Future<void> fetchAll(BuildContext context) async {
     await Future.wait([
-      context.read<ProductsScreenCubit>().fetch(),
+      context.read<ProductsScreenCubit>().init(),
       context.read<ProfileScreenCubit>().fetch(),
       context.read<ShoppingCartScreenCubit>().fetch(),
     ]);

@@ -18,7 +18,7 @@ PagingController<K, T> usePagingController<K, T>({
   useEffect(() {
     pagingController.addPageRequestListener(fetchPage);
     return () => pagingController.removePageRequestListener(fetchPage);
-  }, [pagingController, fetchPage]);
+  }, [pagingController, fetchPage],);
   useEffect(() {
     if (items.isEmpty && hasMore) {
       pagingController.value = PagingState(
@@ -33,6 +33,6 @@ PagingController<K, T> usePagingController<K, T>({
       );
     }
     return null;
-  }, [pagingController, items, hasMore, firstPageKey, getNextPageKey, error]);
+  }, [pagingController, items, hasMore, firstPageKey, getNextPageKey, error],);
   return pagingController;
 }

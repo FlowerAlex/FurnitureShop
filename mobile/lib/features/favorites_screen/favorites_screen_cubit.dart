@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 
@@ -26,18 +26,19 @@ class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
         products: [],
         currentPage: 0,
         totalCount: 0,
-        activeCategory: null,
       );
     }
 
     try {
       final categories = await _cqrs.get(AllCategories());
-      final favoriteProducts = await _cqrs.get(MyFavourites(
-        pageNumber: page,
-        pageSize: pageSize,
-        sortByDescending: false,
-        sortBy: ProductsSortFieldDTO.name,
-      ));
+      final favoriteProducts = await _cqrs.get(
+        MyFavourites(
+          pageNumber: page,
+          pageSize: pageSize,
+          sortByDescending: false,
+          sortBy: ProductsSortFieldDTO.name,
+        ),
+      );
 
       emit(
         FavoritesReadyState(
@@ -55,7 +56,7 @@ class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
     }
   }
 
-  void changeActiveCategory(CategoryDTO activeCategory) {
+  void changeActiveCategory(CategoryDTO? activeCategory) {
     final state = this.state;
     if (state is! FavoritesReadyState) {
       return;
@@ -84,14 +85,18 @@ class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
           state.products.firstWhere((element) => element.id == productId);
 
       if (product.inShoppingCart) {
-        await _cqrs.run(RemoveProductFromShoppingCart(
-          productId: productId,
-        ));
+        await _cqrs.run(
+          RemoveProductFromShoppingCart(
+            productId: productId,
+          ),
+        );
       } else {
-        await _cqrs.run(AddProductsToShoppingCart(
-          productId: productId,
-          amount: 1,
-        ));
+        await _cqrs.run(
+          AddProductsToShoppingCart(
+            productId: productId,
+            amount: 1,
+          ),
+        );
       }
 
       await fetch(page: state.currentPage);

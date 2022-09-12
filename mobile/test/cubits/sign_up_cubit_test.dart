@@ -58,7 +58,7 @@ void main() {
         },
         act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
-            cubit.state, const SignUpScreenReadyState(networkError: true)),
+            cubit.state, const SignUpScreenReadyState(networkError: true),),
       );
 
       blocTest<SignUpScreenCubit, SignUpScreenState>(
@@ -72,7 +72,7 @@ void main() {
         },
         act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
-            cubit.state, const SignUpScreenReadyState(unknownError: true)),
+            cubit.state, const SignUpScreenReadyState(unknownError: true),),
       );
     },
   );

@@ -68,13 +68,13 @@ class AppTextFormField extends HookWidget {
             autofillHints: autofillHints,
             keyboardType: keyboardType,
             validator: (value) {
-              final validatorText = (validator?.call(value));
+              final validatorText = validator?.call(value);
               errorText.value = validatorText ?? '';
-              return (validatorText != null ? '' : null);
+              return validatorText != null ? '' : null;
             },
             decoration: InputDecoration(
               prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8),
                 child: prefix,
               ),
               contentPadding: const EdgeInsets.only(left: 16),

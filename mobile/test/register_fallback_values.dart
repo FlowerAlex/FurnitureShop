@@ -14,10 +14,7 @@ class IRemoteCommandFake extends Mock implements IRemoteCommand {}
 class ResourceOwnerPasswordStrategyFake extends Mock
     implements ResourceOwnerPasswordStrategy {}
 
-class RegisterUserFake extends Mock implements RegisterUser {}
-
 void registerFallbackValues() {
-  registerFallbackValue(RegisterUserFake);
   registerFallbackValue(IRemoteCommandFake());
   registerFallbackValue(ResourceOwnerPasswordStrategyFake());
   registerFallbackValue(UserInfo());

@@ -56,7 +56,6 @@ class ProductDetailsScreen extends StatelessWidget {
                             width: 300,
                             height: 300,
                             child: ModelViewer(
-                              cameraControls: true,
                               src:
                                   'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
                             ),
@@ -103,21 +102,20 @@ class ProductDetailsScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Price: ' + productDetails.price.toString() + '\$',
+                          'Price: ${productDetails.price}\$',
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Description: ' + productDetails.description,
-                          maxLines: null,
+                          'Description: ${productDetails.description}',
                         ),
                       ),
                     ],
                   ),
                 ),
               );
-            }),
+            },),
       ),
     );
   }
