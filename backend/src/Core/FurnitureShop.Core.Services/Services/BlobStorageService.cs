@@ -19,9 +19,11 @@ namespace FurnitureShop.Core.Services.Services
         private string blobConnectionString;
         private string modelsContainerName;
         private string photosContainerName;
+
         public BlobStorageService()
         {
-            blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net";
+            blobConnectionString =
+                "DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net";
             modelsContainerName = "models";
             photosContainerName = "images";
         }
@@ -45,10 +47,13 @@ namespace FurnitureShop.Core.Services.Services
         {
             return await GetBlobUploadLink(modelsContainerName);
         }
+
         private async Task<string> GetBlobUploadLink(string blobContainerName)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(blobConnectionString);
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(
+                blobContainerName
+            );
             string blobId = Guid.NewGuid().ToString();
             BlobClient blob = blobContainerClient.GetBlobClient(blobId);
             await blob.UploadAsync(System.IO.MemoryStream.Null);
@@ -58,7 +63,9 @@ namespace FurnitureShop.Core.Services.Services
         private async Task<List<string>> GetAllBlobsUrlsFromContainer(string blobContainerName)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(blobConnectionString);
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(
+                blobContainerName
+            );
             var resultSegment = blobContainerClient.GetBlobsAsync().AsPages(default, 10);
             List<string> urls = new List<string>();
             await foreach (Azure.Page<BlobItem> blobPage in resultSegment)

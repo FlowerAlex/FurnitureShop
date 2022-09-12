@@ -33,28 +33,38 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             ModelId = "https://some.url.com",
         };
-        private readonly Product TestProduct2 = new Product("test_Product2", "Product_for_test2", 120)
+        private readonly Product TestProduct2 = new Product(
+            "test_Product2",
+            "Product_for_test2",
+            120
+        )
         {
             ModelId = "https://some.url2.com",
         };
         private readonly Domain.ShoppingCart TestShoppingCart = new Domain.ShoppingCart();
         private readonly ShoppingCartProduct TestShoppingCartProduct = new ShoppingCartProduct();
         private readonly int TestShpProductAmount = 2;
-        private static readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
+        private static readonly Guid TestUserId = Guid.Parse(
+            "5d60120d-8a32-47f1-8b81-4018eb230b19"
+        );
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
-            
+
             TestShoppingCartProduct.ProductId = TestProduct.Id;
             TestShoppingCartProduct.ShoppingCartId = TestShoppingCart.Id;
             TestShoppingCartProduct.Amount = TestShpProductAmount;
 
-            TestShoppingCart.ShoppingCartProducts = new List<ShoppingCartProduct> { TestShoppingCartProduct };
+            TestShoppingCart.ShoppingCartProducts = new List<ShoppingCartProduct>
+            {
+                TestShoppingCartProduct
+            };
             TestShoppingCart.UserId = Id<User>.From(TestUserId);
-            
+
             context.ShoppingCartProduct.Add(TestShoppingCartProduct);
 
             context.ShoppingCarts.Add(TestShoppingCart);
@@ -71,12 +81,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             context.SaveChanges();
             TestOrder.OrdersProducts = new List<OrderProduct>()
             {
-                new OrderProduct(){
+                new OrderProduct()
+                {
                     ProductId = TestProduct.Id,
                     OrderId = TestOrder.Id,
                     Amount = testProductAmount,
                 },
-                new OrderProduct(){
+                new OrderProduct()
+                {
                     ProductId = TestProduct2.Id,
                     OrderId = TestOrder.Id,
                     Amount = testProductAmount2,
@@ -84,6 +96,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             };
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -93,10 +106,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         public OrderTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
+
         [Fact]
         public void CreateOrderTest()
         {
@@ -108,8 +122,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 NewOrder = new CreateOrderDTO
                 {
                     Address = "some address",
-                    Products = new List<ProductInOrderCreateDTO>{
-                        new ProductInOrderCreateDTO{
+                    Products = new List<ProductInOrderCreateDTO>
+                    {
+                        new ProductInOrderCreateDTO
+                        {
                             Id = TestProduct.Id,
                             Amount = TestShpProductAmount,
                         }
@@ -125,10 +141,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal("some address", Order.Address);
             Assert.Equal(OrderState.Pending, Order.OrderState);
             Assert.Equal(1, Order.OrdersProducts.Count);
-        //     Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId || TestProduct.Id == Order.OrdersProducts[1].ProductId);
-        //     Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount, $"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
-        //     Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount, $"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
+            //     Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId || TestProduct.Id == Order.OrdersProducts[1].ProductId);
+            //     Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount, $"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
+            //     Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount, $"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
         }
+
         [Fact]
         public void GetAllOrdersTest()
         {
@@ -137,7 +154,11 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.AllOrdersQH(dbContext);
             var command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
+                FilterBy =
+                    new Dictionary<
+                        FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO,
+                        string
+                    >(),
             };
             var result = handler.ExecuteAsync(coreContext, command);
 
@@ -147,9 +168,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
             command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
+                FilterBy =
+                    new Dictionary<
+                        FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO,
+                        string
+                    >(),
             };
-            command.FilterBy.Add(FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.OrderState, "Cancelled");
+            command.FilterBy.Add(
+                FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.OrderState,
+                "Cancelled"
+            );
 
             result = handler.ExecuteAsync(coreContext, command);
 
@@ -159,9 +187,16 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
             command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
             {
-                FilterBy = new Dictionary<FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO, string>(),
+                FilterBy =
+                    new Dictionary<
+                        FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO,
+                        string
+                    >(),
             };
-            command.FilterBy.Add(FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.Address, "test_address2");
+            command.FilterBy.Add(
+                FurnitureShop.Core.Contracts.Web.Orders.OrdersFilterFieldDTO.Address,
+                "test_address2"
+            );
 
             result = handler.ExecuteAsync(coreContext, command);
 
@@ -169,38 +204,60 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Orders = dbContext.Orders.Where(o => o.Address == "test_address2").ToList();
             Assert.Equal(result.Result.TotalCount, Orders.Count());
         }
+
         [Fact]
         public void OrderByIdTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.OrderByIdQH(dbContext);
-            var command = new FurnitureShop.Core.Contracts.Web.Orders.OrderById() { Id = TestOrder.Id };
+            var command = new FurnitureShop.Core.Contracts.Web.Orders.OrderById()
+            {
+                Id = TestOrder.Id
+            };
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
-            var Order = dbContext.Orders.Where(o => o.Id == TestOrder.Id).Include(o => o.OrdersProducts).FirstOrDefault();
+            var Order = dbContext.Orders
+                .Where(o => o.Id == TestOrder.Id)
+                .Include(o => o.OrdersProducts)
+                .FirstOrDefault();
             Assert.Equal(TestOrder.Address, Order.Address);
             Assert.Equal(TestOrder.Address, Order.Address);
             Assert.Equal(TestOrder.UserId, Order.UserId);
             Assert.Equal(TestOrder.OrdersProducts.Count(), Order.OrdersProducts.Count);
             var prod1 = TestOrder.OrdersProducts[0];
             var prod2 = TestOrder.OrdersProducts[1];
-            Assert.True(prod1.ProductId == Order.OrdersProducts[0].ProductId || prod1.ProductId == Order.OrdersProducts[1].ProductId);
-            Assert.True(prod2.ProductId == Order.OrdersProducts[0].ProductId || prod2.ProductId == Order.OrdersProducts[1].ProductId);
-            Assert.True(prod1.Amount == Order.OrdersProducts[0].Amount || prod1.Amount == Order.OrdersProducts[1].Amount);
-            Assert.True(prod2.Amount == Order.OrdersProducts[0].Amount || prod2.Amount == Order.OrdersProducts[1].Amount);
+            Assert.True(
+                prod1.ProductId == Order.OrdersProducts[0].ProductId
+                    || prod1.ProductId == Order.OrdersProducts[1].ProductId
+            );
+            Assert.True(
+                prod2.ProductId == Order.OrdersProducts[0].ProductId
+                    || prod2.ProductId == Order.OrdersProducts[1].ProductId
+            );
+            Assert.True(
+                prod1.Amount == Order.OrdersProducts[0].Amount
+                    || prod1.Amount == Order.OrdersProducts[1].Amount
+            );
+            Assert.True(
+                prod2.Amount == Order.OrdersProducts[0].Amount
+                    || prod2.Amount == Order.OrdersProducts[1].Amount
+            );
         }
+
         [Fact]
         public void SetOrderStateTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.SetOrderStateCH(dbContext);
+            var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.SetOrderStateCH(
+                dbContext
+            );
             var command = new FurnitureShop.Core.Contracts.Web.Orders.SetOrderState()
             {
                 Id = TestOrder.Id,
-                OrderState =FurnitureShop.Core.Contracts.Web.Orders.OrderStateDTO.InProgress,
+                OrderState = FurnitureShop.Core.Contracts.Web.Orders.OrderStateDTO.InProgress,
             };
             var result = handler.ExecuteAsync(coreContext, command);
 

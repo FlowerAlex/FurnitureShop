@@ -34,14 +34,16 @@ namespace FurnitureShop.Api
 
         protected override IAppModule[] Modules { get; }
 
-        public Startup(IWebHostEnvironment hostEnv, IConfiguration config)
-            : base(config)
+        public Startup(IWebHostEnvironment hostEnv, IConfiguration config) : base(config)
         {
             this.hostEnv = hostEnv;
             Modules = ConfigureModules(hostEnv, config);
         }
 
-        protected static IAppModule[] ConfigureModules(IWebHostEnvironment hostEnv, IConfiguration config)
+        protected static IAppModule[] ConfigureModules(
+            IWebHostEnvironment hostEnv,
+            IConfiguration config
+        )
         {
             var dbConnStr = Config.SqlServer.ConnectionString(config);
             var blobConnStr = Config.BlobStorage.ConnectionString(config);
@@ -53,14 +55,17 @@ namespace FurnitureShop.Api
                 new ApiModule(config, hostEnv),
                 new CoreModule(dbConnStr, blobConnStr, modelsContainerName, photosContainerName),
                 new AuthModule(hostEnv, config),
-
-                new CQRSModule()
-                    .WithCustomPipelines<CoreContext>(
-                        AllHandlers,
-                        c => c.Secure().Validate().StoreAndPublishEvents(),
-                        q => q.Secure()),
+                new CQRSModule().WithCustomPipelines<CoreContext>(
+                    AllHandlers,
+                    c => c.Secure().Validate().StoreAndPublishEvents(),
+                    q => q.Secure()
+                ),
                 new FluentValidationModule(AllHandlers),
-                new MassTransitRelayModule(AllHandlers, Domain, MassTransitConfiguration.ConfigureBus(config, hostEnv)),
+                new MassTransitRelayModule(
+                    AllHandlers,
+                    Domain,
+                    MassTransitConfiguration.ConfigureBus(config, hostEnv)
+                ),
                 new LocalizationModule(LocalizationConfiguration.For<Strings.Strings>()),
             };
 
@@ -69,19 +74,14 @@ namespace FurnitureShop.Api
 
         protected override void ConfigureApp(IApplicationBuilder app)
         {
-            app
-                .UseRouting()
-                .UseForwardedHeaders()
-                .UseCors(ApiModule.ApiCorsPolicy);
+            app.UseRouting().UseForwardedHeaders().UseCors(ApiModule.ApiCorsPolicy);
 
             app.Map("/auth", auth => auth.UseIdentityServer());
 
-            app.Map("/api", api =>
-                    api
-                        .UseAuthentication()
-                        .UseRemoteCQRS(
-                            Api,
-                            CoreContext.FromHttp));
+            app.Map(
+                "/api",
+                api => api.UseAuthentication().UseRemoteCQRS(Api, CoreContext.FromHttp)
+            );
 
             app.UseEndpoints(endpoints =>
             {

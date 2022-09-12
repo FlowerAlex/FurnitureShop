@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
@@ -13,8 +13,11 @@ namespace FurnitureShop.Api
     {
         public static class App
         {
-            public static string PublicDomain(IConfiguration cfg) => cfg.GetString("Domains:Public");
-            public static string InternalApiDomain(IConfiguration cfg) => cfg.GetString("Domains:ApiInternal");
+            public static string PublicDomain(IConfiguration cfg) =>
+                cfg.GetString("Domains:Public");
+
+            public static string InternalApiDomain(IConfiguration cfg) =>
+                cfg.GetString("Domains:ApiInternal");
 
             public static string InternalApiBase(IConfiguration cfg) =>
                 $"http://{InternalApiDomain(cfg)}";
@@ -25,27 +28,32 @@ namespace FurnitureShop.Api
 
         public static class ConnectionString
         {
-            public static string AzureServiceBusConnectionstring(IConfiguration cfg) => cfg.GetConnectionString("ServiceBus"); // TODO ustawić AzureServiceBus
+            public static string AzureServiceBusConnectionstring(IConfiguration cfg) =>
+                cfg.GetConnectionString("ServiceBus"); // TODO ustawić AzureServiceBus
         }
 
         public static class SqlServer
         {
-            public static string ConnectionString(IConfiguration cfg) => cfg.GetString("SqlServer:ConnectionString");
+            public static string ConnectionString(IConfiguration cfg) =>
+                cfg.GetString("SqlServer:ConnectionString");
         }
 
         public static class BlobStorage
         {
-            public static string ConnectionString(IConfiguration cfg) => cfg.GetString("BlobStorage:ConnectionString");
-            public static string ModelsContainerName(IConfiguration cfg) => cfg.GetString("BlobStorage:ModelsContainerName");
-            public static string PhotosContainerName(IConfiguration cfg) => cfg.GetString("BlobStorage:PhotosContainerName");
+            public static string ConnectionString(IConfiguration cfg) =>
+                cfg.GetString("BlobStorage:ConnectionString");
+
+            public static string ModelsContainerName(IConfiguration cfg) =>
+                cfg.GetString("BlobStorage:ModelsContainerName");
+
+            public static string PhotosContainerName(IConfiguration cfg) =>
+                cfg.GetString("BlobStorage:PhotosContainerName");
         }
 
         public static class Services
         {
             public static string[] AllowedOrigins(IConfiguration cfg) =>
-                ExternalApps(cfg)
-                    .Concat(new string[] { "http://localhost:51265", })
-                    .ToArray();
+                ExternalApps(cfg).Concat(new string[] { "http://localhost:51265", }).ToArray();
 
             public static string[] ExternalApps(IConfiguration cfg) =>
                 cfg?.GetSection("CORS:External").Get<string[]>() ?? Array.Empty<string>();
@@ -62,7 +70,9 @@ namespace FurnitureShop.Api
 
         public static class Logging
         {
-            public static bool EnableDetailedInternalLogs(IConfiguration cfg) => cfg.GetBool("Logging:EnableDetailedInternalLogs");
+            public static bool EnableDetailedInternalLogs(IConfiguration cfg) =>
+                cfg.GetBool("Logging:EnableDetailedInternalLogs");
+
             public static LogEventLevel MinimumLevel(IConfiguration cfg) =>
                 cfg.GetValue("Logging:MinimumLevel", LogEventLevel.Verbose);
         }
@@ -96,8 +106,8 @@ namespace FurnitureShop.Api
         public static void RegisterMappedConfiguration(
             ContainerBuilder builder,
             IConfiguration config,
-            IWebHostEnvironment hostEnv) // tutaj rejstrujemy klasy z konfiguracjami poszczególnych usług
-        {
-        }
+            IWebHostEnvironment hostEnv
+        ) // tutaj rejstrujemy klasy z konfiguracjami poszczególnych usług
+        { }
     }
 }

@@ -16,25 +16,26 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
         {
             RuleFor(p => p.NewProduct.Name)
                 .NotEmpty()
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectName)
-                    .WithMessage("Product name should not be empty");
+                .WithCode(CreateProduct.ErrorCodes.IncorrectName)
+                .WithMessage("Product name should not be empty");
             RuleFor(p => p.NewProduct.Price)
                 .NotEmpty()
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
-                    .WithMessage("Price should not be empty")
+                .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
+                .WithMessage("Price should not be empty")
                 .GreaterThan(0)
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
-                    .WithMessage("Price should be a positive number");
+                .WithCode(CreateProduct.ErrorCodes.IncorrectPrice)
+                .WithMessage("Price should be a positive number");
             RuleFor(p => p.NewProduct.Description)
                 .NotEmpty()
-                    .WithCode(CreateProduct.ErrorCodes.IncorrectDescription)
-                    .WithMessage("Product description should not be empty");
+                .WithCode(CreateProduct.ErrorCodes.IncorrectDescription)
+                .WithMessage("Product description should not be empty");
         }
     }
 
     public class CreateProductCH : ICommandHandler<CreateProduct>
     {
         private readonly CoreDbContext dbContext;
+
         public CreateProductCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -42,13 +43,22 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
         public async Task ExecuteAsync(CoreContext context, CreateProduct command)
         {
-            var product = new Product(command.NewProduct.Name, command.NewProduct.Description, command.NewProduct.Price)
+            var product = new Product(
+                command.NewProduct.Name,
+                command.NewProduct.Description,
+                command.NewProduct.Price
+            )
             {
                 ModelId = command.NewProduct.ModelId,
-                CategoryId = command.NewProduct.CategoryId != null ? Id<Category>.From(command.NewProduct.CategoryId) : null,
+                CategoryId =
+                    command.NewProduct.CategoryId != null
+                        ? Id<Category>.From(command.NewProduct.CategoryId)
+                        : null,
                 PreviewPhotoId = command.NewProduct.PreviewPhotoId,
             };
-            product.Photos = command.NewProduct.PhotoIds.Select(photo => new Photo(Id<Photo>.From(photo), Id<Product>.From(product.Id))).ToList();
+            product.Photos = command.NewProduct.PhotoIds
+                .Select(photo => new Photo(Id<Photo>.From(photo), Id<Product>.From(product.Id)))
+                .ToList();
             var result = await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
         }

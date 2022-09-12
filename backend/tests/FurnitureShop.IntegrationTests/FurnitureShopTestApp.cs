@@ -24,12 +24,13 @@ namespace FurnitureShop.IntegrationTests
 {
     public class FurnitureShopTestApp : LeanCodeTestFactory<Startup>
     {
-        protected override ConfigurationOverrides Configuration { get; }
-            = new ConfigurationOverrides(LogEventLevel.Debug, true,
+        protected override ConfigurationOverrides Configuration { get; } =
+            new ConfigurationOverrides(
+                LogEventLevel.Debug,
+                true,
                 connectionStringBase: "ConnectionStrings__DatabaseBase",
-                connectionStringKey: "SqlServer:ConnectionString");
-
-
+                connectionStringKey: "SqlServer:ConnectionString"
+            );
 
         static FurnitureShopTestApp()
         {
@@ -58,7 +59,8 @@ namespace FurnitureShop.IntegrationTests
                 .BuildMinimalHost<TestStartup>()
                 .ConfigureDefaultLogging(
                     projectName: "FurnitureShop-tests",
-                    destructurers: new TypesCatalog(typeof(Program)))
+                    destructurers: new TypesCatalog(typeof(Program))
+                )
                 .UseEnvironment(Environments.Development);
         }
 
@@ -74,15 +76,16 @@ namespace FurnitureShop.IntegrationTests
 
         public Task<bool> AuthenticateAsync()
         {
-            return AuthenticateAsync(new PasswordTokenRequest
-            {
-                UserName = UserEmail,
-                Password = UserPassword,
-                Scope = $"profile openid {Auth.Scopes.InternalApi}",
-
-                ClientId = Auth.Clients.ClientApp,
-                ClientSecret = string.Empty,
-            });
+            return AuthenticateAsync(
+                new PasswordTokenRequest
+                {
+                    UserName = UserEmail,
+                    Password = UserPassword,
+                    Scope = $"profile openid {Auth.Scopes.InternalApi}",
+                    ClientId = Auth.Clients.ClientApp,
+                    ClientSecret = string.Empty,
+                }
+            );
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -112,7 +115,11 @@ namespace FurnitureShop.IntegrationTests
                 UserName = UserEmail,
                 Claims =
                 {
-                    new IdentityUserClaim<Guid>() { ClaimType = Auth.KnownClaims.Role, ClaimValue = Auth.Roles.User },
+                    new IdentityUserClaim<Guid>()
+                    {
+                        ClaimType = Auth.KnownClaims.Role,
+                        ClaimValue = Auth.Roles.User
+                    },
                 },
             };
             await userManager.CreateAsync(authUser, UserPassword);

@@ -16,15 +16,16 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
         {
             RuleFor(p => p.NewName)
                 .NotEmpty()
-                    .WithCode(UpdateCategory.ErrorCodes.IncorrectName)
-                    .WithMessage("Category name should not be empty");
+                .WithCode(UpdateCategory.ErrorCodes.IncorrectName)
+                .WithMessage("Category name should not be empty");
         }
     }
-    
+
     public class UpdateCategoryCH : ICommandHandler<UpdateCategory>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateCategoryCH>();
         private readonly CoreDbContext dbContext;
+
         public UpdateCategoryCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -32,7 +33,9 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
 
         public async Task ExecuteAsync(CoreContext context, UpdateCategory command)
         {
-            var category = await dbContext.Categories.Where(c => c.Id == command.Id).FirstOrDefaultAsync();
+            var category = await dbContext.Categories
+                .Where(c => c.Id == command.Id)
+                .FirstOrDefaultAsync();
             if (category == null)
             {
                 return;

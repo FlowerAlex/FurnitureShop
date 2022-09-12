@@ -16,7 +16,8 @@ namespace FurnitureShop.Core.Contracts.Shared
         public bool SortByDescending { get; set; }
     }
 
-    public abstract class SortableMulitiFilterPaginatedQuery<TResult, TBy, TFBy> : PaginatedQuery<TResult>
+    public abstract class SortableMulitiFilterPaginatedQuery<TResult, TBy, TFBy>
+        : PaginatedQuery<TResult>
     {
         public Dictionary<TFBy, string> FilterBy { get; set; }
         public TBy SortBy { get; set; }

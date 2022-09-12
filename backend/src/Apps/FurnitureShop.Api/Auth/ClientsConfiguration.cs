@@ -19,9 +19,7 @@ namespace FurnitureShop.Api.Auth
                     AllowedGrantTypes = new[] { GrantType.ResourceOwnerPassword },
                     AllowOfflineAccess = true,
                     RequireClientSecret = false,
-
                     AbsoluteRefreshTokenLifetime = (int)TimeSpan.FromDays(365 * 10).TotalSeconds,
-
                     AllowedScopes = new List<string>
                     {
                         StandardScopes.OpenId,
@@ -29,7 +27,6 @@ namespace FurnitureShop.Api.Auth
                         StandardScopes.Email,
                         StandardScopes.Phone,
                         StandardScopes.OfflineAccess,
-
                         AuthConsts.Scopes.InternalApi,
                     },
                 },
@@ -40,9 +37,7 @@ namespace FurnitureShop.Api.Auth
                     AllowedGrantTypes = new[] { GrantType.ResourceOwnerPassword },
                     AllowOfflineAccess = true,
                     RequireClientSecret = false,
-
                     AbsoluteRefreshTokenLifetime = (int)TimeSpan.FromDays(365 * 10).TotalSeconds,
-
                     AllowedScopes = new List<string>
                     {
                         StandardScopes.OpenId,
@@ -50,7 +45,6 @@ namespace FurnitureShop.Api.Auth
                         StandardScopes.Email,
                         StandardScopes.Phone,
                         StandardScopes.OfflineAccess,
-
                         AuthConsts.Scopes.InternalApi,
                     },
                 },

@@ -7,7 +7,6 @@ namespace FurnitureShop.Core.Domain
 {
     public class ShoppingCartProduct : IAggregateRoot<Id<ShoppingCartProduct>>
     {
-
         public Id<ShoppingCartProduct> Id { get; set; }
         public Id<ShoppingCart> ShoppingCartId { get; set; }
         public Id<Product> ProductId { get; set; }

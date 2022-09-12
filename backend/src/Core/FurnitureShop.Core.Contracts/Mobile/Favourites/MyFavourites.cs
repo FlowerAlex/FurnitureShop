@@ -10,6 +10,5 @@ namespace FurnitureShop.Core.Contracts.Mobile.Favourites
     public class MyFavourites : SortablePaginatedQuery<ProductDTO, ProductsSortFieldDTO?>
     {
         public Guid? CategoryId { get; set; }
-
     }
 }

@@ -19,13 +19,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
         {
             RuleFor(p => p.Amount)
                 .NotEmpty()
-                    .WithCode(AddProductsToShoppingCart.ErrorCodes.IncorrectAmount)
-                    .WithMessage("Incorrect amount of products to add");
+                .WithCode(AddProductsToShoppingCart.ErrorCodes.IncorrectAmount)
+                .WithMessage("Incorrect amount of products to add");
         }
     }
+
     public class AddProductsToShoppingCartCH : ICommandHandler<AddProductsToShoppingCart>
     {
-
         private readonly CoreDbContext dbContext;
 
         public AddProductsToShoppingCartCH(CoreDbContext dbContext)
@@ -35,13 +35,17 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
 
         public async Task ExecuteAsync(CoreContext context, AddProductsToShoppingCart cmd)
         {
-            var shc = await dbContext.ShoppingCarts.Include(sp => sp.ShoppingCartProducts)
-                .Where(sp => sp.UserId == context.UserId).FirstOrDefaultAsync();
+            var shc = await dbContext.ShoppingCarts
+                .Include(sp => sp.ShoppingCartProducts)
+                .Where(sp => sp.UserId == context.UserId)
+                .FirstOrDefaultAsync();
             if (shc == null)
             {
                 return;
             }
-            var product = shc.ShoppingCartProducts.Where(p => p.Id == cmd.ProductId).FirstOrDefault();
+            var product = shc.ShoppingCartProducts
+                .Where(p => p.Id == cmd.ProductId)
+                .FirstOrDefault();
             if (product != null)
             {
                 product.Amount += cmd.Amount;

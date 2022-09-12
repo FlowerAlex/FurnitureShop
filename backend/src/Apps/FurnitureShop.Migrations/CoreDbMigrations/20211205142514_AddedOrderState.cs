@@ -12,7 +12,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Orders",
                 type: "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AddColumn<bool>(
                 name: "Resolved",
@@ -20,20 +21,15 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Complaint",
                 type: "bit",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: false
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "State",
-                schema: "dbo",
-                table: "Orders");
+            migrationBuilder.DropColumn(name: "State", schema: "dbo", table: "Orders");
 
-            migrationBuilder.DropColumn(
-                name: "Resolved",
-                schema: "dbo",
-                table: "Complaint");
+            migrationBuilder.DropColumn(name: "Resolved", schema: "dbo", table: "Complaint");
         }
     }
 }

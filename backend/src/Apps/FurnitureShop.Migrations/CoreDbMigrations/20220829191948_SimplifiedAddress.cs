@@ -6,31 +6,20 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "City",
-                schema: "dbo",
-                table: "Orders");
+            migrationBuilder.DropColumn(name: "City", schema: "dbo", table: "Orders");
 
-            migrationBuilder.DropColumn(
-                name: "Country",
-                schema: "dbo",
-                table: "Orders");
+            migrationBuilder.DropColumn(name: "Country", schema: "dbo", table: "Orders");
 
-            migrationBuilder.DropColumn(
-                name: "PostalCode",
-                schema: "dbo",
-                table: "Orders");
+            migrationBuilder.DropColumn(name: "PostalCode", schema: "dbo", table: "Orders");
 
-            migrationBuilder.DropColumn(
-                name: "State",
-                schema: "dbo",
-                table: "Orders");
+            migrationBuilder.DropColumn(name: "State", schema: "dbo", table: "Orders");
 
             migrationBuilder.RenameColumn(
                 name: "Street",
                 schema: "dbo",
                 table: "Orders",
-                newName: "Address");
+                newName: "Address"
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "Address",
@@ -38,21 +27,20 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Users",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Address",
-                schema: "dbo",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "Address", schema: "dbo", table: "Users");
 
             migrationBuilder.RenameColumn(
                 name: "Address",
                 schema: "dbo",
                 table: "Orders",
-                newName: "Street");
+                newName: "Street"
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "City",
@@ -60,7 +48,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Orders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "Country",
@@ -68,7 +57,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Orders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "PostalCode",
@@ -76,7 +66,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Orders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "State",
@@ -84,7 +75,8 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "Orders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
         }
     }
 }

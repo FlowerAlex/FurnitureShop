@@ -20,11 +20,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Categories
         {
             return await dbContext.Categories
                 .Where(p => p.Id == query.Id)
-                .Select(p => new CategoryDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                })
+                .Select(p => new CategoryDTO { Id = p.Id, Name = p.Name, })
                 .FirstOrDefaultAsync();
         }
     }

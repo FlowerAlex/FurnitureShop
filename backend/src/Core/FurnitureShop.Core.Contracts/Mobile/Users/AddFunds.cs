@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
     public class AddFunds : IRemoteCommand
     {
         public int FundsToAdd { get; set; }
+
         public static class ErrorCodes
         {
             public const int IncorrectAmount = 1;

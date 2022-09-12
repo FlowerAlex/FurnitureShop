@@ -8,6 +8,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
     public class CreateComplaint : IRemoteCommand
     {
         public ComplaintDTOBase ComplaintInfo { get; set; }
+
         public static class ErrorCodes
         {
             public const int EmptyComplaintText = 1;

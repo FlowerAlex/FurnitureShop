@@ -1,11 +1,13 @@
 using LeanCode.CQRS;
 using LeanCode.CQRS.Security;
+
 namespace FurnitureShop.Core.Contracts.Web.Products
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class CreateProduct : IRemoteCommand
     {
         public CreateProdcutDTO NewProduct { get; set; }
+
         public static class ErrorCodes
         {
             public const int IncorrectName = 1;

@@ -18,12 +18,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
+
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
             context.Categories.Add(TestCategory);
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             using var context = new CoreDbContext(ContextOptions);
@@ -33,8 +35,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         public CategoryTests()
         {
             ContextOptions = new DbContextOptionsBuilder<CoreDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             Seed();
         }
 
@@ -54,6 +56,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(TestCategory.Name, category.Name);
             Assert.Equal(TestCategory.Id, category.Id);
         }
+
         [Fact]
         public void CreateCategoryTest()
         {
@@ -66,10 +69,13 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
-            var category = dbContext.Categories.Where(c => c.Name == NewCategoryName).FirstOrDefault();
+            var category = dbContext.Categories
+                .Where(c => c.Name == NewCategoryName)
+                .FirstOrDefault();
             Assert.NotNull(category);
             Assert.Equal(NewCategoryName, category.Name);
         }
+
         [Fact]
         public void DeleteCategoryTest()
         {
@@ -84,6 +90,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var category = dbContext.Categories.Find(TestCategory.Id);
             Assert.Null(category);
         }
+
         [Fact]
         public void UpdateCategoryTest()
         {
@@ -96,7 +103,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, command);
 
             Assert.True(result.IsCompletedSuccessfully);
-            var category = dbContext.Categories.Where(c => c.Id == TestCategory.Id).FirstOrDefault();
+            var category = dbContext.Categories
+                .Where(c => c.Id == TestCategory.Id)
+                .FirstOrDefault();
             Assert.NotNull(category);
             Assert.Equal(NewNameForCategory, category.Name);
         }

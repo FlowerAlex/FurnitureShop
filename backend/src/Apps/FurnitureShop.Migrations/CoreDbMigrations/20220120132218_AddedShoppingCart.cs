@@ -10,11 +10,12 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
             migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
                 schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
@@ -24,19 +25,25 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         principalSchema: "dbo",
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                });
+                        onDelete: ReferentialAction.SetNull
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "ShoppingCartProduct",
                 schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoppingCartId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Amount = table.Column<int>(type: "int", nullable: false),
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        ShoppingCartId = table.Column<Guid>(
+                            type: "uniqueidentifier",
+                            nullable: true
+                        ),
+                        ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                        Amount = table.Column<int>(type: "int", nullable: false),
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCartProduct", x => x.Id);
@@ -46,27 +53,32 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                         principalSchema: "dbo",
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Restrict
+                    );
                     table.ForeignKey(
                         name: "FK_ShoppingCartProduct_ShoppingCarts_ShoppingCartId",
                         column: x => x.ShoppingCartId,
                         principalSchema: "dbo",
                         principalTable: "ShoppingCarts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        onDelete: ReferentialAction.Restrict
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartProduct_ProductId",
                 schema: "dbo",
                 table: "ShoppingCartProduct",
-                column: "ProductId");
+                column: "ProductId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartProduct_ShoppingCartId",
                 schema: "dbo",
                 table: "ShoppingCartProduct",
-                column: "ShoppingCartId");
+                column: "ShoppingCartId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCarts_UserId",
@@ -74,18 +86,15 @@ namespace FurnitureShop.Migrations.CoreDbMigrations
                 table: "ShoppingCarts",
                 column: "UserId",
                 unique: true,
-                filter: "[UserId] IS NOT NULL");
+                filter: "[UserId] IS NOT NULL"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ShoppingCartProduct",
-                schema: "dbo");
+            migrationBuilder.DropTable(name: "ShoppingCartProduct", schema: "dbo");
 
-            migrationBuilder.DropTable(
-                name: "ShoppingCarts",
-                schema: "dbo");
+            migrationBuilder.DropTable(name: "ShoppingCarts", schema: "dbo");
         }
     }
 }

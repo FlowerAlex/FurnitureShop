@@ -17,19 +17,19 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
         {
             RuleFor(p => p.UpdatedProduct.Name)
                 .NotEmpty()
-                    .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
-                    .WithMessage("Product name should not be empty");
+                .WithCode(UpdateProduct.ErrorCodes.IncorrectName)
+                .WithMessage("Product name should not be empty");
             RuleFor(p => p.UpdatedProduct.Price)
                 .NotEmpty()
-                    .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
-                    .WithMessage("Price should not be empty")
+                .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
+                .WithMessage("Price should not be empty")
                 .GreaterThan(0)
-                    .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
-                    .WithMessage("Price should be a positive number");
+                .WithCode(UpdateProduct.ErrorCodes.IncorrectPrice)
+                .WithMessage("Price should be a positive number");
             RuleFor(p => p.UpdatedProduct.Description)
                 .NotEmpty()
-                    .WithCode(UpdateProduct.ErrorCodes.IncorrectDescription)
-                    .WithMessage("Product description should not be empty");
+                .WithCode(UpdateProduct.ErrorCodes.IncorrectDescription)
+                .WithMessage("Product description should not be empty");
         }
     }
 
@@ -37,6 +37,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UpdateProductCH>();
         private readonly CoreDbContext dbContext;
+
         public UpdateProductCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -44,7 +45,9 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Products
 
         public async Task ExecuteAsync(CoreContext context, UpdateProduct command)
         {
-            var product = await dbContext.Products.Where(c => c.Id == command.UpdatedProduct.Id).FirstOrDefaultAsync();
+            var product = await dbContext.Products
+                .Where(c => c.Id == command.UpdatedProduct.Id)
+                .FirstOrDefaultAsync();
             if (product == null)
             {
                 return;

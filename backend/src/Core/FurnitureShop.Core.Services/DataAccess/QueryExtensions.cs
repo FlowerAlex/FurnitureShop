@@ -16,7 +16,8 @@ namespace FurnitureShop.Core.Services.DataAccess
 
         public static IQueryable<TResult> Paginated<TSource, TResult>(
             this IQueryable<TResult> enumerable,
-            PaginatedQuery<TSource> query)
+            PaginatedQuery<TSource> query
+        )
         {
             var page = Math.Max(query.PageNumber, 0);
             var size = Math.Clamp(query.PageSize, MinPageSize, MaxPageSize);
@@ -26,15 +27,21 @@ namespace FurnitureShop.Core.Services.DataAccess
 
         public static async Task<PaginatedResult<TResult>> ToPaginatedResultAsync<TSource, TResult>(
             this IQueryable<TResult> queryable,
-            PaginatedQuery<TSource> query)
+            PaginatedQuery<TSource> query
+        )
         {
             return await queryable.ToPaginatedResultAsync(queryable, query);
         }
 
-        private static async Task<PaginatedResult<TResult>> ToPaginatedResultAsync<TSource, TResult, TIntermediate>(
+        private static async Task<PaginatedResult<TResult>> ToPaginatedResultAsync<
+            TSource,
+            TResult,
+            TIntermediate
+        >(
             this IQueryable<TResult> queryable,
             IQueryable<TIntermediate> countQuery,
-            PaginatedQuery<TSource> query)
+            PaginatedQuery<TSource> query
+        )
         {
             var count = await countQuery.CountAsync();
             return await queryable.ToPaginatedResultAsync(count, query);
@@ -43,7 +50,8 @@ namespace FurnitureShop.Core.Services.DataAccess
         public static async Task<PaginatedResult<TResult>> ToPaginatedResultAsync<TSource, TResult>(
             this IQueryable<TResult> queryable,
             int totalCount,
-            PaginatedQuery<TSource> query)
+            PaginatedQuery<TSource> query
+        )
         {
             return new()
             {
@@ -52,7 +60,11 @@ namespace FurnitureShop.Core.Services.DataAccess
             };
         }
 
-        public static IOrderedQueryable<T> OrderBy<T, TKey>(this IQueryable<T> q, Expression<Func<T, TKey>> sortBy, bool descending)
+        public static IOrderedQueryable<T> OrderBy<T, TKey>(
+            this IQueryable<T> q,
+            Expression<Func<T, TKey>> sortBy,
+            bool descending
+        )
         {
             if (descending)
             {
@@ -64,7 +76,11 @@ namespace FurnitureShop.Core.Services.DataAccess
             }
         }
 
-        public static IOrderedQueryable<T> ThenBy<T, TKey>(this IOrderedQueryable<T> q, Expression<Func<T, TKey>> sortBy, bool descending)
+        public static IOrderedQueryable<T> ThenBy<T, TKey>(
+            this IOrderedQueryable<T> q,
+            Expression<Func<T, TKey>> sortBy,
+            bool descending
+        )
         {
             if (descending)
             {
@@ -76,7 +92,11 @@ namespace FurnitureShop.Core.Services.DataAccess
             }
         }
 
-        public static IOrderedEnumerable<T> OrderBy<T, TKey>(this IEnumerable<T> q, Func<T, TKey> sortBy, bool descending)
+        public static IOrderedEnumerable<T> OrderBy<T, TKey>(
+            this IEnumerable<T> q,
+            Func<T, TKey> sortBy,
+            bool descending
+        )
         {
             if (descending)
             {

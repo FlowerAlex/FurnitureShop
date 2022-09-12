@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using LeanCode.DomainModels.Model;
 using LeanCode.Time;
+
 namespace FurnitureShop.Core.Domain
 {
     public class ShoppingCart : IAggregateRoot<Id<ShoppingCart>>

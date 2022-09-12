@@ -14,10 +14,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FurnitureShop.Core.Services.DataAccess
 {
-    public class CoreDbContext :
-        IdentityDbContext<AuthUser, AuthRole, Guid>,
-        IOutboxContext,
-        IConsumedMessagesContext
+    public class CoreDbContext
+        : IdentityDbContext<AuthUser, AuthRole, Guid>,
+            IOutboxContext,
+            IConsumedMessagesContext
     {
         public DbContext Self => this;
         public DbSet<AuthUser> AuthUsers => base.Users;
@@ -35,9 +35,7 @@ namespace FurnitureShop.Core.Services.DataAccess
         public DbSet<UserProduct> Favourites => Set<UserProduct>();
         public DbSet<Photo> Photos => Set<Photo>();
 
-        public CoreDbContext(DbContextOptions<CoreDbContext> options)
-            : base(options)
-        { }
+        public CoreDbContext(DbContextOptions<CoreDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -71,9 +69,7 @@ namespace FurnitureShop.Core.Services.DataAccess
             {
                 b.HasKey(c => c.Id);
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
-                b.HasMany<Product>()
-                    .WithOne()
-                    .HasForeignKey(p => p.CategoryId);
+                b.HasMany<Product>().WithOne().HasForeignKey(p => p.CategoryId);
             });
 
             builder.Entity<Product>(b =>
@@ -91,36 +87,28 @@ namespace FurnitureShop.Core.Services.DataAccess
                     .HasForeignKey(p => p.ProductId);
             });
             builder.Entity<OrderProduct>(o =>
-           {
-               o.HasKey(o => o.Id);
-               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
-               o.Property(o => o.OrderId).IsTypedId();
-               o.Property(o => o.ProductId).IsTypedId();
-               o.HasOne<Order>()
-                   .WithMany(ord => ord.OrdersProducts)
-                   .HasForeignKey(o => o.OrderId);
-               o.HasOne<Product>()
-                   .WithMany(p => p.OrdersProducts)
-                   .HasForeignKey(o => o.ProductId);
-           });
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+                o.Property(o => o.OrderId).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
+                o.HasOne<Order>().WithMany(ord => ord.OrdersProducts).HasForeignKey(o => o.OrderId);
+                o.HasOne<Product>().WithMany(p => p.OrdersProducts).HasForeignKey(o => o.ProductId);
+            });
             builder.Entity<Order>(b =>
-           {
-               b.HasKey(o => o.Id);
-               b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
-               b.Property(e => e.UserId).IsTypedId();
-               b.HasOne<Complaint>()
-                   .WithOne()
-                   .HasForeignKey<Order>(o => o.ComplaintId);
-           });
+            {
+                b.HasKey(o => o.Id);
+                b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
+                b.Property(e => e.UserId).IsTypedId();
+                b.HasOne<Complaint>().WithOne().HasForeignKey<Order>(o => o.ComplaintId);
+            });
             builder.Entity<Review>(b =>
             {
                 b.HasKey(r => r.Id);
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                 b.Property(e => e.UserId).IsTypedId();
                 b.Property(e => e.ProductId).IsTypedId();
-                b.HasOne<Product>()
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(r => r.ProductId);
+                b.HasOne<Product>().WithMany(p => p.Reviews).HasForeignKey(r => r.ProductId);
             });
             builder.Entity<Complaint>(b =>
             {
@@ -128,57 +116,48 @@ namespace FurnitureShop.Core.Services.DataAccess
                 b.Property(e => e.Id).ValueGeneratedNever().IsTypedId();
                 b.Property(e => e.UserId).IsTypedId();
                 b.Property(e => e.OrderId).IsTypedId();
-                b.HasOne<Order>()
-                    .WithOne()
-                    .HasForeignKey<Order>(o => o.ComplaintId);
+                b.HasOne<Order>().WithOne().HasForeignKey<Order>(o => o.ComplaintId);
             });
             builder.Entity<ShoppingCart>(b =>
             {
                 b.HasKey(s => s.Id);
                 b.Property(s => s.Id).ValueGeneratedNever().IsTypedId();
                 b.Property(e => e.UserId).IsTypedId();
-                b.HasOne<User>()
-                    .WithOne()
-                    .HasForeignKey<ShoppingCart>(s => s.UserId);
+                b.HasOne<User>().WithOne().HasForeignKey<ShoppingCart>(s => s.UserId);
             });
             builder.Entity<ShoppingCartProduct>(o =>
-           {
-               o.HasKey(o => o.Id);
-               o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
-               o.Property(o => o.ShoppingCartId).IsTypedId();
-               o.Property(o => o.ProductId).IsTypedId();
-               o.HasOne<ShoppingCart>()
-                   .WithMany(ord => ord.ShoppingCartProducts)
-                   .HasForeignKey(o => o.ShoppingCartId);
-               o.HasOne<Product>()
-                   .WithMany(p => p.ShoppingCartProducts)
-                   .HasForeignKey(o => o.ProductId);
-           });
+            {
+                o.HasKey(o => o.Id);
+                o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
+                o.Property(o => o.ShoppingCartId).IsTypedId();
+                o.Property(o => o.ProductId).IsTypedId();
+                o.HasOne<ShoppingCart>()
+                    .WithMany(ord => ord.ShoppingCartProducts)
+                    .HasForeignKey(o => o.ShoppingCartId);
+                o.HasOne<Product>()
+                    .WithMany(p => p.ShoppingCartProducts)
+                    .HasForeignKey(o => o.ProductId);
+            });
             builder.Entity<UserProduct>(o =>
             {
                 o.HasKey(o => o.Id);
                 o.Property(o => o.Id).ValueGeneratedNever().IsTypedId();
                 o.Property(o => o.UserId).IsTypedId();
                 o.Property(o => o.ProductId).IsTypedId();
-                o.HasOne<User>()
-                    .WithMany(u => u.Favourites)
-                    .HasForeignKey(o => o.UserId);
-                o.HasOne<Product>()
-                    .WithMany()
-                    .HasForeignKey(o => o.ProductId);
+                o.HasOne<User>().WithMany(u => u.Favourites).HasForeignKey(o => o.UserId);
+                o.HasOne<Product>().WithMany().HasForeignKey(o => o.ProductId);
             });
             builder.Entity<Photo>(o =>
             {
                 o.HasKey(o => o.Id);
                 o.Property(o => o.Id).IsTypedId();
                 o.Property(o => o.ProductId).IsTypedId();
-                o.HasOne<Product>()
-                    .WithMany()
-                    .HasForeignKey(o => o.ProductId);
+                o.HasOne<Product>().WithMany().HasForeignKey(o => o.ProductId);
             });
         }
 
-        public Task CommitAsync(CancellationToken cancellationToken = default) => SaveChangesAsync(cancellationToken);
+        public Task CommitAsync(CancellationToken cancellationToken = default) =>
+            SaveChangesAsync(cancellationToken);
 
         private static void ConfigureAuth(ModelBuilder builder)
         {

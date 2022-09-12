@@ -34,8 +34,7 @@ namespace FurnitureShop.Api
         {
             services.AddCors(ConfigureCORS);
             services.AddRouting();
-            services.AddHealthChecks()
-                .AddDbContextCheck<CoreDbContext>();
+            services.AddHealthChecks().AddDbContextCheck<CoreDbContext>();
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -54,21 +53,22 @@ namespace FurnitureShop.Api
         {
             Config.RegisterMappedConfiguration(builder, config, hostEnv);
 
-            builder.RegisterType<AppRoles>()
-                .AsImplementedInterfaces();
+            builder.RegisterType<AppRoles>().AsImplementedInterfaces();
         }
 
         private void ConfigureCORS(CorsOptions opts)
         {
-            opts.AddPolicy(ApiCorsPolicy, cfg =>
-            {
-                cfg
-                    .WithOrigins(Config.Services.AllowedOrigins(config))
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-                    .SetPreflightMaxAge(TimeSpan.FromMinutes(60));
-            });
+            opts.AddPolicy(
+                ApiCorsPolicy,
+                cfg =>
+                {
+                    cfg.WithOrigins(Config.Services.AllowedOrigins(config))
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .SetPreflightMaxAge(TimeSpan.FromMinutes(60));
+                }
+            );
         }
     }
 }

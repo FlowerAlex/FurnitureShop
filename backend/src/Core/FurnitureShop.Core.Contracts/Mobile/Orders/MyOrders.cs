@@ -4,7 +4,12 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Mobile.Orders
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
-    public class MyOrders : SortableMulitiFilterPaginatedQuery<OrderDTO, MyOrdersSortFieldDTO?, MyOrdersFilterFieldDTO>
+    public class MyOrders
+        : SortableMulitiFilterPaginatedQuery<
+            OrderDTO,
+            MyOrdersSortFieldDTO?,
+            MyOrdersFilterFieldDTO
+        >
     {
         public static class ErrorCodes
         {
@@ -17,7 +22,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Orders
         OrderedDate = 0,
         DeliveredDate = 1,
     }
-    
+
     public enum MyOrdersFilterFieldDTO
     {
         OrderState = 0,

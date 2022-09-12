@@ -10,6 +10,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public bool InFavourites { get; set; }
         public bool InShoppingCart { get; set; }
     }
+
     public class ProductDetailsDTO : ProductDTO
     {
         public string? ModelId { get; set; }

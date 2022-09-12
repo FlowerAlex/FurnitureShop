@@ -24,21 +24,29 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Products
             var productsInShoppingCart = await context.GetProductsInShoppingCart(dbContext);
             var productsInFavourites = await context.GetProductsInFavourties(dbContext);
             return await dbContext.Products
-                .Where(p => p.Id == query.Id).Include(p => p.Reviews)
-                .Select(p => new ProductDetailsDTO
-                {
-                    Name = p.Name,
-                    Price = p.Price,
-                    CategoryId = p.CategoryId,
-                    PreviewPhotoId = p.PreviewPhotoId,
-                    AverageRating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
-                    Description = p.Description,
-                    ModelId = p.ModelId,
-                    InFavourites = productsInFavourites.Contains(p.Id),
-                    InShoppingCart = productsInShoppingCart.Contains(p.Id),
-                    PhotoIds = dbContext.Photos.Where(p => p.ProductId == query.Id).Select(p => p.Id.Value).ToList(),
-                    Id = p.Id,
-                })
+                .Where(p => p.Id == query.Id)
+                .Include(p => p.Reviews)
+                .Select(
+                    p =>
+                        new ProductDetailsDTO
+                        {
+                            Name = p.Name,
+                            Price = p.Price,
+                            CategoryId = p.CategoryId,
+                            PreviewPhotoId = p.PreviewPhotoId,
+                            AverageRating =
+                                p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : null,
+                            Description = p.Description,
+                            ModelId = p.ModelId,
+                            InFavourites = productsInFavourites.Contains(p.Id),
+                            InShoppingCart = productsInShoppingCart.Contains(p.Id),
+                            PhotoIds = dbContext.Photos
+                                .Where(p => p.ProductId == query.Id)
+                                .Select(p => p.Id.Value)
+                                .ToList(),
+                            Id = p.Id,
+                        }
+                )
                 .FirstOrDefaultAsync();
         }
     }

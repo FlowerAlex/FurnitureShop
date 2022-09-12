@@ -14,17 +14,19 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         {
             RuleFor(p => p.NewReview.Text)
                 .NotEmpty()
-                    .WithCode(CreateReview.ErrorCodes.EmptyReviewText)
-                    .WithMessage("Review text should not be empty");
+                .WithCode(CreateReview.ErrorCodes.EmptyReviewText)
+                .WithMessage("Review text should not be empty");
             RuleFor(p => p.NewReview.Rating)
                 .InclusiveBetween(0.0, 5.0)
-                    .WithCode(CreateReview.ErrorCodes.IncorrectRating)
-                    .WithMessage("Incorrect rating");
+                .WithCode(CreateReview.ErrorCodes.IncorrectRating)
+                .WithMessage("Incorrect rating");
         }
     }
+
     public class CreateReviewCH : ICommandHandler<CreateReview>
     {
         private readonly CoreDbContext dbContext;
+
         public CreateReviewCH(CoreDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -38,7 +40,8 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                     Text = command.NewReview.Text,
                     UserId = Id<User>.From(command.NewReview.UserId),
                     ProductId = Id<Product>.From(command.NewReview.ProductId),
-                });
+                }
+            );
             await dbContext.SaveChangesAsync();
         }
     }
