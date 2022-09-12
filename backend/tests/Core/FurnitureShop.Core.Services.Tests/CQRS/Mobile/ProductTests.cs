@@ -80,6 +80,23 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(TestProduct.Id, Product.Id);
         }
         [Fact]
+        public void AllProductsQHTest()
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new FurnitureShop.Core.Services.CQRS.Mobile.Products.AllProductsQH(dbContext);
+            var command = new FurnitureShop.Core.Contracts.Mobile.Products.AllProducts();
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            var Product = result.Result.Items.Where(p => p.Name == TestProduct.Name).First();
+            Assert.NotNull(Product);
+            Assert.Equal(TestProduct.Name, Product.Name);
+            Assert.Equal(TestProduct.Description, Product.Description);
+            Assert.Equal(TestProduct.Price, Product.Price);
+            Assert.Equal(TestProduct.CategoryId, Product.CategoryId);
+            Assert.Equal(TestProduct.Id, Product.Id);
+        }
+        [Fact]
         public void CreateProductTest()
         {
             var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
@@ -94,7 +111,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                     Name = NewProductName,
                     Price = NewProductPrice,
                     CategoryId = dbContext.Categories.First().Id,
-                    PhotoIds = new System.Collections.Generic.List<Guid>(){Guid.NewGuid()},
+                    PhotoIds = new System.Collections.Generic.List<Guid>() { Guid.NewGuid() },
                 }
             };
 
@@ -107,7 +124,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewProdctDescription, Product.Description);
             Assert.Equal(NewProductModelUrl, Product.ModelId);
             Assert.Equal(NewProductPrice, Product.Price);
-            Assert.Equal(1,Product.Photos.Count);
+            Assert.Equal(1, Product.Photos.Count);
         }
         [Fact]
         public void DeleteProductTest()
