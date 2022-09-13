@@ -2,6 +2,7 @@ import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
 
 part 'products_screen_cubit.freezed.dart';
@@ -136,13 +137,25 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         final product = state.products.values
             .firstWhere((element) => element.id == productId);
 
-        if (product.inFavourites) {
+        final wasInFavorites = product.inFavourites;
+        if (wasInFavorites) {
           await _cqrs.run(RemoveFromFavourites(productId: productId));
         } else {
           await _cqrs.run(AddToFavourites(productId: productId));
         }
 
-        await fetch(page: state.currentPage);
+        emit(
+          state.copyWith(
+            products: {
+              for (final product in state.products.entries)
+                product.key: product.value.copyWith(
+                  inShoppingCart: product.key == productId
+                      ? !wasInFavorites
+                      : product.value.inFavourites,
+                )
+            },
+          ),
+        );
       } catch (e, _) {
         emit(ProductsScreenErrorState(errorMessage: e.toString()));
       }
@@ -160,8 +173,9 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     try {
       final product = state.products.values
           .firstWhere((element) => element.id == productId);
+      final wasInShoppingCart = product.inShoppingCart;
 
-      if (product.inShoppingCart) {
+      if (wasInShoppingCart) {
         await _cqrs.run(
           RemoveProductFromShoppingCart(
             productId: productId,
@@ -176,7 +190,18 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         );
       }
 
-      await fetch(page: state.currentPage);
+      emit(
+        state.copyWith(
+          products: {
+            for (final product in state.products.entries)
+              product.key: product.value.copyWith(
+                inShoppingCart: product.key == productId
+                    ? !wasInShoppingCart
+                    : product.value.inShoppingCart,
+              )
+          },
+        ),
+      );
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }

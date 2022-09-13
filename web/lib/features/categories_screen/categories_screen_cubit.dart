@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/utils/table_section.dart';
@@ -57,9 +57,11 @@ class CategoriesScreenCubit extends Cubit<CategoriesScreenState> {
       }
     }
 
-    emit(state.copyWith(
-      currentPage: page,
-    ));
+    emit(
+      state.copyWith(
+        currentPage: page,
+      ),
+    );
   }
 
   Future<void> deleteCategory(String categoryId) async {
@@ -73,7 +75,10 @@ class CategoriesScreenCubit extends Cubit<CategoriesScreenState> {
       await init();
     } catch (err, st) {
       _logger.warning(
-          'Failed deleting category with categoryId: $categoryId', err, st);
+        'Failed deleting category with categoryId: $categoryId',
+        err,
+        st,
+      );
       emit(CategoriesScreenState.error(error: err.toString()));
     }
   }
@@ -97,7 +102,7 @@ extension CategoriesScreenStateReadyEx on CategoriesScreenStateReady {
 
 extension ListEx<T> on List<T> {
   List<List<T>> split(int bunchSize) {
-    var copy = [...this];
+    final copy = [...this];
     final res = <List<T>>[];
 
     while (copy.isNotEmpty) {

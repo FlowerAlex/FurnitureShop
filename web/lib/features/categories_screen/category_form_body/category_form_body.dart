@@ -50,7 +50,7 @@ class CategoryFormBody extends StatelessWidget {
                     child: Text(
                       state.error,
                     ),
-                  ));
+                  ),);
         },
       ),
     );

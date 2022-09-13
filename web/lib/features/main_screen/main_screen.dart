@@ -41,7 +41,6 @@ class MainScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 controller: ScrollController(),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     for (final section in MainScreenSection.values)
                       AppTextButton(
@@ -60,7 +59,7 @@ class MainScreen extends StatelessWidget {
             ),
             Expanded(
               child: _MainScreenBody(
-                  currentSection: mainScreenCubit.state.currentSection),
+                  currentSection: mainScreenCubit.state.currentSection,),
             ),
           ],
         ),
@@ -80,7 +79,7 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ],
-    ));
+    ),);
   }
 }
 

@@ -1,13 +1,15 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'main_screen_cubit.freezed.dart';
 
 class MainScreenCubit extends Cubit<MainScreenState> {
   MainScreenCubit()
-      : super(const MainScreenReadyState(
-          currentSection: MainScreenSection.products,
-        ));
+      : super(
+          const MainScreenReadyState(
+            currentSection: MainScreenSection.products,
+          ),
+        );
 
   void changeCurrentSection(MainScreenSection currentSection) {
     emit(MainScreenReadyState(currentSection: currentSection));

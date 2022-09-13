@@ -35,8 +35,8 @@ Future<void> mainCommon(AppConfig config) async {
     config.apiUri.resolve('/api/'),
   );
 
-  var storage = AzureStorage.parse(
-      'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net');
+  final storage = AzureStorage.parse(
+      'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net',);
 
   runApp(
     MultiProvider(

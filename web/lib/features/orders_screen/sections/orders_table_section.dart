@@ -51,18 +51,18 @@ class _OrderItem extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Text('Ordered date:' + order.orderedDate.toString()),
+                  Text('Ordered date:${order.orderedDate}'),
                   if (order.deliveredDate != null)
-                    Text('Ordered date:' + order.deliveredDate.toString()),
+                    Text('Ordered date:${order.deliveredDate}'),
                 ],
               ),
               Column(
                 children: [
                   for (final product in order.products)
                     ...[
-                      Text('Product name: ' + product.name),
-                      Text('Product price: ' + product.price.toString()),
-                      Text('Quantity: ' + product.amount.toString()),
+                      Text('Product name: ${product.name}'),
+                      Text('Product price: ${product.price}'),
+                      Text('Quantity: ${product.amount}'),
                       if (product.averageRating != null)
                         AvaregeScore(rating: product.averageRating!),
                     ].spaced(8),
@@ -71,7 +71,7 @@ class _OrderItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text('Total price: ' + order.price.toString()),
+          Text('Total price: ${order.price}'),
         ],
       ),
     );

@@ -39,7 +39,6 @@ class ConfirmDialog extends StatelessWidget {
             if (description != null) ...[
               Text(
                 description,
-                maxLines: null,
               ),
             ],
             Padding(

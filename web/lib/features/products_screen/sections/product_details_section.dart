@@ -61,7 +61,6 @@ class ProductDetailsSection extends StatelessWidget {
                     if (currentProduct.description.isNotEmpty)
                       Text(
                         'Description: ${currentProduct.description}',
-                        maxLines: null,
                       ),
                   ].spaced(8),
                 ),
@@ -95,9 +94,10 @@ class ProductDetailsSection extends StatelessWidget {
                           description:
                               'Are you sure want to delete product: ${currentProduct.name}',
                         );
-                        if (res == true) {
+                        if (res != null && res) {
                           await cubit.deleteProduct(
-                              productId: currentProduct.id);
+                            productId: currentProduct.id,
+                          );
                         }
                       },
                       child: const Text('Delete product'),

@@ -80,7 +80,7 @@ class _TableNavigationBar<T extends Object> extends StatelessWidget {
     this.createItemButtonLabel,
     this.createItemPressed,
   })  : assert((createItemButtonLabel == null && createItemPressed == null) ||
-            createItemButtonLabel != null && createItemPressed != null),
+            createItemButtonLabel != null && createItemPressed != null,),
         super(key: key);
 
   final int currentPage;
