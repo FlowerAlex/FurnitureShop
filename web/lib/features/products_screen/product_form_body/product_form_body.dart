@@ -46,7 +46,7 @@ class ProductFormBody extends StatelessWidget {
                       state.error,
                     ),
                   ),
-              finished: (_) => const SizedBox());
+              finished: (_) => const SizedBox(),);
         },
       ),
     );
@@ -131,8 +131,8 @@ class _ProductFormBodyReady extends HookWidget {
                 items: state.categories
                     .map(
                       (e) => DropdownMenuItem<String>(
-                        child: Text(e.name),
                         value: e.id,
+                        child: Text(e.name),
                       ),
                     )
                     .toList(),
@@ -143,7 +143,7 @@ class _ProductFormBodyReady extends HookWidget {
                 focusColor: Colors.transparent,
                 validator: Validators.required('Enter value'),
               ),
-            ]),
+            ],),
             PickFileSection(
               context: context,
               title: 'Preview photo',

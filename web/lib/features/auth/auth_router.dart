@@ -10,14 +10,14 @@ class AuthRouter extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _navigatorKey = useMemoized(GlobalKey<NavigatorState>.new);
+    final navigatorKey = useMemoized(GlobalKey<NavigatorState>.new);
     final authCubitState = context.watch<AuthCubit>().state;
 
     return WillPopScope(
       onWillPop: () async =>
-          !(await _navigatorKey.currentState?.maybePop() ?? false),
+          !(await navigatorKey.currentState?.maybePop() ?? false),
       child: Navigator(
-        key: _navigatorKey,
+        key: navigatorKey,
         pages: <Page<void>>[
           if (authCubitState is AuthLoggedInState) MainPage() else LoginPage()
         ],

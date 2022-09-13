@@ -29,7 +29,6 @@ class LoginScreen extends HookWidget {
             width: 400,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Furniture shop web app',
@@ -52,7 +51,7 @@ class LoginScreen extends HookWidget {
                   obscureText: obscurePassword.value,
                   autofocus: true,
                   validator: Validators.compose([
-                    Validators.required('Password can\'t be empty'),
+                    Validators.required("Password can't be empty"),
                   ]),
                 ),
                 Row(

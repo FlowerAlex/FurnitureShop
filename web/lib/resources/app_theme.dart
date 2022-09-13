@@ -61,7 +61,7 @@ abstract class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.symmetric(horizontal: 32, vertical: 20)),
+              const EdgeInsets.symmetric(horizontal: 32, vertical: 20),),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
@@ -75,7 +75,7 @@ abstract class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
         textStyle: textTheme.bodyLarge,
-      )),
+      ),),
     );
   }
 }

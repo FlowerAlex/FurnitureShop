@@ -1,4 +1,4 @@
-include: package:flutter_lints/flutter.yaml
+include: package:leancode_lint/analysis_options.yaml
 
 analyzer:
   exclude:
@@ -8,13 +8,11 @@ analyzer:
     - "**.mocks.dart"
   strong-mode:
     implicit-dynamic: false
-  errors:
-    todo: ignore
+
 linter:
   rules:
     sort_constructors_first: true
     prefer_single_quotes: true
     unnecessary_lambdas: true
-    unawaited_futures: true
     use_build_context_synchronously: false
     avoid_classes_with_only_static_members: false

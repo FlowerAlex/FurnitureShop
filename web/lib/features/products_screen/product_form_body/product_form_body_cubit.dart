@@ -1,7 +1,7 @@
 import 'package:azblob/azblob.dart';
-import 'package:bloc/bloc.dart';
 import 'package:cqrs/cqrs.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
@@ -26,13 +26,15 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
   }) async {
     final categories = await _cqrs.get(AllCategories());
 
-    emit(ProductFormBodyState.ready(
-      categories: categories,
-      description: editingProduct?.description,
-      name: editingProduct?.name,
-      price: editingProduct?.price.toString(),
-      selectedCategoryId: editingProduct?.categoryId,
-    ));
+    emit(
+      ProductFormBodyState.ready(
+        categories: categories,
+        description: editingProduct?.description,
+        name: editingProduct?.name,
+        price: editingProduct?.price.toString(),
+        selectedCategoryId: editingProduct?.categoryId,
+      ),
+    );
   }
 
   void updateProduct({
@@ -64,7 +66,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
 
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowMultiple: false,
       allowedExtensions: blobType.allowedExtensions,
     );
 
@@ -73,14 +74,18 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
 
       switch (blobType) {
         case AppBlobType.image:
-          emit(state.copyWith(
-            currentImage: file,
-          ));
+          emit(
+            state.copyWith(
+              currentImage: file,
+            ),
+          );
           break;
         case AppBlobType.model:
-          emit(state.copyWith(
-            currentModel: file,
-          ));
+          emit(
+            state.copyWith(
+              currentModel: file,
+            ),
+          );
           break;
       }
     }
@@ -120,7 +125,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
             '/images/$blobImageId',
             bodyBytes: currentImage.bytes,
             contentType: contentType,
-            type: BlobType.BlockBlob,
           );
         }
 
@@ -135,7 +139,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
             '/models/$blobModelId',
             bodyBytes: currentModel.bytes,
             contentType: contentType,
-            type: BlobType.BlockBlob,
           );
         }
 
@@ -197,7 +200,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
               '/images/$blobImageId',
               bodyBytes: currentImage.bytes,
               contentType: contentType,
-              type: BlobType.BlockBlob,
             );
           }
 
@@ -212,7 +214,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
               '/models/$blobModelId',
               bodyBytes: currentModel.bytes,
               contentType: contentType,
-              type: BlobType.BlockBlob,
             );
           }
 
@@ -262,6 +263,7 @@ enum AppBlobType {
   image,
   model,
 }
+
 AppBlobType? appBlobTypeFromExtension(String? extension) {
   if (extension == null) {
     return null;

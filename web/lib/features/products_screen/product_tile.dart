@@ -16,10 +16,10 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _productTilePressed() {}
+    void productTilePressed() {}
 
     return InkWell(
-      onTap: _productTilePressed,
+      onTap: productTilePressed,
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -35,8 +35,7 @@ class ProductTile extends StatelessWidget {
                   height: 100,
                   child: CachedNetworkImage(
                     fit: BoxFit.contain,
-                    imageUrl:
-                        '',
+                    imageUrl: '',
                     errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
                   ),
@@ -51,7 +50,7 @@ class ProductTile extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -60,7 +59,7 @@ class ProductTile extends StatelessWidget {
                           children: children,
                         ),
                         Text(
-                          product.price.toString() + '\$',
+                          '${product.price}\$',
                         ),
                       ],
                     ),

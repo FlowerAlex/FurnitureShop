@@ -53,7 +53,7 @@ class CategoriesTableSection extends StatelessWidget {
           },
           onDeletePressed: () async {
             await cubit.deleteCategory(category.id);
-          }),
+          },),
     );
   }
 }
@@ -83,7 +83,7 @@ class _CategoryItem extends StatelessWidget {
             children: [
               Text(category.name),
               IconButton(
-                  onPressed: onDeletePressed, icon: Assets.icons.trash.svg()),
+                  onPressed: onDeletePressed, icon: Assets.icons.trash.svg(),),
             ],
           ),
         ),

@@ -27,9 +27,9 @@ class UsersTableSection extends StatelessWidget {
       itemBuilder: (user) => _UserItem(
         user: user,
         onBanPressed: () => cubit.banUser(
-            'user.id'), // TODO: use id when will be added on the backend
+            'user.id',), // TODO: use id when will be added on the backend
         onUnbanPressed: () => cubit.unbanUser(
-            'user.id'), // TODO: use id when will be added on the backend
+            'user.id',), // TODO: use id when will be added on the backend
       ),
     );
   }
@@ -62,7 +62,7 @@ class _UserItem extends StatelessWidget {
           ),
           Column(
             children: [
-              Text('Username:' + user.username),
+              Text('Username:${user.username}'),
               Text(user.emailAddress),
             ],
           ),
