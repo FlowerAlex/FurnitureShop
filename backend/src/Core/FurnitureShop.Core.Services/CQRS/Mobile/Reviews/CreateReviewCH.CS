@@ -38,7 +38,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                 new Review(command.NewReview.Rating)
                 {
                     Text = command.NewReview.Text,
-                    UserId = Id<User>.From(command.NewReview.UserId),
+                    UserId = Id<User>.From(context.UserId),
                     ProductId = Id<Product>.From(command.NewReview.ProductId),
                 }
             );

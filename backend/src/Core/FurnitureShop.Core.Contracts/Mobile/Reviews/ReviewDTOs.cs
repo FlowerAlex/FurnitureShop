@@ -2,17 +2,29 @@ using System;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
-    public class ReviewDTO : ReviewDTOBase
+    public class ReviewDTO
     {
         public Guid Id { get; set; }
-    }
-
-    public class ReviewDTOBase
-    {
         public Guid UserId { get; set; }
+        public string UserName { get; set; }
         public Guid ProductId { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; }
         public DateTime CreatedDate { get; set; }
+    }
+
+    public class CreateReviewDTO
+    {
+        public Guid ProductId { get; set; }
+        public string Text { get; set; }
+        public double Rating { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
+
+    public class UpdateReviewDTO
+    {
+        public Guid Id { get; set; }
+        public string Text { get; set; }
+        public double Rating { get; set; }
     }
 }

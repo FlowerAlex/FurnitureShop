@@ -10,6 +10,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
         public string EmailAddress { get; set; }
         public string Address { get; set; }
     }
+
     public class UserInfoDTO : UserInfoDTOBase
     {
         public int Funds { get; set; }
