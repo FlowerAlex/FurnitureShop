@@ -7,7 +7,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
     public class UpdateReview : IRemoteCommand
     {
-        public ReviewDTO UpdatedReview { get; set; }
+        public UpdateReviewDTO UpdatedReview { get; set; }
 
         public static class ErrorCodes
         {

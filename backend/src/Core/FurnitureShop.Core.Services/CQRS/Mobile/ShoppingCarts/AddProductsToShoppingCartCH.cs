@@ -44,7 +44,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.ShoppingCart
                 return;
             }
             var product = shc.ShoppingCartProducts
-                .Where(p => p.Id == cmd.ProductId)
+                .Where(p => p.ProductId == cmd.ProductId)
                 .FirstOrDefault();
             if (product != null)
             {

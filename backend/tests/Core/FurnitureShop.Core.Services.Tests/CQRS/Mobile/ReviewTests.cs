@@ -17,11 +17,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             Text = "good test product",
             CreatedDate = DateTime.Parse("09-09-2020"),
-            UserId = Id<User>.From(Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19")),
         };
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100);
-        private readonly Guid TestUserId = Guid.Parse("5d60120d-8a32-47f1-8b81-4018eb230b19");
+        private readonly User TestUser = new User("test","test","test","test","test")
+        {
 
+        };
         private string NewReviewText = "new Review";
         private Guid NewReviewProductId = Guid.Parse("a063c7ce-b477-4d27-ac16-c771b9fef4e0");
         private double NewReviewRating = 3;
@@ -31,6 +32,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
         private void Seed()
         {
+            TestReview.UserId = TestUser.Id;
             using var context = new CoreDbContext(ContextOptions);
             context.Products.Add(TestProduct);
             context.SaveChanges();
@@ -39,6 +41,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 .FirstOrDefault()
                 .Id;
             context.Reviews.Add(TestReview);
+            context.SaveChanges();
+            context.Users.Add(TestUser);
             context.SaveChanges();
         }
 
@@ -59,7 +63,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void ReviewByIdQHTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new ReviewByIdQH(dbContext);
             var command = new ReviewById { Id = TestReview.Id };
@@ -79,16 +83,15 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void CreateReviewTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateReviewCH(dbContext);
             var command = new CreateReview
             {
-                NewReview = new ReviewDTOBase
+                NewReview = new CreateReviewDTO
                 {
                     Text = NewReviewText,
                     ProductId = NewReviewProductId,
-                    UserId = TestUserId,
                     Rating = NewReviewRating,
                 }
             };
@@ -106,7 +109,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void DeleteReviewTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new DeleteReviewCH(dbContext);
             var command = new DeleteReview { Id = TestReview.Id };
@@ -121,16 +124,15 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void UpdateReviewTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateReviewCH(dbContext);
             var command = new UpdateReview
             {
-                UpdatedReview = new ReviewDTO
+                UpdatedReview = new UpdateReviewDTO
                 {
                     Id = TestReview.Id,
                     Text = NewReviewText,
-                    UserId = TestUserId,
                     Rating = NewReviewRating,
                 }
             };

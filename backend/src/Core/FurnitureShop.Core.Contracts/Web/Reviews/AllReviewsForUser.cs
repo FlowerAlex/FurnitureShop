@@ -1,5 +1,4 @@
 using FurnitureShop.Core.Contracts.Shared;
-using FurnitureShop.Core.Contracts.Mobile.Reviews;
 using LeanCode.CQRS.Security;
 using System;
 
