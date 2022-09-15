@@ -17,18 +17,18 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            RuleFor(p => p.NewOrder.Address, IsShoppingCartEmpty)
-                .NotEmpty()
-                .WithCode(CreateOrder.ErrorCodes.NoProducts)
-                .WithMessage("No products selected for order");
-            RuleFor(p => p.NewOrder.Address, IsAddressSet)
-                .NotEmpty()
-                .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-                .WithMessage("User and order have no addres set");
-            RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
-                .Equal(false)
-                .WithMessage("Not enough funds to pay for the order.")
-                .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
+            // RuleFor(p => p.NewOrder.Address, IsShoppingCartEmpty)
+            //     .NotEmpty()
+            //     .WithCode(CreateOrder.ErrorCodes.NoProducts)
+            //     .WithMessage("No products selected for order");
+            // RuleFor(p => p.NewOrder.Address, IsAddressSet)
+            //     .NotEmpty()
+            //     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+            //     .WithMessage("User and order have no addres set");
+            // RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
+            //     .Equal(false)
+            //     .WithMessage("Not enough funds to pay for the order.")
+            //     .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
 
         private static bool IsShoppingCartEmpty(IValidationContext ctx, string? address)
@@ -97,9 +97,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 OrderedDate = DateTime.Now,
                 OrderState = OrderState.Pending,
             };
-            var shp = await dbContext.ShoppingCarts
-                .Where(s => s.UserId == context.UserId)
-                .FirstOrDefaultAsync();
             foreach (var prod in command.NewOrder.Products)
             {
                 newOrder.OrdersProducts.Add(
@@ -112,11 +109,16 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 );
             }
             var result = await dbContext.Orders.AddAsync(newOrder);
-            if (result != null)
-            {
-                dbContext.ShoppingCarts.Remove(shp!);
-            }
             await dbContext.SaveChangesAsync();
+            var shoppingCart = await dbContext.ShoppingCarts
+                .Where(s => s.UserId == context.UserId)
+                .FirstOrDefaultAsync();
+            if (shoppingCart != null && result != null)
+            {
+                shoppingCart.ShoppingCartProducts.Clear();
+                dbContext.ShoppingCarts.Update(shoppingCart);
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
 }
