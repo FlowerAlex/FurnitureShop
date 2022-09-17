@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'products_screen_cubit.dart';
@@ -11,34 +12,7 @@ part of 'products_screen_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ProductsScreenStateTearOff {
-  const _$ProductsScreenStateTearOff();
-
-  ProductsScreenStateReady ready(
-      {Map<int, List<ProductDTO>> products = const <int, List<ProductDTO>>{},
-      ProductDetailsDTO? currentProduct,
-      int currentPage = 0,
-      int totalCount = 0}) {
-    return ProductsScreenStateReady(
-      products: products,
-      currentProduct: currentProduct,
-      currentPage: currentPage,
-      totalCount: totalCount,
-    );
-  }
-
-  ProductsScreenStateError error({required String error}) {
-    return ProductsScreenStateError(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $ProductsScreenState = _$ProductsScreenStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ProductsScreenState {
@@ -106,10 +80,10 @@ class _$ProductsScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ProductsScreenStateReadyCopyWith<$Res> {
-  factory $ProductsScreenStateReadyCopyWith(ProductsScreenStateReady value,
-          $Res Function(ProductsScreenStateReady) then) =
-      _$ProductsScreenStateReadyCopyWithImpl<$Res>;
+abstract class _$$ProductsScreenStateReadyCopyWith<$Res> {
+  factory _$$ProductsScreenStateReadyCopyWith(_$ProductsScreenStateReady value,
+          $Res Function(_$ProductsScreenStateReady) then) =
+      __$$ProductsScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
       {Map<int, List<ProductDTO>> products,
       ProductDetailsDTO? currentProduct,
@@ -118,16 +92,16 @@ abstract class $ProductsScreenStateReadyCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductsScreenStateReadyCopyWithImpl<$Res>
+class __$$ProductsScreenStateReadyCopyWithImpl<$Res>
     extends _$ProductsScreenStateCopyWithImpl<$Res>
-    implements $ProductsScreenStateReadyCopyWith<$Res> {
-  _$ProductsScreenStateReadyCopyWithImpl(ProductsScreenStateReady _value,
-      $Res Function(ProductsScreenStateReady) _then)
-      : super(_value, (v) => _then(v as ProductsScreenStateReady));
+    implements _$$ProductsScreenStateReadyCopyWith<$Res> {
+  __$$ProductsScreenStateReadyCopyWithImpl(_$ProductsScreenStateReady _value,
+      $Res Function(_$ProductsScreenStateReady) _then)
+      : super(_value, (v) => _then(v as _$ProductsScreenStateReady));
 
   @override
-  ProductsScreenStateReady get _value =>
-      super._value as ProductsScreenStateReady;
+  _$ProductsScreenStateReady get _value =>
+      super._value as _$ProductsScreenStateReady;
 
   @override
   $Res call({
@@ -136,9 +110,9 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
-    return _then(ProductsScreenStateReady(
+    return _then(_$ProductsScreenStateReady(
       products: products == freezed
-          ? _value.products
+          ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
               as Map<int, List<ProductDTO>>,
       currentProduct: currentProduct == freezed
@@ -161,21 +135,28 @@ class _$ProductsScreenStateReadyCopyWithImpl<$Res>
 
 class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   const _$ProductsScreenStateReady(
-      {this.products = const <int, List<ProductDTO>>{},
+      {final Map<int, List<ProductDTO>> products =
+          const <int, List<ProductDTO>>{},
       this.currentProduct,
       this.currentPage = 0,
-      this.totalCount = 0});
+      this.totalCount = 0})
+      : _products = products;
 
-  @JsonKey()
+  final Map<int, List<ProductDTO>> _products;
   @override
-  final Map<int, List<ProductDTO>> products;
+  @JsonKey()
+  Map<int, List<ProductDTO>> get products {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_products);
+  }
+
   @override
   final ProductDetailsDTO? currentProduct;
-  @JsonKey()
   @override
+  @JsonKey()
   final int currentPage;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalCount;
 
   @override
@@ -187,8 +168,8 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProductsScreenStateReady &&
-            const DeepCollectionEquality().equals(other.products, products) &&
+            other is _$ProductsScreenStateReady &&
+            const DeepCollectionEquality().equals(other._products, _products) &&
             const DeepCollectionEquality()
                 .equals(other.currentProduct, currentProduct) &&
             const DeepCollectionEquality()
@@ -200,16 +181,17 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(products),
+      const DeepCollectionEquality().hash(_products),
       const DeepCollectionEquality().hash(currentProduct),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
-  $ProductsScreenStateReadyCopyWith<ProductsScreenStateReady> get copyWith =>
-      _$ProductsScreenStateReadyCopyWithImpl<ProductsScreenStateReady>(
-          this, _$identity);
+  _$$ProductsScreenStateReadyCopyWith<_$ProductsScreenStateReady>
+      get copyWith =>
+          __$$ProductsScreenStateReadyCopyWithImpl<_$ProductsScreenStateReady>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -282,45 +264,45 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
 
 abstract class ProductsScreenStateReady implements ProductsScreenState {
   const factory ProductsScreenStateReady(
-      {Map<int, List<ProductDTO>> products,
-      ProductDetailsDTO? currentProduct,
-      int currentPage,
-      int totalCount}) = _$ProductsScreenStateReady;
+      {final Map<int, List<ProductDTO>> products,
+      final ProductDetailsDTO? currentProduct,
+      final int currentPage,
+      final int totalCount}) = _$ProductsScreenStateReady;
 
   Map<int, List<ProductDTO>> get products;
   ProductDetailsDTO? get currentProduct;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
-  $ProductsScreenStateReadyCopyWith<ProductsScreenStateReady> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProductsScreenStateReadyCopyWith<_$ProductsScreenStateReady>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductsScreenStateErrorCopyWith<$Res> {
-  factory $ProductsScreenStateErrorCopyWith(ProductsScreenStateError value,
-          $Res Function(ProductsScreenStateError) then) =
-      _$ProductsScreenStateErrorCopyWithImpl<$Res>;
+abstract class _$$ProductsScreenStateErrorCopyWith<$Res> {
+  factory _$$ProductsScreenStateErrorCopyWith(_$ProductsScreenStateError value,
+          $Res Function(_$ProductsScreenStateError) then) =
+      __$$ProductsScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$ProductsScreenStateErrorCopyWithImpl<$Res>
+class __$$ProductsScreenStateErrorCopyWithImpl<$Res>
     extends _$ProductsScreenStateCopyWithImpl<$Res>
-    implements $ProductsScreenStateErrorCopyWith<$Res> {
-  _$ProductsScreenStateErrorCopyWithImpl(ProductsScreenStateError _value,
-      $Res Function(ProductsScreenStateError) _then)
-      : super(_value, (v) => _then(v as ProductsScreenStateError));
+    implements _$$ProductsScreenStateErrorCopyWith<$Res> {
+  __$$ProductsScreenStateErrorCopyWithImpl(_$ProductsScreenStateError _value,
+      $Res Function(_$ProductsScreenStateError) _then)
+      : super(_value, (v) => _then(v as _$ProductsScreenStateError));
 
   @override
-  ProductsScreenStateError get _value =>
-      super._value as ProductsScreenStateError;
+  _$ProductsScreenStateError get _value =>
+      super._value as _$ProductsScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(ProductsScreenStateError(
+    return _then(_$ProductsScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -346,7 +328,7 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProductsScreenStateError &&
+            other is _$ProductsScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -356,9 +338,10 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
 
   @JsonKey(ignore: true)
   @override
-  $ProductsScreenStateErrorCopyWith<ProductsScreenStateError> get copyWith =>
-      _$ProductsScreenStateErrorCopyWithImpl<ProductsScreenStateError>(
-          this, _$identity);
+  _$$ProductsScreenStateErrorCopyWith<_$ProductsScreenStateError>
+      get copyWith =>
+          __$$ProductsScreenStateErrorCopyWithImpl<_$ProductsScreenStateError>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -430,11 +413,11 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
 }
 
 abstract class ProductsScreenStateError implements ProductsScreenState {
-  const factory ProductsScreenStateError({required String error}) =
+  const factory ProductsScreenStateError({required final String error}) =
       _$ProductsScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $ProductsScreenStateErrorCopyWith<ProductsScreenStateError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProductsScreenStateErrorCopyWith<_$ProductsScreenStateError>
+      get copyWith => throw _privateConstructorUsedError;
 }

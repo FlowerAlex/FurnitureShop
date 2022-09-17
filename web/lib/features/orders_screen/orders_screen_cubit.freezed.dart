@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'orders_screen_cubit.dart';
@@ -11,32 +12,7 @@ part of 'orders_screen_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$OrdersScreenStateTearOff {
-  const _$OrdersScreenStateTearOff();
-
-  OrdersScreenStateReady ready(
-      {Map<int, List<OrderDTO>> orders = const <int, List<OrderDTO>>{},
-      int currentPage = 0,
-      int totalCount = 0}) {
-    return OrdersScreenStateReady(
-      orders: orders,
-      currentPage: currentPage,
-      totalCount: totalCount,
-    );
-  }
-
-  OrdersScreenStateError error({required String error}) {
-    return OrdersScreenStateError(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $OrdersScreenState = _$OrdersScreenStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$OrdersScreenState {
@@ -104,23 +80,24 @@ class _$OrdersScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $OrdersScreenStateReadyCopyWith<$Res> {
-  factory $OrdersScreenStateReadyCopyWith(OrdersScreenStateReady value,
-          $Res Function(OrdersScreenStateReady) then) =
-      _$OrdersScreenStateReadyCopyWithImpl<$Res>;
+abstract class _$$OrdersScreenStateReadyCopyWith<$Res> {
+  factory _$$OrdersScreenStateReadyCopyWith(_$OrdersScreenStateReady value,
+          $Res Function(_$OrdersScreenStateReady) then) =
+      __$$OrdersScreenStateReadyCopyWithImpl<$Res>;
   $Res call({Map<int, List<OrderDTO>> orders, int currentPage, int totalCount});
 }
 
 /// @nodoc
-class _$OrdersScreenStateReadyCopyWithImpl<$Res>
+class __$$OrdersScreenStateReadyCopyWithImpl<$Res>
     extends _$OrdersScreenStateCopyWithImpl<$Res>
-    implements $OrdersScreenStateReadyCopyWith<$Res> {
-  _$OrdersScreenStateReadyCopyWithImpl(OrdersScreenStateReady _value,
-      $Res Function(OrdersScreenStateReady) _then)
-      : super(_value, (v) => _then(v as OrdersScreenStateReady));
+    implements _$$OrdersScreenStateReadyCopyWith<$Res> {
+  __$$OrdersScreenStateReadyCopyWithImpl(_$OrdersScreenStateReady _value,
+      $Res Function(_$OrdersScreenStateReady) _then)
+      : super(_value, (v) => _then(v as _$OrdersScreenStateReady));
 
   @override
-  OrdersScreenStateReady get _value => super._value as OrdersScreenStateReady;
+  _$OrdersScreenStateReady get _value =>
+      super._value as _$OrdersScreenStateReady;
 
   @override
   $Res call({
@@ -128,9 +105,9 @@ class _$OrdersScreenStateReadyCopyWithImpl<$Res>
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
-    return _then(OrdersScreenStateReady(
+    return _then(_$OrdersScreenStateReady(
       orders: orders == freezed
-          ? _value.orders
+          ? _value._orders
           : orders // ignore: cast_nullable_to_non_nullable
               as Map<int, List<OrderDTO>>,
       currentPage: currentPage == freezed
@@ -149,18 +126,24 @@ class _$OrdersScreenStateReadyCopyWithImpl<$Res>
 
 class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   const _$OrdersScreenStateReady(
-      {this.orders = const <int, List<OrderDTO>>{},
+      {final Map<int, List<OrderDTO>> orders = const <int, List<OrderDTO>>{},
       this.currentPage = 0,
-      this.totalCount = 0});
+      this.totalCount = 0})
+      : _orders = orders;
 
-  @JsonKey()
+  final Map<int, List<OrderDTO>> _orders;
   @override
-  final Map<int, List<OrderDTO>> orders;
   @JsonKey()
+  Map<int, List<OrderDTO>> get orders {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_orders);
+  }
+
   @override
+  @JsonKey()
   final int currentPage;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalCount;
 
   @override
@@ -172,8 +155,8 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is OrdersScreenStateReady &&
-            const DeepCollectionEquality().equals(other.orders, orders) &&
+            other is _$OrdersScreenStateReady &&
+            const DeepCollectionEquality().equals(other._orders, _orders) &&
             const DeepCollectionEquality()
                 .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality()
@@ -183,14 +166,14 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(orders),
+      const DeepCollectionEquality().hash(_orders),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
-  $OrdersScreenStateReadyCopyWith<OrdersScreenStateReady> get copyWith =>
-      _$OrdersScreenStateReadyCopyWithImpl<OrdersScreenStateReady>(
+  _$$OrdersScreenStateReadyCopyWith<_$OrdersScreenStateReady> get copyWith =>
+      __$$OrdersScreenStateReadyCopyWithImpl<_$OrdersScreenStateReady>(
           this, _$identity);
 
   @override
@@ -264,42 +247,43 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
 
 abstract class OrdersScreenStateReady implements OrdersScreenState {
   const factory OrdersScreenStateReady(
-      {Map<int, List<OrderDTO>> orders,
-      int currentPage,
-      int totalCount}) = _$OrdersScreenStateReady;
+      {final Map<int, List<OrderDTO>> orders,
+      final int currentPage,
+      final int totalCount}) = _$OrdersScreenStateReady;
 
   Map<int, List<OrderDTO>> get orders;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
-  $OrdersScreenStateReadyCopyWith<OrdersScreenStateReady> get copyWith =>
+  _$$OrdersScreenStateReadyCopyWith<_$OrdersScreenStateReady> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OrdersScreenStateErrorCopyWith<$Res> {
-  factory $OrdersScreenStateErrorCopyWith(OrdersScreenStateError value,
-          $Res Function(OrdersScreenStateError) then) =
-      _$OrdersScreenStateErrorCopyWithImpl<$Res>;
+abstract class _$$OrdersScreenStateErrorCopyWith<$Res> {
+  factory _$$OrdersScreenStateErrorCopyWith(_$OrdersScreenStateError value,
+          $Res Function(_$OrdersScreenStateError) then) =
+      __$$OrdersScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$OrdersScreenStateErrorCopyWithImpl<$Res>
+class __$$OrdersScreenStateErrorCopyWithImpl<$Res>
     extends _$OrdersScreenStateCopyWithImpl<$Res>
-    implements $OrdersScreenStateErrorCopyWith<$Res> {
-  _$OrdersScreenStateErrorCopyWithImpl(OrdersScreenStateError _value,
-      $Res Function(OrdersScreenStateError) _then)
-      : super(_value, (v) => _then(v as OrdersScreenStateError));
+    implements _$$OrdersScreenStateErrorCopyWith<$Res> {
+  __$$OrdersScreenStateErrorCopyWithImpl(_$OrdersScreenStateError _value,
+      $Res Function(_$OrdersScreenStateError) _then)
+      : super(_value, (v) => _then(v as _$OrdersScreenStateError));
 
   @override
-  OrdersScreenStateError get _value => super._value as OrdersScreenStateError;
+  _$OrdersScreenStateError get _value =>
+      super._value as _$OrdersScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(OrdersScreenStateError(
+    return _then(_$OrdersScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -325,7 +309,7 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is OrdersScreenStateError &&
+            other is _$OrdersScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -335,8 +319,8 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
 
   @JsonKey(ignore: true)
   @override
-  $OrdersScreenStateErrorCopyWith<OrdersScreenStateError> get copyWith =>
-      _$OrdersScreenStateErrorCopyWithImpl<OrdersScreenStateError>(
+  _$$OrdersScreenStateErrorCopyWith<_$OrdersScreenStateError> get copyWith =>
+      __$$OrdersScreenStateErrorCopyWithImpl<_$OrdersScreenStateError>(
           this, _$identity);
 
   @override
@@ -409,11 +393,11 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
 }
 
 abstract class OrdersScreenStateError implements OrdersScreenState {
-  const factory OrdersScreenStateError({required String error}) =
+  const factory OrdersScreenStateError({required final String error}) =
       _$OrdersScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $OrdersScreenStateErrorCopyWith<OrdersScreenStateError> get copyWith =>
+  _$$OrdersScreenStateErrorCopyWith<_$OrdersScreenStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'category_form_body_cubit.dart';
@@ -11,36 +12,7 @@ part of 'category_form_body_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CategoryFormBodyStateTearOff {
-  const _$CategoryFormBodyStateTearOff();
-
-  CategoryFormBodyStateReady ready(
-      {List<CategoryDTO> categories = const <CategoryDTO>[],
-      String name = '',
-      String? categoryId}) {
-    return CategoryFormBodyStateReady(
-      categories: categories,
-      name: name,
-      categoryId: categoryId,
-    );
-  }
-
-  CategoryFormBodyStateFinished finished() {
-    return const CategoryFormBodyStateFinished();
-  }
-
-  CategoryFormBodyStateError error({required String error}) {
-    return CategoryFormBodyStateError(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $CategoryFormBodyState = _$CategoryFormBodyStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CategoryFormBodyState {
@@ -114,24 +86,26 @@ class _$CategoryFormBodyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $CategoryFormBodyStateReadyCopyWith<$Res> {
-  factory $CategoryFormBodyStateReadyCopyWith(CategoryFormBodyStateReady value,
-          $Res Function(CategoryFormBodyStateReady) then) =
-      _$CategoryFormBodyStateReadyCopyWithImpl<$Res>;
+abstract class _$$CategoryFormBodyStateReadyCopyWith<$Res> {
+  factory _$$CategoryFormBodyStateReadyCopyWith(
+          _$CategoryFormBodyStateReady value,
+          $Res Function(_$CategoryFormBodyStateReady) then) =
+      __$$CategoryFormBodyStateReadyCopyWithImpl<$Res>;
   $Res call({List<CategoryDTO> categories, String name, String? categoryId});
 }
 
 /// @nodoc
-class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
+class __$$CategoryFormBodyStateReadyCopyWithImpl<$Res>
     extends _$CategoryFormBodyStateCopyWithImpl<$Res>
-    implements $CategoryFormBodyStateReadyCopyWith<$Res> {
-  _$CategoryFormBodyStateReadyCopyWithImpl(CategoryFormBodyStateReady _value,
-      $Res Function(CategoryFormBodyStateReady) _then)
-      : super(_value, (v) => _then(v as CategoryFormBodyStateReady));
+    implements _$$CategoryFormBodyStateReadyCopyWith<$Res> {
+  __$$CategoryFormBodyStateReadyCopyWithImpl(
+      _$CategoryFormBodyStateReady _value,
+      $Res Function(_$CategoryFormBodyStateReady) _then)
+      : super(_value, (v) => _then(v as _$CategoryFormBodyStateReady));
 
   @override
-  CategoryFormBodyStateReady get _value =>
-      super._value as CategoryFormBodyStateReady;
+  _$CategoryFormBodyStateReady get _value =>
+      super._value as _$CategoryFormBodyStateReady;
 
   @override
   $Res call({
@@ -139,9 +113,9 @@ class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
     Object? name = freezed,
     Object? categoryId = freezed,
   }) {
-    return _then(CategoryFormBodyStateReady(
+    return _then(_$CategoryFormBodyStateReady(
       categories: categories == freezed
-          ? _value.categories
+          ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryDTO>,
       name: name == freezed
@@ -160,15 +134,21 @@ class _$CategoryFormBodyStateReadyCopyWithImpl<$Res>
 
 class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   const _$CategoryFormBodyStateReady(
-      {this.categories = const <CategoryDTO>[],
+      {final List<CategoryDTO> categories = const <CategoryDTO>[],
       this.name = '',
-      this.categoryId});
+      this.categoryId})
+      : _categories = categories;
 
-  @JsonKey()
+  final List<CategoryDTO> _categories;
   @override
-  final List<CategoryDTO> categories;
   @JsonKey()
+  List<CategoryDTO> get categories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   @override
+  @JsonKey()
   final String name;
   @override
   final String? categoryId;
@@ -182,9 +162,9 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CategoryFormBodyStateReady &&
+            other is _$CategoryFormBodyStateReady &&
             const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.categoryId, categoryId));
@@ -193,16 +173,15 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(categoryId));
 
   @JsonKey(ignore: true)
   @override
-  $CategoryFormBodyStateReadyCopyWith<CategoryFormBodyStateReady>
-      get copyWith =>
-          _$CategoryFormBodyStateReadyCopyWithImpl<CategoryFormBodyStateReady>(
-              this, _$identity);
+  _$$CategoryFormBodyStateReadyCopyWith<_$CategoryFormBodyStateReady>
+      get copyWith => __$$CategoryFormBodyStateReadyCopyWithImpl<
+          _$CategoryFormBodyStateReady>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -281,38 +260,38 @@ class _$CategoryFormBodyStateReady implements CategoryFormBodyStateReady {
 
 abstract class CategoryFormBodyStateReady implements CategoryFormBodyState {
   const factory CategoryFormBodyStateReady(
-      {List<CategoryDTO> categories,
-      String name,
-      String? categoryId}) = _$CategoryFormBodyStateReady;
+      {final List<CategoryDTO> categories,
+      final String name,
+      final String? categoryId}) = _$CategoryFormBodyStateReady;
 
   List<CategoryDTO> get categories;
   String get name;
   String? get categoryId;
   @JsonKey(ignore: true)
-  $CategoryFormBodyStateReadyCopyWith<CategoryFormBodyStateReady>
+  _$$CategoryFormBodyStateReadyCopyWith<_$CategoryFormBodyStateReady>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoryFormBodyStateFinishedCopyWith<$Res> {
-  factory $CategoryFormBodyStateFinishedCopyWith(
-          CategoryFormBodyStateFinished value,
-          $Res Function(CategoryFormBodyStateFinished) then) =
-      _$CategoryFormBodyStateFinishedCopyWithImpl<$Res>;
+abstract class _$$CategoryFormBodyStateFinishedCopyWith<$Res> {
+  factory _$$CategoryFormBodyStateFinishedCopyWith(
+          _$CategoryFormBodyStateFinished value,
+          $Res Function(_$CategoryFormBodyStateFinished) then) =
+      __$$CategoryFormBodyStateFinishedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CategoryFormBodyStateFinishedCopyWithImpl<$Res>
+class __$$CategoryFormBodyStateFinishedCopyWithImpl<$Res>
     extends _$CategoryFormBodyStateCopyWithImpl<$Res>
-    implements $CategoryFormBodyStateFinishedCopyWith<$Res> {
-  _$CategoryFormBodyStateFinishedCopyWithImpl(
-      CategoryFormBodyStateFinished _value,
-      $Res Function(CategoryFormBodyStateFinished) _then)
-      : super(_value, (v) => _then(v as CategoryFormBodyStateFinished));
+    implements _$$CategoryFormBodyStateFinishedCopyWith<$Res> {
+  __$$CategoryFormBodyStateFinishedCopyWithImpl(
+      _$CategoryFormBodyStateFinished _value,
+      $Res Function(_$CategoryFormBodyStateFinished) _then)
+      : super(_value, (v) => _then(v as _$CategoryFormBodyStateFinished));
 
   @override
-  CategoryFormBodyStateFinished get _value =>
-      super._value as CategoryFormBodyStateFinished;
+  _$CategoryFormBodyStateFinished get _value =>
+      super._value as _$CategoryFormBodyStateFinished;
 }
 
 /// @nodoc
@@ -329,7 +308,7 @@ class _$CategoryFormBodyStateFinished implements CategoryFormBodyStateFinished {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CategoryFormBodyStateFinished);
+            other is _$CategoryFormBodyStateFinished);
   }
 
   @override
@@ -416,30 +395,32 @@ abstract class CategoryFormBodyStateFinished implements CategoryFormBodyState {
 }
 
 /// @nodoc
-abstract class $CategoryFormBodyStateErrorCopyWith<$Res> {
-  factory $CategoryFormBodyStateErrorCopyWith(CategoryFormBodyStateError value,
-          $Res Function(CategoryFormBodyStateError) then) =
-      _$CategoryFormBodyStateErrorCopyWithImpl<$Res>;
+abstract class _$$CategoryFormBodyStateErrorCopyWith<$Res> {
+  factory _$$CategoryFormBodyStateErrorCopyWith(
+          _$CategoryFormBodyStateError value,
+          $Res Function(_$CategoryFormBodyStateError) then) =
+      __$$CategoryFormBodyStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$CategoryFormBodyStateErrorCopyWithImpl<$Res>
+class __$$CategoryFormBodyStateErrorCopyWithImpl<$Res>
     extends _$CategoryFormBodyStateCopyWithImpl<$Res>
-    implements $CategoryFormBodyStateErrorCopyWith<$Res> {
-  _$CategoryFormBodyStateErrorCopyWithImpl(CategoryFormBodyStateError _value,
-      $Res Function(CategoryFormBodyStateError) _then)
-      : super(_value, (v) => _then(v as CategoryFormBodyStateError));
+    implements _$$CategoryFormBodyStateErrorCopyWith<$Res> {
+  __$$CategoryFormBodyStateErrorCopyWithImpl(
+      _$CategoryFormBodyStateError _value,
+      $Res Function(_$CategoryFormBodyStateError) _then)
+      : super(_value, (v) => _then(v as _$CategoryFormBodyStateError));
 
   @override
-  CategoryFormBodyStateError get _value =>
-      super._value as CategoryFormBodyStateError;
+  _$CategoryFormBodyStateError get _value =>
+      super._value as _$CategoryFormBodyStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(CategoryFormBodyStateError(
+    return _then(_$CategoryFormBodyStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -465,7 +446,7 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CategoryFormBodyStateError &&
+            other is _$CategoryFormBodyStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -475,10 +456,9 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
 
   @JsonKey(ignore: true)
   @override
-  $CategoryFormBodyStateErrorCopyWith<CategoryFormBodyStateError>
-      get copyWith =>
-          _$CategoryFormBodyStateErrorCopyWithImpl<CategoryFormBodyStateError>(
-              this, _$identity);
+  _$$CategoryFormBodyStateErrorCopyWith<_$CategoryFormBodyStateError>
+      get copyWith => __$$CategoryFormBodyStateErrorCopyWithImpl<
+          _$CategoryFormBodyStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -556,11 +536,11 @@ class _$CategoryFormBodyStateError implements CategoryFormBodyStateError {
 }
 
 abstract class CategoryFormBodyStateError implements CategoryFormBodyState {
-  const factory CategoryFormBodyStateError({required String error}) =
+  const factory CategoryFormBodyStateError({required final String error}) =
       _$CategoryFormBodyStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $CategoryFormBodyStateErrorCopyWith<CategoryFormBodyStateError>
+  _$$CategoryFormBodyStateErrorCopyWith<_$CategoryFormBodyStateError>
       get copyWith => throw _privateConstructorUsedError;
 }

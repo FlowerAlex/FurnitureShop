@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'categories_screen_cubit.dart';
@@ -11,33 +12,7 @@ part of 'categories_screen_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CategoriesScreenStateTearOff {
-  const _$CategoriesScreenStateTearOff();
-
-  CategoriesScreenStateReady ready(
-      {Map<int, List<CategoryDTO>> categories =
-          const <int, List<CategoryDTO>>{},
-      int currentPage = 0,
-      int totalCount = 0}) {
-    return CategoriesScreenStateReady(
-      categories: categories,
-      currentPage: currentPage,
-      totalCount: totalCount,
-    );
-  }
-
-  CategoriesScreenStateError error({required String error}) {
-    return CategoriesScreenStateError(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $CategoriesScreenState = _$CategoriesScreenStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CategoriesScreenState {
@@ -105,10 +80,11 @@ class _$CategoriesScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $CategoriesScreenStateReadyCopyWith<$Res> {
-  factory $CategoriesScreenStateReadyCopyWith(CategoriesScreenStateReady value,
-          $Res Function(CategoriesScreenStateReady) then) =
-      _$CategoriesScreenStateReadyCopyWithImpl<$Res>;
+abstract class _$$CategoriesScreenStateReadyCopyWith<$Res> {
+  factory _$$CategoriesScreenStateReadyCopyWith(
+          _$CategoriesScreenStateReady value,
+          $Res Function(_$CategoriesScreenStateReady) then) =
+      __$$CategoriesScreenStateReadyCopyWithImpl<$Res>;
   $Res call(
       {Map<int, List<CategoryDTO>> categories,
       int currentPage,
@@ -116,16 +92,17 @@ abstract class $CategoriesScreenStateReadyCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CategoriesScreenStateReadyCopyWithImpl<$Res>
+class __$$CategoriesScreenStateReadyCopyWithImpl<$Res>
     extends _$CategoriesScreenStateCopyWithImpl<$Res>
-    implements $CategoriesScreenStateReadyCopyWith<$Res> {
-  _$CategoriesScreenStateReadyCopyWithImpl(CategoriesScreenStateReady _value,
-      $Res Function(CategoriesScreenStateReady) _then)
-      : super(_value, (v) => _then(v as CategoriesScreenStateReady));
+    implements _$$CategoriesScreenStateReadyCopyWith<$Res> {
+  __$$CategoriesScreenStateReadyCopyWithImpl(
+      _$CategoriesScreenStateReady _value,
+      $Res Function(_$CategoriesScreenStateReady) _then)
+      : super(_value, (v) => _then(v as _$CategoriesScreenStateReady));
 
   @override
-  CategoriesScreenStateReady get _value =>
-      super._value as CategoriesScreenStateReady;
+  _$CategoriesScreenStateReady get _value =>
+      super._value as _$CategoriesScreenStateReady;
 
   @override
   $Res call({
@@ -133,9 +110,9 @@ class _$CategoriesScreenStateReadyCopyWithImpl<$Res>
     Object? currentPage = freezed,
     Object? totalCount = freezed,
   }) {
-    return _then(CategoriesScreenStateReady(
+    return _then(_$CategoriesScreenStateReady(
       categories: categories == freezed
-          ? _value.categories
+          ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as Map<int, List<CategoryDTO>>,
       currentPage: currentPage == freezed
@@ -154,18 +131,25 @@ class _$CategoriesScreenStateReadyCopyWithImpl<$Res>
 
 class _$CategoriesScreenStateReady implements CategoriesScreenStateReady {
   const _$CategoriesScreenStateReady(
-      {this.categories = const <int, List<CategoryDTO>>{},
+      {final Map<int, List<CategoryDTO>> categories =
+          const <int, List<CategoryDTO>>{},
       this.currentPage = 0,
-      this.totalCount = 0});
+      this.totalCount = 0})
+      : _categories = categories;
 
-  @JsonKey()
+  final Map<int, List<CategoryDTO>> _categories;
   @override
-  final Map<int, List<CategoryDTO>> categories;
   @JsonKey()
+  Map<int, List<CategoryDTO>> get categories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_categories);
+  }
+
   @override
+  @JsonKey()
   final int currentPage;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalCount;
 
   @override
@@ -177,9 +161,9 @@ class _$CategoriesScreenStateReady implements CategoriesScreenStateReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CategoriesScreenStateReady &&
+            other is _$CategoriesScreenStateReady &&
             const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality()
                 .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality()
@@ -189,16 +173,15 @@ class _$CategoriesScreenStateReady implements CategoriesScreenStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
-  $CategoriesScreenStateReadyCopyWith<CategoriesScreenStateReady>
-      get copyWith =>
-          _$CategoriesScreenStateReadyCopyWithImpl<CategoriesScreenStateReady>(
-              this, _$identity);
+  _$$CategoriesScreenStateReadyCopyWith<_$CategoriesScreenStateReady>
+      get copyWith => __$$CategoriesScreenStateReadyCopyWithImpl<
+          _$CategoriesScreenStateReady>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -271,43 +254,45 @@ class _$CategoriesScreenStateReady implements CategoriesScreenStateReady {
 
 abstract class CategoriesScreenStateReady implements CategoriesScreenState {
   const factory CategoriesScreenStateReady(
-      {Map<int, List<CategoryDTO>> categories,
-      int currentPage,
-      int totalCount}) = _$CategoriesScreenStateReady;
+      {final Map<int, List<CategoryDTO>> categories,
+      final int currentPage,
+      final int totalCount}) = _$CategoriesScreenStateReady;
 
   Map<int, List<CategoryDTO>> get categories;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
-  $CategoriesScreenStateReadyCopyWith<CategoriesScreenStateReady>
+  _$$CategoriesScreenStateReadyCopyWith<_$CategoriesScreenStateReady>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoriesScreenStateErrorCopyWith<$Res> {
-  factory $CategoriesScreenStateErrorCopyWith(CategoriesScreenStateError value,
-          $Res Function(CategoriesScreenStateError) then) =
-      _$CategoriesScreenStateErrorCopyWithImpl<$Res>;
+abstract class _$$CategoriesScreenStateErrorCopyWith<$Res> {
+  factory _$$CategoriesScreenStateErrorCopyWith(
+          _$CategoriesScreenStateError value,
+          $Res Function(_$CategoriesScreenStateError) then) =
+      __$$CategoriesScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$CategoriesScreenStateErrorCopyWithImpl<$Res>
+class __$$CategoriesScreenStateErrorCopyWithImpl<$Res>
     extends _$CategoriesScreenStateCopyWithImpl<$Res>
-    implements $CategoriesScreenStateErrorCopyWith<$Res> {
-  _$CategoriesScreenStateErrorCopyWithImpl(CategoriesScreenStateError _value,
-      $Res Function(CategoriesScreenStateError) _then)
-      : super(_value, (v) => _then(v as CategoriesScreenStateError));
+    implements _$$CategoriesScreenStateErrorCopyWith<$Res> {
+  __$$CategoriesScreenStateErrorCopyWithImpl(
+      _$CategoriesScreenStateError _value,
+      $Res Function(_$CategoriesScreenStateError) _then)
+      : super(_value, (v) => _then(v as _$CategoriesScreenStateError));
 
   @override
-  CategoriesScreenStateError get _value =>
-      super._value as CategoriesScreenStateError;
+  _$CategoriesScreenStateError get _value =>
+      super._value as _$CategoriesScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(CategoriesScreenStateError(
+    return _then(_$CategoriesScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -333,7 +318,7 @@ class _$CategoriesScreenStateError implements CategoriesScreenStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CategoriesScreenStateError &&
+            other is _$CategoriesScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -343,10 +328,9 @@ class _$CategoriesScreenStateError implements CategoriesScreenStateError {
 
   @JsonKey(ignore: true)
   @override
-  $CategoriesScreenStateErrorCopyWith<CategoriesScreenStateError>
-      get copyWith =>
-          _$CategoriesScreenStateErrorCopyWithImpl<CategoriesScreenStateError>(
-              this, _$identity);
+  _$$CategoriesScreenStateErrorCopyWith<_$CategoriesScreenStateError>
+      get copyWith => __$$CategoriesScreenStateErrorCopyWithImpl<
+          _$CategoriesScreenStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -418,11 +402,11 @@ class _$CategoriesScreenStateError implements CategoriesScreenStateError {
 }
 
 abstract class CategoriesScreenStateError implements CategoriesScreenState {
-  const factory CategoriesScreenStateError({required String error}) =
+  const factory CategoriesScreenStateError({required final String error}) =
       _$CategoriesScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $CategoriesScreenStateErrorCopyWith<CategoriesScreenStateError>
+  _$$CategoriesScreenStateErrorCopyWith<_$CategoriesScreenStateError>
       get copyWith => throw _privateConstructorUsedError;
 }

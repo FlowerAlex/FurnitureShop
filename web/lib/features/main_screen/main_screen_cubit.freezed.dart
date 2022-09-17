@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'main_screen_cubit.dart';
@@ -11,26 +12,11 @@ part of 'main_screen_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$MainScreenStateTearOff {
-  const _$MainScreenStateTearOff();
-
-  MainScreenReadyState ready({required MainScreenSection currentSection}) {
-    return MainScreenReadyState(
-      currentSection: currentSection,
-    );
-  }
-}
-
-/// @nodoc
-const $MainScreenState = _$MainScreenStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$MainScreenState {
   MainScreenSection get currentSection => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(MainScreenSection currentSection) ready,
@@ -100,31 +86,31 @@ class _$MainScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $MainScreenReadyStateCopyWith<$Res>
+abstract class _$$MainScreenReadyStateCopyWith<$Res>
     implements $MainScreenStateCopyWith<$Res> {
-  factory $MainScreenReadyStateCopyWith(MainScreenReadyState value,
-          $Res Function(MainScreenReadyState) then) =
-      _$MainScreenReadyStateCopyWithImpl<$Res>;
+  factory _$$MainScreenReadyStateCopyWith(_$MainScreenReadyState value,
+          $Res Function(_$MainScreenReadyState) then) =
+      __$$MainScreenReadyStateCopyWithImpl<$Res>;
   @override
   $Res call({MainScreenSection currentSection});
 }
 
 /// @nodoc
-class _$MainScreenReadyStateCopyWithImpl<$Res>
+class __$$MainScreenReadyStateCopyWithImpl<$Res>
     extends _$MainScreenStateCopyWithImpl<$Res>
-    implements $MainScreenReadyStateCopyWith<$Res> {
-  _$MainScreenReadyStateCopyWithImpl(
-      MainScreenReadyState _value, $Res Function(MainScreenReadyState) _then)
-      : super(_value, (v) => _then(v as MainScreenReadyState));
+    implements _$$MainScreenReadyStateCopyWith<$Res> {
+  __$$MainScreenReadyStateCopyWithImpl(_$MainScreenReadyState _value,
+      $Res Function(_$MainScreenReadyState) _then)
+      : super(_value, (v) => _then(v as _$MainScreenReadyState));
 
   @override
-  MainScreenReadyState get _value => super._value as MainScreenReadyState;
+  _$MainScreenReadyState get _value => super._value as _$MainScreenReadyState;
 
   @override
   $Res call({
     Object? currentSection = freezed,
   }) {
-    return _then(MainScreenReadyState(
+    return _then(_$MainScreenReadyState(
       currentSection: currentSection == freezed
           ? _value.currentSection
           : currentSection // ignore: cast_nullable_to_non_nullable
@@ -150,7 +136,7 @@ class _$MainScreenReadyState implements MainScreenReadyState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is MainScreenReadyState &&
+            other is _$MainScreenReadyState &&
             const DeepCollectionEquality()
                 .equals(other.currentSection, currentSection));
   }
@@ -161,8 +147,8 @@ class _$MainScreenReadyState implements MainScreenReadyState {
 
   @JsonKey(ignore: true)
   @override
-  $MainScreenReadyStateCopyWith<MainScreenReadyState> get copyWith =>
-      _$MainScreenReadyStateCopyWithImpl<MainScreenReadyState>(
+  _$$MainScreenReadyStateCopyWith<_$MainScreenReadyState> get copyWith =>
+      __$$MainScreenReadyStateCopyWithImpl<_$MainScreenReadyState>(
           this, _$identity);
 
   @override
@@ -224,12 +210,13 @@ class _$MainScreenReadyState implements MainScreenReadyState {
 
 abstract class MainScreenReadyState implements MainScreenState {
   const factory MainScreenReadyState(
-      {required MainScreenSection currentSection}) = _$MainScreenReadyState;
+          {required final MainScreenSection currentSection}) =
+      _$MainScreenReadyState;
 
   @override
   MainScreenSection get currentSection;
   @override
   @JsonKey(ignore: true)
-  $MainScreenReadyStateCopyWith<MainScreenReadyState> get copyWith =>
+  _$$MainScreenReadyStateCopyWith<_$MainScreenReadyState> get copyWith =>
       throw _privateConstructorUsedError;
 }

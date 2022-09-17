@@ -144,7 +144,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
 
         await _cqrs.run(
           CreateProduct(
-            newProduct: ProducDetailsDTOBase(
+            newProduct: CreateProdcutDTO(
               name: name,
               description: description,
               price: double.parse(price),
@@ -152,7 +152,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
               categoryId: selectedCategoryId,
               modelId: blobModelId,
               previewPhotoId: blobImageId,
-              photosIds: [], // TODO: Add photos when creating product
+              photoIds: [], // TODO: Add photos when creating product
             ),
           ),
         );

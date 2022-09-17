@@ -41,6 +41,26 @@ Map<String, dynamic> _$PaginatedResultToJson<TResult>(
       'TotalCount': instance.totalCount,
     };
 
+ProductDTOBase _$ProductDTOBaseFromJson(Map<String, dynamic> json) =>
+    ProductDTOBase(
+      name: json['Name'] as String,
+      price: (json['Price'] as num).toDouble(),
+      description: json['Description'] as String,
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
+      previewPhotoId: json['PreviewPhotoId'] as String?,
+      categoryId: json['CategoryId'] as String?,
+    );
+
+Map<String, dynamic> _$ProductDTOBaseToJson(ProductDTOBase instance) =>
+    <String, dynamic>{
+      'Name': instance.name,
+      'Price': instance.price,
+      'Description': instance.description,
+      'AverageRating': instance.averageRating,
+      'PreviewPhotoId': instance.previewPhotoId,
+      'CategoryId': instance.categoryId,
+    };
+
 AllModelsUrls _$AllModelsUrlsFromJson(Map<String, dynamic> json) =>
     AllModelsUrls();
 
@@ -191,12 +211,8 @@ Map<String, dynamic> _$AllOrdersToJson(AllOrders instance) => <String, dynamic>{
 
 const _$OrdersFilterFieldDTOEnumMap = {
   OrdersFilterFieldDTO.orderState: 0,
-  OrdersFilterFieldDTO.country: 1,
-  OrdersFilterFieldDTO.state: 2,
-  OrdersFilterFieldDTO.city: 3,
-  OrdersFilterFieldDTO.street: 4,
-  OrdersFilterFieldDTO.postalCode: 5,
-  OrdersFilterFieldDTO.userId: 6,
+  OrdersFilterFieldDTO.address: 1,
+  OrdersFilterFieldDTO.userId: 2,
 };
 
 const _$OrdersSortFieldDTOEnumMap = {
@@ -215,12 +231,9 @@ Map<String, dynamic> _$OrderByIdToJson(OrderById instance) => <String, dynamic>{
 OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
-      street: json['Street'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      postalCode: json['PostalCode'] as String,
-      country: json['Country'] as String,
-      orderState: json['OrderState'] as String,
+      adress: json['Adress'] as String,
+      orderState:
+          $enumDecode(_$WebOrdersOrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
           ? null
@@ -234,27 +247,27 @@ OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
 Map<String, dynamic> _$OrderDTOToJson(OrderDTO instance) => <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
-      'Street': instance.street,
-      'City': instance.city,
-      'State': instance.state,
-      'PostalCode': instance.postalCode,
-      'Country': instance.country,
-      'OrderState': instance.orderState,
+      'Adress': instance.adress,
+      'OrderState': _$WebOrdersOrderStateDTOEnumMap[instance.orderState]!,
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
       'Products': instance.products,
       'Id': instance.id,
     };
 
+const _$WebOrdersOrderStateDTOEnumMap = {
+  WebOrdersOrderStateDTO.pending: 0,
+  WebOrdersOrderStateDTO.cancelled: 1,
+  WebOrdersOrderStateDTO.inProgress: 2,
+  WebOrdersOrderStateDTO.finished: 3,
+};
+
 OrderDTOBase _$OrderDTOBaseFromJson(Map<String, dynamic> json) => OrderDTOBase(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
-      street: json['Street'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      postalCode: json['PostalCode'] as String,
-      country: json['Country'] as String,
-      orderState: json['OrderState'] as String,
+      adress: json['Adress'] as String,
+      orderState:
+          $enumDecode(_$WebOrdersOrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
           ? null
@@ -268,12 +281,8 @@ Map<String, dynamic> _$OrderDTOBaseToJson(OrderDTOBase instance) =>
     <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
-      'Street': instance.street,
-      'City': instance.city,
-      'State': instance.state,
-      'PostalCode': instance.postalCode,
-      'Country': instance.country,
-      'OrderState': instance.orderState,
+      'Adress': instance.adress,
+      'OrderState': _$WebOrdersOrderStateDTOEnumMap[instance.orderState]!,
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
       'Products': instance.products,
@@ -283,6 +292,7 @@ ProductInOrderDTO _$ProductInOrderDTOFromJson(Map<String, dynamic> json) =>
     ProductInOrderDTO(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
+      description: json['Description'] as String,
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
@@ -294,6 +304,7 @@ Map<String, dynamic> _$ProductInOrderDTOToJson(ProductInOrderDTO instance) =>
     <String, dynamic>{
       'Name': instance.name,
       'Price': instance.price,
+      'Description': instance.description,
       'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
@@ -304,21 +315,15 @@ Map<String, dynamic> _$ProductInOrderDTOToJson(ProductInOrderDTO instance) =>
 SetOrderState _$SetOrderStateFromJson(Map<String, dynamic> json) =>
     SetOrderState(
       id: json['Id'] as String,
-      orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
+      orderState:
+          $enumDecode(_$WebOrdersOrderStateDTOEnumMap, json['OrderState']),
     );
 
 Map<String, dynamic> _$SetOrderStateToJson(SetOrderState instance) =>
     <String, dynamic>{
       'Id': instance.id,
-      'OrderState': _$OrderStateDTOEnumMap[instance.orderState]!,
+      'OrderState': _$WebOrdersOrderStateDTOEnumMap[instance.orderState]!,
     };
-
-const _$OrderStateDTOEnumMap = {
-  OrderStateDTO.pending: 0,
-  OrderStateDTO.cancelled: 1,
-  OrderStateDTO.inProgress: 2,
-  OrderStateDTO.finished: 3,
-};
 
 AllProducts _$AllProductsFromJson(Map<String, dynamic> json) => AllProducts(
       pageNumber: json['PageNumber'] as int,
@@ -346,10 +351,35 @@ const _$ProductsSortFieldDTOEnumMap = {
   ProductsSortFieldDTO.price: 2,
 };
 
+CreateProdcutDTO _$CreateProdcutDTOFromJson(Map<String, dynamic> json) =>
+    CreateProdcutDTO(
+      name: json['Name'] as String,
+      price: (json['Price'] as num).toDouble(),
+      description: json['Description'] as String,
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
+      previewPhotoId: json['PreviewPhotoId'] as String?,
+      categoryId: json['CategoryId'] as String?,
+      modelId: json['ModelId'] as String?,
+      photoIds:
+          (json['PhotoIds'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$CreateProdcutDTOToJson(CreateProdcutDTO instance) =>
+    <String, dynamic>{
+      'Name': instance.name,
+      'Price': instance.price,
+      'Description': instance.description,
+      'AverageRating': instance.averageRating,
+      'PreviewPhotoId': instance.previewPhotoId,
+      'CategoryId': instance.categoryId,
+      'ModelId': instance.modelId,
+      'PhotoIds': instance.photoIds,
+    };
+
 CreateProduct _$CreateProductFromJson(Map<String, dynamic> json) =>
     CreateProduct(
-      newProduct: ProducDetailsDTOBase.fromJson(
-          json['NewProduct'] as Map<String, dynamic>),
+      newProduct:
+          CreateProdcutDTO.fromJson(json['NewProduct'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CreateProductToJson(CreateProduct instance) =>
@@ -367,33 +397,6 @@ Map<String, dynamic> _$DeleteProductToJson(DeleteProduct instance) =>
       'Id': instance.id,
     };
 
-ProducDetailsDTOBase _$ProducDetailsDTOBaseFromJson(
-        Map<String, dynamic> json) =>
-    ProducDetailsDTOBase(
-      name: json['Name'] as String,
-      price: (json['Price'] as num).toDouble(),
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoId: json['PreviewPhotoId'] as String?,
-      categoryId: json['CategoryId'] as String?,
-      description: json['Description'] as String,
-      modelId: json['ModelId'] as String?,
-      photosIds:
-          (json['PhotosIds'] as List<dynamic>).map((e) => e as String).toList(),
-    );
-
-Map<String, dynamic> _$ProducDetailsDTOBaseToJson(
-        ProducDetailsDTOBase instance) =>
-    <String, dynamic>{
-      'Name': instance.name,
-      'Price': instance.price,
-      'AverageRating': instance.averageRating,
-      'PreviewPhotoId': instance.previewPhotoId,
-      'CategoryId': instance.categoryId,
-      'Description': instance.description,
-      'ModelId': instance.modelId,
-      'PhotosIds': instance.photosIds,
-    };
-
 ProductById _$ProductByIdFromJson(Map<String, dynamic> json) => ProductById(
       id: json['Id'] as String,
     );
@@ -407,32 +410,33 @@ ProductDetailsDTO _$ProductDetailsDTOFromJson(Map<String, dynamic> json) =>
     ProductDetailsDTO(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
+      description: json['Description'] as String,
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
-      description: json['Description'] as String,
+      id: json['Id'] as String,
       modelId: json['ModelId'] as String?,
       photosIds:
           (json['PhotosIds'] as List<dynamic>).map((e) => e as String).toList(),
-      id: json['Id'] as String,
     );
 
 Map<String, dynamic> _$ProductDetailsDTOToJson(ProductDetailsDTO instance) =>
     <String, dynamic>{
       'Name': instance.name,
       'Price': instance.price,
+      'Description': instance.description,
       'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
-      'Description': instance.description,
+      'Id': instance.id,
       'ModelId': instance.modelId,
       'PhotosIds': instance.photosIds,
-      'Id': instance.id,
     };
 
 ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) => ProductDTO(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
+      description: json['Description'] as String,
       averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
@@ -443,28 +447,11 @@ Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
     <String, dynamic>{
       'Name': instance.name,
       'Price': instance.price,
+      'Description': instance.description,
       'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Id': instance.id,
-    };
-
-ProductDTOBase _$ProductDTOBaseFromJson(Map<String, dynamic> json) =>
-    ProductDTOBase(
-      name: json['Name'] as String,
-      price: (json['Price'] as num).toDouble(),
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
-      previewPhotoId: json['PreviewPhotoId'] as String?,
-      categoryId: json['CategoryId'] as String?,
-    );
-
-Map<String, dynamic> _$ProductDTOBaseToJson(ProductDTOBase instance) =>
-    <String, dynamic>{
-      'Name': instance.name,
-      'Price': instance.price,
-      'AverageRating': instance.averageRating,
-      'PreviewPhotoId': instance.previewPhotoId,
-      'CategoryId': instance.categoryId,
     };
 
 UpdateProduct _$UpdateProductFromJson(Map<String, dynamic> json) =>
@@ -476,6 +463,42 @@ UpdateProduct _$UpdateProductFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UpdateProductToJson(UpdateProduct instance) =>
     <String, dynamic>{
       'UpdatedProduct': instance.updatedProduct,
+    };
+
+AllReviewsForUser _$AllReviewsForUserFromJson(Map<String, dynamic> json) =>
+    AllReviewsForUser(
+      pageNumber: json['PageNumber'] as int,
+      pageSize: json['PageSize'] as int,
+      userId: json['UserId'] as String,
+    );
+
+Map<String, dynamic> _$AllReviewsForUserToJson(AllReviewsForUser instance) =>
+    <String, dynamic>{
+      'PageNumber': instance.pageNumber,
+      'PageSize': instance.pageSize,
+      'UserId': instance.userId,
+    };
+
+ReviewDTO _$ReviewDTOFromJson(Map<String, dynamic> json) => ReviewDTO(
+      id: json['Id'] as String,
+      userId: json['UserId'] as String,
+      userName: json['UserName'] as String,
+      productId: json['ProductId'] as String,
+      productName: json['ProductName'] as String,
+      text: json['Text'] as String,
+      rating: (json['Rating'] as num).toDouble(),
+      createdDate: DateTime.parse(json['CreatedDate'] as String),
+    );
+
+Map<String, dynamic> _$ReviewDTOToJson(ReviewDTO instance) => <String, dynamic>{
+      'Id': instance.id,
+      'UserId': instance.userId,
+      'UserName': instance.userName,
+      'ProductId': instance.productId,
+      'ProductName': instance.productName,
+      'Text': instance.text,
+      'Rating': instance.rating,
+      'CreatedDate': instance.createdDate.toIso8601String(),
     };
 
 AllUsers _$AllUsersFromJson(Map<String, dynamic> json) => AllUsers(
@@ -505,18 +528,24 @@ Map<String, dynamic> _$UnbanUserToJson(UnbanUser instance) => <String, dynamic>{
     };
 
 UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
+      id: json['Id'] as String,
       firstname: json['Firstname'] as String,
       surname: json['Surname'] as String,
       username: json['Username'] as String,
       emailAddress: json['EmailAddress'] as String,
-      isBanned: json['isBanned'] as bool,
+      address: json['Address'] as String?,
+      funds: json['Funds'] as int,
+      isBanned: json['IsBanned'] as bool,
     );
 
 Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
     <String, dynamic>{
+      'Id': instance.id,
       'Firstname': instance.firstname,
       'Surname': instance.surname,
       'Username': instance.username,
       'EmailAddress': instance.emailAddress,
-      'isBanned': instance.isBanned,
+      'Address': instance.address,
+      'Funds': instance.funds,
+      'IsBanned': instance.isBanned,
     };

@@ -2,6 +2,7 @@ import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:furniture_shop/utils/table_section.dart';
 import 'package:logging/logging.dart';
 
@@ -41,10 +42,7 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
         state.copyWith(
           currentPage: page,
           totalCount: result.totalCount,
-          users: {
-            ...state.users,
-            page: result.items,
-          },
+          users: result.items,
         ),
       );
     } catch (err, st) {
@@ -67,6 +65,20 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 
     try {
       await _cqrs.run(BanUser(userId: userId));
+
+      emit(
+        state.copyWith(
+          users: [
+            for (final user in state.users)
+              if (user.id != userId)
+                user
+              else
+                user.copyWith(
+                  isBanned: true,
+                ),
+          ],
+        ),
+      );
     } catch (err, st) {
       _logger.severe('Could not ban user', err, st);
     }
@@ -81,6 +93,20 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 
     try {
       await _cqrs.run(UnbanUser(userId: userId));
+
+      emit(
+        state.copyWith(
+          users: [
+            for (final user in state.users)
+              if (user.id != userId)
+                user
+              else
+                user.copyWith(
+                  isBanned: false,
+                ),
+          ],
+        ),
+      );
     } catch (err, st) {
       _logger.severe('Could not unban user', err, st);
     }
@@ -90,15 +116,11 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 @freezed
 class UsersScreenState with _$UsersScreenState {
   const factory UsersScreenState.ready({
-    @Default(<int, List<UserInfoDTO>>{}) Map<int, List<UserInfoDTO>> users,
+    @Default(<UserInfoDTO>[]) List<UserInfoDTO> users,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
   }) = UsersScreenStateReady;
   const factory UsersScreenState.error({
     required String error,
   }) = UsersScreenStateError;
-}
-
-extension UsersScreenStateReadyEx on UsersScreenStateReady {
-  List<UserInfoDTO> get currentPageUsers => users[currentPage] ?? [];
 }

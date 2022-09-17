@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'login_screen_cubit.dart';
@@ -11,30 +12,7 @@ part of 'login_screen_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LogInScreenStateTearOff {
-  const _$LogInScreenStateTearOff();
-
-  LogInScreenReadyState ready(
-      {bool loading = false,
-      bool invalidCredentials = false,
-      bool networkError = false,
-      bool unknownError = false,
-      String errorText = ''}) {
-    return LogInScreenReadyState(
-      loading: loading,
-      invalidCredentials: invalidCredentials,
-      networkError: networkError,
-      unknownError: unknownError,
-      errorText: errorText,
-    );
-  }
-}
-
-/// @nodoc
-const $LogInScreenState = _$LogInScreenStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LogInScreenState {
@@ -43,7 +21,6 @@ mixin _$LogInScreenState {
   bool get networkError => throw _privateConstructorUsedError;
   bool get unknownError => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool loading, bool invalidCredentials,
@@ -144,11 +121,11 @@ class _$LogInScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $LogInScreenReadyStateCopyWith<$Res>
+abstract class _$$LogInScreenReadyStateCopyWith<$Res>
     implements $LogInScreenStateCopyWith<$Res> {
-  factory $LogInScreenReadyStateCopyWith(LogInScreenReadyState value,
-          $Res Function(LogInScreenReadyState) then) =
-      _$LogInScreenReadyStateCopyWithImpl<$Res>;
+  factory _$$LogInScreenReadyStateCopyWith(_$LogInScreenReadyState value,
+          $Res Function(_$LogInScreenReadyState) then) =
+      __$$LogInScreenReadyStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool loading,
@@ -159,15 +136,15 @@ abstract class $LogInScreenReadyStateCopyWith<$Res>
 }
 
 /// @nodoc
-class _$LogInScreenReadyStateCopyWithImpl<$Res>
+class __$$LogInScreenReadyStateCopyWithImpl<$Res>
     extends _$LogInScreenStateCopyWithImpl<$Res>
-    implements $LogInScreenReadyStateCopyWith<$Res> {
-  _$LogInScreenReadyStateCopyWithImpl(
-      LogInScreenReadyState _value, $Res Function(LogInScreenReadyState) _then)
-      : super(_value, (v) => _then(v as LogInScreenReadyState));
+    implements _$$LogInScreenReadyStateCopyWith<$Res> {
+  __$$LogInScreenReadyStateCopyWithImpl(_$LogInScreenReadyState _value,
+      $Res Function(_$LogInScreenReadyState) _then)
+      : super(_value, (v) => _then(v as _$LogInScreenReadyState));
 
   @override
-  LogInScreenReadyState get _value => super._value as LogInScreenReadyState;
+  _$LogInScreenReadyState get _value => super._value as _$LogInScreenReadyState;
 
   @override
   $Res call({
@@ -177,7 +154,7 @@ class _$LogInScreenReadyStateCopyWithImpl<$Res>
     Object? unknownError = freezed,
     Object? errorText = freezed,
   }) {
-    return _then(LogInScreenReadyState(
+    return _then(_$LogInScreenReadyState(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -212,20 +189,20 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
       this.unknownError = false,
       this.errorText = ''});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool loading;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool invalidCredentials;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool networkError;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool unknownError;
-  @JsonKey()
   @override
+  @JsonKey()
   final String errorText;
 
   @override
@@ -237,7 +214,7 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LogInScreenReadyState &&
+            other is _$LogInScreenReadyState &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality()
                 .equals(other.invalidCredentials, invalidCredentials) &&
@@ -259,8 +236,8 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
 
   @JsonKey(ignore: true)
   @override
-  $LogInScreenReadyStateCopyWith<LogInScreenReadyState> get copyWith =>
-      _$LogInScreenReadyStateCopyWithImpl<LogInScreenReadyState>(
+  _$$LogInScreenReadyStateCopyWith<_$LogInScreenReadyState> get copyWith =>
+      __$$LogInScreenReadyStateCopyWithImpl<_$LogInScreenReadyState>(
           this, _$identity);
 
   @override
@@ -331,11 +308,11 @@ class _$LogInScreenReadyState implements LogInScreenReadyState {
 
 abstract class LogInScreenReadyState implements LogInScreenState {
   const factory LogInScreenReadyState(
-      {bool loading,
-      bool invalidCredentials,
-      bool networkError,
-      bool unknownError,
-      String errorText}) = _$LogInScreenReadyState;
+      {final bool loading,
+      final bool invalidCredentials,
+      final bool networkError,
+      final bool unknownError,
+      final String errorText}) = _$LogInScreenReadyState;
 
   @override
   bool get loading;
@@ -349,6 +326,6 @@ abstract class LogInScreenReadyState implements LogInScreenState {
   String get errorText;
   @override
   @JsonKey(ignore: true)
-  $LogInScreenReadyStateCopyWith<LogInScreenReadyState> get copyWith =>
+  _$$LogInScreenReadyStateCopyWith<_$LogInScreenReadyState> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -49,8 +49,9 @@ class TableSection<T extends Object> extends StatelessWidget {
                 height: 400,
                 child: SingleChildScrollView(
                   child: Column(
-                    children: [for (final item in items) itemBuilder(item)]
-                        .spacedWith(const Divider(height: 0)),
+                    children: [
+                      for (final item in items) itemBuilder(item),
+                    ].spacedWith(const Divider(height: 0)),
                   ),
                 ),
               ),
@@ -79,8 +80,10 @@ class _TableNavigationBar<T extends Object> extends StatelessWidget {
     required this.onNextPressed,
     this.createItemButtonLabel,
     this.createItemPressed,
-  })  : assert((createItemButtonLabel == null && createItemPressed == null) ||
-            createItemButtonLabel != null && createItemPressed != null,),
+  })  : assert(
+          (createItemButtonLabel == null && createItemPressed == null) ||
+              createItemButtonLabel != null && createItemPressed != null,
+        ),
         super(key: key);
 
   final int currentPage;

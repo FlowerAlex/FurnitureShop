@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'product_form_body_cubit.dart';
@@ -11,44 +12,7 @@ part of 'product_form_body_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ProductFormBodyStateTearOff {
-  const _$ProductFormBodyStateTearOff();
-
-  ProductFormBodyStateReady ready(
-      {List<CategoryDTO> categories = const <CategoryDTO>[],
-      String? name,
-      String? price,
-      String? description,
-      String? selectedCategoryId,
-      PlatformFile? currentImage,
-      PlatformFile? currentModel}) {
-    return ProductFormBodyStateReady(
-      categories: categories,
-      name: name,
-      price: price,
-      description: description,
-      selectedCategoryId: selectedCategoryId,
-      currentImage: currentImage,
-      currentModel: currentModel,
-    );
-  }
-
-  ProductFormBodyStateFinished finished() {
-    return const ProductFormBodyStateFinished();
-  }
-
-  ProductFormBodyStateError error({required String error}) {
-    return ProductFormBodyStateError(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $ProductFormBodyState = _$ProductFormBodyStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ProductFormBodyState {
@@ -140,10 +104,11 @@ class _$ProductFormBodyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ProductFormBodyStateReadyCopyWith<$Res> {
-  factory $ProductFormBodyStateReadyCopyWith(ProductFormBodyStateReady value,
-          $Res Function(ProductFormBodyStateReady) then) =
-      _$ProductFormBodyStateReadyCopyWithImpl<$Res>;
+abstract class _$$ProductFormBodyStateReadyCopyWith<$Res> {
+  factory _$$ProductFormBodyStateReadyCopyWith(
+          _$ProductFormBodyStateReady value,
+          $Res Function(_$ProductFormBodyStateReady) then) =
+      __$$ProductFormBodyStateReadyCopyWithImpl<$Res>;
   $Res call(
       {List<CategoryDTO> categories,
       String? name,
@@ -155,16 +120,16 @@ abstract class $ProductFormBodyStateReadyCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductFormBodyStateReadyCopyWithImpl<$Res>
+class __$$ProductFormBodyStateReadyCopyWithImpl<$Res>
     extends _$ProductFormBodyStateCopyWithImpl<$Res>
-    implements $ProductFormBodyStateReadyCopyWith<$Res> {
-  _$ProductFormBodyStateReadyCopyWithImpl(ProductFormBodyStateReady _value,
-      $Res Function(ProductFormBodyStateReady) _then)
-      : super(_value, (v) => _then(v as ProductFormBodyStateReady));
+    implements _$$ProductFormBodyStateReadyCopyWith<$Res> {
+  __$$ProductFormBodyStateReadyCopyWithImpl(_$ProductFormBodyStateReady _value,
+      $Res Function(_$ProductFormBodyStateReady) _then)
+      : super(_value, (v) => _then(v as _$ProductFormBodyStateReady));
 
   @override
-  ProductFormBodyStateReady get _value =>
-      super._value as ProductFormBodyStateReady;
+  _$ProductFormBodyStateReady get _value =>
+      super._value as _$ProductFormBodyStateReady;
 
   @override
   $Res call({
@@ -176,9 +141,9 @@ class _$ProductFormBodyStateReadyCopyWithImpl<$Res>
     Object? currentImage = freezed,
     Object? currentModel = freezed,
   }) {
-    return _then(ProductFormBodyStateReady(
+    return _then(_$ProductFormBodyStateReady(
       categories: categories == freezed
-          ? _value.categories
+          ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryDTO>,
       name: name == freezed
@@ -213,17 +178,23 @@ class _$ProductFormBodyStateReadyCopyWithImpl<$Res>
 
 class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   const _$ProductFormBodyStateReady(
-      {this.categories = const <CategoryDTO>[],
+      {final List<CategoryDTO> categories = const <CategoryDTO>[],
       this.name,
       this.price,
       this.description,
       this.selectedCategoryId,
       this.currentImage,
-      this.currentModel});
+      this.currentModel})
+      : _categories = categories;
 
-  @JsonKey()
+  final List<CategoryDTO> _categories;
   @override
-  final List<CategoryDTO> categories;
+  @JsonKey()
+  List<CategoryDTO> get categories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   @override
   final String? name;
   @override
@@ -246,9 +217,9 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProductFormBodyStateReady &&
+            other is _$ProductFormBodyStateReady &&
             const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.price, price) &&
             const DeepCollectionEquality()
@@ -264,7 +235,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(description),
@@ -274,9 +245,9 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
 
   @JsonKey(ignore: true)
   @override
-  $ProductFormBodyStateReadyCopyWith<ProductFormBodyStateReady> get copyWith =>
-      _$ProductFormBodyStateReadyCopyWithImpl<ProductFormBodyStateReady>(
-          this, _$identity);
+  _$$ProductFormBodyStateReadyCopyWith<_$ProductFormBodyStateReady>
+      get copyWith => __$$ProductFormBodyStateReadyCopyWithImpl<
+          _$ProductFormBodyStateReady>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -376,13 +347,13 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
 
 abstract class ProductFormBodyStateReady implements ProductFormBodyState {
   const factory ProductFormBodyStateReady(
-      {List<CategoryDTO> categories,
-      String? name,
-      String? price,
-      String? description,
-      String? selectedCategoryId,
-      PlatformFile? currentImage,
-      PlatformFile? currentModel}) = _$ProductFormBodyStateReady;
+      {final List<CategoryDTO> categories,
+      final String? name,
+      final String? price,
+      final String? description,
+      final String? selectedCategoryId,
+      final PlatformFile? currentImage,
+      final PlatformFile? currentModel}) = _$ProductFormBodyStateReady;
 
   List<CategoryDTO> get categories;
   String? get name;
@@ -392,30 +363,30 @@ abstract class ProductFormBodyStateReady implements ProductFormBodyState {
   PlatformFile? get currentImage;
   PlatformFile? get currentModel;
   @JsonKey(ignore: true)
-  $ProductFormBodyStateReadyCopyWith<ProductFormBodyStateReady> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProductFormBodyStateReadyCopyWith<_$ProductFormBodyStateReady>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductFormBodyStateFinishedCopyWith<$Res> {
-  factory $ProductFormBodyStateFinishedCopyWith(
-          ProductFormBodyStateFinished value,
-          $Res Function(ProductFormBodyStateFinished) then) =
-      _$ProductFormBodyStateFinishedCopyWithImpl<$Res>;
+abstract class _$$ProductFormBodyStateFinishedCopyWith<$Res> {
+  factory _$$ProductFormBodyStateFinishedCopyWith(
+          _$ProductFormBodyStateFinished value,
+          $Res Function(_$ProductFormBodyStateFinished) then) =
+      __$$ProductFormBodyStateFinishedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ProductFormBodyStateFinishedCopyWithImpl<$Res>
+class __$$ProductFormBodyStateFinishedCopyWithImpl<$Res>
     extends _$ProductFormBodyStateCopyWithImpl<$Res>
-    implements $ProductFormBodyStateFinishedCopyWith<$Res> {
-  _$ProductFormBodyStateFinishedCopyWithImpl(
-      ProductFormBodyStateFinished _value,
-      $Res Function(ProductFormBodyStateFinished) _then)
-      : super(_value, (v) => _then(v as ProductFormBodyStateFinished));
+    implements _$$ProductFormBodyStateFinishedCopyWith<$Res> {
+  __$$ProductFormBodyStateFinishedCopyWithImpl(
+      _$ProductFormBodyStateFinished _value,
+      $Res Function(_$ProductFormBodyStateFinished) _then)
+      : super(_value, (v) => _then(v as _$ProductFormBodyStateFinished));
 
   @override
-  ProductFormBodyStateFinished get _value =>
-      super._value as ProductFormBodyStateFinished;
+  _$ProductFormBodyStateFinished get _value =>
+      super._value as _$ProductFormBodyStateFinished;
 }
 
 /// @nodoc
@@ -432,7 +403,7 @@ class _$ProductFormBodyStateFinished implements ProductFormBodyStateFinished {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProductFormBodyStateFinished);
+            other is _$ProductFormBodyStateFinished);
   }
 
   @override
@@ -536,30 +507,31 @@ abstract class ProductFormBodyStateFinished implements ProductFormBodyState {
 }
 
 /// @nodoc
-abstract class $ProductFormBodyStateErrorCopyWith<$Res> {
-  factory $ProductFormBodyStateErrorCopyWith(ProductFormBodyStateError value,
-          $Res Function(ProductFormBodyStateError) then) =
-      _$ProductFormBodyStateErrorCopyWithImpl<$Res>;
+abstract class _$$ProductFormBodyStateErrorCopyWith<$Res> {
+  factory _$$ProductFormBodyStateErrorCopyWith(
+          _$ProductFormBodyStateError value,
+          $Res Function(_$ProductFormBodyStateError) then) =
+      __$$ProductFormBodyStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$ProductFormBodyStateErrorCopyWithImpl<$Res>
+class __$$ProductFormBodyStateErrorCopyWithImpl<$Res>
     extends _$ProductFormBodyStateCopyWithImpl<$Res>
-    implements $ProductFormBodyStateErrorCopyWith<$Res> {
-  _$ProductFormBodyStateErrorCopyWithImpl(ProductFormBodyStateError _value,
-      $Res Function(ProductFormBodyStateError) _then)
-      : super(_value, (v) => _then(v as ProductFormBodyStateError));
+    implements _$$ProductFormBodyStateErrorCopyWith<$Res> {
+  __$$ProductFormBodyStateErrorCopyWithImpl(_$ProductFormBodyStateError _value,
+      $Res Function(_$ProductFormBodyStateError) _then)
+      : super(_value, (v) => _then(v as _$ProductFormBodyStateError));
 
   @override
-  ProductFormBodyStateError get _value =>
-      super._value as ProductFormBodyStateError;
+  _$ProductFormBodyStateError get _value =>
+      super._value as _$ProductFormBodyStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(ProductFormBodyStateError(
+    return _then(_$ProductFormBodyStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -585,7 +557,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProductFormBodyStateError &&
+            other is _$ProductFormBodyStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -595,9 +567,9 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
 
   @JsonKey(ignore: true)
   @override
-  $ProductFormBodyStateErrorCopyWith<ProductFormBodyStateError> get copyWith =>
-      _$ProductFormBodyStateErrorCopyWithImpl<ProductFormBodyStateError>(
-          this, _$identity);
+  _$$ProductFormBodyStateErrorCopyWith<_$ProductFormBodyStateError>
+      get copyWith => __$$ProductFormBodyStateErrorCopyWithImpl<
+          _$ProductFormBodyStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -693,11 +665,11 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
 }
 
 abstract class ProductFormBodyStateError implements ProductFormBodyState {
-  const factory ProductFormBodyStateError({required String error}) =
+  const factory ProductFormBodyStateError({required final String error}) =
       _$ProductFormBodyStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $ProductFormBodyStateErrorCopyWith<ProductFormBodyStateError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProductFormBodyStateErrorCopyWith<_$ProductFormBodyStateError>
+      get copyWith => throw _privateConstructorUsedError;
 }
