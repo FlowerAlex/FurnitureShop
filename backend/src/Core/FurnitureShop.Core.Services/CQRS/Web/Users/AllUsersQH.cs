@@ -42,6 +42,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                             EmailAddress = u.EmailAddress,
                             Username = u.Username,
                             Funds = u.Funds,
+                            Address = u.Address,
                             IsBanned = c.ClaimValue == Auth.Roles.BannedUser,
                         }
                 )
