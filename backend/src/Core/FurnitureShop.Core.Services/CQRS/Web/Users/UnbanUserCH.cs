@@ -8,10 +8,27 @@ using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Services.DataAccess;
 using FurnitureShop.Core.Services.DataAccess.Entities;
 using LeanCode.CQRS.Execution;
+using LeanCode.CQRS.Validation.Fluent;
 using Microsoft.AspNetCore.Identity;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Users
 {
+    public class UnbanUserCV : ContextualValidator<UnbanUser>
+    {
+        public UnbanUserCV()
+        {
+            RuleFor(c => c.UserId, IsUserBanned)
+                .NotEmpty()
+                .WithCode(UnbanUser.ErrorCodes.UserAlreadyUnbanned)
+                .WithMessage("User is already unbanned");
+        }
+
+        private static bool IsUserBanned(IValidationContext ctx, Guid userId)
+        {
+            var dbContext = ctx.GetService<CoreDbContext>();
+            return dbContext.UserClaims.Where(u => u.UserId == userId && u.ClaimValue == Auth.Roles.BannedUser).Any();
+        }
+    }
     public class UnbanUserCH : ICommandHandler<CoreContext, UnbanUser>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UnbanUserCH>();

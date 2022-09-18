@@ -11,7 +11,7 @@ namespace FurnitureShop.Core.Contracts.Web.Users
 
         public static class ErrorCodes
         {
-            public const int UserNotFound = 1;
+            public const int UserAlreadyBanned = 1;
         }
     }
 }
