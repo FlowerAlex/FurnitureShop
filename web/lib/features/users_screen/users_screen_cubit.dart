@@ -42,7 +42,7 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
         state.copyWith(
           currentPage: page,
           totalCount: result.totalCount,
-          users: result.items,
+          users: {for (final user in result.items) user.id: user},
         ),
       );
     } catch (err, st) {
@@ -68,15 +68,15 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 
       emit(
         state.copyWith(
-          users: [
-            for (final user in state.users)
-              if (user.id != userId)
-                user
+          users: {
+            for (final user in state.users.entries)
+              if (user.key != userId)
+                user.key: user.value
               else
-                user.copyWith(
+                user.key: user.value.copyWith(
                   isBanned: true,
                 ),
-          ],
+          },
         ),
       );
     } catch (err, st) {
@@ -96,15 +96,15 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 
       emit(
         state.copyWith(
-          users: [
-            for (final user in state.users)
-              if (user.id != userId)
-                user
+          users: {
+            for (final user in state.users.entries)
+              if (user.key != userId)
+                user.key: user.value
               else
-                user.copyWith(
+                user.key: user.value.copyWith(
                   isBanned: false,
                 ),
-          ],
+          },
         ),
       );
     } catch (err, st) {
@@ -116,7 +116,7 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 @freezed
 class UsersScreenState with _$UsersScreenState {
   const factory UsersScreenState.ready({
-    @Default(<UserInfoDTO>[]) List<UserInfoDTO> users,
+    @Default(<String, UserInfoDTO>{}) Map<String, UserInfoDTO> users,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
   }) = UsersScreenStateReady;
