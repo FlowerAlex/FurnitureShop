@@ -50,7 +50,13 @@ class TableSection<T extends Object> extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      for (final item in items) itemBuilder(item),
+                      for (final item in items)
+                        Builder(
+                          key: Key(item.hashCode.toString()),
+                          builder: (context) {
+                            return itemBuilder(item);
+                          },
+                        ),
                     ].spacedWith(const Divider(height: 0)),
                   ),
                 ),

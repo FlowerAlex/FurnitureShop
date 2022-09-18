@@ -20,7 +20,7 @@ class UsersTableSection extends StatelessWidget {
 
     return TableSection<UserInfoDTO>(
       title: 'Users list',
-      items: state.users,
+      items: state.users.values.toList(),
       currentPage: state.currentPage,
       totalCount: state.totalCount,
       onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),

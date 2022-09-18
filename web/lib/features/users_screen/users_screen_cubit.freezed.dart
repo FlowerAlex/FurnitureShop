@@ -19,21 +19,23 @@ mixin _$UsersScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<UserInfoDTO> users, int currentPage, int totalCount)
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -82,7 +84,7 @@ abstract class _$$UsersScreenStateReadyCopyWith<$Res> {
   factory _$$UsersScreenStateReadyCopyWith(_$UsersScreenStateReady value,
           $Res Function(_$UsersScreenStateReady) then) =
       __$$UsersScreenStateReadyCopyWithImpl<$Res>;
-  $Res call({List<UserInfoDTO> users, int currentPage, int totalCount});
+  $Res call({Map<String, UserInfoDTO> users, int currentPage, int totalCount});
 }
 
 /// @nodoc
@@ -106,7 +108,7 @@ class __$$UsersScreenStateReadyCopyWithImpl<$Res>
       users: users == freezed
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
-              as List<UserInfoDTO>,
+              as Map<String, UserInfoDTO>,
       currentPage: currentPage == freezed
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -123,17 +125,17 @@ class __$$UsersScreenStateReadyCopyWithImpl<$Res>
 
 class _$UsersScreenStateReady implements UsersScreenStateReady {
   const _$UsersScreenStateReady(
-      {final List<UserInfoDTO> users = const <UserInfoDTO>[],
+      {final Map<String, UserInfoDTO> users = const <String, UserInfoDTO>{},
       this.currentPage = 0,
       this.totalCount = 0})
       : _users = users;
 
-  final List<UserInfoDTO> _users;
+  final Map<String, UserInfoDTO> _users;
   @override
   @JsonKey()
-  List<UserInfoDTO> get users {
+  Map<String, UserInfoDTO> get users {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
+    return EqualUnmodifiableMapView(_users);
   }
 
   @override
@@ -177,7 +179,7 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<UserInfoDTO> users, int currentPage, int totalCount)
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -187,7 +189,8 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -197,7 +200,8 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -242,11 +246,11 @@ class _$UsersScreenStateReady implements UsersScreenStateReady {
 
 abstract class UsersScreenStateReady implements UsersScreenState {
   const factory UsersScreenStateReady(
-      {final List<UserInfoDTO> users,
+      {final Map<String, UserInfoDTO> users,
       final int currentPage,
       final int totalCount}) = _$UsersScreenStateReady;
 
-  List<UserInfoDTO> get users;
+  Map<String, UserInfoDTO> get users;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
@@ -321,7 +325,7 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<UserInfoDTO> users, int currentPage, int totalCount)
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -331,7 +335,8 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -341,7 +346,8 @@ class _$UsersScreenStateError implements UsersScreenStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<UserInfoDTO> users, int currentPage, int totalCount)?
+    TResult Function(
+            Map<String, UserInfoDTO> users, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
