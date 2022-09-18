@@ -34,14 +34,17 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                 user,
                 claims.Where(c => c.Value == Auth.Roles.User)
             );
-            await userManager.AddClaimAsync(
-                user,
-                new IdentityUserClaim<Guid>()
-                {
-                    ClaimType = Auth.KnownClaims.Role,
-                    ClaimValue = Auth.Roles.BannedUser,
-                }.ToClaim()
-            );
+            if (!claims.Where(c => c.Value == Auth.Roles.BannedUser).Any())
+            {
+                await userManager.AddClaimAsync(
+                    user,
+                    new IdentityUserClaim<Guid>()
+                    {
+                        ClaimType = Auth.KnownClaims.Role,
+                        ClaimValue = Auth.Roles.BannedUser,
+                    }.ToClaim()
+                );
+            }
         }
     }
 }
