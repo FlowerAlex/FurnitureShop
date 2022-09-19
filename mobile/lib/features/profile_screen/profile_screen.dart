@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
@@ -27,6 +28,43 @@ class ProfileScreen extends HookWidget {
 
     void editPhoto() {}
 
+    void addFunds() {
+      fieldEditingController.text = '';
+      showUpdateProfileDialog<void>(
+        context: context,
+        title: 'Add funds',
+        child: Column(
+          children: [
+            AppTextField(
+              controller: fieldEditingController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('^[1-9][0-9]*'))
+              ],
+            ),
+            const SizedBox(height: 20),
+            AppTextButton(
+              onPressed: () async {
+                final fundsToAdd = int.tryParse(fieldEditingController.text);
+
+                if (fundsToAdd != null && fundsToAdd > 0) {
+                  await context.read<ProfileScreenCubit>().addFunds(fundsToAdd);
+                }
+
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+              child: Text(
+                'Confirm',
+                style: AppTextStyles.med14.copyWith(
+                  color: AppColors.primaryText,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     void editNickname() {
       fieldEditingController.text = nickNameEditingController.text;
       showUpdateProfileDialog<void>(
@@ -39,7 +77,6 @@ class ProfileScreen extends HookWidget {
             ),
             const SizedBox(height: 20),
             AppTextButton(
-              initialValue: nickNameEditingController.text,
               onPressed: () {
                 context.read<ProfileScreenCubit>().updateProfile(
                       username: fieldEditingController.text,
@@ -214,6 +251,20 @@ class ProfileScreen extends HookWidget {
                                     ),
                                   ),
                                 ),
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  OutlinedButton(
+                                    onPressed: addFunds,
+                                    child: const Text('Add funds'),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text(
+                                    'Actual funds: ${state.userInfo.funds}',
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 20),
                               AppTextField(

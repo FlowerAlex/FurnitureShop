@@ -65,6 +65,28 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
       emit(ProfileScreenErrorState(error: err.toString()));
     }
   }
+
+  Future<void> addFunds(int fundsToAdd) async {
+    final state = this.state;
+    if (state is! ProfileScreenSuccessState) {
+      return;
+    }
+
+    try {
+      final res = await _cqrs.run(
+        AddFunds(
+          fundsToAdd: fundsToAdd,
+        ),
+      );
+
+      if (res.success) {
+        await _fetch();
+      }
+    } catch (err, st) {
+      _logger.severe("can't update profile", err, st);
+      emit(ProfileScreenErrorState(error: err.toString()));
+    }
+  }
 }
 
 @freezed

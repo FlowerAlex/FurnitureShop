@@ -20,7 +20,10 @@ class CategoriesTableSection extends StatelessWidget {
     final cubit = context.read<CategoriesScreenCubit>();
 
     return TableSection<CategoryDTO>(
-      title: 'Categories list',
+      title: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Text('Categories list'),
+      ),
       items: state.currentPageCategories,
       currentPage: state.currentPage,
       totalCount: state.totalCount,
@@ -38,22 +41,23 @@ class CategoriesTableSection extends StatelessWidget {
         );
       },
       itemBuilder: (category) => _CategoryItem(
-          category: category,
-          onPressed: () {
-            AppDialog.show<CategoryDTO>(
-              context: context,
-              titleText: 'Update category form',
-              child: CategoryFormBody(
-                onConfirmPressed: cubit.init,
-                confirmText: 'Update category',
-                categoryId: category.id,
-                initialValue: category.name,
-              ),
-            );
-          },
-          onDeletePressed: () async {
-            await cubit.deleteCategory(category.id);
-          },),
+        category: category,
+        onPressed: () {
+          AppDialog.show<CategoryDTO>(
+            context: context,
+            titleText: 'Update category form',
+            child: CategoryFormBody(
+              onConfirmPressed: cubit.init,
+              confirmText: 'Update category',
+              categoryId: category.id,
+              initialValue: category.name,
+            ),
+          );
+        },
+        onDeletePressed: () async {
+          await cubit.deleteCategory(category.id);
+        },
+      ),
     );
   }
 }
@@ -83,7 +87,9 @@ class _CategoryItem extends StatelessWidget {
             children: [
               Text(category.name),
               IconButton(
-                  onPressed: onDeletePressed, icon: Assets.icons.trash.svg(),),
+                onPressed: onDeletePressed,
+                icon: Assets.icons.trash.svg(),
+              ),
             ],
           ),
         ),
