@@ -97,8 +97,15 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 OrderedDate = DateTime.Now,
                 OrderState = OrderState.Pending,
             };
+            double finalPrice = 0;
             foreach (var prod in command.NewOrder.Products)
             {
+                var productInDb = dbContext.Products.Where(p => p.Id == prod.Id).FirstOrDefault();
+                if (productInDb == null)
+                {
+                    continue;
+                }
+                finalPrice += productInDb.Price;
                 newOrder.OrdersProducts.Add(
                     new OrderProduct()
                     {
@@ -109,8 +116,14 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 );
             }
             var result = await dbContext.Orders.AddAsync(newOrder);
+            var user = dbContext.Users.Where(u => u.Id == context.UserId).FirstOrDefault();
+            if (user != null)
+            {
+                user.Funds -= (int)finalPrice;
+            }
             await dbContext.SaveChangesAsync();
             var shoppingCart = await dbContext.ShoppingCarts
+                .Include(s => s.ShoppingCartProducts)
                 .Where(s => s.UserId == context.UserId)
                 .FirstOrDefaultAsync();
             if (shoppingCart != null && result != null)

@@ -18,17 +18,15 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
     {
         private readonly string testAddress = "test_address1";
         private readonly Category TestCategory = new Category("test_category");
-        private readonly Order TestOrder = new Order("test_address")
-        {
-            UserId = Id<User>.From(TestUserId),
-        };
+        private readonly Order TestOrder = new Order("test_address");
         private readonly Order TestOrder2 = new Order("test_address2")
         {
-            UserId = Id<User>.From(TestUserId),
             OrderState = OrderState.Cancelled,
         };
+        private readonly User TestUser = new User("test", "test", "test", "test", "test");
         private readonly int testProductAmount = 3;
         private readonly int testProductAmount2 = 2;
+        private readonly int UserFunds = 5000;
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100)
         {
             ModelId = "https://some.url.com",
@@ -44,9 +42,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private readonly Domain.ShoppingCart TestShoppingCart = new Domain.ShoppingCart();
         private readonly ShoppingCartProduct TestShoppingCartProduct = new ShoppingCartProduct();
         private readonly int TestShpProductAmount = 2;
-        private static readonly Guid TestUserId = Guid.Parse(
-            "5d60120d-8a32-47f1-8b81-4018eb230b19"
-        );
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
@@ -54,7 +49,9 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private void Seed()
         {
             using var context = new CoreDbContext(ContextOptions);
-
+            TestUser.Funds = UserFunds;
+            TestOrder.UserId = TestUser.Id;
+            TestOrder2.UserId = TestUser.Id;
             TestShoppingCartProduct.ProductId = TestProduct.Id;
             TestShoppingCartProduct.ShoppingCartId = TestShoppingCart.Id;
             TestShoppingCartProduct.Amount = TestShpProductAmount;
@@ -63,8 +60,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             {
                 TestShoppingCartProduct
             };
-            TestShoppingCart.UserId = Id<User>.From(TestUserId);
-
+            TestShoppingCart.UserId = TestUser.Id;
+            context.Users.Add(TestUser);
             context.ShoppingCartProduct.Add(TestShoppingCartProduct);
 
             context.ShoppingCarts.Add(TestShoppingCart);
@@ -114,7 +111,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void CreateOrderTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new CreateOrderQH(dbContext);
             var command = new CreateOrder
@@ -141,15 +138,25 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal("some address", Order.Address);
             Assert.Equal(OrderState.Pending, Order.OrderState);
             Assert.Equal(1, Order.OrdersProducts.Count);
-            //     Assert.True(TestProduct.Id == Order.OrdersProducts[0].ProductId || TestProduct.Id == Order.OrdersProducts[1].ProductId);
-            //     Assert.True(testProductAmount == Order.OrdersProducts[0].Amount || testProductAmount == Order.OrdersProducts[1].Amount, $"{testProductAmount}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
-            //     Assert.True(2 == Order.OrdersProducts[0].Amount || 2 == Order.OrdersProducts[1].Amount, $"{testProductAmount2}, expected {Order.OrdersProducts[0].Amount} or {Order.OrdersProducts[1].Amount}");
+            Assert.False(
+                dbContext.ShoppingCarts
+                    .Include(s => s.ShoppingCartProducts)
+                    .Where(s => s.UserId == TestUser.Id)
+                    .First()
+                    .ShoppingCartProducts.Any()
+            );
+            Assert.Equal(TestProduct.Id, Order.OrdersProducts.First().ProductId);
+            Assert.Equal(
+                UserFunds - TestProduct.Price * testProductAmount,
+                dbContext.Users.Where(u => u.Id == TestUser.Id).First().Funds
+                    - TestProduct.Price * TestShpProductAmount
+            );
         }
 
         [Fact]
         public void GetAllOrdersTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.AllOrdersQH(dbContext);
             var command = new FurnitureShop.Core.Contracts.Web.Orders.AllOrders()
@@ -208,7 +215,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void OrderByIdTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.OrderByIdQH(dbContext);
             var command = new FurnitureShop.Core.Contracts.Web.Orders.OrderById()
@@ -249,7 +256,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void SetOrderStateTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new FurnitureShop.Core.Services.CQRS.Web.Orders.SetOrderStateCH(
                 dbContext
