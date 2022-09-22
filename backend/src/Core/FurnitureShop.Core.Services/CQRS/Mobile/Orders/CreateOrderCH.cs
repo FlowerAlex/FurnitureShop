@@ -17,28 +17,18 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
     {
         public CreateOrderCV()
         {
-            // RuleFor(p => p.NewOrder.Address, IsShoppingCartEmpty)
-            //     .NotEmpty()
-            //     .WithCode(CreateOrder.ErrorCodes.NoProducts)
-            //     .WithMessage("No products selected for order");
-            // RuleFor(p => p.NewOrder.Address, IsAddressSet)
-            //     .NotEmpty()
-            //     .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
-            //     .WithMessage("User and order have no addres set");
-            // RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
-            //     .Equal(false)
-            //     .WithMessage("Not enough funds to pay for the order.")
-            //     .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
-        }
-
-        private static bool IsShoppingCartEmpty(IValidationContext ctx, string? address)
-        {
-            var dbContext = ctx.GetService<CoreDbContext>();
-            return ctx.AppContext<CoreContext>()
-                .GetProductsInShoppingCart(dbContext)
-                .GetAwaiter()
-                .GetResult()
-                .Any();
+            RuleFor(p => p.NewOrder.Products)
+                .NotEmpty()
+                .WithCode(CreateOrder.ErrorCodes.NoProducts)
+                .WithMessage("No products selected for order");
+            RuleForAsync(p => p.NewOrder.Address, IsAddressSet)
+                .NotEmpty()
+                .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
+                .WithMessage("User and order have no addres set");
+            RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
+                .Equal(false)
+                .WithMessage("Not enough funds to pay for the order.")
+                .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
 
         private static async Task<bool> DoesUserHaveEnoughMoney(
@@ -63,7 +53,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
             {
                 return false;
             }
-            return !string.IsNullOrWhiteSpace(address) && !string.IsNullOrWhiteSpace(user.Address);
+            return !string.IsNullOrWhiteSpace(address) || !string.IsNullOrWhiteSpace(user.Address);
         }
 
         private static async Task<User?> GetCurrentUser(
