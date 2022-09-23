@@ -26,9 +26,12 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
         private static bool IsUserBanned(IValidationContext ctx, Guid userId)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
-            return dbContext.UserClaims.Where(u => u.UserId == userId && u.ClaimValue == Auth.Roles.BannedUser).Any();
+            return dbContext.UserClaims
+                .Where(u => u.UserId == userId && u.ClaimValue == Auth.Roles.BannedUser)
+                .Any();
         }
     }
+
     public class UnbanUserCH : ICommandHandler<CoreContext, UnbanUser>
     {
         private readonly Serilog.ILogger logger = Serilog.Log.ForContext<UnbanUserCH>();
@@ -50,17 +53,18 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                 user,
                 claims.Where(c => c.Value == Auth.Roles.BannedUser)
             );
-            if(!claims.Where(c => c.Value == Auth.Roles.User).Any())
+            if (!claims.Where(c => c.Value == Auth.Roles.User).Any())
             {
                 await userManager.AddClaimAsync(
-                user,
-                new IdentityUserClaim<Guid>()
-                {
-                    ClaimType = Auth.KnownClaims.Role,
-                    ClaimValue = Auth.Roles.User,
-                }.ToClaim()
+                    user,
+                    new IdentityUserClaim<Guid>()
+                    {
+                        ClaimType = Auth.KnownClaims.Role,
+                        ClaimValue = Auth.Roles.User,
+                    }.ToClaim()
                 );
             }
+            await userManager.UpdateAsync(user);
         }
     }
 }

@@ -27,7 +27,9 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
         private static bool IsUserunbanned(IValidationContext ctx, Guid userId)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
-            return dbContext.UserClaims.Where(u => u.UserId == userId && u.ClaimValue == Auth.Roles.User).Any();
+            return dbContext.UserClaims
+                .Where(u => u.UserId == userId && u.ClaimValue == Auth.Roles.User)
+                .Any();
         }
     }
 
@@ -63,6 +65,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Users
                     }.ToClaim()
                 );
             }
+            await userManager.UpdateAsync(user);
         }
     }
 }
