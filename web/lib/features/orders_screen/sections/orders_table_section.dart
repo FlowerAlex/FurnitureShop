@@ -19,8 +19,27 @@ class OrdersTableSection extends StatelessWidget {
     final cubit = context.read<OrdersScreenCubit>();
 
     return TableSection<OrderDTO>(
-      title: 'Orders list',
-      items: state.currentPageOrders,
+      title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Column(
+          children: [
+            const Text('Orders list'),
+            const SizedBox(height: 16),
+            Row(
+              children: const [
+                Expanded(child: Text('Product name')),
+                Expanded(child: Text('Product price')),
+                Expanded(child: Text('Quantity')),
+                Expanded(child: Text('Average rating')),
+                Expanded(child: Text('Order date')),
+                Expanded(child: Text('Delivery date')),
+                Expanded(child: Text('Total price')),
+              ],
+            ),
+          ],
+        ),
+      ),
+      items: state.orders.values.toList(),
       currentPage: state.currentPage,
       totalCount: state.totalCount,
       onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
@@ -43,35 +62,45 @@ class _OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Column(
+          for (final product in order.products)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Row(
                 children: [
-                  Text('Ordered date:${order.orderedDate}'),
+                  Expanded(child: Text(product.name)),
+                  Expanded(child: Text(product.price.toString())),
+                  Expanded(child: Text(product.amount.toString())),
+                  if (product.averageRating != null)
+                    Expanded(
+                      child: AvaregeScore(
+                        rating: product.averageRating!,
+                      ),
+                    )
+                  else
+                    const Spacer(),
+                  Expanded(
+                    child: Text(order.orderedDate.toString()),
+                  ),
                   if (order.deliveredDate != null)
-                    Text('Ordered date:${order.deliveredDate}'),
-                ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Text(
+                          order.deliveredDate!.toString(),
+                        ),
+                      ),
+                    )
+                  else
+                    const Spacer(),
+                  Expanded(child: Text(order.price.toString())),
+                ].spaced(8),
               ),
-              Column(
-                children: [
-                  for (final product in order.products)
-                    ...[
-                      Text('Product name: ${product.name}'),
-                      Text('Product price: ${product.price}'),
-                      Text('Quantity: ${product.amount}'),
-                      if (product.averageRating != null)
-                        AvaregeScore(rating: product.averageRating!),
-                    ].spaced(8),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text('Total price: ${order.price}'),
+            ),
         ],
       ),
     );

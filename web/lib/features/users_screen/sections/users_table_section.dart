@@ -19,7 +19,10 @@ class UsersTableSection extends StatelessWidget {
     final cubit = context.read<UsersScreenCubit>();
 
     return TableSection<UserInfoDTO>(
-      title: 'Users list',
+      title: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Text('Users list'),
+      ),
       items: state.users.values.toList(),
       currentPage: state.currentPage,
       totalCount: state.totalCount,
@@ -74,7 +77,7 @@ class _UserItem extends StatelessWidget {
           Text(user.isBanned ? 'Unban user: ' : 'Ban user: '),
           const SizedBox(width: 12),
           IconButton(
-            onPressed: user.isBanned ? onBanPressed : onUnbanPressed,
+            onPressed: user.isBanned ? onUnbanPressed : onBanPressed,
             icon: user.isBanned
                 ? Assets.icons.banUser.svg()
                 : Assets.icons.unbanUser.svg(),

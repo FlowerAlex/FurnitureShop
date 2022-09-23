@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 
@@ -16,6 +17,7 @@ class AppTextField extends StatelessWidget {
     this.readOnly = false,
     this.autofillHints,
     this.keyboardType,
+    this.inputFormatters,
     this.onChanged,
   }) : super(key: key);
 
@@ -30,6 +32,7 @@ class AppTextField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final bool autocorrect;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
 
   @override
@@ -62,6 +65,7 @@ class AppTextField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.center,
             autofillHints: autofillHints,
             keyboardType: keyboardType,
+            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 8),

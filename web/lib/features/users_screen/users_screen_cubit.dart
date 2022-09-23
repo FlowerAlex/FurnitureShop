@@ -25,7 +25,7 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
     }
 
     if (page != 0) {
-      if (page < 0 || page >= (state.totalCount - 1) / pageSize) {
+      if (page < 0 || page > (state.totalCount - 1) / pageSize) {
         return;
       }
     }
@@ -58,14 +58,12 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
 
   Future<void> banUser(String userId) async {
     final state = this.state;
-
     if (state is! UsersScreenStateReady) {
       return;
     }
 
     try {
       await _cqrs.run(BanUser(userId: userId));
-
       emit(
         state.copyWith(
           users: {
@@ -81,12 +79,16 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
       );
     } catch (err, st) {
       _logger.severe('Could not ban user', err, st);
+      emit(
+        UsersScreenStateError(
+          error: err.toString(),
+        ),
+      );
     }
   }
 
   Future<void> unbanUser(String userId) async {
     final state = this.state;
-
     if (state is! UsersScreenStateReady) {
       return;
     }
@@ -109,6 +111,11 @@ class UsersScreenCubit extends Cubit<UsersScreenState> {
       );
     } catch (err, st) {
       _logger.severe('Could not unban user', err, st);
+      emit(
+        UsersScreenStateError(
+          error: err.toString(),
+        ),
+      );
     }
   }
 }

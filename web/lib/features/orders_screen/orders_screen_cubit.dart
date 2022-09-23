@@ -43,10 +43,7 @@ class OrdersScreenCubit extends Cubit<OrdersScreenState> {
         state.copyWith(
           currentPage: page,
           totalCount: result.totalCount,
-          orders: {
-            ...state.orders,
-            page: result.items,
-          },
+          orders: {for (final item in result.items) item.id: item},
         ),
       );
     } catch (err, st) {
@@ -64,15 +61,11 @@ class OrdersScreenCubit extends Cubit<OrdersScreenState> {
 @freezed
 class OrdersScreenState with _$OrdersScreenState {
   const factory OrdersScreenState.ready({
-    @Default(<int, List<OrderDTO>>{}) Map<int, List<OrderDTO>> orders,
+    @Default(<String, OrderDTO>{}) Map<String, OrderDTO> orders,
     @Default(0) int currentPage,
     @Default(0) int totalCount,
   }) = OrdersScreenStateReady;
   const factory OrdersScreenState.error({
     required String error,
   }) = OrdersScreenStateError;
-}
-
-extension OrdersScreenStateReadyEx on OrdersScreenStateReady {
-  List<OrderDTO> get currentPageOrders => orders[currentPage] ?? [];
 }

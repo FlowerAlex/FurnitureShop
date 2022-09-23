@@ -20,7 +20,7 @@ class TableSection<T extends Object> extends StatelessWidget {
     this.createItemPressed,
   }) : super(key: key);
 
-  final String title;
+  final Widget title;
 
   final List<T> items;
   final Widget Function(T) itemBuilder;
@@ -38,10 +38,7 @@ class TableSection<T extends Object> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(title),
-        ),
+        title,
         Card(
           child: Column(
             children: [

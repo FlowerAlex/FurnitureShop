@@ -149,7 +149,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
             products: {
               for (final product in state.products.entries)
                 product.key: product.value.copyWith(
-                  inShoppingCart: product.key == productId
+                  inFavourites: product.key == productId
                       ? !wasInFavorites
                       : product.value.inFavourites,
                 )

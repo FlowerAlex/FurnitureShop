@@ -19,7 +19,7 @@ mixin _$OrdersScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$OrdersScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$OrdersScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -84,7 +84,7 @@ abstract class _$$OrdersScreenStateReadyCopyWith<$Res> {
   factory _$$OrdersScreenStateReadyCopyWith(_$OrdersScreenStateReady value,
           $Res Function(_$OrdersScreenStateReady) then) =
       __$$OrdersScreenStateReadyCopyWithImpl<$Res>;
-  $Res call({Map<int, List<OrderDTO>> orders, int currentPage, int totalCount});
+  $Res call({Map<String, OrderDTO> orders, int currentPage, int totalCount});
 }
 
 /// @nodoc
@@ -109,7 +109,7 @@ class __$$OrdersScreenStateReadyCopyWithImpl<$Res>
       orders: orders == freezed
           ? _value._orders
           : orders // ignore: cast_nullable_to_non_nullable
-              as Map<int, List<OrderDTO>>,
+              as Map<String, OrderDTO>,
       currentPage: currentPage == freezed
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -126,15 +126,15 @@ class __$$OrdersScreenStateReadyCopyWithImpl<$Res>
 
 class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   const _$OrdersScreenStateReady(
-      {final Map<int, List<OrderDTO>> orders = const <int, List<OrderDTO>>{},
+      {final Map<String, OrderDTO> orders = const <String, OrderDTO>{},
       this.currentPage = 0,
       this.totalCount = 0})
       : _orders = orders;
 
-  final Map<int, List<OrderDTO>> _orders;
+  final Map<String, OrderDTO> _orders;
   @override
   @JsonKey()
-  Map<int, List<OrderDTO>> get orders {
+  Map<String, OrderDTO> get orders {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_orders);
   }
@@ -180,7 +180,7 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -191,7 +191,7 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -202,7 +202,7 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -247,11 +247,11 @@ class _$OrdersScreenStateReady implements OrdersScreenStateReady {
 
 abstract class OrdersScreenStateReady implements OrdersScreenState {
   const factory OrdersScreenStateReady(
-      {final Map<int, List<OrderDTO>> orders,
+      {final Map<String, OrderDTO> orders,
       final int currentPage,
       final int totalCount}) = _$OrdersScreenStateReady;
 
-  Map<int, List<OrderDTO>> get orders;
+  Map<String, OrderDTO> get orders;
   int get currentPage;
   int get totalCount;
   @JsonKey(ignore: true)
@@ -327,7 +327,7 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -338,7 +338,7 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -349,7 +349,7 @@ class _$OrdersScreenStateError implements OrdersScreenStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Map<int, List<OrderDTO>> orders, int currentPage, int totalCount)?
+            Map<String, OrderDTO> orders, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),

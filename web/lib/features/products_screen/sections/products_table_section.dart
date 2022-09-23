@@ -21,7 +21,10 @@ class ProductsTableSection extends StatelessWidget {
     final cubit = context.read<ProductsScreenCubit>();
 
     return TableSection<ProductDTO>(
-      title: 'Products list',
+      title: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Text('Products list'),
+      ),
       items: state.currentPageProducts,
       currentPage: state.currentPage,
       totalCount: state.totalCount,
