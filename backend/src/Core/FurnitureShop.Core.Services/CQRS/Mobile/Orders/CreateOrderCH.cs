@@ -95,7 +95,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 {
                     continue;
                 }
-                finalPrice += productInDb.Price;
+                finalPrice += productInDb.Price * prod.Amount;
                 newOrder.OrdersProducts.Add(
                     new OrderProduct()
                     {
