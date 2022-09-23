@@ -51,6 +51,7 @@ namespace FurnitureShop.Core.Services.Services
                 }
                 sum += prodInDb.Price;
             }
+
             return sum;
         }
     }

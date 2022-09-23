@@ -22,11 +22,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .WithCode(CreateOrder.ErrorCodes.NoProducts)
                 .WithMessage("No products selected for order");
             RuleForAsync(p => p.NewOrder.Address, IsAddressSet)
-                .NotEmpty()
+                .Equal(true)
                 .WithCode(CreateOrder.ErrorCodes.IncorrectAddress)
                 .WithMessage("User and order have no addres set");
             RuleForAsync(p => p.NewOrder, DoesUserHaveEnoughMoney)
-                .Equal(false)
+                .Equal(true)
                 .WithMessage("Not enough funds to pay for the order.")
                 .WithCode(CreateOrder.ErrorCodes.NotEnoughFunds);
         }
@@ -118,7 +118,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                 .FirstOrDefaultAsync();
             if (shoppingCart != null && result != null)
             {
-                shoppingCart.ShoppingCartProducts.Clear();
+                shoppingCart.ShoppingCartProducts.RemoveAll(
+                    scp => command.NewOrder.Products.Select(p => p.Id).Contains(scp.ProductId)
+                );
                 dbContext.ShoppingCarts.Update(shoppingCart);
                 await dbContext.SaveChangesAsync();
             }
