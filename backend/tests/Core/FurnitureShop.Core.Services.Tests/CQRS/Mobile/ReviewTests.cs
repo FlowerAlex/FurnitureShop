@@ -127,7 +127,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new AddReviewCH(dbContext);
             var command = new AddReview
             {
-                Review = new AddReviewDTO { Text = NewReviewText, Rating = NewReviewRating, }
+                Review = new AddReviewDTO
+                {
+                    ProductId = TestReview.ProductId,
+                    Text = NewReviewText,
+                    Rating = NewReviewRating,
+                }
             };
 
             var result = handler.ExecuteAsync(coreContext, command);
