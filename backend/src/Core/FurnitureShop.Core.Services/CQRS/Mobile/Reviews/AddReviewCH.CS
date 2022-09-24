@@ -39,7 +39,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                 .Where(r => r.UserId == context.UserId && r.ProductId == command.Review.ProductId)
                 .FirstOrDefault();
 
-            if (oldReview != null) { }
+            if (oldReview != null)
+            {
+                oldReview.Text = command.Review.Text;
+                oldReview.Rating = command.Review.Rating;
+            }
             else
             {
                 await dbContext.Reviews.AddAsync(
