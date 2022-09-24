@@ -6,7 +6,6 @@ import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/common/widgets/app_bar.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
-import 'package:furniture_shop/features/common/widgets/asset_button.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
 import 'package:furniture_shop/features/profile_screen/profile_screen_cubit.dart';
 import 'package:furniture_shop/features/profile_screen/update_profile_dialog.dart';
@@ -270,7 +269,7 @@ class ProfileScreen extends HookWidget {
                               AppTextField(
                                 controller: nickNameEditingController,
                                 label: 'Nickname',
-                                suffixIcon: AssetButton(
+                                suffixIcon: IconButton(
                                   onPressed: editNickname,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
@@ -283,7 +282,7 @@ class ProfileScreen extends HookWidget {
                               AppTextField(
                                 controller: nameEditingController,
                                 label: 'Name',
-                                suffixIcon: AssetButton(
+                                suffixIcon: IconButton(
                                   onPressed: editName,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
@@ -296,7 +295,7 @@ class ProfileScreen extends HookWidget {
                               AppTextField(
                                 controller: surnameEditingController,
                                 label: 'Surname',
-                                suffixIcon: AssetButton(
+                                suffixIcon: IconButton(
                                   onPressed: editSurname,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,
@@ -309,7 +308,7 @@ class ProfileScreen extends HookWidget {
                               AppTextField(
                                 controller: addressEditingController,
                                 label: 'Address',
-                                suffixIcon: AssetButton(
+                                suffixIcon: IconButton(
                                   onPressed: editAddress,
                                   icon: AssetIcon(
                                     asset: Assets.icons.edit,

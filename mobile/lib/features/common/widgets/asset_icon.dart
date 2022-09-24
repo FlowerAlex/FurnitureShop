@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
+import 'package:furniture_shop/resources/assets.gen.dart';
 
 class AssetIcon extends StatelessWidget {
   const AssetIcon({
@@ -12,15 +13,15 @@ class AssetIcon extends StatelessWidget {
 
   final Color? color;
   final double? size;
-  final AssetImage asset;
+  final AssetGenImage asset;
   final bool active;
 
   @override
   Widget build(BuildContext context) {
-    return ImageIcon(
-      asset,
+    return asset.image(
       color: color ?? (active ? AppColors.white : AppColors.labelText),
-      size: size,
+      width: size,
+      height: size,
     );
   }
 }

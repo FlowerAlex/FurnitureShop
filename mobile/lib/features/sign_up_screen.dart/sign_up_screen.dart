@@ -7,7 +7,6 @@ import 'package:furniture_shop/features/common/widgets/app_back_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_form_field.dart';
 import 'package:furniture_shop/features/common/widgets/asset_button.dart';
-import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
 import 'package:furniture_shop/features/sign_up_screen.dart/sign_up_screen_cubit.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
@@ -146,10 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ]),
                                     suffixIcon: AssetButton(
-                                      icon: AssetIcon(
-                                        asset: Assets.icons.eye,
-                                        color: AppColors.grey5,
-                                      ),
+                                      icon: Assets.icons.eye,
+                                      color: AppColors.grey5,
                                       onPressed: () => setState(() {
                                         obscurePassword = !obscurePassword;
                                       }),
@@ -175,10 +172,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ],
                                     ),
                                     suffixIcon: AssetButton(
-                                      icon: AssetIcon(
-                                        asset: Assets.icons.eye,
-                                        color: AppColors.grey5,
-                                      ),
+                                      icon: Assets.icons.eye,
+                                      color: AppColors.grey5,
                                       onPressed: () => setState(() {
                                         obscureRepeatPassword =
                                             !obscureRepeatPassword;

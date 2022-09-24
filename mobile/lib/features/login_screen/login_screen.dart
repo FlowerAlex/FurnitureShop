@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_form_field.dart';
-import 'package:furniture_shop/features/common/widgets/asset_button.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
 import 'package:furniture_shop/features/login_screen/login_screen_cubit.dart';
 import 'package:furniture_shop/features/sign_up_screen.dart/sign_up_screen.dart';
@@ -107,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ]),
                                   label: 'Password',
-                                  suffixIcon: AssetButton(
+                                  suffixIcon: IconButton(
                                     icon: AssetIcon(
                                       asset: Assets.icons.eye,
                                       color: AppColors.grey5,

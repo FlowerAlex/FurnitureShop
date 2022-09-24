@@ -6,7 +6,9 @@ final userInfoTest = UserInfoDTO(
   surname: '',
   username: '',
   address: '',
+  funds: 0,
 );
+
 final category1Test = CategoryDTO(id: 'id', name: 'name');
 
 final productDTO1Test = ProductDTO(
