@@ -144,5 +144,27 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewReviewRating, Review.Rating);
             Assert.Equal(TestReview.Id, Review.Id);
         }
+        [Fact]
+        public void AllReviewsTest()
+        {
+            var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new AllReviewsQH(dbContext);
+            var query = new AllReviews
+            {
+                PageSize = 5,
+                PageNumber = 0,
+                ProductId = TestProduct.Id
+            };
+
+            var result = handler.ExecuteAsync(coreContext, query);
+            Assert.True(result.IsCompletedSuccessfully);
+            Assert.Equal(1, result.Result.TotalCount);
+            var review =  result.Result.Items.First();
+            Assert.Equal(TestUser.Id, review.UserId);
+            Assert.Equal(TestReview.Rating, review.Rating);
+            Assert.Equal(TestReview.Text, review.Text);
+            Assert.Equal(TestReview.ProductId, review.ProductId);
+        }
     }
 }
