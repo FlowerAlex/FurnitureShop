@@ -5,6 +5,8 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     public class ReviewDTO
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public string UserName { get; set; }
         public Guid ProductId { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; }

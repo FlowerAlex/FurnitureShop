@@ -27,6 +27,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                     p =>
                         new ReviewDTO
                         {
+                            UserId = p.UserId,
+                            UserName = dbContext.Users
+                                .Where(u => u.Id == p.UserId)
+                                .First()
+                                .Username,
                             ProductId = p.ProductId,
                             Text = string.IsNullOrWhiteSpace(p.Text) ? string.Empty : p.Text,
                             Rating = p.Rating,
