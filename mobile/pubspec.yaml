@@ -13,6 +13,7 @@ dependencies:
   counter_button: ^1.0.1
   cqrs: ^6.2.0
   equatable: ^2.0.3
+  expandable: ^5.0.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
