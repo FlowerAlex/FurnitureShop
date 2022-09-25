@@ -651,6 +651,56 @@ class RemoveFromFavouritesErrorCodes {}
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
 @JsonSerializable(fieldRename: FieldRename.pascal)
+class AddReview with EquatableMixin implements Command {
+  AddReview({
+    required this.review,
+  });
+
+  factory AddReview.fromJson(Map<String, dynamic> json) =>
+      _$AddReviewFromJson(json);
+
+  final AddReviewDTO review;
+
+  get props => [review];
+
+  Map<String, dynamic> toJson() => _$AddReviewToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Mobile.Reviews.AddReview';
+}
+
+class AddReviewErrorCodes {
+  static const emptyReviewText = 1;
+
+  static const incorrectRating = 2;
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class AddReviewDTO with EquatableMixin {
+  AddReviewDTO({
+    required this.productId,
+    required this.text,
+    required this.rating,
+    required this.createdDate,
+  });
+
+  factory AddReviewDTO.fromJson(Map<String, dynamic> json) =>
+      _$AddReviewDTOFromJson(json);
+
+  final String productId;
+
+  final String text;
+
+  final double rating;
+
+  final DateTime createdDate;
+
+  get props => [productId, text, rating, createdDate];
+
+  Map<String, dynamic> toJson() => _$AddReviewDTOToJson(this);
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class AllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
   AllReviews({
     required this.pageNumber,
@@ -675,56 +725,6 @@ class AllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
           (e) => _$ReviewDTOFromJson(e as Map<String, dynamic>));
   String getFullName() =>
       'FurnitureShop.Core.Contracts.Mobile.Reviews.AllReviews';
-}
-
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateReview with EquatableMixin implements Command {
-  CreateReview({
-    required this.newReview,
-  });
-
-  factory CreateReview.fromJson(Map<String, dynamic> json) =>
-      _$CreateReviewFromJson(json);
-
-  final CreateReviewDTO newReview;
-
-  get props => [newReview];
-
-  Map<String, dynamic> toJson() => _$CreateReviewToJson(this);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Mobile.Reviews.CreateReview';
-}
-
-class CreateReviewErrorCodes {
-  static const emptyReviewText = 1;
-
-  static const incorrectRating = 2;
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class CreateReviewDTO with EquatableMixin {
-  CreateReviewDTO({
-    required this.productId,
-    required this.text,
-    required this.rating,
-    required this.createdDate,
-  });
-
-  factory CreateReviewDTO.fromJson(Map<String, dynamic> json) =>
-      _$CreateReviewDTOFromJson(json);
-
-  final String productId;
-
-  final String text;
-
-  final double rating;
-
-  final DateTime createdDate;
-
-  get props => [productId, text, rating, createdDate];
-
-  Map<String, dynamic> toJson() => _$CreateReviewDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -802,31 +802,6 @@ class ReviewDTO with EquatableMixin {
   get props => [id, userId, userName, productId, text, rating, createdDate];
 
   Map<String, dynamic> toJson() => _$ReviewDTOToJson(this);
-}
-
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateReview with EquatableMixin implements Command {
-  UpdateReview({
-    required this.updatedReview,
-  });
-
-  factory UpdateReview.fromJson(Map<String, dynamic> json) =>
-      _$UpdateReviewFromJson(json);
-
-  final UpdateReviewDTO updatedReview;
-
-  get props => [updatedReview];
-
-  Map<String, dynamic> toJson() => _$UpdateReviewToJson(this);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Mobile.Reviews.UpdateReview';
-}
-
-class UpdateReviewErrorCodes {
-  static const emptyReviewText = 1;
-
-  static const incorrectRating = 2;
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)

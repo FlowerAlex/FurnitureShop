@@ -49,7 +49,7 @@ namespace FurnitureShop.Core.Services.Services
                 {
                     continue;
                 }
-                sum += prodInDb.Price;
+                sum += prodInDb.Price * prod.Amount;
             }
 
             return sum;
