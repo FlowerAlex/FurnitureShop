@@ -22,7 +22,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         )
         {
             var reviews = await dbContext.Reviews
-                .Where(p => p.ProductId == query.ProductId)
+                .Where(p => p.ProductId == query.ProductId && p.UserId != context.UserId)
                 .Select(
                     p =>
                         new ReviewDTO
