@@ -147,9 +147,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             );
             Assert.Equal(TestProduct.Id, Order.OrdersProducts.First().ProductId);
             Assert.Equal(
-                UserFunds - TestProduct.Price * testProductAmount,
+                UserFunds - TestProduct.Price * TestShpProductAmount,
                 dbContext.Users.Where(u => u.Id == TestUser.Id).First().Funds
-                    - TestProduct.Price * TestShpProductAmount
             );
         }
 

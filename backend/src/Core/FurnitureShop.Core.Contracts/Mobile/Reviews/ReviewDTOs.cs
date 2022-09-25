@@ -13,7 +13,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
         public DateTime CreatedDate { get; set; }
     }
 
-    public class CreateReviewDTO
+    public class AddReviewDTO
     {
         public Guid ProductId { get; set; }
         public string Text { get; set; }

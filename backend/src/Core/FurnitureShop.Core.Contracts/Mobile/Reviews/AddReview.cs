@@ -4,9 +4,9 @@ using LeanCode.CQRS.Security;
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.User)]
-    public class CreateReview : IRemoteCommand
+    public class AddReview : IRemoteCommand
     {
-        public CreateReviewDTO NewReview { get; set; }
+        public AddReviewDTO Review { get; set; }
 
         public static class ErrorCodes
         {

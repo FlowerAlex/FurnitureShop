@@ -13,16 +13,14 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 {
     public class ReviewTests : IDisposable
     {
-        private readonly Review TestReview = new Review(4.5)
+        private readonly Review TestReview = new Review
         {
+            Rating = 4.5,
             Text = "good test product",
             CreatedDate = DateTime.Parse("09-09-2020"),
         };
         private readonly Product TestProduct = new Product("test_Product", "Product_for_test", 100);
-        private readonly User TestUser = new User("test","test","test","test","test")
-        {
-
-        };
+        private readonly User TestUser = new User("test", "test", "test", "test", "test") { };
         private string NewReviewText = "new Review";
         private Guid NewReviewProductId = Guid.Parse("a063c7ce-b477-4d27-ac16-c771b9fef4e0");
         private double NewReviewRating = 3;
@@ -85,10 +83,10 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new CreateReviewCH(dbContext);
-            var command = new CreateReview
+            var handler = new AddReviewCH(dbContext);
+            var command = new AddReview
             {
-                NewReview = new CreateReviewDTO
+                Review = new AddReviewDTO
                 {
                     Text = NewReviewText,
                     ProductId = NewReviewProductId,
@@ -126,12 +124,12 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         {
             var coreContext = CoreContext.ForTests(TestUser.Id, TestAdminRole);
             using var dbContext = new CoreDbContext(ContextOptions);
-            var handler = new UpdateReviewCH(dbContext);
-            var command = new UpdateReview
+            var handler = new AddReviewCH(dbContext);
+            var command = new AddReview
             {
-                UpdatedReview = new UpdateReviewDTO
+                Review = new AddReviewDTO
                 {
-                    Id = TestReview.Id,
+                    ProductId = TestReview.ProductId,
                     Text = NewReviewText,
                     Rating = NewReviewRating,
                 }

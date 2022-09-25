@@ -16,10 +16,9 @@ namespace FurnitureShop.Core.Domain
         byte[] IOptimisticConcurrency.RowVersion { get; set; } = Array.Empty<byte>();
         DateTime IOptimisticConcurrency.DateModified { get; set; }
 
-        public Review(double rating)
+        public Review()
         {
             Id = Id<Review>.New();
-            Rating = rating;
             CreatedDate = DateTime.Now;
         }
     }
