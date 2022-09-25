@@ -533,7 +533,7 @@ UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
       surname: json['Surname'] as String,
       username: json['Username'] as String,
       emailAddress: json['EmailAddress'] as String,
-      address: json['Address'] as String?,
+      address: json['Address'] as String,
       funds: json['Funds'] as int,
       isBanned: json['IsBanned'] as bool,
     );
