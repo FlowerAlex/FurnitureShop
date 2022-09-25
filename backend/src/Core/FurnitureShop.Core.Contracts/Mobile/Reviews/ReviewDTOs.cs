@@ -1,4 +1,5 @@
 using System;
+using FurnitureShop.Core.Contracts.Shared;
 
 namespace FurnitureShop.Core.Contracts.Mobile.Reviews
 {
@@ -26,5 +27,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
         public Guid Id { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; }
+    }
+    public class AllReviewsDTO : PaginatedResult<ReviewDTO>
+    {
+        public ReviewDTO? MyReview { get; set; }
     }
 }
