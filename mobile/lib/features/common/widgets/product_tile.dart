@@ -16,8 +16,10 @@ class ProductTile extends StatelessWidget {
     this.children = const [],
     this.countOfProducts = 1,
     this.onCountOfProductsChanged,
-  })  : assert(!selectable ||
-            (selectable && selected != null && onSelectedChanged != null),),
+  })  : assert(
+          !selectable ||
+              (selectable && selected != null && onSelectedChanged != null),
+        ),
         super(key: key);
 
   final ProductDTO product;
@@ -55,15 +57,16 @@ class ProductTile extends StatelessWidget {
               children: [
                 if (selectable && selected != null && onSelectedChanged != null)
                   Checkbox(
-                      value: selected,
-                      onChanged: (value) => onSelectedChanged(value ?? false),),
+                    value: selected,
+                    onChanged: (value) => onSelectedChanged(value ?? false),
+                  ),
                 SizedBox(
                   width: 100,
                   height: 100,
                   child: CachedNetworkImage(
                     fit: BoxFit.contain,
                     imageUrl:
-                        'https://e7.pngegg.com/pngimages/952/954/png-clipart-table-wood-furniture-table-angle-rectangle.png',
+                        'https://furnitureshopstorage.blob.core.windows.net/images/${product.previewPhotoId}',
                     errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
                   ),
@@ -74,7 +77,8 @@ class ProductTile extends StatelessWidget {
                   children: [
                     Text(product.name),
                     AvaregeScore(
-                        rating: product.averageRating ?? 0,), // get from product
+                      rating: product.averageRating ?? 0,
+                    ), // get from product
                   ],
                 ),
                 Expanded(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/common/widgets/product_tile.dart';
 import 'package:furniture_shop/features/product_details/product_details_screen_cubit.dart';
+import 'package:furniture_shop/features/product_details/reviews_section/reviews_section.dart';
 import 'package:furniture_shop/resources/assets.gen.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
@@ -29,93 +30,95 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<ProductDetailsScreenCubit, ProductDetailsScreenState>(
         builder: (context, state) => state.map(
-            error: (state) => Center(
-                  child: Text(state.errorMessage),
-                ),
-            loading: (_) => const Center(child: CircularProgressIndicator()),
-            ready: (state) {
-              final theme = Theme.of(context);
-              final cubit = context.read<ProductDetailsScreenCubit>();
+          error: (state) => Center(
+            child: Text(state.errorMessage),
+          ),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
+          ready: (state) {
+            final theme = Theme.of(context);
+            final cubit = context.read<ProductDetailsScreenCubit>();
 
-              final productDetails = state.productDetails;
+            final productDetails = state.productDetails;
 
-              return SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      Align(
-                        child: Text(
-                          productDetails.name,
-                          style: theme.textTheme.headline5,
-                        ),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Align(
+                      child: Text(
+                        productDetails.name,
+                        style: theme.textTheme.headline5,
                       ),
-                      if (productDetails.modelId != null)
-                        Align(
-                          child: SizedBox(
-                            width: 300,
-                            height: 300,
-                            child: ModelViewer(
-                              src:
-                                  'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
-                            ),
+                    ),
+                    if (productDetails.modelId != null)
+                      Align(
+                        child: SizedBox(
+                          width: 300,
+                          height: 300,
+                          child: ModelViewer(
+                            src:
+                                'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
                           ),
                         ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (final photoId in productDetails.photoIds)
-                              CachedNetworkImage(
-                                imageUrl:
-                                    'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',
-                              ),
-                            const SizedBox(width: 16),
-                          ]..removeLast(),
-                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         children: [
-                          AvaregeScore(
-                            rating: productDetails.averageRating ?? 0,
-                          ),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: cubit.likeProduct,
-                                child: productDetails.inFavourites
-                                    ? Assets.icons.selectedHeart.image()
-                                    : Assets.icons.heart.image(),
-                              ),
-                              const SizedBox(width: 12),
-                              InkWell(
-                                onTap: cubit.addProductToShoppingCart,
-                                child: productDetails.inShoppingCart
-                                    ? Assets.icons.selectedAddToCart.image()
-                                    : Assets.icons.addToCart.image(),
-                              ),
-                            ],
-                          ),
-                        ],
+                          for (final photoId in productDetails.photoIds)
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',
+                            ),
+                          const SizedBox(width: 16),
+                        ]..removeLast(),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Price: ${productDetails.price}\$',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AvaregeScore(
+                          rating: productDetails.averageRating ?? 0,
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Description: ${productDetails.description}',
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: cubit.likeProduct,
+                              child: productDetails.inFavourites
+                                  ? Assets.icons.selectedHeart.image()
+                                  : Assets.icons.heart.image(),
+                            ),
+                            const SizedBox(width: 12),
+                            InkWell(
+                              onTap: cubit.addProductToShoppingCart,
+                              child: productDetails.inShoppingCart
+                                  ? Assets.icons.selectedAddToCart.image()
+                                  : Assets.icons.addToCart.image(),
+                            ),
+                          ],
                         ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Price: ${productDetails.price}\$',
                       ),
-                    ],
-                  ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Description: ${productDetails.description}',
+                      ),
+                    ),
+                    const ReviewsSection(),
+                  ],
                 ),
-              );
-            },),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

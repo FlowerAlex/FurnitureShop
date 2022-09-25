@@ -288,6 +288,7 @@ enum MyOrdersFilterFieldDTO {
   @JsonValue(0)
   orderState
 }
+
 enum MyOrdersSortFieldDTO {
   @JsonValue(0)
   orderedDate,
@@ -686,7 +687,7 @@ class CreateReview with EquatableMixin implements Command {
   factory CreateReview.fromJson(Map<String, dynamic> json) =>
       _$CreateReviewFromJson(json);
 
-  final ReviewDTOBase newReview;
+  final CreateReviewDTO newReview;
 
   get props => [newReview];
 
@@ -699,6 +700,31 @@ class CreateReviewErrorCodes {
   static const emptyReviewText = 1;
 
   static const incorrectRating = 2;
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class CreateReviewDTO with EquatableMixin {
+  CreateReviewDTO({
+    required this.productId,
+    required this.text,
+    required this.rating,
+    required this.createdDate,
+  });
+
+  factory CreateReviewDTO.fromJson(Map<String, dynamic> json) =>
+      _$CreateReviewDTOFromJson(json);
+
+  final String productId;
+
+  final String text;
+
+  final double rating;
+
+  final DateTime createdDate;
+
+  get props => [productId, text, rating, createdDate];
+
+  Map<String, dynamic> toJson() => _$CreateReviewDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -745,50 +771,25 @@ class ReviewById with EquatableMixin implements Query<ReviewDTO?> {
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ReviewDTO with EquatableMixin implements ReviewDTOBase {
+class ReviewDTO with EquatableMixin {
   ReviewDTO({
+    required this.id,
     required this.userId,
+    required this.userName,
     required this.productId,
     required this.text,
     required this.rating,
     required this.createdDate,
-    required this.id,
   });
 
   factory ReviewDTO.fromJson(Map<String, dynamic> json) =>
       _$ReviewDTOFromJson(json);
 
-  final String userId;
-
-  final String productId;
-
-  final String text;
-
-  final double rating;
-
-  final DateTime createdDate;
-
   final String id;
 
-  get props => [userId, productId, text, rating, createdDate, id];
-
-  Map<String, dynamic> toJson() => _$ReviewDTOToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class ReviewDTOBase with EquatableMixin {
-  ReviewDTOBase({
-    required this.userId,
-    required this.productId,
-    required this.text,
-    required this.rating,
-    required this.createdDate,
-  });
-
-  factory ReviewDTOBase.fromJson(Map<String, dynamic> json) =>
-      _$ReviewDTOBaseFromJson(json);
-
   final String userId;
+
+  final String userName;
 
   final String productId;
 
@@ -798,9 +799,9 @@ class ReviewDTOBase with EquatableMixin {
 
   final DateTime createdDate;
 
-  get props => [userId, productId, text, rating, createdDate];
+  get props => [id, userId, userName, productId, text, rating, createdDate];
 
-  Map<String, dynamic> toJson() => _$ReviewDTOBaseToJson(this);
+  Map<String, dynamic> toJson() => _$ReviewDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -813,7 +814,7 @@ class UpdateReview with EquatableMixin implements Command {
   factory UpdateReview.fromJson(Map<String, dynamic> json) =>
       _$UpdateReviewFromJson(json);
 
-  final ReviewDTO updatedReview;
+  final UpdateReviewDTO updatedReview;
 
   get props => [updatedReview];
 
@@ -826,6 +827,28 @@ class UpdateReviewErrorCodes {
   static const emptyReviewText = 1;
 
   static const incorrectRating = 2;
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UpdateReviewDTO with EquatableMixin {
+  UpdateReviewDTO({
+    required this.id,
+    required this.text,
+    required this.rating,
+  });
+
+  factory UpdateReviewDTO.fromJson(Map<String, dynamic> json) =>
+      _$UpdateReviewDTOFromJson(json);
+
+  final String id;
+
+  final String text;
+
+  final double rating;
+
+  get props => [id, text, rating];
+
+  Map<String, dynamic> toJson() => _$UpdateReviewDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -990,7 +1013,7 @@ class RegisterUser with EquatableMixin implements Command {
   factory RegisterUser.fromJson(Map<String, dynamic> json) =>
       _$RegisterUserFromJson(json);
 
-  final UserInfoDTO userInfo;
+  final UserInfoDTOBase userInfo;
 
   final String password;
 
@@ -1054,7 +1077,7 @@ class UserInfo with EquatableMixin implements Query<UserInfoDTO> {
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class UserInfoDTO with EquatableMixin {
+class UserInfoDTO with EquatableMixin implements UserInfoDTOBase {
   UserInfoDTO({
     required this.firstname,
     required this.surname,
@@ -1082,6 +1105,34 @@ class UserInfoDTO with EquatableMixin {
   get props => [firstname, surname, username, emailAddress, address, funds];
 
   Map<String, dynamic> toJson() => _$UserInfoDTOToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UserInfoDTOBase with EquatableMixin {
+  UserInfoDTOBase({
+    required this.firstname,
+    required this.surname,
+    required this.username,
+    required this.emailAddress,
+    required this.address,
+  });
+
+  factory UserInfoDTOBase.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoDTOBaseFromJson(json);
+
+  final String firstname;
+
+  final String surname;
+
+  final String username;
+
+  final String emailAddress;
+
+  final String address;
+
+  get props => [firstname, surname, username, emailAddress, address];
+
+  Map<String, dynamic> toJson() => _$UserInfoDTOBaseToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')

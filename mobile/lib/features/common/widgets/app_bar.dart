@@ -3,6 +3,7 @@ import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_button.dart';
 import 'package:furniture_shop/features/common/widgets/app_text_field.dart';
 import 'package:furniture_shop/features/common/widgets/asset_icon.dart';
+import 'package:furniture_shop/features/orders_screen/orders_screen.dart';
 import 'package:furniture_shop/features/products_screen/filter_dialog.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
@@ -59,9 +60,34 @@ class CustomAppBar extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              title,
-              style: AppTextStyles.reg16,
+            child: Row(
+              children: [
+                const Spacer(),
+                Text(
+                  title,
+                  style: AppTextStyles.reg16,
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 16),
+                    alignment: Alignment.centerRight,
+                    child: Material(
+                      color: AppColors.grey0,
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(24),
+                        onTap: () {
+                          Navigator.of(context).push(OrdersScreenRoute());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Assets.icons.list.svg(width: 24, height: 24),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           if (onSearchChanged != null) ...[

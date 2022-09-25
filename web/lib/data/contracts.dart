@@ -1069,7 +1069,7 @@ class BanUser with EquatableMixin implements Command {
 }
 
 class BanUserErrorCodes {
-  static const userNotFound = 1;
+  static const userAlreadyBanned = 1;
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
@@ -1091,7 +1091,7 @@ class UnbanUser with EquatableMixin implements Command {
 }
 
 class UnbanUserErrorCodes {
-  static const userNotFound = 1;
+  static const userAlreadyUnbanned = 1;
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -1102,7 +1102,7 @@ class UserInfoDTO with EquatableMixin {
     required this.surname,
     required this.username,
     required this.emailAddress,
-    this.address,
+    required this.address,
     required this.funds,
     required this.isBanned,
   });
@@ -1120,7 +1120,7 @@ class UserInfoDTO with EquatableMixin {
 
   final String emailAddress;
 
-  final String? address;
+  final String address;
 
   final int funds;
 
