@@ -159,8 +159,8 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
 
             var result = handler.ExecuteAsync(coreContext, query);
             Assert.True(result.IsCompletedSuccessfully);
-            Assert.Equal(1, result.Result.TotalCount);
-            var review =  result.Result.Items.First();
+            Assert.Equal(0, result.Result.TotalCount);
+            var review =  result.Result.MyReview;
             Assert.Equal(TestUser.Id, review.UserId);
             Assert.Equal(TestReview.Rating, review.Rating);
             Assert.Equal(TestReview.Text, review.Text);
