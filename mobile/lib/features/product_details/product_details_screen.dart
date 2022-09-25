@@ -13,8 +13,9 @@ class ProductDetailsScreenRoute extends MaterialPageRoute<void> {
   }) : super(
           builder: (context) => BlocProvider(
             create: (context) => ProductDetailsScreenCubit(
+              productId: productId,
               cqrs: context.read(),
-            )..init(productId),
+            )..init(),
             child: const ProductDetailsScreen(),
           ),
         );
@@ -43,77 +44,83 @@ class ProductDetailsScreen extends StatelessWidget {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    Align(
-                      child: Text(
-                        productDetails.name,
-                        style: theme.textTheme.headline5,
-                      ),
-                    ),
-                    if (productDetails.modelId != null)
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
                       Align(
-                        child: SizedBox(
-                          width: 300,
-                          height: 300,
-                          child: ModelViewer(
-                            src:
-                                'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
+                        child: Text(
+                          productDetails.name,
+                          style: theme.textTheme.headline5,
+                        ),
+                      ),
+                      if (productDetails.modelId != null)
+                        Align(
+                          child: SizedBox(
+                            width: 300,
+                            height: 300,
+                            child: ModelViewer(
+                              src:
+                                  'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
+                            ),
                           ),
                         ),
-                      ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          for (final photoId in productDetails.photoIds)
-                            CachedNetworkImage(
-                              imageUrl:
-                                  'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',
-                            ),
-                          const SizedBox(width: 16),
-                        ]..removeLast(),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AvaregeScore(
-                          rating: productDetails.averageRating ?? 0,
-                        ),
-                        Row(
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
                           children: [
-                            InkWell(
-                              onTap: cubit.likeProduct,
-                              child: productDetails.inFavourites
-                                  ? Assets.icons.selectedHeart.image()
-                                  : Assets.icons.heart.image(),
-                            ),
-                            const SizedBox(width: 12),
-                            InkWell(
-                              onTap: cubit.addProductToShoppingCart,
-                              child: productDetails.inShoppingCart
-                                  ? Assets.icons.selectedAddToCart.image()
-                                  : Assets.icons.addToCart.image(),
-                            ),
-                          ],
+                            for (final photoId in productDetails.photoIds)
+                              CachedNetworkImage(
+                                imageUrl:
+                                    'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',
+                              ),
+                            const SizedBox(width: 16),
+                          ]..removeLast(),
                         ),
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Price: ${productDetails.price}\$',
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Description: ${productDetails.description}',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AvaregeScore(
+                            rating: productDetails.averageRating ?? 0,
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: cubit.likeProduct,
+                                child: productDetails.inFavourites
+                                    ? Assets.icons.selectedHeart.image()
+                                    : Assets.icons.heart.image(),
+                              ),
+                              const SizedBox(width: 12),
+                              InkWell(
+                                onTap: cubit.addProductToShoppingCart,
+                                child: productDetails.inShoppingCart
+                                    ? Assets.icons.selectedAddToCart.image()
+                                    : Assets.icons.addToCart.image(),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                    const ReviewsSection(),
-                  ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Price: ${productDetails.price}\$',
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Description: ${productDetails.description}',
+                        ),
+                      ),
+                      ReviewsSection(
+                        reviews: state.reviews,
+                        totalCount: state.totalCount,
+                        currentPage: state.currentPage,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
