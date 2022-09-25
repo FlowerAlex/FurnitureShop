@@ -7,21 +7,40 @@ import 'package:logging/logging.dart';
 
 part 'product_details_screen_cubit.freezed.dart';
 
+const pageSize = 10;
+
 class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
   ProductDetailsScreenCubit({
+    required this.productId,
     required CQRS cqrs,
   })  : _cqrs = cqrs,
         super(const ProductDetailsScreenStateLoading());
 
   final CQRS _cqrs;
+  final String productId;
 
   final _logger = Logger('ProductDetailsScreenCubit');
 
-  Future<void> init(String productId) async {
+  Future<void> init() async {
     try {
       final productDetails = await _cqrs.get(ProductById(id: productId));
+      final reviews = await _cqrs.get(
+        AllReviews(
+          productId: productId,
+          pageNumber: 0,
+          pageSize: pageSize,
+        ),
+      );
+
       if (productDetails != null) {
-        emit(ProductDetailsScreenState.ready(productDetails: productDetails));
+        emit(
+          ProductDetailsScreenState.ready(
+            productDetails: productDetails,
+            reviews: {for (final review in reviews.items) review.id: review},
+            currentPage: 0,
+            totalCount: reviews.totalCount,
+          ),
+        );
       } else {
         emit(
           const ProductDetailsScreenState.error(
@@ -29,6 +48,35 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
           ),
         );
       }
+    } catch (err, st) {
+      _logger.warning('Could not load product details', err, st);
+      emit(ProductDetailsScreenState.error(errorMessage: err.toString()));
+    }
+  }
+
+  Future<void> fetch({required int page}) async {
+    final state = this.state;
+    if (state is! ProductDetailsScreenStateReady) {
+      return;
+    }
+
+    try {
+      final reviews = await _cqrs.get(
+        AllReviews(
+          productId: productId,
+          pageNumber: 0,
+          pageSize: pageSize,
+        ),
+      );
+
+      emit(
+        ProductDetailsScreenState.ready(
+          productDetails: state.productDetails,
+          reviews: {for (final review in reviews.items) review.id: review},
+          currentPage: page,
+          totalCount: reviews.totalCount,
+        ),
+      );
     } catch (err, st) {
       _logger.warning('Could not load product details', err, st);
       emit(ProductDetailsScreenState.error(errorMessage: err.toString()));
@@ -105,6 +153,9 @@ class ProductDetailsScreenState with _$ProductDetailsScreenState {
       ProductDetailsScreenStateLoading;
   const factory ProductDetailsScreenState.ready({
     required ProductDetailsDTO productDetails,
+    required Map<String, ReviewDTO> reviews,
+    required int currentPage,
+    required int totalCount,
   }) = ProductDetailsScreenStateReady;
   const factory ProductDetailsScreenState.error({
     required String errorMessage,

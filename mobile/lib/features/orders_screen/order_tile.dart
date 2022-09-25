@@ -86,7 +86,6 @@ class _OrderTileHeader extends StatelessWidget {
             ],
           ),
         ),
-        // for (final product in order.products) Text(product.name),
       ],
     );
   }
