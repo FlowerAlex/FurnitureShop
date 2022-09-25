@@ -30,6 +30,6 @@ namespace FurnitureShop.Core.Contracts.Mobile.Reviews
     }
     public class AllReviewsDTO : PaginatedResult<ReviewDTO>
     {
-        public ReviewDTO? UserReview { get; set; }
+        public ReviewDTO? MyReview { get; set; }
     }
 }

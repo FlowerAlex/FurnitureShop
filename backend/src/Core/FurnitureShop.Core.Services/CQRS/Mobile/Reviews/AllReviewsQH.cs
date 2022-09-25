@@ -61,7 +61,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
             {
                 Items = reviews,
                 TotalCount = reviews.Count,
-                UserReview = userReview,
+                MyReview = userReview,
             };
         }
     }
