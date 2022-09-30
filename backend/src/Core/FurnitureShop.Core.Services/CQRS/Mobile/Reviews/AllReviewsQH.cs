@@ -49,7 +49,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                             CreatedDate = p.CreatedDate,
                         }
                 )
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
             return new AllReviewsDTO()
             {
