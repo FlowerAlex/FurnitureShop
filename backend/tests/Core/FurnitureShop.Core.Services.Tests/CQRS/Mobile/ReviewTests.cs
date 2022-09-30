@@ -86,7 +86,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new AddReviewCH(dbContext);
             var command = new AddReview
             {
-                Review = new AddReviewDTO
+                ReviewData = new ReviewDataDTO
                 {
                     Text = NewReviewText,
                     ProductId = NewReviewProductId,
@@ -127,7 +127,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new AddReviewCH(dbContext);
             var command = new AddReview
             {
-                Review = new AddReviewDTO
+                ReviewData = new ReviewDataDTO
                 {
                     ProductId = TestReview.ProductId,
                     Text = NewReviewText,
@@ -144,6 +144,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             Assert.Equal(NewReviewRating, Review.Rating);
             Assert.Equal(TestReview.Id, Review.Id);
         }
+
         [Fact]
         public void AllReviewsTest()
         {
@@ -160,8 +161,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var result = handler.ExecuteAsync(coreContext, query);
             Assert.True(result.IsCompletedSuccessfully);
             Assert.Equal(0, result.Result.TotalCount);
-            var review =  result.Result.MyReview;
-            Assert.Equal(TestUser.Id, review.UserId);
+            var review = result.Result.MyReviewData;
             Assert.Equal(TestReview.Rating, review.Rating);
             Assert.Equal(TestReview.Text, review.Text);
             Assert.Equal(TestReview.ProductId, review.ProductId);

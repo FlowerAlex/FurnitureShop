@@ -16,10 +16,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
             this.dbContext = dbContext;
         }
 
-        public async Task<AllReviewsDTO> ExecuteAsync(
-            CoreContext context,
-            AllReviews query
-        )
+        public async Task<AllReviewsDTO> ExecuteAsync(CoreContext context, AllReviews query)
         {
             var reviews = await dbContext.Reviews
                 .Where(p => p.ProductId == query.ProductId && p.UserId != context.UserId)
@@ -38,30 +35,27 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
                             CreatedDate = p.CreatedDate,
                             Id = p.Id,
                         }
-                ).ToListAsync();
+                )
+                .ToListAsync();
             var userReview = await dbContext.Reviews
                 .Where(p => p.ProductId == query.ProductId && p.UserId == context.UserId)
                 .Select(
                     p =>
-                        new ReviewDTO
+                        new ReviewDataDTO
                         {
-                            UserId = p.UserId,
-                            UserName = dbContext.Users
-                                .Where(u => u.Id == p.UserId)
-                                .First()
-                                .Username,
                             ProductId = p.ProductId,
                             Text = string.IsNullOrWhiteSpace(p.Text) ? string.Empty : p.Text,
                             Rating = p.Rating,
                             CreatedDate = p.CreatedDate,
-                            Id = p.Id,
                         }
-                ).FirstAsync();
+                )
+                .FirstAsync();
+
             return new AllReviewsDTO()
             {
                 Items = reviews,
                 TotalCount = reviews.Count,
-                MyReview = userReview,
+                MyReviewData = userReview,
             };
         }
     }
