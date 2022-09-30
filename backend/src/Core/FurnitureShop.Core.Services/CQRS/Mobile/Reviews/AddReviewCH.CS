@@ -13,11 +13,11 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
     {
         public AddReviewCV()
         {
-            RuleFor(p => p.Review.Text)
+            RuleFor(p => p.ReviewData.Text)
                 .NotEmpty()
                 .WithCode(AddReview.ErrorCodes.EmptyReviewText)
                 .WithMessage("Review text should not be empty");
-            RuleFor(p => p.Review.Rating)
+            RuleFor(p => p.ReviewData.Rating)
                 .InclusiveBetween(0.0, 5.0)
                 .WithCode(AddReview.ErrorCodes.IncorrectRating)
                 .WithMessage("Incorrect rating");
@@ -36,23 +36,25 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Reviews
         public async Task ExecuteAsync(CoreContext context, AddReview command)
         {
             var oldReview = dbContext.Reviews
-                .Where(r => r.UserId == context.UserId && r.ProductId == command.Review.ProductId)
+                .Where(
+                    r => r.UserId == context.UserId && r.ProductId == command.ReviewData.ProductId
+                )
                 .FirstOrDefault();
 
             if (oldReview != null)
             {
-                oldReview.Text = command.Review.Text;
-                oldReview.Rating = command.Review.Rating;
+                oldReview.Text = command.ReviewData.Text;
+                oldReview.Rating = command.ReviewData.Rating;
             }
             else
             {
                 await dbContext.Reviews.AddAsync(
                     new Review
                     {
-                        Text = command.Review.Text,
+                        Text = command.ReviewData.Text,
                         UserId = Id<User>.From(context.UserId),
-                        Rating = command.Review.Rating,
-                        ProductId = Id<Product>.From(command.Review.ProductId),
+                        Rating = command.ReviewData.Rating,
+                        ProductId = Id<Product>.From(command.ReviewData.ProductId),
                     }
                 );
             }
