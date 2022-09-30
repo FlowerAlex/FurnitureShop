@@ -44,6 +44,7 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Users
                     user =>
                         new UserInfoDTO
                         {
+                            UserId = user.Id,
                             Firstname = user.Firstname,
                             Surname = user.Surname,
                             EmailAddress = user.EmailAddress,

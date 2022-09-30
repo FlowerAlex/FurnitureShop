@@ -13,6 +13,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Users
 
     public class UserInfoDTO : UserInfoDTOBase
     {
+        public Guid UserId { get; set; }
         public int Funds { get; set; }
     }
 }
