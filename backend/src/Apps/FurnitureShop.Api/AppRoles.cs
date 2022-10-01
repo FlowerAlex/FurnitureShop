@@ -8,6 +8,11 @@ namespace FurnitureShop.Api
     internal class AppRoles : IRoleRegistration
     {
         public IEnumerable<Role> Roles { get; } =
-            new[] { new Role(R.User, R.User), new Role(R.Admin, R.Admin), };
+            new[]
+            {
+                new Role(R.User, R.User),
+                new Role(R.Admin, R.Admin),
+                new Role(R.BannedUser, R.BannedUser),
+            };
     }
 }
