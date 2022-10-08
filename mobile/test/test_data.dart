@@ -1,6 +1,7 @@
 import 'package:furniture_shop/data/contracts.dart';
 
 final userInfoTest = UserInfoDTO(
+  userId: '',
   emailAddress: '',
   firstname: '',
   surname: '',

@@ -22,3 +22,28 @@ extension UserInfoDTOEx on UserInfoDTO {
         isBanned: isBanned ?? this.isBanned,
       );
 }
+
+extension ProductDetailsDTOEx on ProductDetailsDTO {
+  ProductDetailsDTO copyWith({
+    String? name,
+    double? price,
+    String? description,
+    double? averageRating,
+    String? previewPhotoId,
+    String? categoryId,
+    String? id,
+    String? modelId,
+    List<String>? photosIds,
+  }) =>
+      ProductDetailsDTO(
+        name: name ?? this.name,
+        price: price ?? this.price,
+        description: description ?? this.description,
+        averageRating: averageRating ?? this.averageRating,
+        previewPhotoId: previewPhotoId ?? this.previewPhotoId,
+        categoryId: categoryId ?? this.categoryId,
+        id: id ?? this.id,
+        modelId: modelId ?? this.modelId,
+        photosIds: photosIds ?? this.photosIds,
+      );
+}

@@ -34,7 +34,7 @@ class ProfileScreen extends HookWidget {
         title: 'Add funds',
         child: Column(
           children: [
-            AppTextField(
+            AppTextFormField(
               controller: fieldEditingController,
               keyboardType: TextInputType.number,
               inputFormatters: [
@@ -71,7 +71,7 @@ class ProfileScreen extends HookWidget {
         title: 'Nickname',
         child: Column(
           children: [
-            AppTextField(
+            AppTextFormField(
               controller: fieldEditingController,
             ),
             const SizedBox(height: 20),
@@ -102,7 +102,7 @@ class ProfileScreen extends HookWidget {
         title: 'Name',
         child: Column(
           children: [
-            AppTextField(
+            AppTextFormField(
               controller: fieldEditingController,
             ),
             const SizedBox(height: 20),
@@ -133,7 +133,7 @@ class ProfileScreen extends HookWidget {
         title: 'Surname',
         child: Column(
           children: [
-            AppTextField(
+            AppTextFormField(
               controller: fieldEditingController,
             ),
             const SizedBox(height: 20),
@@ -164,7 +164,7 @@ class ProfileScreen extends HookWidget {
         title: 'Address',
         child: Column(
           children: [
-            AppTextField(
+            AppTextFormField(
               controller: fieldEditingController,
             ),
             const SizedBox(height: 20),
@@ -266,7 +266,7 @@ class ProfileScreen extends HookWidget {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              AppTextField(
+                              AppTextFormField(
                                 controller: nickNameEditingController,
                                 label: 'Nickname',
                                 suffixIcon: IconButton(
@@ -279,7 +279,7 @@ class ProfileScreen extends HookWidget {
                                 readOnly: true,
                               ),
                               const SizedBox(height: 20),
-                              AppTextField(
+                              AppTextFormField(
                                 controller: nameEditingController,
                                 label: 'Name',
                                 suffixIcon: IconButton(
@@ -292,7 +292,7 @@ class ProfileScreen extends HookWidget {
                                 readOnly: true,
                               ),
                               const SizedBox(height: 20),
-                              AppTextField(
+                              AppTextFormField(
                                 controller: surnameEditingController,
                                 label: 'Surname',
                                 suffixIcon: IconButton(
@@ -305,7 +305,7 @@ class ProfileScreen extends HookWidget {
                                 readOnly: true,
                               ),
                               const SizedBox(height: 20),
-                              AppTextField(
+                              AppTextFormField(
                                 controller: addressEditingController,
                                 label: 'Address',
                                 suffixIcon: IconButton(

@@ -12,12 +12,12 @@ void main() {
   group(
     'ProfileScreenCubit',
     () {
-      late MockCQRS cqrs;
+      late MockAppCQRS cqrs;
 
       setUpAll(registerFallbackValues);
 
       setUp(() {
-        cqrs = MockCQRS();
+        cqrs = MockAppCQRS();
       });
 
       ProfileScreenCubit buildCubit() => ProfileScreenCubit(
@@ -28,7 +28,7 @@ void main() {
         'emit initial ProfileScreenState on the start',
         build: buildCubit,
         verify: (cubit) =>
-            expect(cubit.state, const ProfileScreenInitialState()),
+            expect(cubit.state, const ProfileScreenStateInitial()),
       );
 
       blocTest<ProfileScreenCubit, ProfileScreenState>(
@@ -41,8 +41,8 @@ void main() {
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
-          const ProfileScreenLoadingState(),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
+          const ProfileScreenStateLoading(),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
         ],
       );
 
@@ -56,7 +56,7 @@ void main() {
       //   },
       //   act: (cubit) => cubit.fetch(),
       //   expect: () => [
-      //     const ProfileScreenLoadingState(),
+      //     const ProfileScreenStateLoading(),
       //     const ProfileScreenErrorState(error: ''),
       //   ],
       // );
@@ -73,10 +73,10 @@ void main() {
           await cubit.fetch();
         },
         expect: () => [
-          const ProfileScreenLoadingState(),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
-          ProfileScreenLoadingState(userInfo: userInfoTest),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
+          const ProfileScreenStateLoading(),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
+          ProfileScreenStateLoading(userInfo: userInfoTest),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
         ],
       );
 
@@ -93,8 +93,8 @@ void main() {
           await cubit.updateProfile();
         },
         expect: () => [
-          const ProfileScreenLoadingState(),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
+          const ProfileScreenStateLoading(),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
         ],
       );
 
@@ -111,7 +111,7 @@ void main() {
       //     await cubit.updateProfile();
       //   },
       //   expect: () => [
-      //     const ProfileScreenLoadingState(),
+      //     const ProfileScreenStateLoading(),
       //     const ProfileScreenErrorState(),
       //   ],
       // );
@@ -131,10 +131,10 @@ void main() {
           await cubit.updateProfile();
         },
         expect: () => [
-          const ProfileScreenLoadingState(),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
-          ProfileScreenLoadingState(userInfo: userInfoTest),
-          ProfileScreenSuccessState(userInfo: userInfoTest),
+          const ProfileScreenStateLoading(),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
+          ProfileScreenStateLoading(userInfo: userInfoTest),
+          ProfileScreenStateSuccess(userInfo: userInfoTest),
         ],
       );
     },

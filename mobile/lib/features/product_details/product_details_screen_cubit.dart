@@ -1,6 +1,6 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
@@ -12,11 +12,11 @@ const pageSize = 10;
 class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
   ProductDetailsScreenCubit({
     required this.productId,
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
         super(const ProductDetailsScreenStateLoading());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
   final String productId;
 
   final _logger = Logger('ProductDetailsScreenCubit');
@@ -36,6 +36,7 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
         emit(
           ProductDetailsScreenState.ready(
             productDetails: productDetails,
+            myReviewData: reviews.myReviewData,
             reviews: {for (final review in reviews.items) review.id: review},
             currentPage: 0,
             totalCount: reviews.totalCount,
@@ -72,6 +73,7 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
       emit(
         ProductDetailsScreenState.ready(
           productDetails: state.productDetails,
+          myReviewData: reviews.myReviewData,
           reviews: {for (final review in reviews.items) review.id: review},
           currentPage: page,
           totalCount: reviews.totalCount,
@@ -145,6 +147,66 @@ class ProductDetailsScreenCubit extends Cubit<ProductDetailsScreenState> {
       );
     }
   }
+
+  void updateReview({
+    String? myReviewText,
+    double? myReviewRating,
+  }) {
+    final state = this.state;
+    if (state is! ProductDetailsScreenStateReady) {
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        myReviewData: state.myReviewData?.copyWith(
+              text: myReviewText ?? state.myReviewData?.text,
+              rating: myReviewRating ?? state.myReviewData?.rating,
+            ) ??
+            ReviewDataDTO(
+              text: myReviewText ?? '',
+              rating: myReviewRating ?? 0,
+              createdDate: DateTime.now(),
+              productId: productId,
+            ),
+      ),
+    );
+  }
+
+  Future<void> publishReview() async {
+    final state = this.state;
+    if (state is! ProductDetailsScreenStateReady) {
+      return;
+    }
+    final myReviewData = state.myReviewData;
+    if (myReviewData == null) {
+      return;
+    }
+
+    try {
+      final reviewData = ReviewDataDTO(
+        createdDate: DateTime.now(),
+        productId: productId,
+        text: myReviewData.text,
+        rating: myReviewData.rating,
+      );
+
+      await _cqrs.run(
+        AddReview(
+          reviewData: reviewData,
+        ),
+      );
+
+      emit(
+        state.copyWith(
+          myReviewData: reviewData,
+        ),
+      );
+    } catch (err, st) {
+      _logger.severe("Couldn't add review", err, st);
+      emit(ProductDetailsScreenState.error(errorMessage: err.toString()));
+    }
+  }
 }
 
 @freezed
@@ -154,6 +216,7 @@ class ProductDetailsScreenState with _$ProductDetailsScreenState {
   const factory ProductDetailsScreenState.ready({
     required ProductDetailsDTO productDetails,
     required Map<String, ReviewDTO> reviews,
+    required ReviewDataDTO? myReviewData,
     required int currentPage,
     required int totalCount,
   }) = ProductDetailsScreenStateReady;

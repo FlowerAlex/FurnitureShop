@@ -1,6 +1,6 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
@@ -11,11 +11,11 @@ const pageSize = 10;
 
 class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   ProductsScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
         super(const ProductsScreenReadyState());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
 
   final _logger = Logger('ProductsScreenCubit');
 
@@ -133,32 +133,28 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
         return;
       }
 
-      try {
-        final product = state.products.values
-            .firstWhere((element) => element.id == productId);
+      final product = state.products.values
+          .firstWhere((element) => element.id == productId);
 
-        final wasInFavorites = product.inFavourites;
-        if (wasInFavorites) {
-          await _cqrs.run(RemoveFromFavourites(productId: productId));
-        } else {
-          await _cqrs.run(AddToFavourites(productId: productId));
-        }
-
-        emit(
-          state.copyWith(
-            products: {
-              for (final product in state.products.entries)
-                product.key: product.value.copyWith(
-                  inFavourites: product.key == productId
-                      ? !wasInFavorites
-                      : product.value.inFavourites,
-                )
-            },
-          ),
-        );
-      } catch (e, _) {
-        emit(ProductsScreenErrorState(errorMessage: e.toString()));
+      final wasInFavorites = product.inFavourites;
+      if (wasInFavorites) {
+        await _cqrs.run(RemoveFromFavourites(productId: productId));
+      } else {
+        await _cqrs.run(AddToFavourites(productId: productId));
       }
+
+      emit(
+        state.copyWith(
+          products: {
+            for (final product in state.products.entries)
+              product.key: product.value.copyWith(
+                inFavourites: product.key == productId
+                    ? !wasInFavorites
+                    : product.value.inFavourites,
+              )
+          },
+        ),
+      );
     } catch (e, _) {
       emit(ProductsScreenErrorState(errorMessage: e.toString()));
     }

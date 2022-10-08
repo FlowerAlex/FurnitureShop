@@ -1,6 +1,6 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 
 part 'favorites_screen_cubit.freezed.dart';
@@ -11,11 +11,11 @@ final allCategories = CategoryDTO(id: 'all_categories_id', name: 'all');
 
 class FavouritesScreenCubit extends Cubit<FavoritesScreenState> {
   FavouritesScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
         super(const FavoritesLoadingState());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
 
   Future<void> fetch({int page = 0}) async {
     var state = this.state;

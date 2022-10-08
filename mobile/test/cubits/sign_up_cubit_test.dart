@@ -13,13 +13,13 @@ void main() {
   group(
     'SignUpScreenCubit',
     () {
-      late MockCQRS cqrs;
+      late MockAppCQRS cqrs;
       late MockAuthCubit authCubit;
 
       setUpAll(registerFallbackValues);
 
       setUp(() {
-        cqrs = MockCQRS();
+        cqrs = MockAppCQRS();
         authCubit = MockAuthCubit();
       });
 
@@ -58,7 +58,9 @@ void main() {
         },
         act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
-            cubit.state, const SignUpScreenReadyState(networkError: true),),
+          cubit.state,
+          const SignUpScreenReadyState(networkError: true),
+        ),
       );
 
       blocTest<SignUpScreenCubit, SignUpScreenState>(
@@ -72,7 +74,9 @@ void main() {
         },
         act: (cubit) => cubit.registerUser('', '', ''),
         verify: (cubit) => expect(
-            cubit.state, const SignUpScreenReadyState(unknownError: true),),
+          cubit.state,
+          const SignUpScreenReadyState(unknownError: true),
+        ),
       );
     },
   );

@@ -18,24 +18,24 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProfileScreenStateTearOff {
   const _$ProfileScreenStateTearOff();
 
-  ProfileScreenInitialState initial() {
-    return const ProfileScreenInitialState();
+  ProfileScreenStateInitial initial() {
+    return const ProfileScreenStateInitial();
   }
 
-  ProfileScreenLoadingState loading({UserInfoDTO? userInfo}) {
-    return ProfileScreenLoadingState(
+  ProfileScreenStateLoading loading({UserInfoDTO? userInfo}) {
+    return ProfileScreenStateLoading(
       userInfo: userInfo,
     );
   }
 
-  ProfileScreenSuccessState success({required UserInfoDTO userInfo}) {
-    return ProfileScreenSuccessState(
+  ProfileScreenStateSuccess success({required UserInfoDTO userInfo}) {
+    return ProfileScreenStateSuccess(
       userInfo: userInfo,
     );
   }
 
-  ProfileScreenErrorState error({required String error}) {
-    return ProfileScreenErrorState(
+  ProfileScreenStateError error({required String error}) {
+    return ProfileScreenStateError(
       error: error,
     );
   }
@@ -73,26 +73,26 @@ mixin _$ProfileScreenState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileScreenInitialState value) initial,
-    required TResult Function(ProfileScreenLoadingState value) loading,
-    required TResult Function(ProfileScreenSuccessState value) success,
-    required TResult Function(ProfileScreenErrorState value) error,
+    required TResult Function(ProfileScreenStateInitial value) initial,
+    required TResult Function(ProfileScreenStateLoading value) loading,
+    required TResult Function(ProfileScreenStateSuccess value) success,
+    required TResult Function(ProfileScreenStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,29 +116,29 @@ class _$ProfileScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ProfileScreenInitialStateCopyWith<$Res> {
-  factory $ProfileScreenInitialStateCopyWith(ProfileScreenInitialState value,
-          $Res Function(ProfileScreenInitialState) then) =
-      _$ProfileScreenInitialStateCopyWithImpl<$Res>;
+abstract class $ProfileScreenStateInitialCopyWith<$Res> {
+  factory $ProfileScreenStateInitialCopyWith(ProfileScreenStateInitial value,
+          $Res Function(ProfileScreenStateInitial) then) =
+      _$ProfileScreenStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ProfileScreenInitialStateCopyWithImpl<$Res>
+class _$ProfileScreenStateInitialCopyWithImpl<$Res>
     extends _$ProfileScreenStateCopyWithImpl<$Res>
-    implements $ProfileScreenInitialStateCopyWith<$Res> {
-  _$ProfileScreenInitialStateCopyWithImpl(ProfileScreenInitialState _value,
-      $Res Function(ProfileScreenInitialState) _then)
-      : super(_value, (v) => _then(v as ProfileScreenInitialState));
+    implements $ProfileScreenStateInitialCopyWith<$Res> {
+  _$ProfileScreenStateInitialCopyWithImpl(ProfileScreenStateInitial _value,
+      $Res Function(ProfileScreenStateInitial) _then)
+      : super(_value, (v) => _then(v as ProfileScreenStateInitial));
 
   @override
-  ProfileScreenInitialState get _value =>
-      super._value as ProfileScreenInitialState;
+  ProfileScreenStateInitial get _value =>
+      super._value as ProfileScreenStateInitial;
 }
 
 /// @nodoc
 
-class _$ProfileScreenInitialState implements ProfileScreenInitialState {
-  const _$ProfileScreenInitialState();
+class _$ProfileScreenStateInitial implements ProfileScreenStateInitial {
+  const _$ProfileScreenStateInitial();
 
   @override
   String toString() {
@@ -149,7 +149,7 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProfileScreenInitialState);
+            other is ProfileScreenStateInitial);
   }
 
   @override
@@ -195,10 +195,10 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileScreenInitialState value) initial,
-    required TResult Function(ProfileScreenLoadingState value) loading,
-    required TResult Function(ProfileScreenSuccessState value) success,
-    required TResult Function(ProfileScreenErrorState value) error,
+    required TResult Function(ProfileScreenStateInitial value) initial,
+    required TResult Function(ProfileScreenStateLoading value) loading,
+    required TResult Function(ProfileScreenStateSuccess value) success,
+    required TResult Function(ProfileScreenStateError value) error,
   }) {
     return initial(this);
   }
@@ -206,10 +206,10 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -217,10 +217,10 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -230,35 +230,35 @@ class _$ProfileScreenInitialState implements ProfileScreenInitialState {
   }
 }
 
-abstract class ProfileScreenInitialState implements ProfileScreenState {
-  const factory ProfileScreenInitialState() = _$ProfileScreenInitialState;
+abstract class ProfileScreenStateInitial implements ProfileScreenState {
+  const factory ProfileScreenStateInitial() = _$ProfileScreenStateInitial;
 }
 
 /// @nodoc
-abstract class $ProfileScreenLoadingStateCopyWith<$Res> {
-  factory $ProfileScreenLoadingStateCopyWith(ProfileScreenLoadingState value,
-          $Res Function(ProfileScreenLoadingState) then) =
-      _$ProfileScreenLoadingStateCopyWithImpl<$Res>;
+abstract class $ProfileScreenStateLoadingCopyWith<$Res> {
+  factory $ProfileScreenStateLoadingCopyWith(ProfileScreenStateLoading value,
+          $Res Function(ProfileScreenStateLoading) then) =
+      _$ProfileScreenStateLoadingCopyWithImpl<$Res>;
   $Res call({UserInfoDTO? userInfo});
 }
 
 /// @nodoc
-class _$ProfileScreenLoadingStateCopyWithImpl<$Res>
+class _$ProfileScreenStateLoadingCopyWithImpl<$Res>
     extends _$ProfileScreenStateCopyWithImpl<$Res>
-    implements $ProfileScreenLoadingStateCopyWith<$Res> {
-  _$ProfileScreenLoadingStateCopyWithImpl(ProfileScreenLoadingState _value,
-      $Res Function(ProfileScreenLoadingState) _then)
-      : super(_value, (v) => _then(v as ProfileScreenLoadingState));
+    implements $ProfileScreenStateLoadingCopyWith<$Res> {
+  _$ProfileScreenStateLoadingCopyWithImpl(ProfileScreenStateLoading _value,
+      $Res Function(ProfileScreenStateLoading) _then)
+      : super(_value, (v) => _then(v as ProfileScreenStateLoading));
 
   @override
-  ProfileScreenLoadingState get _value =>
-      super._value as ProfileScreenLoadingState;
+  ProfileScreenStateLoading get _value =>
+      super._value as ProfileScreenStateLoading;
 
   @override
   $Res call({
     Object? userInfo = freezed,
   }) {
-    return _then(ProfileScreenLoadingState(
+    return _then(ProfileScreenStateLoading(
       userInfo: userInfo == freezed
           ? _value.userInfo
           : userInfo // ignore: cast_nullable_to_non_nullable
@@ -269,8 +269,8 @@ class _$ProfileScreenLoadingStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
-  const _$ProfileScreenLoadingState({this.userInfo});
+class _$ProfileScreenStateLoading implements ProfileScreenStateLoading {
+  const _$ProfileScreenStateLoading({this.userInfo});
 
   @override
   final UserInfoDTO? userInfo;
@@ -284,7 +284,7 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProfileScreenLoadingState &&
+            other is ProfileScreenStateLoading &&
             const DeepCollectionEquality().equals(other.userInfo, userInfo));
   }
 
@@ -294,8 +294,8 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
 
   @JsonKey(ignore: true)
   @override
-  $ProfileScreenLoadingStateCopyWith<ProfileScreenLoadingState> get copyWith =>
-      _$ProfileScreenLoadingStateCopyWithImpl<ProfileScreenLoadingState>(
+  $ProfileScreenStateLoadingCopyWith<ProfileScreenStateLoading> get copyWith =>
+      _$ProfileScreenStateLoadingCopyWithImpl<ProfileScreenStateLoading>(
           this, _$identity);
 
   @override
@@ -338,10 +338,10 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileScreenInitialState value) initial,
-    required TResult Function(ProfileScreenLoadingState value) loading,
-    required TResult Function(ProfileScreenSuccessState value) success,
-    required TResult Function(ProfileScreenErrorState value) error,
+    required TResult Function(ProfileScreenStateInitial value) initial,
+    required TResult Function(ProfileScreenStateLoading value) loading,
+    required TResult Function(ProfileScreenStateSuccess value) success,
+    required TResult Function(ProfileScreenStateError value) error,
   }) {
     return loading(this);
   }
@@ -349,10 +349,10 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -360,10 +360,10 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -373,41 +373,41 @@ class _$ProfileScreenLoadingState implements ProfileScreenLoadingState {
   }
 }
 
-abstract class ProfileScreenLoadingState implements ProfileScreenState {
-  const factory ProfileScreenLoadingState({UserInfoDTO? userInfo}) =
-      _$ProfileScreenLoadingState;
+abstract class ProfileScreenStateLoading implements ProfileScreenState {
+  const factory ProfileScreenStateLoading({UserInfoDTO? userInfo}) =
+      _$ProfileScreenStateLoading;
 
   UserInfoDTO? get userInfo;
   @JsonKey(ignore: true)
-  $ProfileScreenLoadingStateCopyWith<ProfileScreenLoadingState> get copyWith =>
+  $ProfileScreenStateLoadingCopyWith<ProfileScreenStateLoading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProfileScreenSuccessStateCopyWith<$Res> {
-  factory $ProfileScreenSuccessStateCopyWith(ProfileScreenSuccessState value,
-          $Res Function(ProfileScreenSuccessState) then) =
-      _$ProfileScreenSuccessStateCopyWithImpl<$Res>;
+abstract class $ProfileScreenStateSuccessCopyWith<$Res> {
+  factory $ProfileScreenStateSuccessCopyWith(ProfileScreenStateSuccess value,
+          $Res Function(ProfileScreenStateSuccess) then) =
+      _$ProfileScreenStateSuccessCopyWithImpl<$Res>;
   $Res call({UserInfoDTO userInfo});
 }
 
 /// @nodoc
-class _$ProfileScreenSuccessStateCopyWithImpl<$Res>
+class _$ProfileScreenStateSuccessCopyWithImpl<$Res>
     extends _$ProfileScreenStateCopyWithImpl<$Res>
-    implements $ProfileScreenSuccessStateCopyWith<$Res> {
-  _$ProfileScreenSuccessStateCopyWithImpl(ProfileScreenSuccessState _value,
-      $Res Function(ProfileScreenSuccessState) _then)
-      : super(_value, (v) => _then(v as ProfileScreenSuccessState));
+    implements $ProfileScreenStateSuccessCopyWith<$Res> {
+  _$ProfileScreenStateSuccessCopyWithImpl(ProfileScreenStateSuccess _value,
+      $Res Function(ProfileScreenStateSuccess) _then)
+      : super(_value, (v) => _then(v as ProfileScreenStateSuccess));
 
   @override
-  ProfileScreenSuccessState get _value =>
-      super._value as ProfileScreenSuccessState;
+  ProfileScreenStateSuccess get _value =>
+      super._value as ProfileScreenStateSuccess;
 
   @override
   $Res call({
     Object? userInfo = freezed,
   }) {
-    return _then(ProfileScreenSuccessState(
+    return _then(ProfileScreenStateSuccess(
       userInfo: userInfo == freezed
           ? _value.userInfo
           : userInfo // ignore: cast_nullable_to_non_nullable
@@ -418,8 +418,8 @@ class _$ProfileScreenSuccessStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
-  const _$ProfileScreenSuccessState({required this.userInfo});
+class _$ProfileScreenStateSuccess implements ProfileScreenStateSuccess {
+  const _$ProfileScreenStateSuccess({required this.userInfo});
 
   @override
   final UserInfoDTO userInfo;
@@ -433,7 +433,7 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProfileScreenSuccessState &&
+            other is ProfileScreenStateSuccess &&
             const DeepCollectionEquality().equals(other.userInfo, userInfo));
   }
 
@@ -443,8 +443,8 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
 
   @JsonKey(ignore: true)
   @override
-  $ProfileScreenSuccessStateCopyWith<ProfileScreenSuccessState> get copyWith =>
-      _$ProfileScreenSuccessStateCopyWithImpl<ProfileScreenSuccessState>(
+  $ProfileScreenStateSuccessCopyWith<ProfileScreenStateSuccess> get copyWith =>
+      _$ProfileScreenStateSuccessCopyWithImpl<ProfileScreenStateSuccess>(
           this, _$identity);
 
   @override
@@ -487,10 +487,10 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileScreenInitialState value) initial,
-    required TResult Function(ProfileScreenLoadingState value) loading,
-    required TResult Function(ProfileScreenSuccessState value) success,
-    required TResult Function(ProfileScreenErrorState value) error,
+    required TResult Function(ProfileScreenStateInitial value) initial,
+    required TResult Function(ProfileScreenStateLoading value) loading,
+    required TResult Function(ProfileScreenStateSuccess value) success,
+    required TResult Function(ProfileScreenStateError value) error,
   }) {
     return success(this);
   }
@@ -498,10 +498,10 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
   }) {
     return success?.call(this);
   }
@@ -509,10 +509,10 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -522,40 +522,40 @@ class _$ProfileScreenSuccessState implements ProfileScreenSuccessState {
   }
 }
 
-abstract class ProfileScreenSuccessState implements ProfileScreenState {
-  const factory ProfileScreenSuccessState({required UserInfoDTO userInfo}) =
-      _$ProfileScreenSuccessState;
+abstract class ProfileScreenStateSuccess implements ProfileScreenState {
+  const factory ProfileScreenStateSuccess({required UserInfoDTO userInfo}) =
+      _$ProfileScreenStateSuccess;
 
   UserInfoDTO get userInfo;
   @JsonKey(ignore: true)
-  $ProfileScreenSuccessStateCopyWith<ProfileScreenSuccessState> get copyWith =>
+  $ProfileScreenStateSuccessCopyWith<ProfileScreenStateSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProfileScreenErrorStateCopyWith<$Res> {
-  factory $ProfileScreenErrorStateCopyWith(ProfileScreenErrorState value,
-          $Res Function(ProfileScreenErrorState) then) =
-      _$ProfileScreenErrorStateCopyWithImpl<$Res>;
+abstract class $ProfileScreenStateErrorCopyWith<$Res> {
+  factory $ProfileScreenStateErrorCopyWith(ProfileScreenStateError value,
+          $Res Function(ProfileScreenStateError) then) =
+      _$ProfileScreenStateErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$ProfileScreenErrorStateCopyWithImpl<$Res>
+class _$ProfileScreenStateErrorCopyWithImpl<$Res>
     extends _$ProfileScreenStateCopyWithImpl<$Res>
-    implements $ProfileScreenErrorStateCopyWith<$Res> {
-  _$ProfileScreenErrorStateCopyWithImpl(ProfileScreenErrorState _value,
-      $Res Function(ProfileScreenErrorState) _then)
-      : super(_value, (v) => _then(v as ProfileScreenErrorState));
+    implements $ProfileScreenStateErrorCopyWith<$Res> {
+  _$ProfileScreenStateErrorCopyWithImpl(ProfileScreenStateError _value,
+      $Res Function(ProfileScreenStateError) _then)
+      : super(_value, (v) => _then(v as ProfileScreenStateError));
 
   @override
-  ProfileScreenErrorState get _value => super._value as ProfileScreenErrorState;
+  ProfileScreenStateError get _value => super._value as ProfileScreenStateError;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(ProfileScreenErrorState(
+    return _then(ProfileScreenStateError(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -566,8 +566,8 @@ class _$ProfileScreenErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileScreenErrorState implements ProfileScreenErrorState {
-  const _$ProfileScreenErrorState({required this.error});
+class _$ProfileScreenStateError implements ProfileScreenStateError {
+  const _$ProfileScreenStateError({required this.error});
 
   @override
   final String error;
@@ -581,7 +581,7 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProfileScreenErrorState &&
+            other is ProfileScreenStateError &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -591,8 +591,8 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
 
   @JsonKey(ignore: true)
   @override
-  $ProfileScreenErrorStateCopyWith<ProfileScreenErrorState> get copyWith =>
-      _$ProfileScreenErrorStateCopyWithImpl<ProfileScreenErrorState>(
+  $ProfileScreenStateErrorCopyWith<ProfileScreenStateError> get copyWith =>
+      _$ProfileScreenStateErrorCopyWithImpl<ProfileScreenStateError>(
           this, _$identity);
 
   @override
@@ -635,10 +635,10 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileScreenInitialState value) initial,
-    required TResult Function(ProfileScreenLoadingState value) loading,
-    required TResult Function(ProfileScreenSuccessState value) success,
-    required TResult Function(ProfileScreenErrorState value) error,
+    required TResult Function(ProfileScreenStateInitial value) initial,
+    required TResult Function(ProfileScreenStateLoading value) loading,
+    required TResult Function(ProfileScreenStateSuccess value) success,
+    required TResult Function(ProfileScreenStateError value) error,
   }) {
     return error(this);
   }
@@ -646,10 +646,10 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -657,10 +657,10 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileScreenInitialState value)? initial,
-    TResult Function(ProfileScreenLoadingState value)? loading,
-    TResult Function(ProfileScreenSuccessState value)? success,
-    TResult Function(ProfileScreenErrorState value)? error,
+    TResult Function(ProfileScreenStateInitial value)? initial,
+    TResult Function(ProfileScreenStateLoading value)? loading,
+    TResult Function(ProfileScreenStateSuccess value)? success,
+    TResult Function(ProfileScreenStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -670,12 +670,12 @@ class _$ProfileScreenErrorState implements ProfileScreenErrorState {
   }
 }
 
-abstract class ProfileScreenErrorState implements ProfileScreenState {
-  const factory ProfileScreenErrorState({required String error}) =
-      _$ProfileScreenErrorState;
+abstract class ProfileScreenStateError implements ProfileScreenState {
+  const factory ProfileScreenStateError({required String error}) =
+      _$ProfileScreenStateError;
 
   String get error;
   @JsonKey(ignore: true)
-  $ProfileScreenErrorStateCopyWith<ProfileScreenErrorState> get copyWith =>
+  $ProfileScreenStateErrorCopyWith<ProfileScreenStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }

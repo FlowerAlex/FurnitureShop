@@ -46,6 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         child: Text(
@@ -102,19 +103,14 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Price: ${productDetails.price}\$',
-                        ),
+                      Text(
+                        'Price: ${productDetails.price}\$',
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Description: ${productDetails.description}',
-                        ),
+                      Text(
+                        'Description: ${productDetails.description}',
                       ),
                       ReviewsSection(
+                        myReviewData: state.myReviewData,
                         reviews: state.reviews,
                         totalCount: state.totalCount,
                         currentPage: state.currentPage,

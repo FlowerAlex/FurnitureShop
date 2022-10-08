@@ -19,6 +19,7 @@ mixin _$ProductFormBodyState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -34,6 +35,7 @@ mixin _$ProductFormBodyState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -49,6 +51,7 @@ mixin _$ProductFormBodyState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -110,7 +113,8 @@ abstract class _$$ProductFormBodyStateReadyCopyWith<$Res> {
           $Res Function(_$ProductFormBodyStateReady) then) =
       __$$ProductFormBodyStateReadyCopyWithImpl<$Res>;
   $Res call(
-      {List<CategoryDTO> categories,
+      {ProductDetailsDTO? editingProduct,
+      List<CategoryDTO> categories,
       String? name,
       String? price,
       String? description,
@@ -133,6 +137,7 @@ class __$$ProductFormBodyStateReadyCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? editingProduct = freezed,
     Object? categories = freezed,
     Object? name = freezed,
     Object? price = freezed,
@@ -142,6 +147,10 @@ class __$$ProductFormBodyStateReadyCopyWithImpl<$Res>
     Object? currentModel = freezed,
   }) {
     return _then(_$ProductFormBodyStateReady(
+      editingProduct: editingProduct == freezed
+          ? _value.editingProduct
+          : editingProduct // ignore: cast_nullable_to_non_nullable
+              as ProductDetailsDTO?,
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -178,7 +187,8 @@ class __$$ProductFormBodyStateReadyCopyWithImpl<$Res>
 
 class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   const _$ProductFormBodyStateReady(
-      {final List<CategoryDTO> categories = const <CategoryDTO>[],
+      {this.editingProduct,
+      final List<CategoryDTO> categories = const <CategoryDTO>[],
       this.name,
       this.price,
       this.description,
@@ -187,6 +197,8 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
       this.currentModel})
       : _categories = categories;
 
+  @override
+  final ProductDetailsDTO? editingProduct;
   final List<CategoryDTO> _categories;
   @override
   @JsonKey()
@@ -210,7 +222,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
 
   @override
   String toString() {
-    return 'ProductFormBodyState.ready(categories: $categories, name: $name, price: $price, description: $description, selectedCategoryId: $selectedCategoryId, currentImage: $currentImage, currentModel: $currentModel)';
+    return 'ProductFormBodyState.ready(editingProduct: $editingProduct, categories: $categories, name: $name, price: $price, description: $description, selectedCategoryId: $selectedCategoryId, currentImage: $currentImage, currentModel: $currentModel)';
   }
 
   @override
@@ -218,6 +230,8 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProductFormBodyStateReady &&
+            const DeepCollectionEquality()
+                .equals(other.editingProduct, editingProduct) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other.name, name) &&
@@ -235,6 +249,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(editingProduct),
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(price),
@@ -253,6 +268,7 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -264,14 +280,15 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
     required TResult Function() finished,
     required TResult Function(String error) error,
   }) {
-    return ready(categories, name, price, description, selectedCategoryId,
-        currentImage, currentModel);
+    return ready(editingProduct, categories, name, price, description,
+        selectedCategoryId, currentImage, currentModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -283,14 +300,15 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
     TResult Function()? finished,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(categories, name, price, description, selectedCategoryId,
-        currentImage, currentModel);
+    return ready?.call(editingProduct, categories, name, price, description,
+        selectedCategoryId, currentImage, currentModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -304,8 +322,8 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(categories, name, price, description, selectedCategoryId,
-          currentImage, currentModel);
+      return ready(editingProduct, categories, name, price, description,
+          selectedCategoryId, currentImage, currentModel);
     }
     return orElse();
   }
@@ -347,7 +365,8 @@ class _$ProductFormBodyStateReady implements ProductFormBodyStateReady {
 
 abstract class ProductFormBodyStateReady implements ProductFormBodyState {
   const factory ProductFormBodyStateReady(
-      {final List<CategoryDTO> categories,
+      {final ProductDetailsDTO? editingProduct,
+      final List<CategoryDTO> categories,
       final String? name,
       final String? price,
       final String? description,
@@ -355,6 +374,7 @@ abstract class ProductFormBodyStateReady implements ProductFormBodyState {
       final PlatformFile? currentImage,
       final PlatformFile? currentModel}) = _$ProductFormBodyStateReady;
 
+  ProductDetailsDTO? get editingProduct;
   List<CategoryDTO> get categories;
   String? get name;
   String? get price;
@@ -413,6 +433,7 @@ class _$ProductFormBodyStateFinished implements ProductFormBodyStateFinished {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -431,6 +452,7 @@ class _$ProductFormBodyStateFinished implements ProductFormBodyStateFinished {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -449,6 +471,7 @@ class _$ProductFormBodyStateFinished implements ProductFormBodyStateFinished {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -575,6 +598,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -593,6 +617,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,
@@ -611,6 +636,7 @@ class _$ProductFormBodyStateError implements ProductFormBodyStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            ProductDetailsDTO? editingProduct,
             List<CategoryDTO> categories,
             String? name,
             String? price,

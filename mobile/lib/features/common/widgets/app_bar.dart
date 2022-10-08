@@ -96,7 +96,7 @@ class CustomAppBar extends StatelessWidget {
               child: Row(
                 children: [
                   Flexible(
-                    child: AppTextField(
+                    child: AppTextFormField(
                       hintText: 'Search',
                       onChanged: onSearchChanged,
                       prefix: AssetIcon(

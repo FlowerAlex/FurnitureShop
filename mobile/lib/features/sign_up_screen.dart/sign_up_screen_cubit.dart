@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:login_client/login_client.dart';
@@ -11,13 +11,13 @@ part 'sign_up_screen_cubit.freezed.dart';
 
 class SignUpScreenCubit extends Cubit<SignUpScreenState> {
   SignUpScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
     required AuthCubit authCubit,
   })  : _cqrs = cqrs,
         _authCubit = authCubit,
         super(const SignUpScreenReadyState());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
   final AuthCubit _authCubit;
 
   Future<void> registerUser(

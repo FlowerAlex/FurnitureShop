@@ -1,31 +1,33 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../test_data.dart';
 
-class MockCQRS extends Mock implements CQRS {}
+class MockAppCQRS extends Mock implements AppCQRS {}
 
 void main() {
   group(
     'ProductsScreenCubit',
     () {
-      late MockCQRS cqrs;
+      late MockAppCQRS cqrs;
 
       setUpAll(() {
         registerFallbackValue(AllCategories());
-        registerFallbackValue(AllProducts(
-          sortByDescending: false,
-          pageSize: 10,
-          pageNumber: 0,
-        ),);
+        registerFallbackValue(
+          AllProducts(
+            sortByDescending: false,
+            pageSize: 10,
+            pageNumber: 0,
+          ),
+        );
       });
 
       setUp(() {
-        cqrs = MockCQRS();
+        cqrs = MockAppCQRS();
       });
 
       ProductsScreenCubit buildCubit() => ProductsScreenCubit(
@@ -36,49 +38,60 @@ void main() {
         'emit initial ProductsScreenState on the start',
         build: buildCubit,
         verify: (cubit) => expect(
-            cubit.state, const ProductsScreenReadyState(),),
+          cubit.state,
+          const ProductsScreenReadyState(),
+        ),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run changeActiveCategory',
         build: buildCubit,
         act: (cubit) => cubit.changeActiveCategory(category1Test),
-        verify: (cubit) => expect(cubit.state,
-            ProductsScreenReadyState(activeCategory: category1Test),),
+        verify: (cubit) => expect(
+          cubit.state,
+          ProductsScreenReadyState(activeCategory: category1Test),
+        ),
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch successfully',
         build: () {
-          when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
-              .thenAnswer((_) async => []);
-          when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<AllProducts>()),),)
-              .thenAnswer(
-                  (_) async => PaginatedResult(items: [], totalCount: 0),);
+          when(
+            () => cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),
+          ).thenAnswer((_) async => []);
+          when(
+            () => cqrs.get<PaginatedResult<ProductDTO>>(
+              any(that: isA<AllProducts>()),
+            ),
+          ).thenAnswer(
+            (_) async => PaginatedResult(items: [], totalCount: 0),
+          );
           return buildCubit();
         },
         act: (cubit) => cubit.fetch(),
         expect: () => [
           const ProductsScreenReadyState(isLoading: true),
           const ProductsScreenReadyState(
-              products: {},
-              totalCount: 0,
-              currentPage: 0,
-              categories: [],),
+            products: {},
+            totalCount: 0,
+            currentPage: 0,
+            categories: [],
+          ),
         ],
       );
 
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch unsuccessfully',
         build: () {
-          when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
-              .thenThrow(Exception(''));
+          when(
+            () => cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),
+          ).thenThrow(Exception(''));
 
-          when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-              any(that: isA<AllProducts>()),),).thenThrow(Exception(''));
+          when(
+            () => cqrs.get<PaginatedResult<ProductDTO>>(
+              any(that: isA<AllProducts>()),
+            ),
+          ).thenThrow(Exception(''));
 
           return buildCubit();
         },
@@ -92,14 +105,18 @@ void main() {
       blocTest<ProductsScreenCubit, ProductsScreenState>(
         'run fetch for 2 pages successfully',
         build: () {
-          when(() =>
-                  cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),)
-              .thenAnswer((_) async => []);
+          when(
+            () => cqrs.get<List<CategoryDTO>>(any(that: isA<AllCategories>())),
+          ).thenAnswer((_) async => []);
 
-          when(() => cqrs.get<PaginatedResult<ProductDTO>>(
-                  any(that: isA<AllProducts>()),),)
-              .thenAnswer((_) async =>
-                  PaginatedResult(items: [productDTO1Test], totalCount: 2),);
+          when(
+            () => cqrs.get<PaginatedResult<ProductDTO>>(
+              any(that: isA<AllProducts>()),
+            ),
+          ).thenAnswer(
+            (_) async =>
+                PaginatedResult(items: [productDTO1Test], totalCount: 2),
+          );
 
           return buildCubit();
         },

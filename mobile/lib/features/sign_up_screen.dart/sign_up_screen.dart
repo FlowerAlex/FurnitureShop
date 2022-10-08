@@ -1,4 +1,3 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
@@ -245,7 +244,7 @@ class SignUpPage extends AppPageRoute<void> {
       : super(
           builder: (context) => BlocProvider(
             create: (context) => SignUpScreenCubit(
-              cqrs: context.read<CQRS>(),
+              cqrs: context.read(),
               authCubit: context.read<AuthCubit>(),
             ),
             child: const SignUpScreen(),

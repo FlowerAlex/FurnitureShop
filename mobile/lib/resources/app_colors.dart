@@ -15,4 +15,5 @@ abstract class AppColors {
   static const labelText = Color(0xFFA29EB9);
   static const secondary = Color(0xFFC58787);
   static const errorRed = Color(0xFFE23A4F);
+  static const yellowStar = Color(0xFFFFCC00);
 }

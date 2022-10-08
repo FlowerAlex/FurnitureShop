@@ -35,18 +35,19 @@ class ProductFormBody extends StatelessWidget {
         },
         builder: (context, state) {
           return state.map(
-              ready: (state) {
-                return _ProductFormBodyReady(
-                  state: state,
-                  editingProduct: editingProduct,
-                );
-              },
-              error: (state) => Center(
-                    child: Text(
-                      state.error,
-                    ),
-                  ),
-              finished: (_) => const SizedBox(),);
+            ready: (state) {
+              return _ProductFormBodyReady(
+                state: state,
+                editingProduct: editingProduct,
+              );
+            },
+            error: (state) => Center(
+              child: Text(
+                state.error,
+              ),
+            ),
+            finished: (_) => const SizedBox(),
+          );
         },
       ),
     );
@@ -121,41 +122,47 @@ class _ProductFormBodyReady extends HookWidget {
                 ),
               ],
             ),
-            FormRow(childrenFlex: const {
-              1: 2,
-              2: 5
-            }, children: [
-              const SizedBox(),
-              const Text('Category'),
-              DropdownButtonFormField<String>(
-                items: state.categories
-                    .map(
-                      (e) => DropdownMenuItem<String>(
-                        value: e.id,
-                        child: Text(e.name),
-                      ),
-                    )
-                    .toList(),
-                value: state.selectedCategoryId,
-                onChanged: (selectedCategoryId) => cubit.updateProduct(
-                  selectedCategoryId: selectedCategoryId,
+            FormRow(
+              childrenFlex: const {1: 2, 2: 5},
+              children: [
+                const SizedBox(),
+                const Text('Category'),
+                DropdownButtonFormField<String>(
+                  items: state.categories
+                      .map(
+                        (e) => DropdownMenuItem<String>(
+                          value: e.id,
+                          child: Text(e.name),
+                        ),
+                      )
+                      .toList(),
+                  value: state.selectedCategoryId,
+                  onChanged: (selectedCategoryId) => cubit.updateProduct(
+                    selectedCategoryId: selectedCategoryId,
+                  ),
+                  focusColor: Colors.transparent,
+                  validator: Validators.required('Enter value'),
                 ),
-                focusColor: Colors.transparent,
-                validator: Validators.required('Enter value'),
-              ),
-            ],),
+              ],
+            ),
             PickFileSection(
               context: context,
               title: 'Preview photo',
               currentFile: currentImage,
+              extraInfo: editingProduct != null
+                  ? 'Old image will be taken, if nothing will be provided'
+                  : null,
               buttonLabel: 'Pick image',
               onPickFilePressed: () => cubit.pickFile(AppBlobType.image),
-              isValid: currentImage != null,
+              isValid: currentImage != null || editingProduct != null,
             ),
             PickFileSection(
               context: context,
               title: 'Model of the product',
               currentFile: currentModel,
+              extraInfo: editingProduct != null
+                  ? 'Old model will be taken, if nothing will be provided'
+                  : null,
               buttonLabel: 'Pick model',
               onPickFilePressed: () => cubit.pickFile(AppBlobType.model),
               isValid: true,
@@ -166,8 +173,11 @@ class _ProductFormBodyReady extends HookWidget {
                 autovalidateMode.value = AutovalidateMode.onUserInteraction;
 
                 if (formKey.currentState?.validate() ?? false) {
-                  if (editingProduct != null) {}
-                  await cubit.createProduct();
+                  if (editingProduct != null) {
+                    await cubit.editProduct();
+                  } else {
+                    await cubit.createProduct();
+                  }
                 }
               },
             ),
@@ -187,6 +197,7 @@ class PickFileSection extends FormField<bool> {
     required String buttonLabel,
     required VoidCallback onPickFilePressed,
     required PlatformFile? currentFile,
+    String? extraInfo,
   }) : super(
           key: key,
           initialValue: isValid,
@@ -213,6 +224,7 @@ class PickFileSection extends FormField<bool> {
                 child: Column(
                   children: [
                     Text(title),
+                    if (extraInfo != null) Text(extraInfo),
                     AppTextButton(
                       text: buttonLabel,
                       onPressed: onPickFilePressed,
