@@ -25,11 +25,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/backet.png
   AssetGenImage get backet => const AssetGenImage('assets/icons/backet.png');
 
+  /// File path: assets/icons/blocked-user.svg
+  SvgGenImage get blockedUser =>
+      const SvgGenImage('assets/icons/blocked-user.svg');
+
   /// File path: assets/icons/cross.png
   AssetGenImage get cross => const AssetGenImage('assets/icons/cross.png');
 
   /// File path: assets/icons/edit.png
   AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
+
+  /// File path: assets/icons/empty-star.svg
+  SvgGenImage get emptyStar => const SvgGenImage('assets/icons/empty-star.svg');
 
   /// File path: assets/icons/eye.png
   AssetGenImage get eye => const AssetGenImage('assets/icons/eye.png');
@@ -53,6 +60,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/squares.png
   AssetGenImage get squares => const AssetGenImage('assets/icons/squares.png');
+
+  /// File path: assets/icons/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
 
   /// File path: assets/icons/user.png
   AssetGenImage get user => const AssetGenImage('assets/icons/user.png');

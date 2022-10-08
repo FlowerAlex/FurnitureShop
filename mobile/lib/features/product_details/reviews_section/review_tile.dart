@@ -17,23 +17,28 @@ class ReviewTile extends StatelessWidget {
       'dd/MM/y',
     );
 
-    return Column(
-      children: [
-        Row(
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('User: ${review.userName}'),
-            const Spacer(),
-            AvaregeScore(
-              rating: review.rating,
+            Row(
+              children: [
+                Expanded(child: Text('User: ${review.userName}')),
+                AvaregeScore(
+                  rating: review.rating,
+                ),
+              ],
             ),
+            Text('Created date: ${df.format(review.createdDate)}'),
+            const SizedBox(
+              height: 4,
+            ),
+            Text('Review: ${review.text}'),
           ],
         ),
-        Text(df.format(review.createdDate)),
-        const SizedBox(
-          height: 4,
-        ),
-        Text('Review: ${review.text}'),
-      ],
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
@@ -13,11 +13,11 @@ final allCategories = CategoryDTO(id: 'all_categories_id', name: 'all');
 
 class ShoppingCartScreenCubit extends Cubit<ShoppingCartScreenState> {
   ShoppingCartScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
         super(const ShoppingCartScreenState.loading());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
 
   final _logger = Logger('ShoppingCartScreenCubit');
 

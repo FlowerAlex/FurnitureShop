@@ -6,9 +6,7 @@ import 'package:login_client/login_client.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._loginClient)
       : super(
-          _loginClient.loggedIn
-              ? const AuthLoggedInState()
-              : const AuthLoggedOutState(),
+          _loginClient.loggedIn ? AuthState.loggedIn : AuthState.loggedOut,
         );
 
   final LoginClient _loginClient;
@@ -21,9 +19,9 @@ class AuthCubit extends Cubit<AuthState> {
     _tokenChangesSubscription = _loginClient.onCredentialsChanged.listen(
       (credentials) async {
         if (credentials != null) {
-          emit(const AuthLoggedInState());
+          emit(AuthState.loggedIn);
         } else {
-          emit(const AuthLoggedOutState());
+          emit(AuthState.loggedOut);
         }
       },
     );
@@ -34,6 +32,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logOut() => _loginClient.logOut();
 
+  void updateState(AuthState state) {
+    emit(state);
+  }
+
   @override
   Future<void> close() async {
     await _tokenChangesSubscription?.cancel();
@@ -41,14 +43,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 }
 
-abstract class AuthState {
-  const AuthState();
-}
-
-class AuthLoggedInState extends AuthState {
-  const AuthLoggedInState();
-}
-
-class AuthLoggedOutState extends AuthState {
-  const AuthLoggedOutState();
+enum AuthState {
+  loggedIn,
+  loggedOut,
+  banned,
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
+import 'package:furniture_shop/features/banned_user/banned_user.dart';
 import 'package:furniture_shop/features/login_screen/login_screen.dart';
 import 'package:furniture_shop/features/main_screen/main_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,9 @@ class AuthRouter extends HookWidget {
       child: Navigator(
         key: navigatorKey,
         pages: <Page<void>>[
-          if (authCubitState is AuthLoggedInState) MainPage() else LoginPage()
+          if (authCubitState == AuthState.loggedIn) MainPage(),
+          if (authCubitState == AuthState.banned) const BannedUserPage(),
+          if (authCubitState == AuthState.loggedOut) LoginPage(),
         ],
         onPopPage: (route, dynamic result) => route.didPop(result),
       ),

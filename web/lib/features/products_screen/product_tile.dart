@@ -67,7 +67,6 @@ class ProductTile extends StatelessWidget {
                 ),
               ],
             ),
-            const UserComment(),
             const SizedBox(height: 20),
           ],
         ),
@@ -95,14 +94,5 @@ class AvaregeScore extends StatelessWidget {
       itemSize: 26,
       unratedColor: Colors.amber.withAlpha(50),
     );
-  }
-}
-
-class UserComment extends StatelessWidget {
-  const UserComment({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(); // TODO: add user comment
   }
 }

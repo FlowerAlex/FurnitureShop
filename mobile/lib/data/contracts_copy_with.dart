@@ -75,3 +75,18 @@ extension ShoppingCartProductDTOEx on ShoppingCartProductDTO {
         product: product ?? this.product,
       );
 }
+
+extension ReviewDataDTOEx on ReviewDataDTO {
+  ReviewDataDTO copyWith({
+    DateTime? createdDate,
+    String? productId,
+    double? rating,
+    String? text,
+  }) =>
+      ReviewDataDTO(
+        createdDate: createdDate ?? this.createdDate,
+        productId: productId ?? this.productId,
+        rating: rating ?? this.rating,
+        text: text ?? this.text,
+      );
+}

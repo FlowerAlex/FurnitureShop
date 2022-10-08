@@ -1,8 +1,8 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/app.dart';
 import 'package:furniture_shop/config/app_config.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/features/auth/auth_cubit.dart';
 import 'package:logging/logging.dart';
 import 'package:login_client/login_client.dart';
@@ -27,9 +27,12 @@ Future<void> mainCommon(AppConfig config) async {
   );
   await loginClient.initialize();
 
-  final cqrs = CQRS(
+  final authCubit = AuthCubit(loginClient);
+
+  final cqrs = AppCQRS(
     loginClient,
     config.apiUri.resolve('/api/'),
+    authCubit: authCubit,
   );
 
   runApp(
@@ -38,7 +41,7 @@ Future<void> mainCommon(AppConfig config) async {
         Provider.value(value: cqrs),
         BlocProvider(
           lazy: false,
-          create: (context) => AuthCubit(loginClient)..initialize(),
+          create: (context) => authCubit..initialize(),
         ),
       ],
       builder: (context, _) => const App(),

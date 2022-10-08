@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:furniture_shop/resources/app_colors.dart';
 import 'package:furniture_shop/resources/app_text_styles.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class AppTextFormField extends StatelessWidget {
+  const AppTextFormField({
     Key? key,
+    this.initialValue,
     this.controller,
     this.prefix,
     this.suffixIcon,
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
   }) : super(key: key);
 
+  final String? initialValue;
   final TextEditingController? controller;
   final Widget? prefix;
   final Widget? suffixIcon;
@@ -54,7 +56,8 @@ class AppTextField extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: TextField(
+          child: TextFormField(
+            initialValue: initialValue,
             controller: controller,
             onChanged: onChanged,
             cursorColor: AppColors.primaryText,

@@ -11,11 +11,13 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class ReviewsSection extends HookWidget {
   const ReviewsSection({
     Key? key,
+    required this.myReviewData,
     required this.reviews,
     required this.currentPage,
     required this.totalCount,
   }) : super(key: key);
 
+  final ReviewDataDTO? myReviewData;
   final Map<String, ReviewDTO> reviews;
   final int currentPage;
   final int totalCount;
@@ -26,12 +28,25 @@ class ReviewsSection extends HookWidget {
     final cubit = context.read<ProductDetailsScreenCubit>();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Reviews',
-          style: theme.textTheme.headline6,
+        MyReview(
+          myReviewData: myReviewData,
+          onRatingUpdated: (rating) => cubit.updateReview(
+            myReviewRating: rating,
+          ),
+          onReviewTextUpdated: (text) => cubit.updateReview(
+            myReviewText: text,
+          ),
+          onPublishReviewPressed: cubit.publishReview,
         ),
-        MyReview(),
+        Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Text(
+            'Reviews',
+            style: theme.textTheme.headline6,
+          ),
+        ),
         PagedListView<int, ReviewDTO>(
           pagingController: usePagingController<int, ReviewDTO>(
             firstPageKey: 0,

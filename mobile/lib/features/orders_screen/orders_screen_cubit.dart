@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
-import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:logging/logging.dart';
 
 part 'orders_screen_cubit.freezed.dart';
@@ -10,11 +10,11 @@ const pageSize = 10;
 
 class OrdersScreenCubit extends Cubit<OrdersScreenState> {
   OrdersScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
         super(const OrdersScreenState.initial());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
 
   final _logger = Logger('OrdersScreenCubit');
 

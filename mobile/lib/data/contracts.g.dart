@@ -362,39 +362,44 @@ Map<String, dynamic> _$RemoveFromFavouritesToJson(
     };
 
 AddReview _$AddReviewFromJson(Map<String, dynamic> json) => AddReview(
-      review: AddReviewDTO.fromJson(json['Review'] as Map<String, dynamic>),
+      reviewData:
+          ReviewDataDTO.fromJson(json['ReviewData'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AddReviewToJson(AddReview instance) => <String, dynamic>{
-      'Review': instance.review,
-    };
-
-AddReviewDTO _$AddReviewDTOFromJson(Map<String, dynamic> json) => AddReviewDTO(
-      productId: json['ProductId'] as String,
-      text: json['Text'] as String,
-      rating: (json['Rating'] as num).toDouble(),
-      createdDate: DateTime.parse(json['CreatedDate'] as String),
-    );
-
-Map<String, dynamic> _$AddReviewDTOToJson(AddReviewDTO instance) =>
-    <String, dynamic>{
-      'ProductId': instance.productId,
-      'Text': instance.text,
-      'Rating': instance.rating,
-      'CreatedDate': instance.createdDate.toIso8601String(),
+      'ReviewData': instance.reviewData,
     };
 
 AllReviews _$AllReviewsFromJson(Map<String, dynamic> json) => AllReviews(
+      productId: json['ProductId'] as String,
       pageNumber: json['PageNumber'] as int,
       pageSize: json['PageSize'] as int,
-      productId: json['ProductId'] as String,
     );
 
 Map<String, dynamic> _$AllReviewsToJson(AllReviews instance) =>
     <String, dynamic>{
+      'ProductId': instance.productId,
       'PageNumber': instance.pageNumber,
       'PageSize': instance.pageSize,
-      'ProductId': instance.productId,
+    };
+
+AllReviewsDTO _$AllReviewsDTOFromJson(Map<String, dynamic> json) =>
+    AllReviewsDTO(
+      items: (json['Items'] as List<dynamic>)
+          .map((e) => ReviewDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      totalCount: json['TotalCount'] as int,
+      myReviewData: json['MyReviewData'] == null
+          ? null
+          : ReviewDataDTO.fromJson(
+              json['MyReviewData'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$AllReviewsDTOToJson(AllReviewsDTO instance) =>
+    <String, dynamic>{
+      'Items': instance.items,
+      'TotalCount': instance.totalCount,
+      'MyReviewData': instance.myReviewData,
     };
 
 DeleteReview _$DeleteReviewFromJson(Map<String, dynamic> json) => DeleteReview(
@@ -415,24 +420,40 @@ Map<String, dynamic> _$ReviewByIdToJson(ReviewById instance) =>
       'Id': instance.id,
     };
 
-ReviewDTO _$ReviewDTOFromJson(Map<String, dynamic> json) => ReviewDTO(
-      id: json['Id'] as String,
-      userId: json['UserId'] as String,
-      userName: json['UserName'] as String,
+ReviewDataDTO _$ReviewDataDTOFromJson(Map<String, dynamic> json) =>
+    ReviewDataDTO(
       productId: json['ProductId'] as String,
       text: json['Text'] as String,
       rating: (json['Rating'] as num).toDouble(),
       createdDate: DateTime.parse(json['CreatedDate'] as String),
     );
 
-Map<String, dynamic> _$ReviewDTOToJson(ReviewDTO instance) => <String, dynamic>{
-      'Id': instance.id,
-      'UserId': instance.userId,
-      'UserName': instance.userName,
+Map<String, dynamic> _$ReviewDataDTOToJson(ReviewDataDTO instance) =>
+    <String, dynamic>{
       'ProductId': instance.productId,
       'Text': instance.text,
       'Rating': instance.rating,
       'CreatedDate': instance.createdDate.toIso8601String(),
+    };
+
+ReviewDTO _$ReviewDTOFromJson(Map<String, dynamic> json) => ReviewDTO(
+      productId: json['ProductId'] as String,
+      text: json['Text'] as String,
+      rating: (json['Rating'] as num).toDouble(),
+      createdDate: DateTime.parse(json['CreatedDate'] as String),
+      id: json['Id'] as String,
+      userId: json['UserId'] as String,
+      userName: json['UserName'] as String,
+    );
+
+Map<String, dynamic> _$ReviewDTOToJson(ReviewDTO instance) => <String, dynamic>{
+      'ProductId': instance.productId,
+      'Text': instance.text,
+      'Rating': instance.rating,
+      'CreatedDate': instance.createdDate.toIso8601String(),
+      'Id': instance.id,
+      'UserId': instance.userId,
+      'UserName': instance.userName,
     };
 
 UpdateReviewDTO _$UpdateReviewDTOFromJson(Map<String, dynamic> json) =>
@@ -569,6 +590,7 @@ UserInfoDTO _$UserInfoDTOFromJson(Map<String, dynamic> json) => UserInfoDTO(
       username: json['Username'] as String,
       emailAddress: json['EmailAddress'] as String,
       address: json['Address'] as String,
+      userId: json['UserId'] as String,
       funds: json['Funds'] as int,
     );
 
@@ -579,6 +601,7 @@ Map<String, dynamic> _$UserInfoDTOToJson(UserInfoDTO instance) =>
       'Username': instance.username,
       'EmailAddress': instance.emailAddress,
       'Address': instance.address,
+      'UserId': instance.userId,
       'Funds': instance.funds,
     };
 

@@ -1,6 +1,6 @@
-import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:furniture_shop/cqrs/app_cqrs.dart';
 import 'package:furniture_shop/data/contracts.dart';
 import 'package:logging/logging.dart';
 
@@ -8,19 +8,19 @@ part 'profile_screen_cubit.freezed.dart';
 
 class ProfileScreenCubit extends Cubit<ProfileScreenState> {
   ProfileScreenCubit({
-    required CQRS cqrs,
+    required AppCQRS cqrs,
   })  : _cqrs = cqrs,
-        super(const ProfileScreenInitialState());
+        super(const ProfileScreenState.initial());
 
-  final CQRS _cqrs;
+  final AppCQRS _cqrs;
 
   final _logger = Logger('ProfileScreenCubit');
 
   Future<void> fetch() async {
     state.maybeMap(
       success: (state) =>
-          emit(ProfileScreenLoadingState(userInfo: state.userInfo)),
-      orElse: () => emit(const ProfileScreenLoadingState()),
+          emit(ProfileScreenState.loading(userInfo: state.userInfo)),
+      orElse: () => emit(const ProfileScreenState.loading()),
     );
 
     await _fetch();
@@ -29,10 +29,10 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
   Future<void> _fetch() async {
     try {
       final res = await _cqrs.get(UserInfo());
-      emit(ProfileScreenSuccessState(userInfo: res));
+      emit(ProfileScreenState.success(userInfo: res));
     } catch (err, st) {
       _logger.severe('Cant get user info', err, st);
-      emit(ProfileScreenErrorState(error: err.toString()));
+      emit(ProfileScreenState.error(error: err.toString()));
     }
   }
 
@@ -44,8 +44,8 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
   }) async {
     state.maybeMap(
       success: (state) =>
-          emit(ProfileScreenLoadingState(userInfo: state.userInfo)),
-      orElse: () => emit(const ProfileScreenLoadingState()),
+          emit(ProfileScreenState.loading(userInfo: state.userInfo)),
+      orElse: () => emit(const ProfileScreenState.loading()),
     );
     try {
       final res = await _cqrs.run(
@@ -62,13 +62,13 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
       }
     } catch (err, st) {
       _logger.severe("can't update profile", err, st);
-      emit(ProfileScreenErrorState(error: err.toString()));
+      emit(ProfileScreenState.error(error: err.toString()));
     }
   }
 
   Future<void> addFunds(int fundsToAdd) async {
     final state = this.state;
-    if (state is! ProfileScreenSuccessState) {
+    if (state is! ProfileScreenStateSuccess) {
       return;
     }
 
@@ -84,21 +84,35 @@ class ProfileScreenCubit extends Cubit<ProfileScreenState> {
       }
     } catch (err, st) {
       _logger.severe("can't update profile", err, st);
-      emit(ProfileScreenErrorState(error: err.toString()));
+      emit(ProfileScreenState.error(error: err.toString()));
     }
   }
 }
 
 @freezed
 class ProfileScreenState with _$ProfileScreenState {
-  const factory ProfileScreenState.initial() = ProfileScreenInitialState;
+  const factory ProfileScreenState.initial() = ProfileScreenStateInitial;
   const factory ProfileScreenState.loading({
     UserInfoDTO? userInfo,
-  }) = ProfileScreenLoadingState;
+  }) = ProfileScreenStateLoading;
   const factory ProfileScreenState.success({
     required UserInfoDTO userInfo,
-  }) = ProfileScreenSuccessState;
+  }) = ProfileScreenStateSuccess;
   const factory ProfileScreenState.error({
     required String error,
-  }) = ProfileScreenErrorState;
+  }) = ProfileScreenStateError;
+}
+
+extension ProfileScreenStateEx on ProfileScreenState {
+  UserInfoDTO? get me {
+    final state = this;
+    if (state is ProfileScreenStateSuccess) {
+      return state.userInfo;
+    }
+    if (state is ProfileScreenStateLoading) {
+      return state.userInfo;
+    }
+
+    throw Exception('User is not accessible');
+  }
 }

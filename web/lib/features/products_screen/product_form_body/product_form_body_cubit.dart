@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
@@ -33,6 +34,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
         name: editingProduct?.name,
         price: editingProduct?.price.toString(),
         selectedCategoryId: editingProduct?.categoryId,
+        editingProduct: editingProduct,
       ),
     );
   }
@@ -163,80 +165,77 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
         emit(ProductFormBodyState.error(error: err.toString()));
       }
     }
+  }
 
-    // TODO check if all functionality ok
-    // ignore: unused_element
-    Future<void> editProduct() async {
-      final state = this.state;
-      if (state is! ProductFormBodyStateReady) {
-        return;
-      }
+  // TODO check if all functionality ok
+  Future<void> editProduct() async {
+    final state = this.state;
+    if (state is! ProductFormBodyStateReady) {
+      return;
+    }
 
-      final name = state.name;
-      final currentImage = state.currentImage;
-      final currentModel = state.currentModel;
-      final description = state.description;
-      final price = state.price;
-      final selectedCategoryId = state.selectedCategoryId;
+    final editingProduct = state.editingProduct;
+    if (editingProduct == null) {
+      return;
+    }
 
-      if (name != null &&
-          currentImage != null &&
-          currentModel != null &&
-          description != null &&
-          price != null &&
-          selectedCategoryId != null) {
-        try {
-          final currentImage = state.currentImage;
-          final currentModel = state.currentModel;
+    final name = state.name;
+    final description = state.description;
+    final price = state.price;
+    final selectedCategoryId = state.selectedCategoryId;
 
-          String? blobImageId;
-          if (currentImage != null) {
-            blobImageId = await _cqrs.get(PhotoUploadId());
+    if (name != null &&
+        description != null &&
+        price != null &&
+        selectedCategoryId != null) {
+      try {
+        final currentImage = state.currentImage;
+        final currentModel = state.currentModel;
 
-            final contentType =
-                p.extension(currentImage.name).replaceAll('.', '');
+        var blobImageId = editingProduct.previewPhotoId;
+        if (currentImage != null) {
+          blobImageId = blobImageId ?? await _cqrs.get(PhotoUploadId());
+          final contentType =
+              p.extension(currentImage.name).replaceAll('.', '');
 
-            await _azureStorage.putBlob(
-              '/images/$blobImageId',
-              bodyBytes: currentImage.bytes,
-              contentType: contentType,
-            );
-          }
-
-          String? blobModelId;
-          if (currentModel != null) {
-            blobModelId = await _cqrs.get(ModelUploadId());
-
-            final contentType =
-                p.extension(currentModel.name).replaceAll('.', '');
-
-            await _azureStorage.putBlob(
-              '/models/$blobModelId',
-              bodyBytes: currentModel.bytes,
-              contentType: contentType,
-            );
-          }
-
-          // await _cqrs.run(
-          //   UpdateProduct(
-          //     updatedProduct: ProductDetailsDTO(
-          //       description: ,
-          //       id: ,
-          //       name: ,
-          //       price: ,
-          //       averageRating: ,
-          //       categoryId: ,
-          //       modelUrl: ,
-          //       previewPhotoURL: ,
-          //     ),
-          //   ),
-          // );
-
-          emit(const ProductFormBodyState.finished());
-        } catch (err, st) {
-          _logger.severe(err, st);
-          emit(ProductFormBodyState.error(error: err.toString()));
+          await _azureStorage.putBlob(
+            '/images/$blobImageId',
+            bodyBytes: currentImage.bytes,
+            contentType: contentType,
+          );
         }
+
+        var blobModelId = editingProduct.modelId;
+        if (currentModel != null) {
+          blobModelId = blobModelId ?? await _cqrs.get(ModelUploadId());
+
+          final contentType =
+              p.extension(currentModel.name).replaceAll('.', '');
+
+          await _azureStorage.putBlob(
+            '/models/$blobModelId',
+            bodyBytes: currentModel.bytes,
+            contentType: contentType,
+          );
+        }
+
+        await _cqrs.run(
+          UpdateProduct(
+            updatedProduct: editingProduct.copyWith(
+              name: name,
+              previewPhotoId: blobImageId,
+              modelId: blobModelId,
+              description: description,
+              price: double.parse(price),
+              categoryId: selectedCategoryId,
+            ),
+          ),
+        );
+
+        emit(const ProductFormBodyState.finished());
+      } catch (err, st) {
+        _logger.severe(err, st);
+        emit(ProductFormBodyState.error(error: err.toString()));
       }
     }
   }
@@ -245,6 +244,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
 @freezed
 class ProductFormBodyState with _$ProductFormBodyState {
   const factory ProductFormBodyState.ready({
+    ProductDetailsDTO? editingProduct,
     @Default(<CategoryDTO>[]) List<CategoryDTO> categories,
     String? name,
     String? price,
