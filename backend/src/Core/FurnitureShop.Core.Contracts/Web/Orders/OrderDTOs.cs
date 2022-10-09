@@ -1,4 +1,5 @@
 using FurnitureShop.Core.Contracts.Web.Products;
+using FurnitureShop.Core.Contracts.Web.Complaints;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,7 @@ namespace FurnitureShop.Core.Contracts.Web.Orders
     public class OrderDTO : OrderDTOBase
     {
         public Guid Id { get; set; }
+        public ComplaintDTO? Complaint { get; set; }
     }
 
     public class ProductInOrderDTO : ProductDTO

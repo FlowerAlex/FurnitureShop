@@ -171,7 +171,7 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
             var handler = new UpdateProductCH(dbContext);
             var command = new UpdateProduct
             {
-                UpdatedProduct = new FurnitureShop.Core.Contracts.Web.Products.ProductDetailsDTO
+                UpdatedProduct = new FurnitureShop.Core.Contracts.Web.Products.UpdateProductDTO
                 {
                     Id = TestProduct.Id,
                     Description = NewProdctDescription,

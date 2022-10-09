@@ -34,8 +34,9 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
                 new Complaint(command.ComplaintInfo.Text)
                 {
                     OrderId = Id<Order>.From(command.ComplaintInfo.OrderId),
-                    UserId = Id<User>.From(command.ComplaintInfo.UserId),
+                    UserId = context.UserId,
                     Resolved = false,
+                    CreatedDate = System.DateTime.Now,
                 }
             );
             await dbContext.SaveChangesAsync();

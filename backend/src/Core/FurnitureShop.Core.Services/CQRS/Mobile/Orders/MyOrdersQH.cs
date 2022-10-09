@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FurnitureShop.Core.Contracts.Mobile.Products;
+using FurnitureShop.Core.Contracts.Mobile.Complaints;
 using FurnitureShop.Core.Contracts.Mobile.Orders;
 using FurnitureShop.Core.Contracts.Shared.Orders;
 using FurnitureShop.Core.Domain;
@@ -41,6 +41,13 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                             OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
                             OrderedDate = p.OrderedDate,
                             DeliveredDate = p.DeliveredDate,
+                            Complaint = dbContext.Complaints.Where(c => c.OrderId == p.Id).Select( x => new ComplaintDTO{
+                                Id = x.Id,
+                                UserId = x.UserId,
+                                Resolved = x.Resolved,
+                                Text = x.Text,
+                                CreatedDate = x.CreatedDate
+                            }).FirstOrDefault(),
                             Products = dbContext.OrderProduct
                                 .Where(o => o.OrderId == p.Id)
                                 .Join(
