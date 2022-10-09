@@ -6,7 +6,7 @@ namespace FurnitureShop.Core.Contracts.Web.Products
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
     public class UpdateProduct : IRemoteCommand
     {
-        public ProductDetailsDTO UpdatedProduct { get; set; }
+        public UpdateProductDTO UpdatedProduct { get; set; }
 
         public static class ErrorCodes
         {

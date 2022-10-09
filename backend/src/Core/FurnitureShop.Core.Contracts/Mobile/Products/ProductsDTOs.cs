@@ -9,6 +9,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Products
         public Guid Id { get; set; }
         public bool InFavourites { get; set; }
         public bool InShoppingCart { get; set; }
+        public double? AverageRating { get; set; }
     }
 
     public class ProductDetailsDTO : ProductDTO
