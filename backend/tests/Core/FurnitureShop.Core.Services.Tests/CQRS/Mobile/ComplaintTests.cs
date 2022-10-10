@@ -95,8 +95,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 ComplaintInfo = new FurnitureShop.Core.Contracts.Mobile.Complaints.ComplaintDTOBase
                 {
                     Text = NewComplaintText,
-                    Resolved = NewComplaintResolved,
-                    UserId = TestUserId,
                     OrderId = TestOrder.Id
                 }
             };
