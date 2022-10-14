@@ -30,7 +30,6 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         private string NewComplaintText = "new Complaint";
         private string NewComplaintResponse = "new response";
         private bool NewComplaintResolved = false;
-        private DateTime NewComplaintCreatedDate = DateTime.Parse("09-04-2011");
         private readonly string TestUserRole = Auth.Roles.User;
         private readonly string TestAdminRole = Auth.Roles.Admin;
         private DbContextOptions<CoreDbContext> ContextOptions { get; }
@@ -129,20 +128,17 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
         [Fact]
         public void UpdateComplaintTest()
         {
-            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
             using var dbContext = new CoreDbContext(ContextOptions);
             var handler = new UpdateComplaintCH(dbContext);
             var command = new UpdateComplaint
             {
-                UpdatedComplaint = new FurnitureShop.Core.Contracts.Mobile.Complaints.ComplaintDTO
-                {
-                    Id = TestComplaint.Id,
-                    Text = NewComplaintText,
-                    Response = NewComplaintResponse,
-                    Resolved = NewComplaintResolved,
-                    UserId = TestUserId,
-                    OrderId = TestOrder.Id
-                }
+                UpdatedComplaint =
+                    new FurnitureShop.Core.Contracts.Mobile.Complaints.UpdateComplaintDTO
+                    {
+                        Text = NewComplaintText,
+                        Id = TestComplaint.Id
+                    }
             };
 
             var result = handler.ExecuteAsync(coreContext, command);
@@ -153,9 +149,40 @@ namespace FurnitureShop.Core.Services.Tests.CQRS.Mobile
                 .FirstOrDefault();
             Assert.NotNull(Complaint);
             Assert.Equal(NewComplaintText, Complaint.Text);
-            Assert.Equal(NewComplaintResponse, Complaint.Response);
-            Assert.Equal(NewComplaintResolved, Complaint.Resolved);
             Assert.Equal(TestOrder.Id, Complaint.OrderId);
+        }
+
+        [Fact]
+        public void RespondToComplaintTest() 
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestAdminRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new RespondToComplaintCH(dbContext);
+            var command = new RespondToComplaint()
+            {
+                Response = "abcd",
+                Id = TestComplaint.Id,
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            Assert.Equal("abcd", dbContext.Complaints.Where(c => c.Id == TestComplaint.Id).FirstOrDefault()?.Response);
+
+        }
+        [Fact]
+        public void ResolveComplaintTest() 
+        {
+            var coreContext = CoreContext.ForTests(TestUserId, TestUserRole);
+            using var dbContext = new CoreDbContext(ContextOptions);
+            var handler = new ResolveComplaintCH(dbContext);
+            var command = new ResolveComplaint()
+            {
+                Id = TestComplaint.Id
+            };
+
+            var result = handler.ExecuteAsync(coreContext, command);
+            Assert.True(result.IsCompletedSuccessfully);
+            Assert.True(dbContext.Complaints.Where(c => c.Id == TestComplaint.Id).FirstOrDefault()?.Resolved);
         }
     }
 }

@@ -38,8 +38,6 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Complaints
                 return;
             }
 
-            toUpdate.Resolved = command.UpdatedComplaint.Resolved;
-            toUpdate.Response = command.UpdatedComplaint.Response;
             toUpdate.Text = command.UpdatedComplaint.Text;
             dbContext.Complaints.Update(toUpdate);
             await dbContext.SaveChangesAsync();
