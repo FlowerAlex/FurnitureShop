@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
-import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
@@ -150,7 +149,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
               name: name,
               description: description,
               price: double.parse(price),
-              averageRating: 1,
               categoryId: selectedCategoryId,
               modelId: blobModelId,
               previewPhotoId: blobImageId,
@@ -167,7 +165,6 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
     }
   }
 
-  // TODO check if all functionality ok
   Future<void> editProduct() async {
     final state = this.state;
     if (state is! ProductFormBodyStateReady) {
@@ -221,13 +218,15 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
 
         await _cqrs.run(
           UpdateProduct(
-            updatedProduct: editingProduct.copyWith(
+            updatedProduct: UpdateProductDTO(
+              id: editingProduct.id,
               name: name,
               previewPhotoId: blobImageId,
               modelId: blobModelId,
               description: description,
               price: double.parse(price),
               categoryId: selectedCategoryId,
+              photosIds: editingProduct.photosIds,
             ),
           ),
         );

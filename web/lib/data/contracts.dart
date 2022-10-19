@@ -92,7 +92,6 @@ class ProductDTOBase with EquatableMixin {
     required this.name,
     required this.price,
     required this.description,
-    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
   });
@@ -106,14 +105,11 @@ class ProductDTOBase with EquatableMixin {
 
   final String description;
 
-  final double? averageRating;
-
   final String? previewPhotoId;
 
   final String? categoryId;
 
-  get props =>
-      [name, price, description, averageRating, previewPhotoId, categoryId];
+  get props => [name, price, description, previewPhotoId, categoryId];
 
   Map<String, dynamic> toJson() => _$ProductDTOBaseToJson(this);
 }
@@ -387,10 +383,10 @@ class ComplaintById with EquatableMixin implements Query<ComplaintDTO?> {
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class ComplaintDTO with EquatableMixin implements ComplaintDTOBase {
+class ComplaintDTO with EquatableMixin {
   ComplaintDTO({
-    this.userId,
-    this.orderId,
+    required this.userId,
+    required this.orderId,
     required this.text,
     this.response,
     required this.createdDate,
@@ -401,9 +397,9 @@ class ComplaintDTO with EquatableMixin implements ComplaintDTOBase {
   factory ComplaintDTO.fromJson(Map<String, dynamic> json) =>
       _$ComplaintDTOFromJson(json);
 
-  final String? userId;
+  final String userId;
 
-  final String? orderId;
+  final String orderId;
 
   final String text;
 
@@ -418,37 +414,6 @@ class ComplaintDTO with EquatableMixin implements ComplaintDTOBase {
   get props => [userId, orderId, text, response, createdDate, resolved, id];
 
   Map<String, dynamic> toJson() => _$ComplaintDTOToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class ComplaintDTOBase with EquatableMixin {
-  ComplaintDTOBase({
-    this.userId,
-    this.orderId,
-    required this.text,
-    this.response,
-    required this.createdDate,
-    required this.resolved,
-  });
-
-  factory ComplaintDTOBase.fromJson(Map<String, dynamic> json) =>
-      _$ComplaintDTOBaseFromJson(json);
-
-  final String? userId;
-
-  final String? orderId;
-
-  final String text;
-
-  final String? response;
-
-  final DateTime createdDate;
-
-  final bool resolved;
-
-  get props => [userId, orderId, text, response, createdDate, resolved];
-
-  Map<String, dynamic> toJson() => _$ComplaintDTOBaseToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
@@ -521,6 +486,7 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
     this.deliveredDate,
     required this.products,
     required this.id,
+    this.complaint,
   });
 
   factory OrderDTO.fromJson(Map<String, dynamic> json) =>
@@ -542,6 +508,8 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
 
   final String id;
 
+  final ComplaintDTO? complaint;
+
   get props => [
         userId,
         price,
@@ -550,7 +518,8 @@ class OrderDTO with EquatableMixin implements OrderDTOBase {
         orderedDate,
         deliveredDate,
         products,
-        id
+        id,
+        complaint
       ];
 
   Map<String, dynamic> toJson() => _$OrderDTOToJson(this);
@@ -624,10 +593,10 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
     required this.name,
     required this.price,
     required this.description,
-    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     required this.id,
+    this.averageRating,
     required this.amount,
   });
 
@@ -640,13 +609,13 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
 
   final String description;
 
-  final double? averageRating;
-
   final String? previewPhotoId;
 
   final String? categoryId;
 
   final String id;
+
+  final double? averageRating;
 
   final int amount;
 
@@ -654,10 +623,10 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
         name,
         price,
         description,
-        averageRating,
         previewPhotoId,
         categoryId,
         id,
+        averageRating,
         amount
       ];
 
@@ -736,7 +705,6 @@ class CreateProdcutDTO with EquatableMixin implements ProductDTOBase {
     required this.name,
     required this.price,
     required this.description,
-    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     this.modelId,
@@ -752,8 +720,6 @@ class CreateProdcutDTO with EquatableMixin implements ProductDTOBase {
 
   final String description;
 
-  final double? averageRating;
-
   final String? previewPhotoId;
 
   final String? categoryId;
@@ -762,16 +728,8 @@ class CreateProdcutDTO with EquatableMixin implements ProductDTOBase {
 
   final List<String> photoIds;
 
-  get props => [
-        name,
-        price,
-        description,
-        averageRating,
-        previewPhotoId,
-        categoryId,
-        modelId,
-        photoIds
-      ];
+  get props =>
+      [name, price, description, previewPhotoId, categoryId, modelId, photoIds];
 
   Map<String, dynamic> toJson() => _$CreateProdcutDTOToJson(this);
 }
@@ -852,11 +810,11 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTOBase {
     required this.name,
     required this.price,
     required this.description,
-    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     required this.id,
     this.modelId,
+    this.averageRating,
     required this.photosIds,
   });
 
@@ -869,7 +827,116 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTOBase {
 
   final String description;
 
+  final String? previewPhotoId;
+
+  final String? categoryId;
+
+  final String id;
+
+  final String? modelId;
+
   final double? averageRating;
+
+  final List<String> photosIds;
+
+  get props => [
+        name,
+        price,
+        description,
+        previewPhotoId,
+        categoryId,
+        id,
+        modelId,
+        averageRating,
+        photosIds
+      ];
+
+  Map<String, dynamic> toJson() => _$ProductDetailsDTOToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class ProductDTO with EquatableMixin implements ProductDTOBase {
+  ProductDTO({
+    required this.name,
+    required this.price,
+    required this.description,
+    this.previewPhotoId,
+    this.categoryId,
+    required this.id,
+    this.averageRating,
+  });
+
+  factory ProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$ProductDTOFromJson(json);
+
+  final String name;
+
+  final double price;
+
+  final String description;
+
+  final String? previewPhotoId;
+
+  final String? categoryId;
+
+  final String id;
+
+  final double? averageRating;
+
+  get props =>
+      [name, price, description, previewPhotoId, categoryId, id, averageRating];
+
+  Map<String, dynamic> toJson() => _$ProductDTOToJson(this);
+}
+
+/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UpdateProduct with EquatableMixin implements Command {
+  UpdateProduct({
+    required this.updatedProduct,
+  });
+
+  factory UpdateProduct.fromJson(Map<String, dynamic> json) =>
+      _$UpdateProductFromJson(json);
+
+  final UpdateProductDTO updatedProduct;
+
+  get props => [updatedProduct];
+
+  Map<String, dynamic> toJson() => _$UpdateProductToJson(this);
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Web.Products.UpdateProduct';
+}
+
+class UpdateProductErrorCodes {
+  static const incorrectName = 1;
+
+  static const incorrectDescription = 2;
+
+  static const incorrectPrice = 3;
+}
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class UpdateProductDTO with EquatableMixin implements ProductDTOBase {
+  UpdateProductDTO({
+    required this.name,
+    required this.price,
+    required this.description,
+    this.previewPhotoId,
+    this.categoryId,
+    required this.id,
+    this.modelId,
+    required this.photosIds,
+  });
+
+  factory UpdateProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$UpdateProductDTOFromJson(json);
+
+  final String name;
+
+  final double price;
+
+  final String description;
 
   final String? previewPhotoId;
 
@@ -885,7 +952,6 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTOBase {
         name,
         price,
         description,
-        averageRating,
         previewPhotoId,
         categoryId,
         id,
@@ -893,69 +959,7 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTOBase {
         photosIds
       ];
 
-  Map<String, dynamic> toJson() => _$ProductDetailsDTOToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class ProductDTO with EquatableMixin implements ProductDTOBase {
-  ProductDTO({
-    required this.name,
-    required this.price,
-    required this.description,
-    this.averageRating,
-    this.previewPhotoId,
-    this.categoryId,
-    required this.id,
-  });
-
-  factory ProductDTO.fromJson(Map<String, dynamic> json) =>
-      _$ProductDTOFromJson(json);
-
-  final String name;
-
-  final double price;
-
-  final String description;
-
-  final double? averageRating;
-
-  final String? previewPhotoId;
-
-  final String? categoryId;
-
-  final String id;
-
-  get props =>
-      [name, price, description, averageRating, previewPhotoId, categoryId, id];
-
-  Map<String, dynamic> toJson() => _$ProductDTOToJson(this);
-}
-
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateProduct with EquatableMixin implements Command {
-  UpdateProduct({
-    required this.updatedProduct,
-  });
-
-  factory UpdateProduct.fromJson(Map<String, dynamic> json) =>
-      _$UpdateProductFromJson(json);
-
-  final ProductDetailsDTO updatedProduct;
-
-  get props => [updatedProduct];
-
-  Map<String, dynamic> toJson() => _$UpdateProductToJson(this);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Web.Products.UpdateProduct';
-}
-
-class UpdateProductErrorCodes {
-  static const incorrectName = 1;
-
-  static const incorrectDescription = 2;
-
-  static const incorrectPrice = 3;
+  Map<String, dynamic> toJson() => _$UpdateProductDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')

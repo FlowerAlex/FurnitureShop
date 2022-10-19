@@ -70,7 +70,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     }
 
     final product = await _cqrs.get(ProductById(id: productId));
-    // final reivews = await _cqrs.get(ReviewById);
+    // final reivews = await _cqrs.get();
 
     emit(state.copyWith(currentProduct: product));
   }
