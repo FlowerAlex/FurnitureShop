@@ -7,7 +7,7 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
     [AuthorizeWhenHasAnyOf(Auth.Roles.User, Auth.Roles.Admin)]
     public class UpdateComplaint : IRemoteCommand
     {
-        public ComplaintDTO UpdatedComplaint { get; set; }
+        public UpdateComplaintDTO UpdatedComplaint { get; set; }
 
         public static class ErrorCodes
         {

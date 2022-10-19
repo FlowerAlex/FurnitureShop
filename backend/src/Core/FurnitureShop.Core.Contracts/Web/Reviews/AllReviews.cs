@@ -5,8 +5,8 @@ using System;
 namespace FurnitureShop.Core.Contracts.Web.Reviews
 {
     [AuthorizeWhenHasAnyOf(Auth.Roles.Admin)]
-    public class AllReviewsForUser : PaginatedQuery<ReviewDTO>
+    public class AllReviews : PaginatedQuery<ReviewDTO>
     {
-        public Guid UserId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

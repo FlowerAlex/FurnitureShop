@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Reviews
 {
-    public class AllReviewsForUserQH : IQueryHandler<AllReviewsForUser, PaginatedResult<ReviewDTO>>
+    public class AllReviewsForUserQH : IQueryHandler<AllReviews, PaginatedResult<ReviewDTO>>
     {
         private readonly CoreDbContext dbContext;
 
@@ -17,11 +17,11 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Reviews
 
         public async Task<PaginatedResult<ReviewDTO>> ExecuteAsync(
             CoreContext context,
-            AllReviewsForUser query
+            AllReviews query
         )
         {
             return await dbContext.Reviews
-                .Where(p => p.UserId == query.UserId)
+                .Where(p => p.ProductId == query.ProductId)
                 .Select(
                     p =>
                         new ReviewDTO

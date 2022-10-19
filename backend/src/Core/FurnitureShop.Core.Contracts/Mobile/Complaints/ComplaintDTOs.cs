@@ -16,4 +16,9 @@ namespace FurnitureShop.Core.Contracts.Mobile.Complaints
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+    public class UpdateComplaintDTO
+    {
+        public Guid Id { get; set; }
+        public string Text { get; set; }
+    }
 }

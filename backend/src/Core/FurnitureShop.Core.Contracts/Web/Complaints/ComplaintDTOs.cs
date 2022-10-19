@@ -12,4 +12,9 @@ namespace FurnitureShop.Core.Contracts.Web.Complaints
         public bool Resolved { get; set; }
         public Guid Id { get; set; }
     }
+    public class RespondToComplaintDTO
+    {
+        public Guid OrderId { get; set; }
+        public string Text { get; set; }
+    }
 }
