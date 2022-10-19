@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -8,6 +9,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
 {
+    public class RespondToComplaintCV : ContextualValidator<RespondToComplaint>
+    {
+        public RespondToComplaintCV()
+        {
+            RuleForAsync(p => p.Id, IsComplaintResolved)
+                .Equal(true)
+                .WithMessage("Complaint is already resolved.")
+                .WithCode(RespondToComplaint.ErrorCodes.CompaintResolved);
+        }
+
+        private static async Task<bool> IsComplaintResolved(
+            IValidationContext ctx,
+            Guid id
+        )
+        {
+            var dbContext = ctx.GetService<CoreDbContext>();
+            var compaint = await dbContext.Complaints.FindAsync(id);
+            if (compaint == null)
+            {
+                return false;
+            }
+            return compaint.Resolved;
+        }
+    }
     public class RespondToComplaintCH : ICommandHandler<RespondToComplaint>
     {
         private readonly CoreDbContext dbContext;

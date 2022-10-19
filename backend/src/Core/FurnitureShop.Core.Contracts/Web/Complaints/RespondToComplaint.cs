@@ -9,5 +9,9 @@ namespace FurnitureShop.Core.Contracts.Web.Complaints
     {
         public Guid Id { get; set; }
         public string Response { get; set; }
+        public static class ErrorCodes
+        {
+            public const int CompaintResolved = 1;
+        }
     }
 }
