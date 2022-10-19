@@ -61,6 +61,8 @@ class _OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final complaint = order.complaint;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -68,38 +70,43 @@ class _OrderItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for (final product in order.products)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                children: [
-                  Expanded(child: Text(product.name)),
-                  Expanded(child: Text(product.price.toString())),
-                  Expanded(child: Text(product.amount.toString())),
-                  if (product.averageRating != null)
-                    Expanded(
-                      child: AvaregeScore(
-                        rating: product.averageRating!,
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    children: [
+                      Expanded(child: Text(product.name)),
+                      Expanded(child: Text(product.price.toString())),
+                      Expanded(child: Text(product.amount.toString())),
+                      if (product.averageRating != null)
+                        Expanded(
+                          child: AvaregeScore(
+                            rating: product.averageRating!,
+                          ),
+                        )
+                      else
+                        const Spacer(),
+                      Expanded(
+                        child: Text(order.orderedDate.toString()),
                       ),
-                    )
-                  else
-                    const Spacer(),
-                  Expanded(
-                    child: Text(order.orderedDate.toString()),
+                      if (order.deliveredDate != null)
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              order.deliveredDate!.toString(),
+                            ),
+                          ),
+                        )
+                      else
+                        const Spacer(),
+                      Expanded(child: Text(order.price.toString())),
+                    ].spaced(8),
                   ),
-                  if (order.deliveredDate != null)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          order.deliveredDate!.toString(),
-                        ),
-                      ),
-                    )
-                  else
-                    const Spacer(),
-                  Expanded(child: Text(order.price.toString())),
-                ].spaced(8),
-              ),
+                ),
+                if (complaint != null) Text('Complaint: ${complaint.text}'),
+              ],
             ),
         ],
       ),
