@@ -2,6 +2,7 @@ import 'package:cqrs/cqrs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:furniture_shop/data/contracts.dart';
+import 'package:furniture_shop/data/contracts_copy_with.dart';
 import 'package:furniture_shop/utils/table_section.dart';
 import 'package:logging/logging.dart';
 
@@ -15,6 +16,56 @@ class OrdersScreenCubit extends Cubit<OrdersScreenState> {
 
   final CQRS _cqrs;
   final _logger = Logger('OrdersScreenCubit');
+
+  Future<void> respondToComplaint({
+    required String orderId,
+    required String response,
+  }) async {
+    final state = this.state;
+    if (state is! OrdersScreenStateReady ||
+        (state.orders[orderId]?.complaint?.resolved ?? true) == true ||
+        response.isEmpty) {
+      return;
+    }
+
+    final complaint = state.orders[orderId]?.complaint;
+    if (complaint == null) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(
+        RespondToComplaint(
+          id: complaint.id,
+          response: response,
+        ),
+      );
+
+      emit(
+        state.copyWith(
+          orders: {
+            for (final order in state.orders.entries)
+              if (order.key != orderId)
+                order.key: order.value
+              else
+                order.key: order.value.copyWith(
+                  complaint: order.value.complaint?.copyWith(
+                    response: response,
+                  ),
+                ),
+          },
+        ),
+      );
+    } catch (err, st) {
+      _logger.severe('could not resolve complaint', err, st);
+
+      emit(
+        OrdersScreenStateError(
+          error: err.toString(),
+        ),
+      );
+    }
+  }
 
   Future<void> fetch({int page = 0}) async {
     final state = this.state;

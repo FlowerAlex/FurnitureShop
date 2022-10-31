@@ -36,7 +36,7 @@ class ProductsScreen extends HookWidget {
                     hasMore:
                         state.totalCount > (state.currentPage + 1) * pageSize,
                     items: state.products.values.toList(),
-                    fetchPage: (page) => cubit.fetch(page: page),
+                    fetchPage: (page) => cubit.fetch(productsPage: page),
                     getNextPageKey: (_) => state.currentPage + 1,
                   ),
                   builderDelegate: PagedChildBuilderDelegate<ProductDTO>(

@@ -122,7 +122,7 @@ void main() {
         },
         act: (cubit) async {
           await cubit.fetch();
-          await cubit.fetch(page: 1);
+          await cubit.fetch(productsPage: 1);
         },
         expect: () => [
           const ProductsScreenReadyState(isLoading: true),
