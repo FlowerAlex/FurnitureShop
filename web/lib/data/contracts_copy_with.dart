@@ -47,3 +47,49 @@ extension ProductDetailsDTOEx on ProductDetailsDTO {
         photosIds: photosIds ?? this.photosIds,
       );
 }
+
+extension OrderDTOEx on OrderDTO {
+  OrderDTO copyWith({
+    String? userId,
+    double? price,
+    String? adress,
+    WebOrdersOrderStateDTO? orderState,
+    DateTime? orderedDate,
+    DateTime? deliveredDate,
+    List<ProductInOrderDTO>? products,
+    String? id,
+    ComplaintDTO? complaint,
+  }) =>
+      OrderDTO(
+        userId: userId ?? this.userId,
+        price: price ?? this.price,
+        adress: adress ?? this.adress,
+        orderState: orderState ?? this.orderState,
+        orderedDate: orderedDate ?? this.orderedDate,
+        deliveredDate: deliveredDate ?? this.deliveredDate,
+        products: products ?? this.products,
+        id: id ?? this.id,
+        complaint: complaint ?? this.complaint,
+      );
+}
+
+extension ComplaintEx on ComplaintDTO {
+  ComplaintDTO copyWith({
+    String? userId,
+    String? orderId,
+    String? text,
+    String? response,
+    DateTime? createdDate,
+    bool? resolved,
+    String? id,
+  }) =>
+      ComplaintDTO(
+        userId: userId ?? this.userId,
+        orderId: orderId ?? this.orderId,
+        text: text ?? this.text,
+        response: response ?? this.response,
+        createdDate: createdDate ?? this.createdDate,
+        resolved: resolved ?? this.resolved,
+        id: id ?? this.id,
+      );
+}

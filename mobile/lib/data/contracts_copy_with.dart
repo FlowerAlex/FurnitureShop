@@ -90,3 +90,28 @@ extension ReviewDataDTOEx on ReviewDataDTO {
         text: text ?? this.text,
       );
 }
+
+extension OrderDTOEx on OrderDTO {
+  OrderDTO copyWith({
+    String? id,
+    List<ProductInOrderDTO>? products,
+    String? userId,
+    double? price,
+    String? address,
+    ComplaintDTO? complaint,
+    OrderStateDTO? orderState,
+    DateTime? orderedDate,
+    DateTime? deliveredDate,
+  }) =>
+      OrderDTO(
+        id: id ?? this.id,
+        products: products ?? this.products,
+        userId: userId ?? this.userId,
+        price: price ?? this.price,
+        address: address ?? this.address,
+        complaint: complaint ?? this.complaint,
+        orderState: orderState ?? this.orderState,
+        orderedDate: orderedDate ?? this.orderedDate,
+        deliveredDate: deliveredDate ?? this.deliveredDate,
+      );
+}

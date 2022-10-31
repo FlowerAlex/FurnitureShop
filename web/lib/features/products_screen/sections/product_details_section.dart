@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_shop/data/contracts.dart';
 import 'package:furniture_shop/features/products_screen/product_form_body/product_form_body.dart';
+import 'package:furniture_shop/features/products_screen/product_tile.dart';
 import 'package:furniture_shop/features/products_screen/products_screen_cubit.dart';
 import 'package:furniture_shop/utils/dialogs/app_dialog.dart';
 import 'package:furniture_shop/utils/dialogs/confirm_dialog.dart';
 import 'package:furniture_shop/utils/spaced.dart';
+import 'package:furniture_shop/utils/table_section.dart';
+import 'package:intl/intl.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class ProductDetailsSection extends StatelessWidget {
@@ -53,18 +57,34 @@ class ProductDetailsSection extends StatelessWidget {
                   ),
                   const SizedBox(width: 40),
                 ],
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Product name: ${currentProduct.name}'),
-                    Text('Price: ${currentProduct.price.toString()}\$'),
-                    if (currentProduct.description.isNotEmpty)
-                      Text(
-                        'Description: ${currentProduct.description}',
-                      ),
-                  ].spaced(8),
+                SizedBox(
+                  height: 300,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Product name: ${currentProduct.name}'),
+                      Text('Price: ${currentProduct.price.toString()}\$'),
+                      if (currentProduct.description.isNotEmpty)
+                        Text(
+                          'Description: ${currentProduct.description}',
+                        ),
+                    ].spaced(8),
+                  ),
                 ),
               ],
+            ),
+            TableSection<ReviewDTO>(
+              title: const Text('Reviews'),
+              currentPage: state.currentReviewsPage,
+              itemBuilder: (review) => ReviewTile(review: review),
+              items: state.reviews[state.currentReviewsPage] ?? [],
+              onNextPressed: () => cubit.updateReviews(
+                reivewsPage: state.currentReviewsPage + 1,
+              ),
+              onPrevPressed: () => cubit.updateReviews(
+                reivewsPage: state.currentReviewsPage - 1,
+              ),
+              totalCount: state.totalReviewsCount,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -106,6 +126,46 @@ class ProductDetailsSection extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReviewTile extends StatelessWidget {
+  const ReviewTile({
+    Key? key,
+    required this.review,
+  }) : super(key: key);
+
+  final ReviewDTO review;
+
+  @override
+  Widget build(BuildContext context) {
+    final df = DateFormat(
+      'dd/MM/y',
+    );
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(child: Text('User: ${review.userName}')),
+                AvaregeScore(
+                  rating: review.rating,
+                ),
+              ],
+            ),
+            Text('Created date: ${df.format(review.createdDate)}'),
+            const SizedBox(
+              height: 4,
+            ),
+            Text('Review: ${review.text}'),
           ],
         ),
       ),

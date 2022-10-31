@@ -82,6 +82,64 @@ class OrdersScreenCubit extends Cubit<OrdersScreenState> {
       );
     }
   }
+
+  Future<void> createComplaint({
+    required String orderId,
+    required String value,
+  }) async {
+    final state = this.state;
+    if (state is! OrdersScreenStateReady || value.isEmpty) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(
+        CreateComplaint(
+          complaintInfo: ComplaintDTOBase(
+            orderId: orderId,
+            text: value,
+          ),
+        ),
+      );
+
+      await init();
+    } catch (err, st) {
+      _logger.severe("Couldn't create complaint", err, st);
+
+      emit(
+        OrdersScreenStateError(
+          error: err.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> resolveComplaint({
+    required String complaintId,
+  }) async {
+    final state = this.state;
+    if (state is! OrdersScreenStateReady) {
+      return;
+    }
+
+    try {
+      await _cqrs.run(
+        ResolveComplaint(
+          id: complaintId,
+        ),
+      );
+
+      await init();
+    } catch (err, st) {
+      _logger.severe("Couldn't create complaint", err, st);
+
+      emit(
+        OrdersScreenStateError(
+          error: err.toString(),
+        ),
+      );
+    }
+  }
 }
 
 @freezed
