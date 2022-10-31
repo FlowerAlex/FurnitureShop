@@ -19,13 +19,12 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
                 .WithCode(RespondToComplaint.ErrorCodes.CompaintResolved);
         }
 
-        private static async Task<bool> IsComplaintResolved(
-            IValidationContext ctx,
-            Guid id
-        )
+        private static async Task<bool> IsComplaintResolved(IValidationContext ctx, Guid id)
         {
             var dbContext = ctx.GetService<CoreDbContext>();
-            var compaint = await dbContext.Complaints.FindAsync(id);
+            var compaint = await dbContext.Complaints
+                .Where((c) => c.Id == id)
+                .FirstOrDefaultAsync();
             if (compaint == null)
             {
                 return false;
@@ -33,6 +32,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
             return compaint.Resolved;
         }
     }
+
     public class RespondToComplaintCH : ICommandHandler<RespondToComplaint>
     {
         private readonly CoreDbContext dbContext;
