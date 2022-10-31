@@ -41,13 +41,21 @@ namespace FurnitureShop.Core.Services.CQRS.Mobile.Orders
                             OrderState = Enum.Parse<OrderStateDTO>(p.OrderState.ToString()),
                             OrderedDate = p.OrderedDate,
                             DeliveredDate = p.DeliveredDate,
-                            Complaint = dbContext.Complaints.Where(c => c.OrderId == p.Id).Select( x => new ComplaintDTO{
-                                Id = x.Id,
-                                UserId = x.UserId,
-                                Resolved = x.Resolved,
-                                Text = x.Text,
-                                CreatedDate = x.CreatedDate
-                            }).FirstOrDefault(),
+                            Complaint = dbContext.Complaints
+                                .Where(c => c.OrderId == p.Id)
+                                .Select(
+                                    x =>
+                                        new ComplaintDTO
+                                        {
+                                            Id = x.Id,
+                                            UserId = x.UserId,
+                                            Resolved = x.Resolved,
+                                            Response = x.Response,
+                                            Text = x.Text,
+                                            CreatedDate = x.CreatedDate
+                                        }
+                                )
+                                .FirstOrDefault(),
                             Products = dbContext.OrderProduct
                                 .Where(o => o.OrderId == p.Id)
                                 .Join(
