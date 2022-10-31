@@ -7,44 +7,36 @@ part of 'contracts.dart';
 // **************************************************************************
 
 ComplaintDTO _$ComplaintDTOFromJson(Map<String, dynamic> json) => ComplaintDTO(
-      userId: json['UserId'] as String,
       orderId: json['OrderId'] as String,
       text: json['Text'] as String,
+      userId: json['UserId'] as String,
       response: json['Response'] as String?,
-      createdDate: DateTime.parse(json['CreatedDate'] as String),
       resolved: json['Resolved'] as bool,
       id: json['Id'] as String,
+      createdDate: DateTime.parse(json['CreatedDate'] as String),
     );
 
 Map<String, dynamic> _$ComplaintDTOToJson(ComplaintDTO instance) =>
     <String, dynamic>{
-      'UserId': instance.userId,
       'OrderId': instance.orderId,
       'Text': instance.text,
+      'UserId': instance.userId,
       'Response': instance.response,
-      'CreatedDate': instance.createdDate.toIso8601String(),
       'Resolved': instance.resolved,
       'Id': instance.id,
+      'CreatedDate': instance.createdDate.toIso8601String(),
     };
 
 ComplaintDTOBase _$ComplaintDTOBaseFromJson(Map<String, dynamic> json) =>
     ComplaintDTOBase(
-      userId: json['UserId'] as String,
       orderId: json['OrderId'] as String,
       text: json['Text'] as String,
-      response: json['Response'] as String?,
-      createdDate: DateTime.parse(json['CreatedDate'] as String),
-      resolved: json['Resolved'] as bool,
     );
 
 Map<String, dynamic> _$ComplaintDTOBaseToJson(ComplaintDTOBase instance) =>
     <String, dynamic>{
-      'UserId': instance.userId,
       'OrderId': instance.orderId,
       'Text': instance.text,
-      'Response': instance.response,
-      'CreatedDate': instance.createdDate.toIso8601String(),
-      'Resolved': instance.resolved,
     };
 
 CreateComplaint _$CreateComplaintFromJson(Map<String, dynamic> json) =>
@@ -79,15 +71,37 @@ Map<String, dynamic> _$MyComplaintsToJson(MyComplaints instance) =>
       'PageSize': instance.pageSize,
     };
 
+ResolveComplaint _$ResolveComplaintFromJson(Map<String, dynamic> json) =>
+    ResolveComplaint(
+      id: json['Id'] as String,
+    );
+
+Map<String, dynamic> _$ResolveComplaintToJson(ResolveComplaint instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+    };
+
 UpdateComplaint _$UpdateComplaintFromJson(Map<String, dynamic> json) =>
     UpdateComplaint(
-      updatedComplaint: ComplaintDTO.fromJson(
+      updatedComplaint: UpdateComplaintDTO.fromJson(
           json['UpdatedComplaint'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UpdateComplaintToJson(UpdateComplaint instance) =>
     <String, dynamic>{
       'UpdatedComplaint': instance.updatedComplaint,
+    };
+
+UpdateComplaintDTO _$UpdateComplaintDTOFromJson(Map<String, dynamic> json) =>
+    UpdateComplaintDTO(
+      id: json['Id'] as String,
+      text: json['Text'] as String,
+    );
+
+Map<String, dynamic> _$UpdateComplaintDTOToJson(UpdateComplaintDTO instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'Text': instance.text,
     };
 
 MyFavourites _$MyFavouritesFromJson(Map<String, dynamic> json) => MyFavourites(
@@ -187,6 +201,9 @@ OrderDTO _$OrderDTOFromJson(Map<String, dynamic> json) => OrderDTO(
       userId: json['UserId'] as String?,
       price: (json['Price'] as num).toDouble(),
       address: json['Address'] as String,
+      complaint: json['Complaint'] == null
+          ? null
+          : ComplaintDTO.fromJson(json['Complaint'] as Map<String, dynamic>),
       orderState: $enumDecode(_$OrderStateDTOEnumMap, json['OrderState']),
       orderedDate: DateTime.parse(json['OrderedDate'] as String),
       deliveredDate: json['DeliveredDate'] == null
@@ -200,6 +217,7 @@ Map<String, dynamic> _$OrderDTOToJson(OrderDTO instance) => <String, dynamic>{
       'UserId': instance.userId,
       'Price': instance.price,
       'Address': instance.address,
+      'Complaint': instance.complaint,
       'OrderState': _$OrderStateDTOEnumMap[instance.orderState]!,
       'OrderedDate': instance.orderedDate.toIso8601String(),
       'DeliveredDate': instance.deliveredDate?.toIso8601String(),
@@ -231,12 +249,12 @@ ProductInOrderDTO _$ProductInOrderDTOFromJson(Map<String, dynamic> json) =>
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       description: json['Description'] as String,
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       id: json['Id'] as String,
       inFavourites: json['InFavourites'] as bool,
       inShoppingCart: json['InShoppingCart'] as bool,
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       amount: json['Amount'] as int,
     );
 
@@ -245,12 +263,12 @@ Map<String, dynamic> _$ProductInOrderDTOToJson(ProductInOrderDTO instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'Description': instance.description,
-      'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Id': instance.id,
       'InFavourites': instance.inFavourites,
       'InShoppingCart': instance.inShoppingCart,
+      'AverageRating': instance.averageRating,
       'Amount': instance.amount,
     };
 
@@ -298,12 +316,12 @@ ProductDetailsDTO _$ProductDetailsDTOFromJson(Map<String, dynamic> json) =>
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       description: json['Description'] as String,
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       id: json['Id'] as String,
       inFavourites: json['InFavourites'] as bool,
       inShoppingCart: json['InShoppingCart'] as bool,
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       modelId: json['ModelId'] as String?,
       photoIds:
           (json['PhotoIds'] as List<dynamic>).map((e) => e as String).toList(),
@@ -314,12 +332,12 @@ Map<String, dynamic> _$ProductDetailsDTOToJson(ProductDetailsDTO instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'Description': instance.description,
-      'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Id': instance.id,
       'InFavourites': instance.inFavourites,
       'InShoppingCart': instance.inShoppingCart,
+      'AverageRating': instance.averageRating,
       'ModelId': instance.modelId,
       'PhotoIds': instance.photoIds,
     };
@@ -328,12 +346,12 @@ ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) => ProductDTO(
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       description: json['Description'] as String,
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
       id: json['Id'] as String,
       inFavourites: json['InFavourites'] as bool,
       inShoppingCart: json['InShoppingCart'] as bool,
+      averageRating: (json['AverageRating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
@@ -341,12 +359,12 @@ Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'Description': instance.description,
-      'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
       'Id': instance.id,
       'InFavourites': instance.inFavourites,
       'InShoppingCart': instance.inShoppingCart,
+      'AverageRating': instance.averageRating,
     };
 
 RemoveFromFavourites _$RemoveFromFavouritesFromJson(
@@ -663,7 +681,6 @@ ProductDTOBase _$ProductDTOBaseFromJson(Map<String, dynamic> json) =>
       name: json['Name'] as String,
       price: (json['Price'] as num).toDouble(),
       description: json['Description'] as String,
-      averageRating: (json['AverageRating'] as num?)?.toDouble(),
       previewPhotoId: json['PreviewPhotoId'] as String?,
       categoryId: json['CategoryId'] as String?,
     );
@@ -673,7 +690,6 @@ Map<String, dynamic> _$ProductDTOBaseToJson(ProductDTOBase instance) =>
       'Name': instance.name,
       'Price': instance.price,
       'Description': instance.description,
-      'AverageRating': instance.averageRating,
       'PreviewPhotoId': instance.previewPhotoId,
       'CategoryId': instance.categoryId,
     };

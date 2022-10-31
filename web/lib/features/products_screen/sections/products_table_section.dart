@@ -26,10 +26,12 @@ class ProductsTableSection extends StatelessWidget {
         child: Text('Products list'),
       ),
       items: state.currentPageProducts,
-      currentPage: state.currentPage,
-      totalCount: state.totalCount,
-      onPrevPressed: () => cubit.fetch(page: state.currentPage - 1),
-      onNextPressed: () => cubit.fetch(page: state.currentPage + 1),
+      currentPage: state.currentProductsPage,
+      totalCount: state.totalProductsCount,
+      onPrevPressed: () =>
+          cubit.fetch(productsPage: state.currentProductsPage - 1),
+      onNextPressed: () =>
+          cubit.fetch(productsPage: state.currentProductsPage + 1),
       createItemButtonLabel: 'Create new product',
       createItemPressed: () async {
         await AppDialog.show<void>(
@@ -44,6 +46,9 @@ class ProductsTableSection extends StatelessWidget {
         product: product,
         isCurrent: product.id == state.currentProduct?.id,
         onPressed: () => cubit.changeCurrentProduct(productId: product.id),
+        reviews: state.reviews,
+        totalReviewsCount: state.totalReviewsCount,
+        currentReviewsPage: state.currentReviewsPage,
       ),
     );
   }
@@ -54,6 +59,9 @@ class _ProductItem extends StatelessWidget {
     Key? key,
     required this.product,
     required this.isCurrent,
+    required this.reviews,
+    required this.currentReviewsPage,
+    required this.totalReviewsCount,
     this.onPressed,
   }) : super(key: key);
 
@@ -61,9 +69,12 @@ class _ProductItem extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isCurrent;
 
+  final int totalReviewsCount;
+  final int currentReviewsPage;
+  final Map<int, List<ReviewDTO>> reviews;
+
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     final previewPhotoId = product.previewPhotoId;
 
     return Material(
