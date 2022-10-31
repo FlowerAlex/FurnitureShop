@@ -152,7 +152,7 @@ class ProductFormBodyCubit extends Cubit<ProductFormBodyState> {
               categoryId: selectedCategoryId,
               modelId: blobModelId,
               previewPhotoId: blobImageId,
-              photoIds: [],
+              photoIds: [], // TODO: Add photos when creating product
             ),
           ),
         );

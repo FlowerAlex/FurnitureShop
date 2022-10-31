@@ -167,32 +167,6 @@ Map<String, dynamic> _$ComplaintDTOToJson(ComplaintDTO instance) =>
       'Id': instance.id,
     };
 
-RespondToComplaint _$RespondToComplaintFromJson(Map<String, dynamic> json) =>
-    RespondToComplaint(
-      id: json['Id'] as String,
-      response: json['Response'] as String,
-    );
-
-Map<String, dynamic> _$RespondToComplaintToJson(RespondToComplaint instance) =>
-    <String, dynamic>{
-      'Id': instance.id,
-      'Response': instance.response,
-    };
-
-RespondToComplaintDTO _$RespondToComplaintDTOFromJson(
-        Map<String, dynamic> json) =>
-    RespondToComplaintDTO(
-      orderId: json['OrderId'] as String,
-      text: json['Text'] as String,
-    );
-
-Map<String, dynamic> _$RespondToComplaintDTOToJson(
-        RespondToComplaintDTO instance) =>
-    <String, dynamic>{
-      'OrderId': instance.orderId,
-      'Text': instance.text,
-    };
-
 AllOrders _$AllOrdersFromJson(Map<String, dynamic> json) => AllOrders(
       pageNumber: json['PageNumber'] as int,
       pageSize: json['PageSize'] as int,
@@ -496,17 +470,18 @@ Map<String, dynamic> _$UpdateProductDTOToJson(UpdateProductDTO instance) =>
       'PhotosIds': instance.photosIds,
     };
 
-AllReviews _$AllReviewsFromJson(Map<String, dynamic> json) => AllReviews(
+AllReviewsForUser _$AllReviewsForUserFromJson(Map<String, dynamic> json) =>
+    AllReviewsForUser(
       pageNumber: json['PageNumber'] as int,
       pageSize: json['PageSize'] as int,
-      productId: json['ProductId'] as String,
+      userId: json['UserId'] as String,
     );
 
-Map<String, dynamic> _$AllReviewsToJson(AllReviews instance) =>
+Map<String, dynamic> _$AllReviewsForUserToJson(AllReviewsForUser instance) =>
     <String, dynamic>{
       'PageNumber': instance.pageNumber,
       'PageSize': instance.pageSize,
-      'ProductId': instance.productId,
+      'UserId': instance.userId,
     };
 
 ReviewDTO _$ReviewDTOFromJson(Map<String, dynamic> json) => ReviewDTO(

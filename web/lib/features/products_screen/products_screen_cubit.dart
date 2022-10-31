@@ -16,16 +16,15 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   final CQRS _cqrs;
   final _logger = Logger('ProductsScreenCubit');
 
-  Future<void> fetch({int productsPage = 0}) async {
+  Future<void> fetch({int page = 0}) async {
     final state = this.state;
 
     if (state is! ProductsScreenStateReady) {
       return;
     }
 
-    if (productsPage != 0) {
-      if (productsPage < 0 ||
-          productsPage >= (state.totalProductsCount - 1) / pageSize) {
+    if (page != 0) {
+      if (page < 0 || page >= (state.totalCount - 1) / pageSize) {
         return;
       }
     }
@@ -33,7 +32,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     try {
       final result = await _cqrs.get(
         AllProducts(
-          pageNumber: productsPage,
+          pageNumber: page,
           pageSize: pageSize,
           sortByDescending: false,
           sortBy: ProductsSortFieldDTO.name,
@@ -42,11 +41,11 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
 
       emit(
         state.copyWith(
-          currentProductsPage: productsPage,
-          totalProductsCount: result.totalCount,
+          currentPage: page,
+          totalCount: result.totalCount,
           products: {
             ...state.products,
-            productsPage: result.items,
+            page: result.items,
           },
         ),
       );
@@ -71,74 +70,9 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     }
 
     final product = await _cqrs.get(ProductById(id: productId));
+    // final reivews = await _cqrs.get();
 
-    final reviews = await _cqrs.get(
-      AllReviews(
-        productId: productId,
-        pageNumber: 0,
-        pageSize: pageSize,
-      ),
-    );
-
-    emit(
-      state.copyWith(
-        currentProduct: product,
-        reviews: {0: reviews.items},
-        totalReviewsCount: reviews.totalCount,
-        currentReviewsPage: 0,
-      ),
-    );
-  }
-
-  Future<void> updateReviews({
-    required int reivewsPage,
-  }) async {
-    final state = this.state;
-
-    if (state is! ProductsScreenStateReady) {
-      return;
-    }
-    final currentProduct = state.currentProduct;
-
-    if (currentProduct == null) {
-      return;
-    }
-
-    if (reivewsPage != 0) {
-      if (reivewsPage < 0 ||
-          reivewsPage >= (state.totalReviewsCount - 1) / pageSize) {
-        return;
-      }
-    }
-
-    try {
-      final result = await _cqrs.get(
-        AllReviews(
-          productId: currentProduct.id,
-          pageNumber: reivewsPage,
-          pageSize: pageSize,
-        ),
-      );
-
-      emit(
-        state.copyWith(
-          currentProductsPage: reivewsPage,
-          totalProductsCount: result.totalCount,
-          reviews: {
-            ...state.reviews,
-            reivewsPage: result.items,
-          },
-        ),
-      );
-    } catch (err, st) {
-      _logger.severe(err, st);
-
-      emit(
-        ProductsScreenStateError(
-          error: err.toString(),
-        ),
-      );
-    }
+    emit(state.copyWith(currentProduct: product));
   }
 
   Future<void> deleteProduct({
@@ -166,11 +100,8 @@ class ProductsScreenState with _$ProductsScreenState {
   const factory ProductsScreenState.ready({
     @Default(<int, List<ProductDTO>>{}) Map<int, List<ProductDTO>> products,
     ProductDetailsDTO? currentProduct,
-    @Default(0) int currentProductsPage,
-    @Default(0) int totalProductsCount,
-    @Default(<int, List<ReviewDTO>>{}) Map<int, List<ReviewDTO>> reviews,
-    @Default(0) int currentReviewsPage,
-    @Default(0) int totalReviewsCount,
+    @Default(0) int currentPage,
+    @Default(0) int totalCount,
   }) = ProductsScreenStateReady;
   const factory ProductsScreenState.error({
     required String error,
@@ -178,6 +109,5 @@ class ProductsScreenState with _$ProductsScreenState {
 }
 
 extension ProductsScreenStateReadyEx on ProductsScreenStateReady {
-  List<ProductDTO> get currentPageProducts =>
-      products[currentProductsPage] ?? [];
+  List<ProductDTO> get currentPageProducts => products[currentPage] ?? [];
 }

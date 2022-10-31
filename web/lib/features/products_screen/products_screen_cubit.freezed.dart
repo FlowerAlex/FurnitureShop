@@ -18,42 +18,24 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProductsScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -105,11 +87,8 @@ abstract class _$$ProductsScreenStateReadyCopyWith<$Res> {
   $Res call(
       {Map<int, List<ProductDTO>> products,
       ProductDetailsDTO? currentProduct,
-      int currentProductsPage,
-      int totalProductsCount,
-      Map<int, List<ReviewDTO>> reviews,
-      int currentReviewsPage,
-      int totalReviewsCount});
+      int currentPage,
+      int totalCount});
 }
 
 /// @nodoc
@@ -128,11 +107,8 @@ class __$$ProductsScreenStateReadyCopyWithImpl<$Res>
   $Res call({
     Object? products = freezed,
     Object? currentProduct = freezed,
-    Object? currentProductsPage = freezed,
-    Object? totalProductsCount = freezed,
-    Object? reviews = freezed,
-    Object? currentReviewsPage = freezed,
-    Object? totalReviewsCount = freezed,
+    Object? currentPage = freezed,
+    Object? totalCount = freezed,
   }) {
     return _then(_$ProductsScreenStateReady(
       products: products == freezed
@@ -143,25 +119,13 @@ class __$$ProductsScreenStateReadyCopyWithImpl<$Res>
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
               as ProductDetailsDTO?,
-      currentProductsPage: currentProductsPage == freezed
-          ? _value.currentProductsPage
-          : currentProductsPage // ignore: cast_nullable_to_non_nullable
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      totalProductsCount: totalProductsCount == freezed
-          ? _value.totalProductsCount
-          : totalProductsCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      reviews: reviews == freezed
-          ? _value._reviews
-          : reviews // ignore: cast_nullable_to_non_nullable
-              as Map<int, List<ReviewDTO>>,
-      currentReviewsPage: currentReviewsPage == freezed
-          ? _value.currentReviewsPage
-          : currentReviewsPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalReviewsCount: totalReviewsCount == freezed
-          ? _value.totalReviewsCount
-          : totalReviewsCount // ignore: cast_nullable_to_non_nullable
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -174,13 +138,9 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
       {final Map<int, List<ProductDTO>> products =
           const <int, List<ProductDTO>>{},
       this.currentProduct,
-      this.currentProductsPage = 0,
-      this.totalProductsCount = 0,
-      final Map<int, List<ReviewDTO>> reviews = const <int, List<ReviewDTO>>{},
-      this.currentReviewsPage = 0,
-      this.totalReviewsCount = 0})
-      : _products = products,
-        _reviews = reviews;
+      this.currentPage = 0,
+      this.totalCount = 0})
+      : _products = products;
 
   final Map<int, List<ProductDTO>> _products;
   @override
@@ -194,28 +154,14 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   final ProductDetailsDTO? currentProduct;
   @override
   @JsonKey()
-  final int currentProductsPage;
+  final int currentPage;
   @override
   @JsonKey()
-  final int totalProductsCount;
-  final Map<int, List<ReviewDTO>> _reviews;
-  @override
-  @JsonKey()
-  Map<int, List<ReviewDTO>> get reviews {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_reviews);
-  }
-
-  @override
-  @JsonKey()
-  final int currentReviewsPage;
-  @override
-  @JsonKey()
-  final int totalReviewsCount;
+  final int totalCount;
 
   @override
   String toString() {
-    return 'ProductsScreenState.ready(products: $products, currentProduct: $currentProduct, currentProductsPage: $currentProductsPage, totalProductsCount: $totalProductsCount, reviews: $reviews, currentReviewsPage: $currentReviewsPage, totalReviewsCount: $totalReviewsCount)';
+    return 'ProductsScreenState.ready(products: $products, currentProduct: $currentProduct, currentPage: $currentPage, totalCount: $totalCount)';
   }
 
   @override
@@ -227,14 +173,9 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
             const DeepCollectionEquality()
                 .equals(other.currentProduct, currentProduct) &&
             const DeepCollectionEquality()
-                .equals(other.currentProductsPage, currentProductsPage) &&
+                .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality()
-                .equals(other.totalProductsCount, totalProductsCount) &&
-            const DeepCollectionEquality().equals(other._reviews, _reviews) &&
-            const DeepCollectionEquality()
-                .equals(other.currentReviewsPage, currentReviewsPage) &&
-            const DeepCollectionEquality()
-                .equals(other.totalReviewsCount, totalReviewsCount));
+                .equals(other.totalCount, totalCount));
   }
 
   @override
@@ -242,11 +183,8 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
       runtimeType,
       const DeepCollectionEquality().hash(_products),
       const DeepCollectionEquality().hash(currentProduct),
-      const DeepCollectionEquality().hash(currentProductsPage),
-      const DeepCollectionEquality().hash(totalProductsCount),
-      const DeepCollectionEquality().hash(_reviews),
-      const DeepCollectionEquality().hash(currentReviewsPage),
-      const DeepCollectionEquality().hash(totalReviewsCount));
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(totalCount));
 
   @JsonKey(ignore: true)
   @override
@@ -258,57 +196,36 @@ class _$ProductsScreenStateReady implements ProductsScreenStateReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
-    return ready(products, currentProduct, currentProductsPage,
-        totalProductsCount, reviews, currentReviewsPage, totalReviewsCount);
+    return ready(products, currentProduct, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
-    return ready?.call(products, currentProduct, currentProductsPage,
-        totalProductsCount, reviews, currentReviewsPage, totalReviewsCount);
+    return ready?.call(products, currentProduct, currentPage, totalCount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (ready != null) {
-      return ready(products, currentProduct, currentProductsPage,
-          totalProductsCount, reviews, currentReviewsPage, totalReviewsCount);
+      return ready(products, currentProduct, currentPage, totalCount);
     }
     return orElse();
   }
@@ -349,19 +266,13 @@ abstract class ProductsScreenStateReady implements ProductsScreenState {
   const factory ProductsScreenStateReady(
       {final Map<int, List<ProductDTO>> products,
       final ProductDetailsDTO? currentProduct,
-      final int currentProductsPage,
-      final int totalProductsCount,
-      final Map<int, List<ReviewDTO>> reviews,
-      final int currentReviewsPage,
-      final int totalReviewsCount}) = _$ProductsScreenStateReady;
+      final int currentPage,
+      final int totalCount}) = _$ProductsScreenStateReady;
 
   Map<int, List<ProductDTO>> get products;
   ProductDetailsDTO? get currentProduct;
-  int get currentProductsPage;
-  int get totalProductsCount;
-  Map<int, List<ReviewDTO>> get reviews;
-  int get currentReviewsPage;
-  int get totalReviewsCount;
+  int get currentPage;
+  int get totalCount;
   @JsonKey(ignore: true)
   _$$ProductsScreenStateReadyCopyWith<_$ProductsScreenStateReady>
       get copyWith => throw _privateConstructorUsedError;
@@ -435,14 +346,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)
+    required TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)
         ready,
     required TResult Function(String error) error,
   }) {
@@ -452,14 +357,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
   }) {
@@ -469,14 +368,8 @@ class _$ProductsScreenStateError implements ProductsScreenStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Map<int, List<ProductDTO>> products,
-            ProductDetailsDTO? currentProduct,
-            int currentProductsPage,
-            int totalProductsCount,
-            Map<int, List<ReviewDTO>> reviews,
-            int currentReviewsPage,
-            int totalReviewsCount)?
+    TResult Function(Map<int, List<ProductDTO>> products,
+            ProductDetailsDTO? currentProduct, int currentPage, int totalCount)?
         ready,
     TResult Function(String error)? error,
     required TResult orElse(),

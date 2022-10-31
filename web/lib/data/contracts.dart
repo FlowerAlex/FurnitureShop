@@ -416,51 +416,6 @@ class ComplaintDTO with EquatableMixin {
   Map<String, dynamic> toJson() => _$ComplaintDTOToJson(this);
 }
 
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class RespondToComplaint with EquatableMixin implements Command {
-  RespondToComplaint({
-    required this.id,
-    required this.response,
-  });
-
-  factory RespondToComplaint.fromJson(Map<String, dynamic> json) =>
-      _$RespondToComplaintFromJson(json);
-
-  final String id;
-
-  final String response;
-
-  get props => [id, response];
-
-  Map<String, dynamic> toJson() => _$RespondToComplaintToJson(this);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Web.Complaints.RespondToComplaint';
-}
-
-class RespondToComplaintErrorCodes {
-  static const compaintResolved = 1;
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class RespondToComplaintDTO with EquatableMixin {
-  RespondToComplaintDTO({
-    required this.orderId,
-    required this.text,
-  });
-
-  factory RespondToComplaintDTO.fromJson(Map<String, dynamic> json) =>
-      _$RespondToComplaintDTOFromJson(json);
-
-  final String orderId;
-
-  final String text;
-
-  get props => [orderId, text];
-
-  Map<String, dynamic> toJson() => _$RespondToComplaintDTOToJson(this);
-}
-
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class AllOrders
@@ -1009,29 +964,32 @@ class UpdateProductDTO with EquatableMixin implements ProductDTOBase {
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class AllReviews with EquatableMixin implements PaginatedQuery<ReviewDTO> {
-  AllReviews({
+class AllReviewsForUser
+    with EquatableMixin
+    implements PaginatedQuery<ReviewDTO> {
+  AllReviewsForUser({
     required this.pageNumber,
     required this.pageSize,
-    required this.productId,
+    required this.userId,
   });
 
-  factory AllReviews.fromJson(Map<String, dynamic> json) =>
-      _$AllReviewsFromJson(json);
+  factory AllReviewsForUser.fromJson(Map<String, dynamic> json) =>
+      _$AllReviewsForUserFromJson(json);
 
   final int pageNumber;
 
   final int pageSize;
 
-  final String productId;
+  final String userId;
 
-  get props => [pageNumber, pageSize, productId];
+  get props => [pageNumber, pageSize, userId];
 
-  Map<String, dynamic> toJson() => _$AllReviewsToJson(this);
+  Map<String, dynamic> toJson() => _$AllReviewsForUserToJson(this);
   PaginatedResult<ReviewDTO> resultFactory(dynamic decodedJson) =>
       _$PaginatedResultFromJson(decodedJson as Map<String, dynamic>,
           (e) => _$ReviewDTOFromJson(e as Map<String, dynamic>));
-  String getFullName() => 'FurnitureShop.Core.Contracts.Web.Reviews.AllReviews';
+  String getFullName() =>
+      'FurnitureShop.Core.Contracts.Web.Reviews.AllReviewsForUser';
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)

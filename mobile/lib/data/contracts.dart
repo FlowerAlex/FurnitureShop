@@ -6,33 +6,33 @@ part 'contracts.g.dart';
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ComplaintDTO with EquatableMixin implements ComplaintDTOBase {
   ComplaintDTO({
+    required this.userId,
     required this.orderId,
     required this.text,
-    required this.userId,
     this.response,
+    required this.createdDate,
     required this.resolved,
     required this.id,
-    required this.createdDate,
   });
 
   factory ComplaintDTO.fromJson(Map<String, dynamic> json) =>
       _$ComplaintDTOFromJson(json);
 
+  final String userId;
+
   final String orderId;
 
   final String text;
 
-  final String userId;
-
   final String? response;
+
+  final DateTime createdDate;
 
   final bool resolved;
 
   final String id;
 
-  final DateTime createdDate;
-
-  get props => [orderId, text, userId, response, resolved, id, createdDate];
+  get props => [userId, orderId, text, response, createdDate, resolved, id];
 
   Map<String, dynamic> toJson() => _$ComplaintDTOToJson(this);
 }
@@ -40,18 +40,30 @@ class ComplaintDTO with EquatableMixin implements ComplaintDTOBase {
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class ComplaintDTOBase with EquatableMixin {
   ComplaintDTOBase({
+    required this.userId,
     required this.orderId,
     required this.text,
+    this.response,
+    required this.createdDate,
+    required this.resolved,
   });
 
   factory ComplaintDTOBase.fromJson(Map<String, dynamic> json) =>
       _$ComplaintDTOBaseFromJson(json);
 
+  final String userId;
+
   final String orderId;
 
   final String text;
 
-  get props => [orderId, text];
+  final String? response;
+
+  final DateTime createdDate;
+
+  final bool resolved;
+
+  get props => [userId, orderId, text, response, createdDate, resolved];
 
   Map<String, dynamic> toJson() => _$ComplaintDTOBaseToJson(this);
 }
@@ -125,27 +137,6 @@ class MyComplaints with EquatableMixin implements PaginatedQuery<ComplaintDTO> {
       'FurnitureShop.Core.Contracts.Mobile.Complaints.MyComplaints';
 }
 
-/// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class ResolveComplaint with EquatableMixin implements Command {
-  ResolveComplaint({
-    required this.id,
-  });
-
-  factory ResolveComplaint.fromJson(Map<String, dynamic> json) =>
-      _$ResolveComplaintFromJson(json);
-
-  final String id;
-
-  get props => [id];
-
-  Map<String, dynamic> toJson() => _$ResolveComplaintToJson(this);
-  String getFullName() =>
-      'FurnitureShop.Core.Contracts.Mobile.Complaints.ResolveComplaint';
-}
-
-class ResolveComplaintErrorCodes {}
-
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user', 'admin')
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class UpdateComplaint with EquatableMixin implements Command {
@@ -156,7 +147,7 @@ class UpdateComplaint with EquatableMixin implements Command {
   factory UpdateComplaint.fromJson(Map<String, dynamic> json) =>
       _$UpdateComplaintFromJson(json);
 
-  final UpdateComplaintDTO updatedComplaint;
+  final ComplaintDTO updatedComplaint;
 
   get props => [updatedComplaint];
 
@@ -167,25 +158,6 @@ class UpdateComplaint with EquatableMixin implements Command {
 
 class UpdateComplaintErrorCodes {
   static const emptyComplaintText = 1;
-}
-
-@JsonSerializable(fieldRename: FieldRename.pascal)
-class UpdateComplaintDTO with EquatableMixin {
-  UpdateComplaintDTO({
-    required this.id,
-    required this.text,
-  });
-
-  factory UpdateComplaintDTO.fromJson(Map<String, dynamic> json) =>
-      _$UpdateComplaintDTOFromJson(json);
-
-  final String id;
-
-  final String text;
-
-  get props => [id, text];
-
-  Map<String, dynamic> toJson() => _$UpdateComplaintDTOToJson(this);
 }
 
 /// LeanCode.CQRS.Security.AuthorizeWhenHasAnyOfAttribute('user')
@@ -354,7 +326,6 @@ class OrderDTO with EquatableMixin {
     this.userId,
     required this.price,
     required this.address,
-    this.complaint,
     required this.orderState,
     required this.orderedDate,
     this.deliveredDate,
@@ -373,8 +344,6 @@ class OrderDTO with EquatableMixin {
 
   final String address;
 
-  final ComplaintDTO? complaint;
-
   final OrderStateDTO orderState;
 
   final DateTime orderedDate;
@@ -387,7 +356,6 @@ class OrderDTO with EquatableMixin {
         userId,
         price,
         address,
-        complaint,
         orderState,
         orderedDate,
         deliveredDate
@@ -421,12 +389,12 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
     required this.name,
     required this.price,
     required this.description,
+    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     required this.id,
     required this.inFavourites,
     required this.inShoppingCart,
-    this.averageRating,
     required this.amount,
   });
 
@@ -439,6 +407,8 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
 
   final String description;
 
+  final double? averageRating;
+
   final String? previewPhotoId;
 
   final String? categoryId;
@@ -449,20 +419,18 @@ class ProductInOrderDTO with EquatableMixin implements ProductDTO {
 
   final bool inShoppingCart;
 
-  final double? averageRating;
-
   final int amount;
 
   get props => [
         name,
         price,
         description,
+        averageRating,
         previewPhotoId,
         categoryId,
         id,
         inFavourites,
         inShoppingCart,
-        averageRating,
         amount
       ];
 
@@ -558,12 +526,12 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTO {
     required this.name,
     required this.price,
     required this.description,
+    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     required this.id,
     required this.inFavourites,
     required this.inShoppingCart,
-    this.averageRating,
     this.modelId,
     required this.photoIds,
   });
@@ -577,6 +545,8 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTO {
 
   final String description;
 
+  final double? averageRating;
+
   final String? previewPhotoId;
 
   final String? categoryId;
@@ -587,8 +557,6 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTO {
 
   final bool inShoppingCart;
 
-  final double? averageRating;
-
   final String? modelId;
 
   final List<String> photoIds;
@@ -597,12 +565,12 @@ class ProductDetailsDTO with EquatableMixin implements ProductDTO {
         name,
         price,
         description,
+        averageRating,
         previewPhotoId,
         categoryId,
         id,
         inFavourites,
         inShoppingCart,
-        averageRating,
         modelId,
         photoIds
       ];
@@ -616,12 +584,12 @@ class ProductDTO with EquatableMixin implements ProductDTOBase {
     required this.name,
     required this.price,
     required this.description,
+    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
     required this.id,
     required this.inFavourites,
     required this.inShoppingCart,
-    this.averageRating,
   });
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) =>
@@ -633,6 +601,8 @@ class ProductDTO with EquatableMixin implements ProductDTOBase {
 
   final String description;
 
+  final double? averageRating;
+
   final String? previewPhotoId;
 
   final String? categoryId;
@@ -643,18 +613,16 @@ class ProductDTO with EquatableMixin implements ProductDTOBase {
 
   final bool inShoppingCart;
 
-  final double? averageRating;
-
   get props => [
         name,
         price,
         description,
+        averageRating,
         previewPhotoId,
         categoryId,
         id,
         inFavourites,
-        inShoppingCart,
-        averageRating
+        inShoppingCart
       ];
 
   Map<String, dynamic> toJson() => _$ProductDTOToJson(this);
@@ -1256,6 +1224,7 @@ class ProductDTOBase with EquatableMixin {
     required this.name,
     required this.price,
     required this.description,
+    this.averageRating,
     this.previewPhotoId,
     this.categoryId,
   });
@@ -1269,11 +1238,14 @@ class ProductDTOBase with EquatableMixin {
 
   final String description;
 
+  final double? averageRating;
+
   final String? previewPhotoId;
 
   final String? categoryId;
 
-  get props => [name, price, description, previewPhotoId, categoryId];
+  get props =>
+      [name, price, description, averageRating, previewPhotoId, categoryId];
 
   Map<String, dynamic> toJson() => _$ProductDTOBaseToJson(this);
 }

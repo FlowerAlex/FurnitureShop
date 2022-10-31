@@ -58,7 +58,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
   }
 
   Future<void> fetch({
-    int productsPage = 0,
+    int page = 0,
   }) async {
     final state = this.state;
     if (state is! ProductsScreenReadyState) {
@@ -68,7 +68,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
     try {
       final products = await _cqrs.get(
         AllProducts(
-          pageNumber: productsPage,
+          pageNumber: page,
           pageSize: pageSize,
           sortByDescending: false,
           sortBy: ProductsSortFieldDTO.name,
@@ -80,7 +80,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       emit(
         state.copyWith(
           categories: state.categories,
-          currentPage: productsPage,
+          currentPage: page,
           totalCount: products.totalCount,
           products: {
             ...state.products,
@@ -113,10 +113,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       ),
     );
 
-    await init(
-      search: search,
-      activeCategory: state.activeCategory,
-    );
+    await init(search: search);
   }
 
   Future<void> changeActiveCategory(CategoryDTO? activeCategory) async {
@@ -126,10 +123,7 @@ class ProductsScreenCubit extends Cubit<ProductsScreenState> {
       return;
     }
 
-    await init(
-      search: state.search,
-      activeCategory: activeCategory,
-    );
+    await init(activeCategory: activeCategory);
   }
 
   Future<void> likeProduct(String productId) async {

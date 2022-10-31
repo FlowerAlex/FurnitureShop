@@ -7,17 +7,6 @@ import 'package:furniture_shop/features/orders_screen/order_tile.dart';
 import 'package:furniture_shop/features/orders_screen/orders_screen_cubit.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class OrdersScreenRoute extends MaterialPageRoute<void> {
-  OrdersScreenRoute()
-      : super(
-          builder: (context) => BlocProvider(
-            create: (context) =>
-                OrdersScreenCubit(cqrs: context.read())..init(),
-            child: const OrdersScreen(),
-          ),
-        );
-}
-
 class OrdersScreen extends HookWidget {
   const OrdersScreen({Key? key}) : super(key: key);
 
@@ -31,43 +20,31 @@ class OrdersScreen extends HookWidget {
         initial: (_) => const Center(
           child: CircularProgressIndicator(),
         ),
-        ready: (state) => SafeArea(
-          child: Column(
-            children: [
-              const Text('Orders'),
-              const SizedBox(height: 8),
-              Expanded(
-                child: PagedListView<int, OrderDTO>(
-                  pagingController: usePagingController<int, OrderDTO>(
-                    firstPageKey: 0,
-                    hasMore:
-                        state.totalCount > (state.currentPage + 1) * pageSize,
-                    items: state.orders.values.toList(),
-                    fetchPage: (page) => cubit.fetch(page: page),
-                    getNextPageKey: (_) => state.currentPage + 1,
-                  ),
-                  builderDelegate: PagedChildBuilderDelegate<OrderDTO>(
-                    itemBuilder: (context, order, index) {
-                      return OrderTile(
-                        order: order,
-                        onCreateComplaintPressed: (value) => cubit
-                            .createComplaint(orderId: order.id, value: value),
-                        onResolveComplaintPressed: order.complaint != null
-                            ? () => cubit.resolveComplaint(
-                                  complaintId: order.complaint!.id,
-                                )
-                            : null,
-                      );
-                    },
-                    firstPageProgressIndicatorBuilder: (context) =>
-                        const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+        ready: (state) => Column(
+          children: [
+            Expanded(
+              child: PagedListView<int, OrderDTO>(
+                pagingController: usePagingController<int, OrderDTO>(
+                  firstPageKey: 0,
+                  hasMore:
+                      state.totalCount > (state.currentPage + 1) * pageSize,
+                  items: state.orders.values.toList(),
+                  fetchPage: (page) => cubit.fetch(page: page),
+                  getNextPageKey: (_) => state.currentPage + 1,
+                ),
+                builderDelegate: PagedChildBuilderDelegate<OrderDTO>(
+                  itemBuilder: (context, order, index) {
+                    return OrderTile(
+                      order: order,
+                    );
+                  },
+                  firstPageProgressIndicatorBuilder: (context) => const Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
         error: (state) => Center(
           child: Text(state.error),
@@ -75,4 +52,15 @@ class OrdersScreen extends HookWidget {
       ),
     );
   }
+}
+
+class OrdersScreenRoute extends MaterialPageRoute<void> {
+  OrdersScreenRoute()
+      : super(
+          builder: (context) => BlocProvider(
+            create: (context) =>
+                OrdersScreenCubit(cqrs: context.read())..init(),
+            child: const OrdersScreen(),
+          ),
+        );
 }
