@@ -14,7 +14,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Complaints
         public RespondToComplaintCV()
         {
             RuleForAsync(p => p.Id, IsComplaintResolved)
-                .Equal(true)
+                .Equal(false)
                 .WithMessage("Complaint is already resolved.")
                 .WithCode(RespondToComplaint.ErrorCodes.CompaintResolved);
         }
