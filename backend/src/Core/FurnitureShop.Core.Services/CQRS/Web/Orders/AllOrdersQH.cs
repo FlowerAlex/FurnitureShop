@@ -48,6 +48,7 @@ namespace FurnitureShop.Core.Services.CQRS.Web.Orders
                                             Id = x.Id,
                                             UserId = x.UserId,
                                             Resolved = x.Resolved,
+                                            Response = x.Response,
                                             Text = x.Text,
                                             CreatedDate = x.CreatedDate
                                         }
