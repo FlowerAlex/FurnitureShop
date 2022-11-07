@@ -18,6 +18,7 @@ class App extends StatelessWidget {
         child: MaterialApp(
           title: 'Furniture Shop',
           theme: appTheme,
+          debugShowCheckedModeBanner: false,
           home: const AuthRouter(),
         ),
       ),

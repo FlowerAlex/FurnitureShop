@@ -46,6 +46,7 @@ class ProductDetailsSection extends StatelessWidget {
               children: [
                 if (modelId != null) ...[
                   Card(
+                    key: ValueKey(modelId),
                     child: SizedBox(
                       width: 300,
                       height: 300,

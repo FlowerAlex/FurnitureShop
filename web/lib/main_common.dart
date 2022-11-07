@@ -36,7 +36,8 @@ Future<void> mainCommon(AppConfig config) async {
   );
 
   final storage = AzureStorage.parse(
-      'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net',);
+    'DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net',
+  );
 
   runApp(
     MultiProvider(
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Furniture Shop Web',
       theme: AppTheme.getTheme(AppThemeType.light),
+      debugShowCheckedModeBanner: false,
       home: const AuthRouter(),
     );
   }
