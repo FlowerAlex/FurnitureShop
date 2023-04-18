@@ -23,7 +23,7 @@ namespace FurnitureShop.Core.Services.Services
         public BlobStorageService()
         {
             blobConnectionString =
-                "DefaultEndpointsProtocol=https;AccountName=furnitureshopstorage;AccountKey=6SRIXCdjvPICeOpofs4bKBTpEz+Wkgxkrp2Hv4wob/t+gLu+3qll4IYB/emr6AyiqfYK3KCqmYqM+AStRi2ouw==;EndpointSuffix=core.windows.net";
+                "DefaultEndpointsProtocol=https;AccountName=furniturestorage;AccountKey=mzLcxMKf3wf0ZqiVHDHJ399kKTN18MfKl5ZTRCHIPIsUbquAxB7k4Savh6vPLf5AjpUCSORR5wFT+AStwXlihg==;EndpointSuffix=core.windows.net";
             modelsContainerName = "models";
             photosContainerName = "images";
         }
