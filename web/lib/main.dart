@@ -3,8 +3,9 @@ import 'package:furniture_shop/main_common.dart';
 
 void main() {
   final config = AppConfig(
-      debugMode: true,
-      apiUri: Uri.parse('https://d7f6-91-202-125-36.ngrok.io'),);
+    debugMode: true,
+    apiUri: Uri.parse('https://03db-194-29-137-21.ngrok-free.app'),
+  );
 
   mainCommon(config);
 }

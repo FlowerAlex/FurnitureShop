@@ -88,7 +88,7 @@ class _ProductItem extends StatelessWidget {
               const SizedBox(width: 20),
               if (previewPhotoId != null) ...[
                 Image.network(
-                  'https://furnitureshopstorage.blob.core.windows.net/images/$previewPhotoId',
+                  'https://furniturestorage.blob.core.windows.net/images/$previewPhotoId',
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(width: 20),

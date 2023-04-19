@@ -69,6 +69,7 @@ class AppTextFormField extends StatelessWidget {
             autofillHints: autofillHints,
             keyboardType: keyboardType,
             inputFormatters: inputFormatters,
+            maxLines: null,
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 8),

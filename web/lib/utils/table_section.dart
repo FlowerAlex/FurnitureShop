@@ -43,7 +43,7 @@ class TableSection<T extends Object> extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 400,
+                height: 350,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
