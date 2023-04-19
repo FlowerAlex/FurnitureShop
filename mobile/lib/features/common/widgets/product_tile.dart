@@ -66,7 +66,7 @@ class ProductTile extends StatelessWidget {
                   child: CachedNetworkImage(
                     fit: BoxFit.contain,
                     imageUrl:
-                        'https://furnitureshopstorage.blob.core.windows.net/images/${product.previewPhotoId}',
+                        'https://furniturestorage.blob.core.windows.net/images/${product.previewPhotoId}',
                     errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
                   ),

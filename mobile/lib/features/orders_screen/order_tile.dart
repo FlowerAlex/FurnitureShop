@@ -175,19 +175,23 @@ class _OrderTileBody extends HookWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  Text('Complaint: ${complaint.text}'),
-                  Text('Response: ${complaint.response ?? '-'}'),
-                  Row(
-                    children: [
-                      const Text('Resolved: '),
-                      Checkbox(value: complaint.resolved, onChanged: null),
-                    ],
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text(
+                      'Complaint: ${complaint.text}',
+                    ),
+                    Text('Response: ${complaint.response ?? '-'}'),
+                    Row(
+                      children: [
+                        const Text('Resolved: '),
+                        Checkbox(value: complaint.resolved, onChanged: null),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               if (!complaint.resolved && onResolveComplaintPressed != null)
                 AppTextButton(

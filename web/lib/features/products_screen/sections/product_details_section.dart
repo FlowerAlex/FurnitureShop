@@ -51,7 +51,7 @@ class ProductDetailsSection extends StatelessWidget {
                       height: 300,
                       child: ModelViewer(
                         src:
-                            'https://furnitureshopstorage.blob.core.windows.net/models/$modelId',
+                            'https://furniturestorage.blob.core.windows.net/models/$modelId',
                       ),
                     ),
                   ),

@@ -61,7 +61,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             height: 300,
                             child: ModelViewer(
                               src:
-                                  'https://furnitureshopstorage.blob.core.windows.net/models/${productDetails.modelId}',
+                                  'https://furniturestorage.blob.core.windows.net/models/${productDetails.modelId}',
                             ),
                           ),
                         ),
@@ -72,7 +72,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             for (final photoId in productDetails.photoIds)
                               CachedNetworkImage(
                                 imageUrl:
-                                    'https://furnitureshopstorage.blob.core.windows.net/images/$photoId',
+                                    'https://furniturestorage.blob.core.windows.net/images/$photoId',
                               ),
                             const SizedBox(width: 16),
                           ]..removeLast(),
