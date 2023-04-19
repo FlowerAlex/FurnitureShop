@@ -51,7 +51,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       Align(
                         child: Text(
                           productDetails.name,
-                          style: theme.textTheme.headline5,
+                          style: theme.textTheme.headlineSmall,
                         ),
                       ),
                       if (productDetails.modelId != null)
